@@ -1,5 +1,9 @@
 package net.venera.galacticraftcore;
 
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.item.ModItems;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -37,6 +41,9 @@ public class GalacticraftCore {
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
 
+        ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
+
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
 
@@ -59,7 +66,10 @@ public class GalacticraftCore {
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-
+if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
+    event.accept(ModItems.IRIDIUM_INGOT);
+    event.accept(ModBlocks.ALUMINIUM_ORE);
+}
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
