@@ -1,0 +1,4 @@
+// 1.21.1	2025-09-20T10:45:26.4030077	Loot Tables
+32d8949df7b3f849c0c7cfd1269c3f88674ab5cc data/galacticraftcore/loot_table/blocks/gcc_block_aluminium_block.json
+4a5fc0934faf97b7543e4c5a5417ac66a2f0d5cc data/galacticraftcore/loot_table/blocks/gcc_block_aluminium_ore.json
+fa0cb3df648a5adf353becbd316ba35aabc09270 data/galacticraftcore/loot_table/blocks/gcc_block_radioactive_block.json

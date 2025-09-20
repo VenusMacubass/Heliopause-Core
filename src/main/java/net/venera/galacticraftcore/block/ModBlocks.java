@@ -15,13 +15,13 @@ import net.venera.galacticraftcore.item.ModItems;
 public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(GalacticraftCore.MOD_ID);
 
-    public static final DeferredBlock<Block> ALUMINIUM_ORE = registerBlock("aluminium_ore",
+    public static final DeferredBlock<Block> ALUMINIUM_ORE = registerBlock("gcc_block_aluminium_ore",
             () -> new Block(BlockBehaviour.Properties.of().strength(3f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
-    public static final DeferredBlock<Block> ALUMINIUM_BLOCK = registerBlock("aluminium_block",
+    public static final DeferredBlock<Block> ALUMINIUM_BLOCK = registerBlock("gcc_block_aluminium_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
-    public static final DeferredBlock<Block> RADIOACTIVE_BLOCK = registerBlock("radioactive_block",
+    public static final DeferredBlock<Block> RADIOACTIVE_BLOCK = registerBlock("gcc_block_radioactive_block",
             () -> new RadioactiveBlock(BlockBehaviour.Properties.of().strength(6f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, java.util.function.Supplier<T> block){

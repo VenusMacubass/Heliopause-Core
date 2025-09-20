@@ -1,24 +1,24 @@
 {
-  "tooltip.galacticraftcore.radioactive_block": "This will burn your ass, stay away.",
-  "tooltip.galacticraftcore.standard_wrench.shift_down": "How the tables turn...",
-  "tooltip.galacticraftcore.standard_wrench": "Press shift for more info...",
-  "tooltip.galacticraftcore.dehydrated_apple": "Dried apples for long space missions.",
+  "tooltip.galacticraftcore.gcc_block_radioactive_block": "This will burn your ass, stay away.",
+  "tooltip.galacticraftcore.gcc_item_standard_wrench.shift_down": "How the tables turn...",
+  "tooltip.galacticraftcore.gcc_item_standard_wrench": "Press shift for more info...",
+  "tooltip.galacticraftcore.gcc_item_dehydrated_apple": "Dried apples for long space missions.",
 
-  "creativetab.galacticraftcore_items": "Galactcraft Items",
+  "creativetab.galacticraftcore_items": "Galacticraft Items",
   "creativetab.galacticraftcore_blocks": "Galacticraft Blocks",
 
-  "item.galacticraftcore.iridium_ingot": "Iridium Ingot",
-  "item.galacticraftcore.aluminium_ingot": "Aluminium Ingot",
-  "item.galacticraftcore.standard_wrench": "Standard Wrench",
-  "item.galacticraftcore.radioactive_core": "Radioactive Core",
-  "item.galacticraftcore.copper_canister": "Copper Canister",
-  "item.galacticraftcore.tin_canister": "Tin Canister",
-  "item.galacticraftcore.dehydrated_apple": "Dehydrated Apple",
-  "item.galacticraftcore.dehydrated_carrot": "Dehydrated Carrot",
-  "item.galacticraftcore.dehydrated_potato": "Dehydrated Potato",
-  "item.galacticraftcore.dehydrated_melon": "Dehydrated Melon",
+  "item.galacticraftcore.gcc_item_iridium_ingot": "Iridium Ingot",
+  "item.galacticraftcore.gcc_item_aluminium_ingot": "Aluminium Ingot",
+  "item.galacticraftcore.gcc_item_standard_wrench": "Standard Wrench",
+  "item.galacticraftcore.gcc_item_radioactive_core": "Radioactive Core",
+  "item.galacticraftcore.gcc_item_copper_canister": "Copper Canister",
+  "item.galacticraftcore.gcc_item_tin_canister": "Tin Canister",
+  "item.galacticraftcore.gcc_item_dehydrated_apple": "Dehydrated Apple",
+  "item.galacticraftcore.gcc_item_dehydrated_carrot": "Dehydrated Carrot",
+  "item.galacticraftcore.gcc_item_dehydrated_potato": "Dehydrated Potato",
+  "item.galacticraftcore.gcc_item_dehydrated_melon": "Dehydrated Melon",
 
-  "block.galacticraftcore.aluminium_ore": "Aluminium Ore",
-  "block.galacticraftcore.aluminium_block": "Block of Aluminium",
-  "block.galacticraftcore.radioactive_block": "Radioactive Block"
+  "block.galacticraftcore.gcc_block_aluminium_ore": "Aluminium Ore",
+  "block.galacticraftcore.gcc_block_aluminium_block": "Block of Aluminium",
+  "block.galacticraftcore.gcc_block_radioactive_block": "Radioactive Block"
 }

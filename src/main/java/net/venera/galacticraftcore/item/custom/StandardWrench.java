@@ -55,9 +55,9 @@ public class StandardWrench extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         if(Screen.hasShiftDown()) {
-            tooltipComponents.add(Component.translatable("tooltip.galacticraftcore.standard_wrench.shift_down"));
+            tooltipComponents.add(Component.translatable("tooltip.galacticraftcore.gcc_item_standard_wrench.shift_down"));
         } else {
-            tooltipComponents.add(Component.translatable("tooltip.galacticraftcore.standard_wrench"));
+            tooltipComponents.add(Component.translatable("tooltip.galacticraftcore.gcc_item_standard_wrench"));
         }
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }

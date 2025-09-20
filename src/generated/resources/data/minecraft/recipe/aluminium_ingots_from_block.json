@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "galacticraftcore:gcc_block_aluminium_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "galacticraftcore:gcc_item_aluminium_ingot"
+  }
+}
