@@ -49,6 +49,23 @@ public class ModItems {
     public static final DeferredItem<Item> RADIOACTIVE_CORE = ITEMS.register("gcc_item_radioactive_core",
             () -> new FuelItem(new Item.Properties(), 20000));
 
+    public static final DeferredItem<Item> RAW_ALUMINIUM = ITEMS.register("gcc_item_raw_aluminium", () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> RAW_TIN = ITEMS.register("gcc_item_raw_tin", () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> RAW_SILICON= ITEMS.register("gcc_item_raw_silicon", () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> TIN_INGOT = ITEMS.register("gcc_item_tin_ingot", () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> COMPRESSED_ALUMINIUM = ITEMS.register("gcc_item_compressed_aluminium", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> COMPRESSED_BRONZE = ITEMS.register("gcc_item_compressed_bronze", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> COMPRESSED_COPPER = ITEMS.register("gcc_item_compressed_copper", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> COMPRESSED_IRIDIUM = ITEMS.register("gcc_item_compressed_iridium", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> COMPRESSED_IRON = ITEMS.register("gcc_item_compressed_iron", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> COMPRESSED_STEEL = ITEMS.register("gcc_item_compressed_steel", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> COMPRESSED_TIN = ITEMS.register("gcc_item_compressed_tin", () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> SENSOR_LENS = ITEMS.register("gcc_item_sensor_lens", () -> new Item(new Item.Properties()));
 
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);

@@ -4,8 +4,12 @@
   "tooltip.galacticraftcore.gcc_item_standard_wrench": "Press shift for more info...",
   "tooltip.galacticraftcore.gcc_item_dehydrated_apple": "Dried apples for long space missions.",
 
+
+
   "creativetab.galacticraftcore_items": "Galacticraft Items",
   "creativetab.galacticraftcore_blocks": "Galacticraft Blocks",
+
+
 
   "item.galacticraftcore.gcc_item_iridium_ingot": "Iridium Ingot",
   "item.galacticraftcore.gcc_item_aluminium_ingot": "Aluminium Ingot",
@@ -18,7 +22,43 @@
   "item.galacticraftcore.gcc_item_dehydrated_potato": "Dehydrated Potato",
   "item.galacticraftcore.gcc_item_dehydrated_melon": "Dehydrated Melon",
 
+  "item.galacticraftcore.gcc_item_raw_aluminium": "Raw Aluminium",
+  "item.galacticraftcore.gcc_item_raw_tin": "Raw Tin",
+  "item.galacticraftcore.gcc_item_raw_silicon": "Raw Silicon",
+  "item.galacticraftcore.gcc_item_tin_ingot": "Tin Ingot",
+
+  "item.galacticraftcore.gcc_item_compressed_aluminium": "Compressed Aluminium",
+  "item.galacticraftcore.gcc_item_compressed_bronze": "Compressed Bronze",
+  "item.galacticraftcore.gcc_item_compressed_copper": "Compressed Copper",
+  "item.galacticraftcore.gcc_item_compressed_iridium": "Compressed Iridium",
+  "item.galacticraftcore.gcc_item_compressed_iron": "Compressed Iron",
+  "item.galacticraftcore.gcc_item_compressed_steel": "Compressed Steel",
+  "item.galacticraftcore.gcc_item_compressed_tin": "Compressed Tin",
+
+  "item.galacticraftcore.gcc_item_sensor_lens": "Sensor Lens",
+
+
+
   "block.galacticraftcore.gcc_block_aluminium_ore": "Aluminium Ore",
   "block.galacticraftcore.gcc_block_aluminium_block": "Block of Aluminium",
-  "block.galacticraftcore.gcc_block_radioactive_block": "Radioactive Block"
+  "block.galacticraftcore.gcc_block_radioactive_block": "Radioactive Block",
+  "block.galacticraftcore.gcc_block_cheese_block": "Cheese Block",
+  "block.galacticraftcore.gcc_block_moon_turf": "Moon Turf",
+  "block.galacticraftcore.gcc_block_moon_dirt": "Moon Dirt",
+  "block.galacticraftcore.gcc_block_moon_rock": "Moon Rock",
+  "block.galacticraftcore.gcc_block_tin_building_block": "Tin Building Block",
+  "block.galacticraftcore.gcc_block_tin_block": "Block of Tin",
+  "block.galacticraftcore.gcc_block_tin_ore": "Tin Ore",
+  "block.galacticraftcore.gcc_block_raw_tin_block": "Block of Raw Tin",
+  "block.galacticraftcore.gcc_block_raw_aluminium_block": "Block of Raw Aluminium",
+  "block.galacticraftcore.gcc_block_silicon_ore": "Silicon Ore",
+  "block.galacticraftcore.gcc_block_silicon_block": "Block of Silicon",
+  "block.galacticraftcore.gcc_block_moon_copper_ore": "Moon Copper Ore",
+  "block.galacticraftcore.gcc_block_moon_tin_ore": "Moon Tin Ore",
+  "block.galacticraftcore.gcc_block_moon_cobblestone": "Moon Cobblestone",
+  "block.galacticraftcore.gcc_block_moon_dungeon_bricks": "Moon Dungeon Bricks",
+  "block.galacticraftcore.gcc_block_mars_dungeon_bricks": "Mars Dungeon Bricks",
+  "block.galacticraftcore.gcc_block_mars_rock": "Mars Rock",
+  "block.galacticraftcore.gcc_block_mars_cobblestone": "Mars Cobblestone"
+
 }

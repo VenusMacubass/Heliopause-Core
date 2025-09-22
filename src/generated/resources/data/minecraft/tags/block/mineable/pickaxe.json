@@ -2,6 +2,21 @@
   "values": [
     "galacticraftcore:gcc_block_aluminium_ore",
     "galacticraftcore:gcc_block_aluminium_block",
-    "galacticraftcore:gcc_block_radioactive_block"
+    "galacticraftcore:gcc_block_radioactive_block",
+    "galacticraftcore:gcc_block_moon_rock",
+    "galacticraftcore:gcc_block_tin_building_block",
+    "galacticraftcore:gcc_block_tin_block",
+    "galacticraftcore:gcc_block_tin_ore",
+    "galacticraftcore:gcc_block_raw_tin_block",
+    "galacticraftcore:gcc_block_raw_aluminium_block",
+    "galacticraftcore:gcc_block_silicon_block",
+    "galacticraftcore:gcc_block_silicon_ore",
+    "galacticraftcore:gcc_block_moon_copper_ore",
+    "galacticraftcore:gcc_block_moon_tin_ore",
+    "galacticraftcore:gcc_block_moon_cobblestone",
+    "galacticraftcore:gcc_block_moon_dungeon_bricks",
+    "galacticraftcore:gcc_block_mars_dungeon_bricks",
+    "galacticraftcore:gcc_block_mars_rock",
+    "galacticraftcore:gcc_block_mars_cobblestone"
   ]
 }

@@ -21,11 +21,34 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocks.ALUMINIUM_ORE.get())
                 .add(ModBlocks.ALUMINIUM_BLOCK.get())
-                .add(ModBlocks.RADIOACTIVE_BLOCK.get());
+                .add(ModBlocks.RADIOACTIVE_BLOCK.get())
+                .add(ModBlocks.MOON_ROCK.get())
+                .add(ModBlocks.TIN_BUILDING_BLOCK.get())
+                .add(ModBlocks.TIN_BLOCK.get())
+                .add(ModBlocks.TIN_ORE.get())
+                .add(ModBlocks.RAW_TIN_BLOCK.get())
+                .add(ModBlocks.RAW_ALUMINIUM_BLOCK.get())
+                .add(ModBlocks.SILICON_BLOCK.get())
+                .add(ModBlocks.SILICON_ORE.get())
+                .add(ModBlocks.MOON_COPPER_ORE.get())
+                .add(ModBlocks.MOON_TIN_ORE.get())
+                .add(ModBlocks.MOON_COBBLESTONE.get())
+                .add(ModBlocks.MOON_DUNGEON_BRICKS.get())
+                .add(ModBlocks.MARS_DUNGEON_BRICKS.get())
+                .add(ModBlocks.MARS_ROCK.get())
+                .add(ModBlocks.MARS_COBBLESTONE.get());
+
+        tag(BlockTags.MINEABLE_WITH_SHOVEL)
+                .add(ModBlocks.MOON_DIRT.get());
+
+        tag(BlockTags.NEEDS_STONE_TOOL)
+                .add(ModBlocks.TIN_ORE.get())
+                .add(ModBlocks.MARS_ROCK.get());
 
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(ModBlocks.ALUMINIUM_ORE.get())
-                .add(ModBlocks.ALUMINIUM_BLOCK.get());
+                .add(ModBlocks.ALUMINIUM_BLOCK.get())
+                .add(ModBlocks.SILICON_ORE.get());
 
         tag(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(ModBlocks.RADIOACTIVE_BLOCK.get());

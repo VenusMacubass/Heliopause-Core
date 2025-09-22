@@ -15,13 +15,30 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         basicItem(ModItems.IRIDIUM_INGOT.get());
         basicItem(ModItems.ALUMINIUM_INGOT.get());
+
         basicItem(ModItems.COPPER_CANISTER.get());
         basicItem(ModItems.TIN_CANISTER.get());
         basicItem(ModItems.DEHYDRATED_APPLE.get());
         basicItem(ModItems.DEHYDRATED_CARROT.get());
         basicItem(ModItems.DEHYDRATED_POTATO.get());
         basicItem(ModItems.DEHYDRATED_MELON.get());
+
         basicItem(ModItems.RADIOACTIVE_CORE.get());
         handheldItem(ModItems.STANDARD_WRENCH.get());
+
+        basicItem(ModItems.RAW_ALUMINIUM.get());
+        basicItem(ModItems.RAW_TIN.get());
+        basicItem(ModItems.RAW_SILICON.get());
+        basicItem(ModItems.TIN_INGOT.get());
+
+        basicItem(ModItems.COMPRESSED_ALUMINIUM.get());
+        basicItem(ModItems.COMPRESSED_BRONZE.get());
+        basicItem(ModItems.COMPRESSED_COPPER.get());
+        basicItem(ModItems.COMPRESSED_IRIDIUM.get());
+        basicItem(ModItems.COMPRESSED_IRON.get());
+        basicItem(ModItems.COMPRESSED_STEEL.get());
+        basicItem(ModItems.COMPRESSED_TIN.get());
+
+        basicItem(ModItems.SENSOR_LENS.get());
     }
 }

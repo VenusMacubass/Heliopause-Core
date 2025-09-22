@@ -7,6 +7,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
@@ -32,12 +33,41 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
     protected void generate() {
         dropSelf(ModBlocks.ALUMINIUM_BLOCK.get());
         dropSelf(ModBlocks.RADIOACTIVE_BLOCK.get());
+        dropSelf(ModBlocks.CHEESE_BLOCK.get());
+        dropSelf(ModBlocks.MOON_TURF.get());
+        dropSelf(ModBlocks.MOON_DIRT.get());
+        dropSelf(ModBlocks.TIN_BUILDING_BLOCK.get());
+        dropSelf(ModBlocks.TIN_BLOCK.get());
+        dropSelf(ModBlocks.RAW_TIN_BLOCK.get());
+        dropSelf(ModBlocks.RAW_ALUMINIUM_BLOCK.get());
+        dropSelf(ModBlocks.SILICON_BLOCK.get());
+        dropSelf(ModBlocks.MOON_DUNGEON_BRICKS.get());
+        dropSelf(ModBlocks.MOON_COBBLESTONE.get());
+        dropSelf(ModBlocks.MARS_DUNGEON_BRICKS.get());
+        dropSelf(ModBlocks.MARS_COBBLESTONE.get());
+
+        dropOther(ModBlocks.MOON_ROCK.get(), ModBlocks.MOON_COBBLESTONE.get());
+        dropOther(ModBlocks.MARS_ROCK.get(), ModBlocks.MARS_COBBLESTONE.get());
 
         add(ModBlocks.ALUMINIUM_ORE.get(),
                 block -> createOreDrop(ModBlocks.ALUMINIUM_ORE.get(), ModItems.ALUMINIUM_INGOT.get()));
 
         add(ModBlocks.RADIOACTIVE_BLOCK.get(),
                 block -> createMultipleOreDrops(ModBlocks.RADIOACTIVE_BLOCK.get(), ModItems.RADIOACTIVE_CORE.get(), 1,2));
+
+        add(ModBlocks.TIN_ORE.get(),
+                block -> createOreDrop(ModBlocks.TIN_ORE.get(), ModItems.RAW_TIN.get()));
+
+        add(ModBlocks.SILICON_ORE.get(),
+                block -> createOreDrop(ModBlocks.SILICON_ORE.get(), ModItems.RAW_SILICON.get()));
+
+        add(ModBlocks.MOON_TIN_ORE.get(),
+                block -> createMultipleOreDrops(ModBlocks.MOON_TIN_ORE.get(), ModItems.RAW_TIN.get(), 1,5));
+
+        add(ModBlocks.MOON_COPPER_ORE.get(),
+                block -> createMultipleOreDrops(ModBlocks.MOON_COPPER_ORE.get(), Items.RAW_COPPER,1,5));
+
+
     }
 
     protected LootTable.Builder createMultipleOreDrops(Block block, Item item, float minDrops, float maxDrops) {
