@@ -36,7 +36,14 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.MOON_DUNGEON_BRICKS.get())
                 .add(ModBlocks.MARS_DUNGEON_BRICKS.get())
                 .add(ModBlocks.MARS_ROCK.get())
-                .add(ModBlocks.MARS_COBBLESTONE.get());
+                .add(ModBlocks.MARS_COBBLESTONE.get())
+                .add(ModBlocks.TIN_BUILDING_SLAB.get())
+                .add(ModBlocks.MOON_ROCK_SLAB.get())
+                .add(ModBlocks.MOON_DUNGEON_BRICK_SLAB.get())
+                .add(ModBlocks.MARS_COBBLESTONE_WALL.get())
+                .add(ModBlocks.MARS_DUNGEON_BRICK_WALL.get())
+                .add(ModBlocks.MARS_COBBLESTONE_SLAB.get())
+                .add(ModBlocks.MARS_DUNGEON_BRICK_SLAB.get());
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(ModBlocks.MOON_DIRT.get());
@@ -52,5 +59,12 @@ public class ModBlockTagProvider extends BlockTagsProvider {
 
         tag(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(ModBlocks.RADIOACTIVE_BLOCK.get());
+
+        tag(BlockTags.WALLS)
+                .add(ModBlocks.TIN_BUILDING_WALL.get())
+                .add(ModBlocks.MOON_ROCK_WALL.get())
+                .add(ModBlocks.MOON_DUNGEON_BRICK_WALL.get())
+                .add(ModBlocks.MARS_COBBLESTONE_WALL.get())
+                .add(ModBlocks.MARS_DUNGEON_BRICK_WALL.get());
     }
 }

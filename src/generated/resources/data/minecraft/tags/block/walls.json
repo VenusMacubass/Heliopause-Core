@@ -1,0 +1,9 @@
+{
+  "values": [
+    "galacticraftcore:gcc_block_tin_building_wall",
+    "galacticraftcore:gcc_block_moon_rock_wall",
+    "galacticraftcore:gcc_block_moon_dungeon_brick_wall",
+    "galacticraftcore:gcc_block_mars_cobblestone_wall",
+    "galacticraftcore:gcc_block_mars_dungeon_brick_wall"
+  ]
+}

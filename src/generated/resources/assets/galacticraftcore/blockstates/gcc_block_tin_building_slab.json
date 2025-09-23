@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "galacticraftcore:block/gcc_block_tin_building_slab"
+    },
+    "type=double": {
+      "model": "galacticraftcore:block/gcc_block_tin_building_block"
+    },
+    "type=top": {
+      "model": "galacticraftcore:block/gcc_block_tin_building_slab_top"
+    }
+  }
+}

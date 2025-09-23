@@ -46,6 +46,15 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.MARS_DUNGEON_BRICKS.get());
         dropSelf(ModBlocks.MARS_COBBLESTONE.get());
 
+        dropSelf(ModBlocks.TIN_BUILDING_WALL.get());
+        dropSelf(ModBlocks.MOON_ROCK_WALL.get());
+        dropSelf(ModBlocks.MOON_DUNGEON_BRICK_WALL.get());
+        dropSelf(ModBlocks.MARS_COBBLESTONE_WALL.get());
+        dropSelf(ModBlocks.MARS_DUNGEON_BRICK_WALL.get());
+        dropSelf(ModBlocks.TIN_BUILDING_STAIRS.get());
+        dropSelf(ModBlocks.MOON_ROCK_STAIRS.get());
+        dropSelf(ModBlocks.MOON_DUNGEON_BRICK_STAIRS.get());
+
         dropOther(ModBlocks.MOON_ROCK.get(), ModBlocks.MOON_COBBLESTONE.get());
         dropOther(ModBlocks.MARS_ROCK.get(), ModBlocks.MARS_COBBLESTONE.get());
 
@@ -67,6 +76,11 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         add(ModBlocks.MOON_COPPER_ORE.get(),
                 block -> createMultipleOreDrops(ModBlocks.MOON_COPPER_ORE.get(), Items.RAW_COPPER,1,5));
 
+        add(ModBlocks.TIN_BUILDING_SLAB.get(), block -> createSlabItemTable(ModBlocks.TIN_BUILDING_SLAB.get()));
+        add(ModBlocks.MOON_ROCK_SLAB.get(), block -> createSlabItemTable(ModBlocks.MOON_ROCK_SLAB.get()));
+        add(ModBlocks.MOON_DUNGEON_BRICK_SLAB.get(), block -> createSlabItemTable(ModBlocks.MOON_DUNGEON_BRICK_SLAB.get()));
+        add(ModBlocks.MARS_COBBLESTONE_SLAB.get(), block -> createSlabItemTable(ModBlocks.MARS_COBBLESTONE_SLAB.get()));
+        add(ModBlocks.MARS_DUNGEON_BRICK_SLAB.get(), block -> createSlabItemTable(ModBlocks.MARS_DUNGEON_BRICK_SLAB.get()));
 
     }
 

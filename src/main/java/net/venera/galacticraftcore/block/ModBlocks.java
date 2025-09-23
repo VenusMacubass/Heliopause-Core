@@ -3,10 +3,7 @@ package net.venera.galacticraftcore.block;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DropExperienceBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
@@ -82,6 +79,44 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> MARS_COBBLESTONE = registerBlock("gcc_block_mars_cobblestone",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops()));
+
+    public static final DeferredBlock<WallBlock> TIN_BUILDING_WALL = registerBlock("gcc_block_tin_building_wall",
+            ()-> new WallBlock(BlockBehaviour.Properties.of().strength(4f)));
+
+    public static final DeferredBlock<WallBlock> MOON_ROCK_WALL = registerBlock("gcc_block_moon_rock_wall",
+            ()-> new WallBlock(BlockBehaviour.Properties.of().strength(4f)));
+
+    public static final DeferredBlock<WallBlock> MOON_DUNGEON_BRICK_WALL = registerBlock("gcc_block_moon_dungeon_brick_wall",
+            ()-> new WallBlock(BlockBehaviour.Properties.of().strength(4f)));
+
+    public static final DeferredBlock<StairBlock> TIN_BUILDING_STAIRS = registerBlock("gcc_block_tin_building_stairs",
+            ()-> new StairBlock(ModBlocks.TIN_BUILDING_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.of().strength(4f)));
+
+    public static final DeferredBlock<StairBlock> MOON_ROCK_STAIRS = registerBlock("gcc_block_moon_rock_stairs",
+            ()-> new StairBlock(ModBlocks.MOON_ROCK.get().defaultBlockState(), BlockBehaviour.Properties.of().strength(4f)));
+
+    public static final DeferredBlock<StairBlock> MOON_DUNGEON_BRICK_STAIRS = registerBlock("gcc_block_moon_dungeon_brick_stairs",
+            ()-> new StairBlock(ModBlocks.MOON_DUNGEON_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.of().strength(4f)));
+
+    public static final DeferredBlock<SlabBlock> TIN_BUILDING_SLAB = registerBlock("gcc_block_tin_building_slab",
+            ()-> new SlabBlock(BlockBehaviour.Properties.of().strength(5f)));
+
+    public static final DeferredBlock<SlabBlock> MOON_ROCK_SLAB = registerBlock("gcc_block_moon_rock_slab",
+            ()-> new SlabBlock(BlockBehaviour.Properties.of().strength(4f)));
+
+    public static final DeferredBlock<SlabBlock> MOON_DUNGEON_BRICK_SLAB = registerBlock("gcc_block_moon_dungeon_brick_slab",
+            ()-> new SlabBlock(BlockBehaviour.Properties.of().strength(4f)));
+
+    public static final DeferredBlock<WallBlock> MARS_COBBLESTONE_WALL = registerBlock("gcc_block_mars_cobblestone_wall",
+            ()-> new WallBlock(BlockBehaviour.Properties.of().strength(4f)));
+    public static final DeferredBlock<WallBlock> MARS_DUNGEON_BRICK_WALL = registerBlock("gcc_block_mars_dungeon_brick_wall",
+            ()-> new WallBlock(BlockBehaviour.Properties.of().strength(5f)));
+    public static final DeferredBlock<SlabBlock> MARS_COBBLESTONE_SLAB = registerBlock("gcc_block_mars_cobblestone_slab",
+            ()-> new SlabBlock(BlockBehaviour.Properties.of().strength(4f)));
+    public static final DeferredBlock<SlabBlock> MARS_DUNGEON_BRICK_SLAB = registerBlock("gcc_block_mars_dungeon_brick_slab",
+            ()-> new SlabBlock(BlockBehaviour.Properties.of().strength(5f)));
+
+
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, java.util.function.Supplier<T> block){
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

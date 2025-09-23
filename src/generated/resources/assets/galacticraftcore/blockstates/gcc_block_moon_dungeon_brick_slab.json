@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "galacticraftcore:block/gcc_block_moon_dungeon_brick_slab"
+    },
+    "type=double": {
+      "model": "galacticraftcore:block/gcc_block_moon_dungeon_bricks"
+    },
+    "type=top": {
+      "model": "galacticraftcore:block/gcc_block_moon_dungeon_brick_slab_top"
+    }
+  }
+}

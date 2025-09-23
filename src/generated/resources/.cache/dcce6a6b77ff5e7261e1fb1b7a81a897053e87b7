@@ -1,6 +1,7 @@
-// 1.21.1	2025-09-22T17:44:02.2189517	Tags for minecraft:block mod id galacticraftcore
-d519794b01fad656f3a6addf17b5b5d613c5df3c data/minecraft/tags/block/mineable/pickaxe.json
+// 1.21.1	2025-09-23T09:49:39.8722228	Tags for minecraft:block mod id galacticraftcore
+fcad529ec7a298111d553883b7f6093b2285c59d data/minecraft/tags/block/mineable/pickaxe.json
 5219d6f438471e4cbbd43f1879a1191e72b6451e data/minecraft/tags/block/mineable/shovel.json
 f7053498e1152d53b117a63fbf01cd1a90ceb62a data/minecraft/tags/block/needs_diamond_tool.json
 27bb842487e9853c8d2cec0ab6b290ab2a8edd07 data/minecraft/tags/block/needs_iron_tool.json
 371ee7c360c0a07f702ba98a671dbee848a9366e data/minecraft/tags/block/needs_stone_tool.json
+60dd341ae0a7ad08b39fb3274010c5da54f02226 data/minecraft/tags/block/walls.json

@@ -17,7 +17,7 @@ public class ModCreativeModeTabs {
 
     public static final Supplier<CreativeModeTab> GALACTICRAFT_CORE_ITEMS = CREATIVE_MODE_TAB.register("galacticraftcore_items",
             () -> CreativeModeTab.builder()
-                    .icon(() -> new ItemStack(ModItems.IRIDIUM_INGOT.get()))
+                    .icon(() -> new ItemStack(ModItems.RADIOACTIVE_CORE.get()))
                     .title(Component.translatable("creativetab.galacticraftcore_items"))
                     .displayItems((parameters, output) -> {
                         output.accept(ModItems.IRIDIUM_INGOT.get());
@@ -48,7 +48,7 @@ public class ModCreativeModeTabs {
 
     public static final Supplier<CreativeModeTab> GALACTICRAFT_CORE_BLOCKS = CREATIVE_MODE_TAB.register("galacticraftcore_blocks",
             () -> CreativeModeTab.builder()
-                    .icon(() -> new ItemStack(ModBlocks.ALUMINIUM_ORE.get()))
+                    .icon(() -> new ItemStack(ModBlocks.RADIOACTIVE_BLOCK.get()))
                     .title(Component.translatable("creativetab.galacticraftcore_blocks"))
                     .withTabsBefore(ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "galacticraftcore_items"))
                     .displayItems((parameters, output) -> {
@@ -73,6 +73,19 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.MARS_DUNGEON_BRICKS.get());
                         output.accept(ModBlocks.MARS_ROCK.get());
                         output.accept(ModBlocks.MARS_COBBLESTONE.get());
+                        output.accept(ModBlocks.TIN_BUILDING_WALL.get());
+                        output.accept(ModBlocks.MOON_ROCK_WALL.get());
+                        output.accept(ModBlocks.MOON_DUNGEON_BRICK_WALL.get());
+                        output.accept(ModBlocks.TIN_BUILDING_STAIRS.get());
+                        output.accept(ModBlocks.MOON_ROCK_STAIRS.get());
+                        output.accept(ModBlocks.MOON_DUNGEON_BRICK_STAIRS.get());
+                        output.accept(ModBlocks.TIN_BUILDING_SLAB.get());
+                        output.accept(ModBlocks.MOON_ROCK_SLAB.get());
+                        output.accept(ModBlocks.MOON_DUNGEON_BRICK_SLAB.get());
+                        output.accept(ModBlocks.MARS_COBBLESTONE_WALL.get());
+                        output.accept(ModBlocks.MARS_DUNGEON_BRICK_WALL.get());
+                        output.accept(ModBlocks.MARS_COBBLESTONE_SLAB.get());
+                        output.accept(ModBlocks.MARS_DUNGEON_BRICK_SLAB.get());
 
                     })
                     .build()
