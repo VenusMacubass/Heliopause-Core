@@ -1,16 +1,14 @@
 package net.venera.galacticraftcore.block;
 
-import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.galacticraftcore.GalacticraftCore;
+import net.venera.galacticraftcore.block.custom.ArcLamp;
 import net.venera.galacticraftcore.block.custom.RadioactiveBlock;
 import net.venera.galacticraftcore.item.ModItems;
 
@@ -116,7 +114,8 @@ public class ModBlocks {
     public static final DeferredBlock<SlabBlock> MARS_DUNGEON_BRICK_SLAB = registerBlock("gcc_block_mars_dungeon_brick_slab",
             ()-> new SlabBlock(BlockBehaviour.Properties.of().strength(5f)));
 
-
+    public static final DeferredBlock<Block> ARC_LAMP = registerBlock("arclamp",
+            () -> new ArcLamp(BlockBehaviour.Properties.of().lightLevel(state -> state.getValue(ArcLamp.CLICKED) ? 15:0).noOcclusion().strength(2f)));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, java.util.function.Supplier<T> block){
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

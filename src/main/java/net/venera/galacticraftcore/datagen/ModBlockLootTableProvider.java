@@ -45,6 +45,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.MOON_COBBLESTONE.get());
         dropSelf(ModBlocks.MARS_DUNGEON_BRICKS.get());
         dropSelf(ModBlocks.MARS_COBBLESTONE.get());
+        dropSelf(ModBlocks.ARC_LAMP.get());
 
         dropSelf(ModBlocks.TIN_BUILDING_WALL.get());
         dropSelf(ModBlocks.MOON_ROCK_WALL.get());

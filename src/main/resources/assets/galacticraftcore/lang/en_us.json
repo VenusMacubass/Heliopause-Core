@@ -76,5 +76,6 @@
   "block.galacticraftcore.gcc_block_mars_cobblestone_wall": "Mars Cobblestone Wall",
   "block.galacticraftcore.gcc_block_mars_dungeon_brick_wall": "Mars Dungeon Brick Wall",
   "block.galacticraftcore.gcc_block_mars_cobblestone_slab": "Mars Cobblestone Slab",
-  "block.galacticraftcore.gcc_block_mars_dungeon_brick_slab": "Mars Dungeon Brick Slab"
+  "block.galacticraftcore.gcc_block_mars_dungeon_brick_slab": "Mars Dungeon Brick Slab",
+  "block.galacticraftcore.arclamp": "Arc Lamp"
 }

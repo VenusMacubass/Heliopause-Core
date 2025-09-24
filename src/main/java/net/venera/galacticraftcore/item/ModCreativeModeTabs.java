@@ -86,6 +86,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.MARS_DUNGEON_BRICK_WALL.get());
                         output.accept(ModBlocks.MARS_COBBLESTONE_SLAB.get());
                         output.accept(ModBlocks.MARS_DUNGEON_BRICK_SLAB.get());
+                        output.accept(ModBlocks.ARC_LAMP.get());
 
                     })
                     .build()
