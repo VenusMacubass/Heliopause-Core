@@ -42,6 +42,12 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.COMPRESSED_STEEL.get());
                         output.accept(ModItems.COMPRESSED_TIN.get());
                         output.accept(ModItems.SENSOR_LENS.get());
+                        output.accept(ModItems.STEEL_SWORD.get());
+                        output.accept(ModItems.STEEL_AXE.get());
+                        output.accept(ModItems.STEEL_PICKAXE.get());
+                        output.accept(ModItems.STEEL_SHOVEL.get());
+                        output.accept(ModItems.STEEL_HOE.get());
+
                     })
                     .build()
     );

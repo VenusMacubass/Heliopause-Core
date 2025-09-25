@@ -1,4 +1,6 @@
-// 1.21.1	2025-09-23T09:49:39.8722228	Tags for minecraft:block mod id galacticraftcore
+// 1.21.1	2025-09-25T11:28:55.8484426	Tags for minecraft:block mod id galacticraftcore
+9b07c9402611dd7f5de01db696b943ca5a2000bb data/galacticraftcore/tags/block/incorrect_for_steel_tool.json
+32b13946c4cd1f944b029659ccce5fcb2adad4ff data/galacticraftcore/tags/block/needs_steel_tools.json
 fcad529ec7a298111d553883b7f6093b2285c59d data/minecraft/tags/block/mineable/pickaxe.json
 5219d6f438471e4cbbd43f1879a1191e72b6451e data/minecraft/tags/block/mineable/shovel.json
 f7053498e1152d53b117a63fbf01cd1a90ceb62a data/minecraft/tags/block/needs_diamond_tool.json

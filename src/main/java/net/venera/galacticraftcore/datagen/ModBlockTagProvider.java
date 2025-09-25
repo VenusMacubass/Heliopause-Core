@@ -7,6 +7,7 @@ import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.util.ModTags;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
@@ -57,6 +58,9 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.ALUMINIUM_BLOCK.get())
                 .add(ModBlocks.SILICON_ORE.get());
 
+        tag(ModTags.Blocks.NEEDS_STEEL_TOOLS)
+                .addTag(BlockTags.NEEDS_IRON_TOOL);
+
         tag(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(ModBlocks.RADIOACTIVE_BLOCK.get());
 
@@ -66,5 +70,8 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.MOON_DUNGEON_BRICK_WALL.get())
                 .add(ModBlocks.MARS_COBBLESTONE_WALL.get())
                 .add(ModBlocks.MARS_DUNGEON_BRICK_WALL.get());
+
+        tag(ModTags.Blocks.INCORRECT_FOR_STEEL_TOOL).addTag(BlockTags.INCORRECT_FOR_IRON_TOOL)
+                .remove(ModTags.Blocks.NEEDS_STEEL_TOOLS);
     }
 }

@@ -3,6 +3,7 @@ package net.venera.galacticraftcore.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
@@ -29,6 +30,19 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('A', ModItems.ALUMINIUM_INGOT.get())
                 .unlockedBy("has_aluminium_ingot", has(ModItems.ALUMINIUM_INGOT.get()))
                 .save(recipeOutput, "aluminium_block_from_ingots");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.STEEL_AXE.get())
+                .pattern("CCC")
+                .pattern(" S ")
+                .pattern(" S ")
+                .define('C', ModItems.COMPRESSED_STEEL.get())
+                .define('S', Items.STICK)
+                .unlockedBy("has_compressed_steel", has(ModItems.COMPRESSED_STEEL.get()))
+                .save(recipeOutput, "steel_pickaxe_crafting");
+
+
+
+
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.ALUMINIUM_INGOT.get(), 9)
                 .requires(ModBlocks.ALUMINIUM_BLOCK.get(), 1)

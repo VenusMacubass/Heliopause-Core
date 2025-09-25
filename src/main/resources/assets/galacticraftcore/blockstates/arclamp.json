@@ -1,18 +1,13 @@
 {
   "variants": {
-    "facing=north,clicked=false": { "model": "galacticraftcore:block/arclamp_off_model", "y": 270 },
-    "facing=south,clicked=false": { "model": "galacticraftcore:block/arclamp_off_model", "y": 90 },
-    "facing=west,clicked=false": { "model": "galacticraftcore:block/arclamp_off_model", "y": 180 },
-    "facing=east,clicked=false": { "model": "galacticraftcore:block/arclamp_off_model", "y": 0 },
+    "facing=east,clicked=false": { "model": "galacticraftcore:block/arclamp_off_model", "x": 0, "y": 0, "z": 0},
+    "facing=south,clicked=false": { "model": "galacticraftcore:block/arclamp_off_model", "x": 0, "y": 90, "z": 0},
+    "facing=west,clicked=false": { "model": "galacticraftcore:block/arclamp_off_model", "x": 0, "y": 180, "z": 0},
+    "facing=north,clicked=false": { "model": "galacticraftcore:block/arclamp_off_model", "x": 0, "y": 270,"z": 0},
 
-    "facing=north,clicked=true": { "model": "galacticraftcore:block/arclamp_on_model", "y": 270 },
-    "facing=south,clicked=true": { "model": "galacticraftcore:block/arclamp_on_model", "y": 90 },
-    "facing=west,clicked=true": { "model": "galacticraftcore:block/arclamp_on_model", "y": 180 },
-    "facing=east,clicked=true": { "model": "galacticraftcore:block/arclamp_on_model", "y": 0 },
-
-    "facing=up,clicked=false": { "model": "galacticraftcore:block/arclamp_off_model", "z": 180 },
-    "facing=down,clicked=false": { "model": "galacticraftcore:block/arclamp_off_model", "z": 0 },
-    "facing=up,clicked=true": { "model": "galacticraftcore:block/arclamp_on_model", "z": 180 },
-    "facing=down,clicked=true": { "model": "galacticraftcore:block/arclamp_on_model", "z": 0 }
+    "facing=east,clicked=true": { "model": "galacticraftcore:block/arclamp_on_model", "x": 0, "y": 0, "z": 0},
+    "facing=south,clicked=true": { "model": "galacticraftcore:block/arclamp_on_model", "x": 0, "y": 90, "z": 0},
+    "facing=west,clicked=true": { "model": "galacticraftcore:block/arclamp_on_model", "x": 0, "y": 180, "z": 0},
+    "facing=north,clicked=true": { "model": "galacticraftcore:block/arclamp_on_model", "x": 0, "y": 270, "z": 0}
   }
 }

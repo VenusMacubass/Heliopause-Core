@@ -37,6 +37,12 @@
 
   "item.galacticraftcore.gcc_item_sensor_lens": "Sensor Lens",
 
+  "item.galacticraftcore.gcc_item_steel_sword": "Steel Sword",
+  "item.galacticraftcore.gcc_item_steel_axe": "Steel Axe",
+  "item.galacticraftcore.gcc_item_steel_pickaxe": "Steel Pickaxe",
+  "item.galacticraftcore.gcc_item_steel_shovel": "Steel Shovel",
+  "item.galacticraftcore.gcc_item_steel_hoe": "Steel Hoe",
+
 
 
   "block.galacticraftcore.gcc_block_aluminium_ore": "Aluminium Ore",

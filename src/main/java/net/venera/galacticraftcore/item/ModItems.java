@@ -1,9 +1,7 @@
 package net.venera.galacticraftcore.item;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -66,6 +64,38 @@ public class ModItems {
     public static final DeferredItem<Item> COMPRESSED_TIN = ITEMS.register("gcc_item_compressed_tin", () -> new Item(new Item.Properties()));
 
     public static final DeferredItem<Item> SENSOR_LENS = ITEMS.register("gcc_item_sensor_lens", () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<SwordItem> STEEL_SWORD = ITEMS.register("gcc_item_steel_sword", ()-> new SwordItem(ModToolTiers.STEEL, new Item.Properties()
+            .attributes(SwordItem.createAttributes(ModToolTiers.STEEL, 2,-2.4f))));
+
+    public static final DeferredItem<AxeItem> STEEL_AXE = ITEMS.register("gcc_item_steel_axe", ()-> new AxeItem(ModToolTiers.STEEL, new Item.Properties()
+            .attributes(AxeItem.createAttributes(ModToolTiers.STEEL, 5,-3.1f))));
+
+    public static final DeferredItem<PickaxeItem> STEEL_PICKAXE = ITEMS.register("gcc_item_steel_pickaxe", ()-> new PickaxeItem(ModToolTiers.STEEL, new Item.Properties()
+            .attributes(PickaxeItem.createAttributes(ModToolTiers.STEEL, 0f,-2.8f))));
+
+    public static final DeferredItem<ShovelItem> STEEL_SHOVEL = ITEMS.register("gcc_item_steel_shovel", ()-> new ShovelItem(ModToolTiers.STEEL, new Item.Properties()
+            .attributes(ShovelItem.createAttributes(ModToolTiers.STEEL, 0.5f,-3f))));
+
+    public static final DeferredItem<HoeItem> STEEL_HOE = ITEMS.register("gcc_item_steel_hoe", ()-> new HoeItem(ModToolTiers.STEEL, new Item.Properties()
+            .attributes(HoeItem.createAttributes(ModToolTiers.STEEL, -3f,-1f))));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);
