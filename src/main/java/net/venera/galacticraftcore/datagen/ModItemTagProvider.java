@@ -31,5 +31,12 @@ public class ModItemTagProvider extends ItemTagsProvider {
         tag(ItemTags.PICKAXES).add(ModItems.STEEL_PICKAXE.get());
         tag(ItemTags.SHOVELS).add(ModItems.STEEL_SHOVEL.get());
         tag(ItemTags.HOES).add(ModItems.STEEL_HOE.get());
+
+        this.tag(ItemTags.TRIMMABLE_ARMOR)
+                .add(ModItems.STEEL_HELMET.get())
+                .add(ModItems.STEEL_CHESTPLATE.get())
+                .add(ModItems.STEEL_LEGGINGS.get())
+                .add(ModItems.STEEL_BOOTS.get());
+
     }
 }

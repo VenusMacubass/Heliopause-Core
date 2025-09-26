@@ -67,20 +67,30 @@ public class ModItems {
 
     public static final DeferredItem<SwordItem> STEEL_SWORD = ITEMS.register("gcc_item_steel_sword", ()-> new SwordItem(ModToolTiers.STEEL, new Item.Properties()
             .attributes(SwordItem.createAttributes(ModToolTiers.STEEL, 2,-2.4f))));
-
     public static final DeferredItem<AxeItem> STEEL_AXE = ITEMS.register("gcc_item_steel_axe", ()-> new AxeItem(ModToolTiers.STEEL, new Item.Properties()
             .attributes(AxeItem.createAttributes(ModToolTiers.STEEL, 5,-3.1f))));
-
     public static final DeferredItem<PickaxeItem> STEEL_PICKAXE = ITEMS.register("gcc_item_steel_pickaxe", ()-> new PickaxeItem(ModToolTiers.STEEL, new Item.Properties()
             .attributes(PickaxeItem.createAttributes(ModToolTiers.STEEL, 0f,-2.8f))));
-
     public static final DeferredItem<ShovelItem> STEEL_SHOVEL = ITEMS.register("gcc_item_steel_shovel", ()-> new ShovelItem(ModToolTiers.STEEL, new Item.Properties()
             .attributes(ShovelItem.createAttributes(ModToolTiers.STEEL, 0.5f,-3f))));
-
     public static final DeferredItem<HoeItem> STEEL_HOE = ITEMS.register("gcc_item_steel_hoe", ()-> new HoeItem(ModToolTiers.STEEL, new Item.Properties()
             .attributes(HoeItem.createAttributes(ModToolTiers.STEEL, -3f,-1f))));
 
+    public static final DeferredItem<ArmorItem> STEEL_HELMET = ITEMS.register("gcc_item_steel_helmet", () ->
+            new ArmorItem(ModArmorMaterials.STEEL_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(18))));
 
+    public static final DeferredItem<ArmorItem> STEEL_CHESTPLATE = ITEMS.register("gcc_item_steel_chestplate", () ->
+            new ArmorItem(ModArmorMaterials.STEEL_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
+                    new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(18))));
+
+    public static final DeferredItem<ArmorItem> STEEL_LEGGINGS = ITEMS.register("gcc_item_steel_leggings", () ->
+            new ArmorItem(ModArmorMaterials.STEEL_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
+                    new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(18))));
+
+    public static final DeferredItem<ArmorItem> STEEL_BOOTS = ITEMS.register("gcc_item_steel_boots", () ->
+            new ArmorItem(ModArmorMaterials.STEEL_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
+                    new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(18))));
 
 
 
