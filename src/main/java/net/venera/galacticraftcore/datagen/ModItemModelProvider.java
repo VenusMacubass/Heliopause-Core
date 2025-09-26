@@ -64,6 +64,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.RAW_TIN.get());
         basicItem(ModItems.RAW_SILICON.get());
         basicItem(ModItems.TIN_INGOT.get());
+        basicItem(ModItems.RAW_IRIDIUM.get());
+        basicItem(ModItems.LUNAR_SAPPHIRE.get());
 
         basicItem(ModItems.COMPRESSED_ALUMINIUM.get());
         basicItem(ModItems.COMPRESSED_BRONZE.get());

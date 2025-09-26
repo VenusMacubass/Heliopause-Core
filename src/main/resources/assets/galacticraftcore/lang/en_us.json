@@ -26,6 +26,8 @@
   "item.galacticraftcore.gcc_item_raw_tin": "Raw Tin",
   "item.galacticraftcore.gcc_item_raw_silicon": "Raw Silicon",
   "item.galacticraftcore.gcc_item_tin_ingot": "Tin Ingot",
+  "item.galacticraftcore.gcc_item_raw_iridium": "Raw Iridium",
+  "item.galacticraftcore.gcc_item_lunar_sapphire": "Lunar Sapphire",
 
   "item.galacticraftcore.gcc_item_compressed_aluminium": "Compressed Aluminium",
   "item.galacticraftcore.gcc_item_compressed_bronze": "Compressed Bronze",
@@ -52,6 +54,8 @@
   "block.galacticraftcore.gcc_block_aluminium_ore": "Aluminium Ore",
   "block.galacticraftcore.gcc_block_aluminium_block": "Block of Aluminium",
   "block.galacticraftcore.gcc_block_radioactive_block": "Radioactive Block",
+  "block.galacticraftcore.gcc_block_iridium_block": "Block of Iridium",
+  "block.galacticraftcore.gcc_block_sapphire_ore": "Sapphire Ore",
   "block.galacticraftcore.gcc_block_cheese_block": "Cheese Block",
 
   "block.galacticraftcore.gcc_block_moon_turf": "Moon Turf",

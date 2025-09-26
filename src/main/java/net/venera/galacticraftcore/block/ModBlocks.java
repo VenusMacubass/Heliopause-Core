@@ -117,6 +117,11 @@ public class ModBlocks {
     public static final DeferredBlock<Block> ARC_LAMP = registerBlock("arclamp",
             () -> new ArcLamp(BlockBehaviour.Properties.of().lightLevel(state -> state.getValue(ArcLamp.CLICKED) ? 15:0).noOcclusion().strength(2f)));
 
+    public static final DeferredBlock<Block> IRIDIUM_BLOCK = registerBlock("gcc_block_iridium_block",
+            () -> new Block(BlockBehaviour.Properties.of().strength(8f).requiresCorrectToolForDrops()));
+    public static final DeferredBlock<Block> SAPPHIRE_ORE = registerBlock("gcc_block_sapphire_ore",
+            () -> new Block(BlockBehaviour.Properties.of().strength(4f).requiresCorrectToolForDrops()));
+
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, java.util.function.Supplier<T> block){
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

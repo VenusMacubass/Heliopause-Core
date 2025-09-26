@@ -18,7 +18,7 @@ import net.minecraft.world.phys.AABB;
 import java.util.List;
 
 public class RadioactiveBlock extends Block {
-    private static final double RADIUS = 6.0;
+    private static final double RADIUS = 9.0;
     public RadioactiveBlock(Properties properties) {
         super(properties);
     }

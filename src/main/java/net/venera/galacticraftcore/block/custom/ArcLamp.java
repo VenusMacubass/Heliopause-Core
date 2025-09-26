@@ -47,7 +47,7 @@ public class ArcLamp extends Block {
         BlockPos blockpos = context.getClickedPos();
         Player player = context.getPlayer();
 
-        if (context.getClickedFace().getAxis() .isHorizontal()) {
+        if (context.getClickedFace().getAxis().isHorizontal()) {
             Direction facingHorizontal = context.getHorizontalDirection();
             player.displayClientMessage(Component.literal("We are in isHorizontal. Clicked Facing " + facingHorizontal.getOpposite().toString()), true);
             return this.defaultBlockState().setValue(FACING, facingHorizontal);
@@ -56,8 +56,6 @@ public class ArcLamp extends Block {
             Direction facingHorizontal = context.getHorizontalDirection();
             player.displayClientMessage(Component.literal("We are in isnotHorizontal. Clicked Facing " + facingHorizontal.getOpposite().toString()), true);
             return this.defaultBlockState().setValue(FACING, facingHorizontal);
-
-
         }
     }
 }

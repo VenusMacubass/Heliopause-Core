@@ -44,7 +44,9 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.MARS_COBBLESTONE_WALL.get())
                 .add(ModBlocks.MARS_DUNGEON_BRICK_WALL.get())
                 .add(ModBlocks.MARS_COBBLESTONE_SLAB.get())
-                .add(ModBlocks.MARS_DUNGEON_BRICK_SLAB.get());
+                .add(ModBlocks.MARS_DUNGEON_BRICK_SLAB.get())
+                .add(ModBlocks.IRIDIUM_BLOCK.get())
+                .add(ModBlocks.SAPPHIRE_ORE.get());
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(ModBlocks.MOON_DIRT.get());
@@ -59,7 +61,8 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.SILICON_ORE.get());
 
         tag(ModTags.Blocks.NEEDS_STEEL_TOOLS)
-                .addTag(BlockTags.NEEDS_IRON_TOOL);
+                .addTag(BlockTags.NEEDS_IRON_TOOL)
+                .add(ModBlocks.SAPPHIRE_ORE.get());
 
         tag(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(ModBlocks.RADIOACTIVE_BLOCK.get());

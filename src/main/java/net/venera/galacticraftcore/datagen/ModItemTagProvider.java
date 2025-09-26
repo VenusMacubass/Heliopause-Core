@@ -38,5 +38,6 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .add(ModItems.STEEL_LEGGINGS.get())
                 .add(ModItems.STEEL_BOOTS.get());
 
+
     }
 }

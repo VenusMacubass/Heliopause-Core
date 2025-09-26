@@ -55,6 +55,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.TIN_BUILDING_STAIRS.get());
         dropSelf(ModBlocks.MOON_ROCK_STAIRS.get());
         dropSelf(ModBlocks.MOON_DUNGEON_BRICK_STAIRS.get());
+        dropSelf(ModBlocks.IRIDIUM_BLOCK.get());
 
         dropOther(ModBlocks.MOON_ROCK.get(), ModBlocks.MOON_COBBLESTONE.get());
         dropOther(ModBlocks.MARS_ROCK.get(), ModBlocks.MARS_COBBLESTONE.get());
@@ -76,6 +77,9 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
 
         add(ModBlocks.MOON_COPPER_ORE.get(),
                 block -> createMultipleOreDrops(ModBlocks.MOON_COPPER_ORE.get(), Items.RAW_COPPER,1,5));
+
+        add(ModBlocks.SAPPHIRE_ORE.get(),
+                block -> createOreDrop(ModBlocks.SAPPHIRE_ORE.get(), ModItems.LUNAR_SAPPHIRE.get()));
 
         add(ModBlocks.TIN_BUILDING_SLAB.get(), block -> createSlabItemTable(ModBlocks.TIN_BUILDING_SLAB.get()));
         add(ModBlocks.MOON_ROCK_SLAB.get(), block -> createSlabItemTable(ModBlocks.MOON_ROCK_SLAB.get()));

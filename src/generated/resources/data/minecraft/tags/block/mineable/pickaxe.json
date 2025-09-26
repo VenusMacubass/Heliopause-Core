@@ -24,6 +24,8 @@
     "galacticraftcore:gcc_block_mars_cobblestone_wall",
     "galacticraftcore:gcc_block_mars_dungeon_brick_wall",
     "galacticraftcore:gcc_block_mars_cobblestone_slab",
-    "galacticraftcore:gcc_block_mars_dungeon_brick_slab"
+    "galacticraftcore:gcc_block_mars_dungeon_brick_slab",
+    "galacticraftcore:gcc_block_iridium_block",
+    "galacticraftcore:gcc_block_sapphire_ore"
   ]
 }

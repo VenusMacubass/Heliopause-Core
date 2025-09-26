@@ -79,19 +79,22 @@ public class ModItems {
     public static final DeferredItem<ArmorItem> STEEL_HELMET = ITEMS.register("gcc_item_steel_helmet", () ->
             new ArmorItem(ModArmorMaterials.STEEL_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(18))));
-
     public static final DeferredItem<ArmorItem> STEEL_CHESTPLATE = ITEMS.register("gcc_item_steel_chestplate", () ->
             new ArmorItem(ModArmorMaterials.STEEL_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
                     new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(18))));
-
     public static final DeferredItem<ArmorItem> STEEL_LEGGINGS = ITEMS.register("gcc_item_steel_leggings", () ->
             new ArmorItem(ModArmorMaterials.STEEL_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
                     new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(18))));
-
     public static final DeferredItem<ArmorItem> STEEL_BOOTS = ITEMS.register("gcc_item_steel_boots", () ->
             new ArmorItem(ModArmorMaterials.STEEL_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
                     new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(18))));
 
+
+    public static final DeferredItem<Item> RAW_IRIDIUM = ITEMS.register("gcc_item_raw_iridium",
+            () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> LUNAR_SAPPHIRE = ITEMS.register("gcc_item_lunar_sapphire",
+            () -> new Item(new Item.Properties()));
 
 
 
