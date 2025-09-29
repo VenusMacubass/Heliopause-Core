@@ -1,0 +1,41 @@
+package net.venera.galacticraftcore.fluid;
+
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.WaterFluid;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.common.SoundActions;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.venera.galacticraftcore.GalacticraftCore;
+import net.venera.galacticraftcore.fluid.custom.CrudeOil;
+import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3f;
+
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+public class ModFluidTypes extends FluidType{
+    // The deferred register for FluidTypes
+    public static final DeferredRegister<FluidType> FLUID_TYPES =
+            DeferredRegister.create(NeoForgeRegistries.FLUID_TYPES, GalacticraftCore.MOD_ID);
+
+    public static final DeferredHolder<FluidType, FluidType> CRUDE_OIL_TYPE =
+            FLUID_TYPES.register("crude_oil", () -> CrudeOil.FLUID_TYPE);
+
+
+
+    public ModFluidTypes(Properties properties) {
+        super(properties);
+    }
+    public static void register(IEventBus eventBus) {
+        FLUID_TYPES.register(eventBus);
+    }
+}

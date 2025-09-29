@@ -2,12 +2,15 @@ package net.venera.galacticraftcore.item;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.galacticraftcore.GalacticraftCore;
+import net.venera.galacticraftcore.fluid.ModFluids;
 import net.venera.galacticraftcore.item.custom.FuelItem;
 import net.venera.galacticraftcore.item.custom.StandardWrench;
+import net.venera.galacticraftcore.item.custom.TempSword;
 
 import java.util.List;
 
@@ -15,13 +18,9 @@ public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(GalacticraftCore.MOD_ID);
 
     public static final DeferredItem<Item> IRIDIUM_INGOT = ITEMS.register("gcc_item_iridium_ingot", () -> new Item(new Item.Properties()));
-
     public static final DeferredItem<Item> ALUMINIUM_INGOT = ITEMS.register("gcc_item_aluminium_ingot", () -> new Item(new Item.Properties()));
-
     public static final DeferredItem<Item> STANDARD_WRENCH = ITEMS.register("gcc_item_standard_wrench", () -> new StandardWrench(new Item.Properties().durability(125)));
-
     public static final DeferredItem<Item> COPPER_CANISTER = ITEMS.register("gcc_item_copper_canister", () -> new Item(new Item.Properties()));
-
     public static final DeferredItem<Item> TIN_CANISTER = ITEMS.register("gcc_item_tin_canister", () -> new Item(new Item.Properties()));
 
     public static final DeferredItem<Item> DEHYDRATED_APPLE = ITEMS.register("gcc_item_dehydrated_apple",
@@ -34,13 +33,10 @@ public class ModItems {
                 }
             }
             );
-
     public static final DeferredItem<Item> DEHYDRATED_CARROT = ITEMS.register("gcc_item_dehydrated_carrot",
             () -> new Item(new Item.Properties().food(ModFoodProperties.DEHYDRATED_FOOD)));
-
     public static final DeferredItem<Item> DEHYDRATED_POTATO = ITEMS.register("gcc_item_dehydrated_potato",
             () -> new Item(new Item.Properties().food(ModFoodProperties.DEHYDRATED_FOOD)));
-
     public static final DeferredItem<Item> DEHYDRATED_MELON = ITEMS.register("gcc_item_dehydrated_melon",
             () -> new Item(new Item.Properties().food(ModFoodProperties.DEHYDRATED_FOOD)));
 
@@ -48,11 +44,8 @@ public class ModItems {
             () -> new FuelItem(new Item.Properties(), 20000));
 
     public static final DeferredItem<Item> RAW_ALUMINIUM = ITEMS.register("gcc_item_raw_aluminium", () -> new Item(new Item.Properties()));
-
     public static final DeferredItem<Item> RAW_TIN = ITEMS.register("gcc_item_raw_tin", () -> new Item(new Item.Properties()));
-
     public static final DeferredItem<Item> RAW_SILICON= ITEMS.register("gcc_item_raw_silicon", () -> new Item(new Item.Properties()));
-
     public static final DeferredItem<Item> TIN_INGOT = ITEMS.register("gcc_item_tin_ingot", () -> new Item(new Item.Properties()));
 
     public static final DeferredItem<Item> COMPRESSED_ALUMINIUM = ITEMS.register("gcc_item_compressed_aluminium", () -> new Item(new Item.Properties()));
@@ -92,11 +85,14 @@ public class ModItems {
 
     public static final DeferredItem<Item> RAW_IRIDIUM = ITEMS.register("gcc_item_raw_iridium",
             () -> new Item(new Item.Properties()));
-
     public static final DeferredItem<Item> LUNAR_SAPPHIRE = ITEMS.register("gcc_item_lunar_sapphire",
             () -> new Item(new Item.Properties()));
 
+    public static final DeferredItem<BucketItem> CRUDE_OIL_BUCKET = ITEMS.register("gcc_item_crude_oil_bucket",
+            () -> new BucketItem(ModFluids.CRUDE_OIL.get(), (new Item.Properties()).craftRemainder(Items.BUCKET).stacksTo(2)));
 
+    public static final DeferredItem<TempSword> TEMP_SWORD = ITEMS.register("temp_item_claymore", () ->
+            new TempSword(ModToolTiers.STEEL, (new Item.Properties().attributes(ShovelItem.createAttributes(ModToolTiers.STEEL, 12,-3.9f)))));
 
 
 

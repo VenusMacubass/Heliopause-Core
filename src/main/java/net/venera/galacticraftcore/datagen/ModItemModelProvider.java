@@ -76,6 +76,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.COMPRESSED_TIN.get());
 
         basicItem(ModItems.SENSOR_LENS.get());
+        basicItem(ModItems.CRUDE_OIL_BUCKET.get());
 
         wallItem(ModBlocks.TIN_BUILDING_WALL, ModBlocks.TIN_BUILDING_BLOCK);
         wallItem(ModBlocks.MOON_ROCK_WALL, ModBlocks.MOON_ROCK);
@@ -93,6 +94,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(ModItems.STEEL_CHESTPLATE);
         trimmedArmorItem(ModItems.STEEL_LEGGINGS);
         trimmedArmorItem(ModItems.STEEL_BOOTS);
+
+        handheldItem(ModItems.TEMP_SWORD.get());
 
     }
     private void trimmedArmorItem(DeferredItem<ArmorItem> itemDeferredItem) {

@@ -3,6 +3,9 @@ package net.venera.galacticraftcore;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.component.ModDataComponents;
+import net.venera.galacticraftcore.fluid.ModFluidTypes;
+import net.venera.galacticraftcore.fluid.ModFluids;
 import net.venera.galacticraftcore.item.ModCreativeModeTabs;
 import net.venera.galacticraftcore.item.ModItems;
 import org.slf4j.Logger;
@@ -45,6 +48,9 @@ public class GalacticraftCore {
         ModCreativeModeTabs.register(modEventBus);
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModFluids.register(modEventBus);
+        ModFluidTypes.register(modEventBus);
+        ModDataComponents.register(modEventBus);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);

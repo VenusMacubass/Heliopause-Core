@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -14,6 +15,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.venera.galacticraftcore.component.ModDataComponents;
 
 import java.util.List;
 import java.util.Map;
@@ -25,10 +27,16 @@ public class StandardWrench extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
+        Player player = context.getPlayer();
         Level level = context.getLevel();
         Block clickedBlock = level.getBlockState(context.getClickedPos()).getBlock();
         BlockPos blockPos = context.getClickedPos();
         BlockState blockState = level.getBlockState(blockPos);
+
+        context.getItemInHand().set(ModDataComponents.COORDINATES, context.getClickedPos());
+        if(context.getItemInHand().get(ModDataComponents.COORDINATES) != null && context.isSecondaryUseActive()) {
+            player.displayClientMessage(Component.literal("Last block changed at: " + context.getItemInHand().get(ModDataComponents.COORDINATES)), false);
+        }
 
         if (!level.isClientSide) {
             // Try to find a "facing" property on the block
@@ -59,6 +67,7 @@ public class StandardWrench extends Item {
         } else {
             tooltipComponents.add(Component.translatable("tooltip.galacticraftcore.gcc_item_standard_wrench"));
         }
+
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 }

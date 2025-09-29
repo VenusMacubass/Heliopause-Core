@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "galacticraftcore:item/temp_item_claymore"
+  }
+}

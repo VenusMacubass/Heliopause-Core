@@ -65,6 +65,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockItem(ModBlocks.MOON_DUNGEON_BRICK_SLAB);
         blockItem(ModBlocks.MARS_COBBLESTONE_SLAB);
         blockItem(ModBlocks.MARS_DUNGEON_BRICK_SLAB);
+
+        
     }
 
     private void blockWithItem(DeferredBlock<?> deferredBlock) {

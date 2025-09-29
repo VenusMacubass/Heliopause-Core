@@ -53,6 +53,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.STEEL_BOOTS.get());
                         output.accept(ModItems.RAW_IRIDIUM.get());
                         output.accept(ModItems.LUNAR_SAPPHIRE.get());
+                        output.accept(ModItems.TEMP_SWORD.get());
 
                     })
                     .build()
