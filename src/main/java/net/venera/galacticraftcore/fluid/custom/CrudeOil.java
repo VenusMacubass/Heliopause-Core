@@ -8,196 +8,132 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.fluid.ModFluidTypes;
+import net.venera.galacticraftcore.fluid.ModFluids;
 import net.venera.galacticraftcore.item.ModItems;
+import org.jetbrains.annotations.NotNull;
 
-public class CrudeOil {
-    public static final ResourceLocation STILL_TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "oil_still");
-    public static final ResourceLocation FLOW_TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "oil_flow");
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
-    public static final FluidType FLUID_TYPE = new CrudeOilFluidType(
-            FluidType.Properties.create()
-                    .canConvertToSource(false)
-                    .canDrown(true)
-                    .canExtinguish(false)
-                    .canHydrate(false)
-                    .canPushEntity(true)
-                    .canSwim(false)
-                    .fallDistanceModifier(0.5F)
-                    .motionScale(0.002D)
-                    .viscosity(3000)
-                    .density(1200),
-            STILL_TEXTURE,
-            FLOW_TEXTURE,
-            0xFF2F2F2F
-    );
-
-    public static final FlowingFluid SOURCE = new Source();
-    public static final FlowingFluid FLOWING = new Flowing();
-
-    public static class Source extends FlowingFluid{
-
-        public FluidType getFluidType(){
-
-            return FLUID_TYPE;
-        }
-
-        @Override
-        public Fluid getFlowing() {
-            return FLOWING;
-        }
-
-        @Override
-        public Fluid getSource() {
-            return SOURCE;
-        }
-
-        @Override
-        protected boolean canConvertToSource(Level level) {
-            return false;
-        }
-
-        @Override
-        protected void beforeDestroyingBlock(LevelAccessor levelAccessor, BlockPos blockPos, BlockState blockState) {
-
-        }
-
-        @Override
-        protected int getSlopeFindDistance(LevelReader levelReader) {
-            return 3;
-        }
-
-        @Override
-        protected int getDropOff(LevelReader levelReader) {
-            return 3;
-        }
-
-        @Override
-        public Item getBucket() {
-            return ModItems.CRUDE_OIL_BUCKET.get();
-        }
-
-        @Override
-        protected boolean canBeReplacedWith(FluidState fluidState, BlockGetter blockGetter, BlockPos blockPos, Fluid fluid, Direction direction) {
-            return false;
-        }
-
-        @Override
-        public int getTickDelay(LevelReader levelReader) {
-            return 20;
-        }
-
-        @Override
-        protected float getExplosionResistance() {
-            return 2;
-        }
-
-        @Override
-        protected BlockState createLegacyBlock(FluidState fluidState) {
-            return ModBlocks.CRUDE_OIL.get().defaultBlockState();
-        }
-
-        @Override
-        public boolean isSource(FluidState fluidState) {
-            return true;
-        }
-
-        @Override
-        public int getAmount(FluidState fluidState) {
-            return FLUID_STATE_REGISTRY.getId(fluidState);
-        }
-
-        @Override
-        protected void createFluidStateDefinition(StateDefinition.Builder<Fluid, FluidState> builder) {
-            super.createFluidStateDefinition(builder);
-            builder.add(LEVEL);
-        }
+public class CrudeOil extends FlowingFluid {
+    protected CrudeOil() {
+        super();
     }
 
+    @Override
+    public @NotNull Fluid getFlowing() {return ModFluids.FLOWING_CRUDE_OIL.get();}
 
-    public static class Flowing extends FlowingFluid{
+    @Override
+    public @NotNull Fluid getSource() {return ModFluids.CRUDE_OIL.get();}
 
-        public FluidType getFluidType(){
-            return FLUID_TYPE;
-        }
+    @Override
+    protected boolean canConvertToSource(@NotNull Level level) {
+        return false;
+    }
 
-        @Override
-        public Fluid getFlowing() {
-            return null;
-        }
+    @Override
+    protected void beforeDestroyingBlock(@NotNull LevelAccessor levelAccessor, @NotNull BlockPos blockPos, @NotNull BlockState blockState) {
 
-        @Override
-        public Fluid getSource() {
-            return null;
-        }
+    }
 
-        @Override
-        protected boolean canConvertToSource(Level level) {
-            return false;
-        }
+    @Override
+    public Item getBucket() {
+        return ModItems.CRUDE_OIL_BUCKET.get();
+    }
 
-        @Override
-        protected void beforeDestroyingBlock(LevelAccessor levelAccessor, BlockPos blockPos, BlockState blockState) {
+    @Override
+    protected boolean canBeReplacedWith(@NotNull FluidState fluidState, @NotNull BlockGetter blockGetter, @NotNull BlockPos blockPos, @NotNull Fluid fluid, @NotNull Direction direction) {
+        return false;
+    }
 
-        }
+    @Override
+    public int getTickDelay(@NotNull LevelReader levelReader) {
+        return 10;
+    }
 
-        @Override
-        protected int getSlopeFindDistance(LevelReader levelReader) {
-            return 0;
-        }
+    @Override
+    protected float getExplosionResistance() {
+        return 0;
+    }
 
-        @Override
-        protected int getDropOff(LevelReader levelReader) {
-            return 0;
-        }
+    @Override
+    protected @NotNull BlockState createLegacyBlock(@NotNull FluidState state) {
+        return ModBlocks.CRUDE_OIL_BLOCK.get().defaultBlockState().setValue(LiquidBlock.LEVEL, getLegacyLevel(state));
+    }
 
-        @Override
-        public Item getBucket() {
-            return null;
-        }
+    @Override
+    public boolean isSource(@NotNull FluidState fluidState) {
+        return false;
+    }
 
-        @Override
-        protected boolean canBeReplacedWith(FluidState fluidState, BlockGetter blockGetter, BlockPos blockPos, Fluid fluid, Direction direction) {
-            return false;
-        }
+    // Heavier and slower than water
+    @Override
+    protected int getSlopeFindDistance(@NotNull LevelReader level) {
+        return 2; // shorter spread
+    }
 
-        @Override
-        public int getTickDelay(LevelReader levelReader) {
-            return 0;
-        }
+    @Override
+    protected int getDropOff(@NotNull LevelReader level) {
+        return 3;
+    }
 
-        @Override
-        protected float getExplosionResistance() {
-            return 0;
-        }
+    @Override
+    public int getAmount(@NotNull FluidState fluidState) {
+        return 1;
+    }
 
-        @Override
-        protected BlockState createLegacyBlock(FluidState fluidState) {
-            return null;
-        }
+    @Override
+    public @NotNull FluidType getFluidType() {
+        return ModFluidTypes.CRUDE_OIL_TYPE.get();
+    }
 
-        @Override
-        public boolean isSource(FluidState fluidState) {
-            return false;
-        }
+    @Override
+    protected void createFluidStateDefinition(StateDefinition.@NotNull Builder<Fluid, FluidState> builder) {
+        super.createFluidStateDefinition(builder);
+        builder.add(LEVEL);
+    }
 
-        @Override
-        public int getAmount(FluidState fluidState) {
-            return 0;
-        }
-        @Override
-        protected void createFluidStateDefinition(StateDefinition.Builder<Fluid, FluidState> builder) {
-            super.createFluidStateDefinition(builder);
-            builder.add(LEVEL);
-        }
+    public static class Source extends CrudeOil {
+        public Source() { super(); }
+        @Override public boolean isSource(@NotNull FluidState state) { return true; }
+        @Override public int getAmount(@NotNull FluidState state) { return 8; }
+
+        public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
+            consumer.accept(new IClientFluidTypeExtensions() {
+                @Override
+                public ResourceLocation getStillTexture() {
+                    return ModFluidTypes.STILL;
+                }
+                @Override
+                public ResourceLocation getFlowingTexture() {
+                    return ModFluidTypes.FLOW;
+                }
+            });}
+    }
+
+    public static class Flowing extends CrudeOil {
+        public Flowing() { super();}
+        @Override public int getAmount(@NotNull FluidState state) { return state.getValue(LEVEL); }
+        public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
+            consumer.accept(new IClientFluidTypeExtensions() {
+                @Override
+                public ResourceLocation getStillTexture() {
+                    return ModFluidTypes.STILL;
+                }
+                @Override
+                public ResourceLocation getFlowingTexture() {
+                    return ModFluidTypes.FLOW;
+                }
+            });}
     }
 }

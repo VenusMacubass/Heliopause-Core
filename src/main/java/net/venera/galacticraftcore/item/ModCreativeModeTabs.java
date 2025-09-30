@@ -54,6 +54,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.RAW_IRIDIUM.get());
                         output.accept(ModItems.LUNAR_SAPPHIRE.get());
                         output.accept(ModItems.TEMP_SWORD.get());
+                        output.accept(ModItems.CRUDE_OIL_BUCKET.get());
 
                     })
                     .build()

@@ -2,18 +2,28 @@ package net.venera.galacticraftcore;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.LiquidBlockRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Display;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.EventBus;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.registries.IRegistryExtension;
+import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.fluid.ModFluidTypes;
 import net.venera.galacticraftcore.fluid.ModFluids;
 import net.venera.galacticraftcore.fluid.custom.CrudeOil;
 
@@ -30,9 +40,11 @@ public class GalacticraftCoreClient {
     }
 
     @SubscribeEvent
-    static void onClientSetup(FMLClientSetupEvent event) {
+    static void onClientSetup(final FMLClientSetupEvent event) {
         // Some client setup code
         GalacticraftCore.LOGGER.info("HELLO FROM CLIENT SETUP");
         GalacticraftCore.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.CRUDE_OIL.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_CRUDE_OIL.get(), RenderType.translucent());
     }
 }

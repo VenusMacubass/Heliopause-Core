@@ -22,19 +22,22 @@ import org.joml.Vector3f;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class ModFluidTypes extends FluidType{
-    // The deferred register for FluidTypes
-    public static final DeferredRegister<FluidType> FLUID_TYPES =
-            DeferredRegister.create(NeoForgeRegistries.FLUID_TYPES, GalacticraftCore.MOD_ID);
+public class ModFluidTypes {
+    public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.FLUID_TYPES, GalacticraftCore.MOD_ID);
 
-    public static final DeferredHolder<FluidType, FluidType> CRUDE_OIL_TYPE =
-            FLUID_TYPES.register("crude_oil", () -> CrudeOil.FLUID_TYPE);
+    public static final ResourceLocation STILL = ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "block/crude_oil_still");
+    public static final ResourceLocation FLOW = ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "block/crude_oil_flow");
 
+    public static final Supplier<FluidType> CRUDE_OIL_TYPE =
+            FLUID_TYPES.register("crude_oil", () -> new FluidType(FluidType.Properties.create()
+                    .density(1500)
+                    .viscosity(3000)
+                    .temperature(300)
+                    .canDrown(true)
+                    .canSwim(true)
+                    .canExtinguish(true)
+                    .canConvertToSource(false)) {});
 
-
-    public ModFluidTypes(Properties properties) {
-        super(properties);
-    }
     public static void register(IEventBus eventBus) {
         FLUID_TYPES.register(eventBus);
     }
