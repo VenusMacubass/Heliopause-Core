@@ -2,12 +2,16 @@ package net.venera.galacticraftcore;
 
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.venera.galacticraftcore.block.ModBlocks;
 import net.venera.galacticraftcore.component.ModDataComponents;
-import net.venera.galacticraftcore.fluid.ModFluidTypes;
-import net.venera.galacticraftcore.fluid.ModFluids;
+import net.venera.galacticraftcore.handler.MilkHandler;
 import net.venera.galacticraftcore.item.ModCreativeModeTabs;
 import net.venera.galacticraftcore.item.ModItems;
+import net.venera.galacticraftcore.registry.MilkRegistry;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -35,22 +39,32 @@ public class GalacticraftCore {
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
-    public GalacticraftCore(IEventBus modEventBus, ModContainer modContainer) {
-        // Register the commonSetup method for modloading
-        modEventBus.addListener(this::commonSetup);
+    public GalacticraftCore(IEventBus modEventBus, Dist modDist, ModContainer modContainer) {
 
+        NeoForgeMod.enableMilkFluid(); //Enable milk from forge
+
+        if (modDist.isClient()) {
+            modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+            modEventBus.addListener(GalacticraftCoreClient::onClientSetup);
+        }
+
+        modEventBus.addListener(this::commonSetup);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (GalacticraftCore) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.addListener(MilkHandler::onRightClick);
 
         ModCreativeModeTabs.register(modEventBus);
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
-        ModFluids.register(modEventBus);
-        ModFluidTypes.register(modEventBus);
         ModDataComponents.register(modEventBus);
+
+        MilkRegistry.FLUIDS.register(modEventBus);
+        MilkRegistry.BLOCKS.register(modEventBus);
+
+
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);

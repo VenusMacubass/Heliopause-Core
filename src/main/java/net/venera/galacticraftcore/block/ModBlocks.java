@@ -1,19 +1,15 @@
 package net.venera.galacticraftcore.block;
 
-import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.custom.ArcLamp;
 import net.venera.galacticraftcore.block.custom.RadioactiveBlock;
-import net.venera.galacticraftcore.fluid.ModFluidTypes;
-import net.venera.galacticraftcore.fluid.ModFluids;
 import net.venera.galacticraftcore.item.ModItems;
 
 import java.awt.*;
@@ -128,8 +124,6 @@ public class ModBlocks {
     public static final DeferredBlock<Block> SAPPHIRE_ORE = registerBlock("gcc_block_sapphire_ore",
             () -> new Block(BlockBehaviour.Properties.of().strength(4f).requiresCorrectToolForDrops()));
 
-    public static final DeferredBlock<LiquidBlock> CRUDE_OIL_BLOCK = BLOCKS.register("crude_oil",
-            () -> new LiquidBlock(ModFluids.CRUDE_OIL.get(), BlockBehaviour.Properties.of().liquid().noLootTable()));
 
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, java.util.function.Supplier<T> block){

@@ -23,9 +23,8 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.IRegistryExtension;
 import net.venera.galacticraftcore.block.ModBlocks;
-import net.venera.galacticraftcore.fluid.ModFluidTypes;
-import net.venera.galacticraftcore.fluid.ModFluids;
-import net.venera.galacticraftcore.fluid.custom.CrudeOil;
+import net.venera.galacticraftcore.registry.MilkRegistry;
+
 
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
 @Mod(value = GalacticraftCore.MOD_ID, dist = Dist.CLIENT)
@@ -44,7 +43,7 @@ public class GalacticraftCoreClient {
         // Some client setup code
         GalacticraftCore.LOGGER.info("HELLO FROM CLIENT SETUP");
         GalacticraftCore.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
-        ItemBlockRenderTypes.setRenderLayer(ModFluids.CRUDE_OIL.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_CRUDE_OIL.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(MilkRegistry.MILK.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(MilkRegistry.FLOWING_MILK.get(), RenderType.translucent());
     }
 }

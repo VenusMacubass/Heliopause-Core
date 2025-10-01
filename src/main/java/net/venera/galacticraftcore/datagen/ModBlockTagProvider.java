@@ -9,7 +9,7 @@ import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.ModBlocks;
-import net.venera.galacticraftcore.fluid.ModFluids;
+
 import net.venera.galacticraftcore.util.ModTags;
 import org.jetbrains.annotations.Nullable;
 

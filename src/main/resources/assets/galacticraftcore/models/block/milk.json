@@ -1,0 +1,6 @@
+{
+  "textures": {
+	"particle": "neoforge:block/milk_still"
+  },
+  "render_type": "minecraft:cutout"
+}
