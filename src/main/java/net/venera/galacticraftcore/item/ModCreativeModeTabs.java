@@ -9,6 +9,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.registry.ModRegistry;
 
 import java.util.function.Supplier;
 
@@ -54,7 +55,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.RAW_IRIDIUM.get());
                         output.accept(ModItems.LUNAR_SAPPHIRE.get());
                         output.accept(ModItems.TEMP_SWORD.get());
-                        output.accept(ModItems.CRUDE_OIL_BUCKET.get());
+                        output.accept(ModRegistry.CRUDE_OIL.getBucket());
 
                     })
                     .build()

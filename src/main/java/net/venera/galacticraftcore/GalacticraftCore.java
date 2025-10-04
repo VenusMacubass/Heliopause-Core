@@ -12,6 +12,7 @@ import net.venera.galacticraftcore.handler.MilkHandler;
 import net.venera.galacticraftcore.item.ModCreativeModeTabs;
 import net.venera.galacticraftcore.item.ModItems;
 import net.venera.galacticraftcore.registry.MilkRegistry;
+import net.venera.galacticraftcore.registry.ModRegistry;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -63,6 +64,13 @@ public class GalacticraftCore {
 
         MilkRegistry.FLUIDS.register(modEventBus);
         MilkRegistry.BLOCKS.register(modEventBus);
+        ModRegistry.BLOCKS.register(modEventBus);
+        ModRegistry.ITEMS.register(modEventBus);
+        ModRegistry.FLUIDS.register(modEventBus);
+        ModRegistry.FLUID_TYPES.register(modEventBus);
+        ModRegistry.BLOCK_ENTITY_TYPES.register(modEventBus);
+        ModRegistry.CREATIVE_MODE_TABS.register(modEventBus);
+        modEventBus.addListener(ModRegistry::registerCapabilities);
 
 
 

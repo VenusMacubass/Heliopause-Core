@@ -7,9 +7,14 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.galacticraftcore.GalacticraftCore;
+import net.venera.galacticraftcore.block.custom.CrudeOilBlock;
+import net.venera.galacticraftcore.fluid.CrudeOilFluid;
+import net.venera.galacticraftcore.fluid.ModFluids;
+import net.venera.galacticraftcore.item.custom.CrudeOilBucketItem;
 import net.venera.galacticraftcore.item.custom.FuelItem;
 import net.venera.galacticraftcore.item.custom.StandardWrench;
 import net.venera.galacticraftcore.item.custom.TempSword;
+import net.venera.galacticraftcore.registry.ModRegistry;
 
 import java.util.List;
 
@@ -87,8 +92,8 @@ public class ModItems {
     public static final DeferredItem<Item> LUNAR_SAPPHIRE = ITEMS.register("gcc_item_lunar_sapphire",
             () -> new Item(new Item.Properties()));
 
-    public static final DeferredItem<BucketItem> CRUDE_OIL_BUCKET = ITEMS.register("gcc_item_crude_oil_bucket",
-            () -> new BucketItem(Fluids.FLOWING_LAVA, (new Item.Properties()).craftRemainder(Items.BUCKET).stacksTo(2)));
+//    public static final DeferredItem<CrudeOilBucketItem> CRUDE_OIL_BUCKET = ITEMS.register("gcc_item_crude_oil_bucket",
+//            () -> new CrudeOilBucketItem(, (new Item.Properties()).craftRemainder(Items.BUCKET).stacksTo(2)));
 
     public static final DeferredItem<TempSword> TEMP_SWORD = ITEMS.register("temp_item_claymore", () ->
             new TempSword(ModToolTiers.STEEL, (new Item.Properties().attributes(ShovelItem.createAttributes(ModToolTiers.STEEL, 12,-3.9f)))));

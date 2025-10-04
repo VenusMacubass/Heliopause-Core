@@ -13,12 +13,16 @@ import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.init.CrudeOilBlockReg;
 import net.venera.galacticraftcore.item.ModItems;
+import net.venera.galacticraftcore.item.custom.CrudeOilBucketItem;
+import net.venera.galacticraftcore.registry.ModRegistry;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -76,7 +80,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.COMPRESSED_TIN.get());
 
         basicItem(ModItems.SENSOR_LENS.get());
-        basicItem(ModItems.CRUDE_OIL_BUCKET.get());
+        basicItem(ModRegistry.CRUDE_OIL.getBucket());
 
         wallItem(ModBlocks.TIN_BUILDING_WALL, ModBlocks.TIN_BUILDING_BLOCK);
         wallItem(ModBlocks.MOON_ROCK_WALL, ModBlocks.MOON_ROCK);
@@ -97,7 +101,17 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         handheldItem(ModItems.TEMP_SWORD.get());
 
+        generateBucket(ModRegistry.CRUDE_OIL);
+
     }
+
+    private void generateBucket(CrudeOilBlockReg blockReg) {
+        withExistingParent(blockReg.getBucketRegistry().getId().getPath(),
+                ResourceLocation.fromNamespaceAndPath("neoforge", "item/bucket"))
+                .customLoader(DynamicFluidContainerModelBuilder::begin)
+                .fluid(blockReg.getSource());
+    }
+
     private void trimmedArmorItem(DeferredItem<ArmorItem> itemDeferredItem) {
         final String MOD_ID = GalacticraftCore.MOD_ID; // Change this to your mod id
 

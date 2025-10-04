@@ -7,6 +7,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.registry.ModRegistry;
 
 public class ModBlockStateProvider extends BlockStateProvider {
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -66,6 +67,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockItem(ModBlocks.MARS_COBBLESTONE_SLAB);
         blockItem(ModBlocks.MARS_DUNGEON_BRICK_SLAB);
 
+        ModelFile crudeOilModel = models().getExistingFile(modLoc("block/crude_oil"));
+        simpleBlock(ModRegistry.CRUDE_OIL.getFluidblock(), crudeOilModel);
 
     }
 

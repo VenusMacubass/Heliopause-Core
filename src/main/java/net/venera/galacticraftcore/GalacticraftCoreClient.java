@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.LiquidBlockRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Display;
+import net.minecraft.world.level.material.FluidState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.EventBus;
 import net.neoforged.bus.api.IEventBus;
@@ -16,14 +17,17 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.registries.IRegistryExtension;
 import net.venera.galacticraftcore.block.ModBlocks;
 import net.venera.galacticraftcore.registry.MilkRegistry;
+import net.venera.galacticraftcore.registry.ModRegistry;
 
 
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
@@ -45,5 +49,26 @@ public class GalacticraftCoreClient {
         GalacticraftCore.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         ItemBlockRenderTypes.setRenderLayer(MilkRegistry.MILK.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(MilkRegistry.FLOWING_MILK.get(), RenderType.translucent());
+    }
+    public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
+        for (var blockObject : ModRegistry.BLOCKS.getEntries()) {
+            event.register((state, getter, pos, tintIndex) -> {
+                if (getter != null && pos != null) {
+                    FluidState fluidState = getter.getFluidState(pos);
+                    return IClientFluidTypeExtensions.of(fluidState).getTintColor(fluidState, getter, pos);
+                } else return 0xFFFFFFFF;
+            }, blockObject.get());
+        }
+    }
+
+    public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
+        for (var itemObject : ModRegistry.ITEMS.getEntries()) {
+            event.register((stack, tintIndex) -> {
+                if (tintIndex != 1) return 0xFFFFFFFF;
+                return FluidUtil.getFluidContained(stack)
+                        .map(fluidStack -> IClientFluidTypeExtensions.of(fluidStack.getFluid()).getTintColor(fluidStack))
+                        .orElse(0xFFFFFFFF);
+            }, itemObject.get());
+        }
     }
 }
