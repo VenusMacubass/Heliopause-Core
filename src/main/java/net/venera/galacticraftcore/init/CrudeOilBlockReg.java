@@ -1,7 +1,10 @@
 package net.venera.galacticraftcore.init;
 
+import com.mojang.blaze3d.shaders.FogShape;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -12,7 +15,6 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
@@ -39,7 +41,7 @@ public class CrudeOilBlockReg {
     private final DeferredHolder<FluidType, FluidType> fluidType;
     private DeferredHolder<Fluid, BaseFlowingFluid> source;
     private DeferredHolder<Fluid, BaseFlowingFluid> flowing;
-    private DeferredBlock<LiquidBlock> fluidblock;
+    private DeferredBlock<LiquidBlock> fluidBlock;
     private DeferredItem<CrudeOilBucketItem> bucket;
 
     @Nonnull
@@ -69,7 +71,7 @@ public class CrudeOilBlockReg {
 
     @Nonnull
     public LiquidBlock getFluidblock() {
-        return fluidblock.get();
+        return fluidBlock.get();
     }
 
     public DeferredItem<CrudeOilBucketItem> getBucketRegistry() {
@@ -102,7 +104,7 @@ public class CrudeOilBlockReg {
 
             @SuppressWarnings("removal")
             @Override
-            public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
+            public void initializeClient(@NotNull Consumer<IClientFluidTypeExtensions> consumer) {
                 consumer.accept(new IClientFluidTypeExtensions() {
 
                     @Override
@@ -116,8 +118,20 @@ public class CrudeOilBlockReg {
                     }
 
                     @Override
+                    public void modifyFogRender(Camera camera, FogRenderer.FogMode mode, float renderDistance, float partialTick, float nearDistance, float farDistance, FogShape shape) {
+                        IClientFluidTypeExtensions.super.modifyFogRender(camera, mode, renderDistance, partialTick, nearDistance, farDistance, shape);{
+                            nearDistance = -0.7f;
+                            farDistance = 2.0f;
+                            shape = FogShape.SPHERE;
+                            RenderSystem.setShaderFogStart(nearDistance);
+                            RenderSystem.setShaderFogEnd(farDistance);
+                            RenderSystem.setShaderFogShape(shape);
+                        }
+                    }
+
+                    @Override
                     public int getTintColor() {
-                        return Color.BLACK.hashCode();
+                        return Color.BLACK.getRGB();
                     }
 
                     @Override
@@ -128,20 +142,20 @@ public class CrudeOilBlockReg {
                 });
             }
         });
-        source = ModRegistry.FLUIDS.register(name, () -> new ModFluids.Source(
-                createProperties(fluidType, source, flowing, bucket, fluidblock))
+        source = ModRegistry.FLUIDS.register(name + "_still", () -> new ModFluids.Source(
+                createProperties(fluidType, source, flowing, bucket, fluidBlock))
         );
         flowing = ModRegistry.FLUIDS.register(name + "_flow", () -> new ModFluids.Flowing(
-                createProperties(fluidType, source, flowing, bucket, fluidblock))
+                createProperties(fluidType, source, flowing, bucket, fluidBlock))
         );
-        fluidblock = ModRegistry.BLOCKS.register(name,
+        fluidBlock = ModRegistry.BLOCKS.register(name,
                 () -> new CrudeOilBlock(
                         source.value(), // supplier of still fluid
                         BlockBehaviour.Properties.of()
-                                .mapColor(MapColor.COLOR_BLACK)
-                                .noCollission()
-                                .strength(100.0F)
                                 .noLootTable()
+                                .noCollission()
+                                .replaceable()
+                                .liquid()
                 )
         );
         bucket = ModRegistry.ITEMS.register("gcc_item_crude_oil_bucket", () -> new CrudeOilBucketItem(new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(2), source));
@@ -153,7 +167,7 @@ public class CrudeOilBlockReg {
         private MapColor mapColor = MapColor.WATER;
         private int color;
         private boolean hot = false;
-        private int luminosity = 0;
+        private int luminosity = 10;
 
         public Builder(String name, Supplier<Block> blockSupplier, int color) {
             this.name = name;

@@ -1,0 +1,4 @@
+// 1.21.1	2025-10-04T19:18:31.5320104	Tags for minecraft:fluid mod id galacticraftcore
+abb0b6d44a6a61da04d64b9b8d903be925d2ff2c data/galacticraftcore/tags/fluid/oil.json
+e191d5f912e05091b3a0b1df17f4c4181e04d96f data/minecraft/tags/fluid/lava.json
+c9ae54a7510073b17edf82f7591e14bdb2c51837 data/minecraft/tags/fluid/water.json

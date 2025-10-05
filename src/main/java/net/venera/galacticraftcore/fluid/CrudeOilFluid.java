@@ -25,7 +25,7 @@ public class CrudeOilFluid extends FlowingFluid {
 
     @Override
     protected boolean canBeReplacedWith(FluidState fluidState, BlockGetter blockGetter, BlockPos blockPos, Fluid fluid, Direction direction) {
-        return false;
+        return true;
     }
 
     @Override

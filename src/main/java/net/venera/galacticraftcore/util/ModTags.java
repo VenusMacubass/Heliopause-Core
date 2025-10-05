@@ -9,6 +9,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.material.Fluid;
 import net.venera.galacticraftcore.GalacticraftCore;
 
@@ -37,6 +38,7 @@ public class ModTags {
 
     public static class Fluids{
         public static final TagKey<Fluid> OIL = createTag("oil");
+
 
 
         private static TagKey<Fluid> createTag(String name){

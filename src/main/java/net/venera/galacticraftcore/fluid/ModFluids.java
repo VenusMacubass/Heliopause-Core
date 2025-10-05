@@ -1,5 +1,8 @@
 package net.venera.galacticraftcore.fluid;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FlowingFluid;
@@ -12,6 +15,16 @@ public class ModFluids {
         public Flowing(Properties properties) {
             super(properties);
             registerDefaultState(getStateDefinition().any().setValue(LEVEL, 7));
+        }
+
+        @Override
+        protected boolean canBeReplacedWith(FluidState state, BlockGetter level, BlockPos pos, Fluid fluidIn, Direction direction) {
+            return true;
+        }
+
+        @Override
+        public boolean canConvertToSource(FluidState state, Level level, BlockPos pos) {
+            return false;
         }
 
         protected void createFluidStateDefinition(StateDefinition.Builder<Fluid, FluidState> builder) {
@@ -37,6 +50,16 @@ public class ModFluids {
 
         public int getAmount(FluidState state) {
             return 8;
+        }
+
+        @Override
+        protected boolean canBeReplacedWith(FluidState state, BlockGetter level, BlockPos pos, Fluid fluidIn, Direction direction) {
+            return true;
+        }
+
+        @Override
+        public boolean canConvertToSource(FluidState state, Level level, BlockPos pos) {
+            return false;
         }
 
         public boolean isSource(FluidState state) {

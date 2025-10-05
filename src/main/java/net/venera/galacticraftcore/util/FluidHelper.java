@@ -9,15 +9,11 @@ import net.neoforged.neoforge.fluids.FluidType;
 public class FluidHelper {
     public static FluidType.Properties createTypeProperties() {
         return FluidType.Properties.create()
-                .canSwim(false)
-                .canDrown(false)
+                .canSwim(true)
+                .canDrown(true)
                 .pathType(PathType.LAVA)
                 .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
                 .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
-                .rarity(Rarity.UNCOMMON)
-                .density(900)
-                .viscosity(3500)
-                .temperature(3000)
-                .lightLevel(0);
+                .rarity(Rarity.COMMON);
     }
 }

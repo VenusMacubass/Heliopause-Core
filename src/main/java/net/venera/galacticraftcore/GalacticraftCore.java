@@ -62,17 +62,12 @@ public class GalacticraftCore {
         ModBlocks.register(modEventBus);
         ModDataComponents.register(modEventBus);
 
-        MilkRegistry.FLUIDS.register(modEventBus);
-        MilkRegistry.BLOCKS.register(modEventBus);
+        ModRegistry.FLUID_TYPES.register(modEventBus);
+        ModRegistry.FLUIDS.register(modEventBus);
         ModRegistry.BLOCKS.register(modEventBus);
         ModRegistry.ITEMS.register(modEventBus);
-        ModRegistry.FLUIDS.register(modEventBus);
-        ModRegistry.FLUID_TYPES.register(modEventBus);
-        ModRegistry.BLOCK_ENTITY_TYPES.register(modEventBus);
-        ModRegistry.CREATIVE_MODE_TABS.register(modEventBus);
-        modEventBus.addListener(ModRegistry::registerCapabilities);
-
-
+        MilkRegistry.FLUIDS.register(modEventBus);
+        MilkRegistry.BLOCKS.register(modEventBus);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);

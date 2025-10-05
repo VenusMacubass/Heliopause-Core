@@ -1,4 +1,4 @@
-// 1.21.1	2025-09-28T11:56:22.8733423	Item Models: galacticraftcore
+// 1.21.1	2025-10-04T19:18:31.5345113	Item Models: galacticraftcore
 3dbe0dd8e793d34ee1b40f2c9687eea8737cc96e assets/galacticraftcore/models/item/gcc_block_mars_cobblestone_wall.json
 4a5f76e352c2d8ea114638f6ae38a31afefc8c36 assets/galacticraftcore/models/item/gcc_block_mars_dungeon_brick_wall.json
 a7d0cdd2ce625633627687ee022ba334de30abc2 assets/galacticraftcore/models/item/gcc_block_moon_dungeon_brick_wall.json
@@ -13,7 +13,7 @@ b369fe91f66bd8aeabb96cdd78ed33820d787bba assets/galacticraftcore/models/item/gcc
 4a3de7bd6eed1d87c426e5edb64edd17aab89ef6 assets/galacticraftcore/models/item/gcc_item_compressed_steel.json
 61ae55d702a11cd862bc89b8dcd71bbe4ea3eb08 assets/galacticraftcore/models/item/gcc_item_compressed_tin.json
 eb4d027879f36a88b516e44d719172eb0f65fcf1 assets/galacticraftcore/models/item/gcc_item_copper_canister.json
-898bf68a8e33ed8d4e249b7f86ea6e3cad476526 assets/galacticraftcore/models/item/gcc_item_crude_oil_bucket.json
+cb844cc4c0d307bf95e4392d72f79fcde6ed504c assets/galacticraftcore/models/item/gcc_item_crude_oil_bucket.json
 3c631c9a387e2d216ae3a41592b04232b5385346 assets/galacticraftcore/models/item/gcc_item_dehydrated_apple.json
 11f7af2efe541d8bdbeb5eb017819c33cd7a93ee assets/galacticraftcore/models/item/gcc_item_dehydrated_carrot.json
 7c88e36593fb2643b1f44cf3b3a9dd8ee58d11af assets/galacticraftcore/models/item/gcc_item_dehydrated_melon.json
