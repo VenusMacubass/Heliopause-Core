@@ -2,8 +2,10 @@ package net.venera.galacticraftcore.fluid;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
@@ -51,6 +53,13 @@ public class ModFluids {
         public int getAmount(FluidState state) {
             return 8;
         }
+
+        @Override
+        public int getTickDelay(LevelReader level) {
+            return Math.max(1, getFluidType().getViscosity() / 200);
+        }
+
+
 
         @Override
         protected boolean canBeReplacedWith(FluidState state, BlockGetter level, BlockPos pos, Fluid fluidIn, Direction direction) {

@@ -91,10 +91,10 @@ public class CrudeOilBlockReg {
     public CrudeOilBlockReg(String name, Supplier<Block> blockSupplier, MapColor mapColor, int color, boolean coldLiquid, int luminosity) {
         this.name = name;
         fluidType = ModRegistry.FLUID_TYPES.register(name, () -> new FluidType(FluidHelper.createTypeProperties().temperature(coldLiquid ? 300 : 1000).lightLevel(luminosity)) {
-            @Override
-            public double motionScale(Entity entity) {
-                return entity.level().dimensionType().ultraWarm() ? 0.007D : 0.0023333333333333335D;
-            }
+//            @Override
+//            public double motionScale(Entity entity) {
+//                return entity.level().dimensionType().ultraWarm() ? 0.007D : 0.0023333333333333335D;
+//            }
 
             @Override
             public void setItemMovement(ItemEntity entity) {

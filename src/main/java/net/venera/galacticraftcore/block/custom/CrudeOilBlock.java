@@ -19,11 +19,6 @@ public class CrudeOilBlock extends LiquidBlock {
     }
 
     @Override
-    protected boolean canBeReplaced(BlockState state, Fluid fluid) {
-        return true;
-    }
-
-    @Override
     public void entityInside(BlockState blockState, Level world, BlockPos blockPos, Entity entity) {
         if (world.getBlockState(entity.blockPosition().offset(0, (int) Math.floor(entity.getEyeHeight(entity.getPose())), 0)).getFluidState().getType().is(ModTags.Fluids.OIL)) {
             if (entity instanceof LivingEntity living) {

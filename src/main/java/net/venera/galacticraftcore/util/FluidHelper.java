@@ -14,6 +14,8 @@ public class FluidHelper {
                 .pathType(PathType.LAVA)
                 .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
                 .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
-                .rarity(Rarity.COMMON);
+                .rarity(Rarity.COMMON)
+                .density(900)
+                .viscosity(3000);
     }
 }
