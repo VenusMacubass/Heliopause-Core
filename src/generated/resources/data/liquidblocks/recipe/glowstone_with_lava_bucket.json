@@ -1,0 +1,16 @@
+{
+  "type": "galacticraftcore:shapeless_no_remainder",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:glowstone"
+    },
+    {
+      "item": "minecraft:lava_bucket"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "galacticraftcore:gcc_item_liquid_glowstone_bucket"
+  }
+}

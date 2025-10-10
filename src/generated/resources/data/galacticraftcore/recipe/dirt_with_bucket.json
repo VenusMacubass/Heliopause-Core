@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "galacticraftcore:craft_with_water_bucket"
+    }
+  ],
+  "type": "galacticraftcore:shapeless_no_remainder",
+  "category": "misc",
+  "group": "liquidblocks",
+  "ingredients": [
+    {
+      "item": "minecraft:dirt"
+    },
+    {
+      "item": "minecraft:water_bucket"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "galacticraftcore:gcc_item_liquid_dirt_bucket"
+  }
+}

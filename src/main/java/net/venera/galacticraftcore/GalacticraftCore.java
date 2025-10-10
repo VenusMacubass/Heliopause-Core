@@ -1,22 +1,16 @@
 package net.venera.galacticraftcore;
 
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.client.gui.ConfigurationScreen;
-import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
-import net.neoforged.neoforge.common.NeoForgeMod;
 import net.venera.galacticraftcore.block.ModBlocks;
 import net.venera.galacticraftcore.component.ModDataComponents;
-import net.venera.galacticraftcore.handler.MilkHandler;
+import net.venera.galacticraftcore.init.LiquidConditions;
+import net.venera.galacticraftcore.fluid.ModFluids;
+import net.venera.galacticraftcore.init.recipes.LiquidRecipes;
 import net.venera.galacticraftcore.item.ModCreativeModeTabs;
 import net.venera.galacticraftcore.item.ModItems;
-import net.venera.galacticraftcore.registry.MilkRegistry;
-import net.venera.galacticraftcore.registry.ModRegistry;
 import org.slf4j.Logger;
-
 import com.mojang.logging.LogUtils;
-
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
@@ -29,50 +23,38 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
-// The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(GalacticraftCore.MOD_ID)
 public class GalacticraftCore {
-    // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "galacticraftcore";
-    // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
 
-
-    // The constructor for the mod class is the first code that is run when your mod is loaded.
-    // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
     public GalacticraftCore(IEventBus modEventBus, Dist modDist, ModContainer modContainer) {
 
-        NeoForgeMod.enableMilkFluid(); //Enable milk from forge
-
-        if (modDist.isClient()) {
-            modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
-            modEventBus.addListener(GalacticraftCoreClient::onClientSetup);
-        }
+        modEventBus.addListener(GalacticraftCoreClient::onClientSetup);
 
         modEventBus.addListener(this::commonSetup);
 
-        // Register ourselves for server and other game events we are interested in.
-        // Note that this is necessary if and only if we want *this* class (GalacticraftCore) to respond directly to events.
-        // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
+        ModFluids.FLUIDS.register(modEventBus);
+        ModFluids.FLUID_TYPES.register(modEventBus);
+        ModFluids.BLOCK_ENTITY_TYPES.register(modEventBus);
+        ModFluids.CREATIVE_MODE_TABS.register(modEventBus);
+        LiquidRecipes.RECIPE_SERIALIZERS.register(modEventBus);
+        LiquidConditions.CONDITION_CODECS.register(modEventBus);
+        //modEventBus.addListener(ModFluids::registerCapabilities);
+        if (modDist.isClient()) {
+            modEventBus.addListener(GalacticraftCoreClient::registerBlockColors);
+            modEventBus.addListener(GalacticraftCoreClient::registerItemColors);
+        }
+
         NeoForge.EVENT_BUS.register(this);
-        NeoForge.EVENT_BUS.addListener(MilkHandler::onRightClick);
 
         ModCreativeModeTabs.register(modEventBus);
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModDataComponents.register(modEventBus);
 
-        ModRegistry.FLUID_TYPES.register(modEventBus);
-        ModRegistry.FLUIDS.register(modEventBus);
-        ModRegistry.BLOCKS.register(modEventBus);
-        ModRegistry.ITEMS.register(modEventBus);
-        MilkRegistry.FLUIDS.register(modEventBus);
-        MilkRegistry.BLOCKS.register(modEventBus);
-
-        // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
 
-        // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
@@ -91,9 +73,9 @@ public class GalacticraftCore {
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
-    //event.accept(ModBlocks.SPACE_GLASS);
-}
+        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
+        //event.accept(ModBlocks.SPACE_GLASS);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

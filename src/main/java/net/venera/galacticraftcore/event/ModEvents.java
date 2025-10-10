@@ -12,8 +12,9 @@ import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtension
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.fluids.FluidUtil;
+import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.item.ModItems;
 import net.venera.galacticraftcore.item.custom.TempSword;
-import net.venera.galacticraftcore.registry.ModRegistry;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -48,28 +49,6 @@ public class ModEvents {
                 serverPlayer.gameMode.destroyBlock(pos);
                 HARVESTED_BLOCKS.remove(pos);
             }
-        }
-    }
-
-    public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
-        for (var blockObject : ModRegistry.BLOCKS.getEntries()) {
-            event.register((state, getter, pos, tintIndex) -> {
-                if (getter != null && pos != null) {
-                    FluidState fluidState = getter.getFluidState(pos);
-                    return IClientFluidTypeExtensions.of(fluidState).getTintColor(fluidState, getter, pos);
-                } else return 0xFFFFFFFF;
-            }, blockObject.get());
-        }
-    }
-
-    public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
-        for (var itemObject : ModRegistry.ITEMS.getEntries()) {
-            event.register((stack, tintIndex) -> {
-                if (tintIndex != 1) return 0xFFFFFFFF;
-                return FluidUtil.getFluidContained(stack)
-                        .map(fluidStack -> IClientFluidTypeExtensions.of(fluidStack.getFluid()).getTintColor(fluidStack))
-                        .orElse(0xFFFFFFFF);
-            }, itemObject.get());
         }
     }
 }

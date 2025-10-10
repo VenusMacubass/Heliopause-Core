@@ -7,7 +7,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.ModBlocks;
-import net.venera.galacticraftcore.registry.ModRegistry;
+import net.venera.galacticraftcore.fluid.ModFluids;
 
 public class ModBlockStateProvider extends BlockStateProvider {
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -67,8 +67,59 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockItem(ModBlocks.MARS_COBBLESTONE_SLAB);
         blockItem(ModBlocks.MARS_DUNGEON_BRICK_SLAB);
 
-        ModelFile crudeOilModel = models().getExistingFile(modLoc("block/crude_oil"));
-        simpleBlock(ModRegistry.CRUDE_OIL.getFluidblock(), crudeOilModel);
+        ModelFile liquidModel = models().getExistingFile(modLoc("block/liquid_block"));
+        simpleBlock(ModFluids.LIQUID_DIRT.getFluidblock(), liquidModel);
+        simpleBlock(ModFluids.LIQUID_COARSE_DIRT.getFluidblock(), liquidModel);
+        simpleBlock(ModFluids.LIQUID_PODZOL.getFluidblock(), liquidModel);
+        simpleBlock(ModFluids.LIQUID_STONE.getFluidblock(), liquidModel);
+        simpleBlock(ModFluids.LIQUID_GRANITE.getFluidblock(), liquidModel);
+        simpleBlock(ModFluids.LIQUID_DIORITE.getFluidblock(), liquidModel);
+        simpleBlock(ModFluids.LIQUID_ANDESITE.getFluidblock(), liquidModel);
+        simpleBlock(ModFluids.LIQUID_SANDSTONE.getFluidblock(), liquidModel);
+        simpleBlock(ModFluids.LIQUID_RED_SANDSTONE.getFluidblock(), liquidModel);
+        simpleBlock(ModFluids.LIQUID_NETHERRACK.getFluidblock(), liquidModel);
+        simpleBlock(ModFluids.LIQUID_SOUL_SAND.getFluidblock(), liquidModel);
+        simpleBlock(ModFluids.LIQUID_MAGMA.getFluidblock(), liquidModel);
+        simpleBlock(ModFluids.LIQUID_GLOWSTONE.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_SAND.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_RED_SAND.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_GRAVEL.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_ORE.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_CLAY.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_TERRACOTTA.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_WHITE_GLAZED_TERRACOTTA.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_ORANGE_GLAZED_TERRACOTTA.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_MAGENTA_GLAZED_TERRACOTTA.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_LIGHT_BLUE_GLAZED_TERRACOTTA.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_YELLOW_GLAZED_TERRACOTTA.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_LIME_GLAZED_TERRACOTTA.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_PINK_GLAZED_TERRACOTTA.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_GRAY_GLAZED_TERRACOTTA.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_LIGHT_GRAY_GLAZED_TERRACOTTA.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_CYAN_GLAZED_TERRACOTTA.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_PURPLE_GLAZED_TERRACOTTA.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_BLUE_GLAZED_TERRACOTTA.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_BROWN_GLAZED_TERRACOTTA.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_GREEN_GLAZED_TERRACOTTA.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_RED_GLAZED_TERRACOTTA.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_BLACK_GLAZED_TERRACOTTA.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_WHITE_CONCRETE.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_ORANGE_CONCRETE.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_MAGENTA_CONCRETE.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_LIGHT_BLUE_CONCRETE.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_YELLOW_CONCRETE.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_LIME_CONCRETE.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_PINK_CONCRETE.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_GRAY_CONCRETE.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_LIGHT_GRAY_CONCRETE.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_CYAN_CONCRETE.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_PURPLE_CONCRETE.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_BLUE_CONCRETE.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_BROWN_CONCRETE.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_GREEN_CONCRETE.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_RED_CONCRETE.getFluidblock(), liquidModel);
+//        simpleBlock(ModFluids.LIQUID_BLACK_CONCRETE.getFluidblock(), liquidModel);
+        simpleBlock(ModFluids.CRUDE_OIL.getFluidblock(), liquidModel);
 
     }
 

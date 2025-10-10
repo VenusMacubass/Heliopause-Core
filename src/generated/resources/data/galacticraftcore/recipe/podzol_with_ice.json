@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "galacticraftcore:craft_with_ice"
+    }
+  ],
+  "type": "galacticraftcore:shapeless_no_remainder",
+  "category": "misc",
+  "group": "liquidblocks",
+  "ingredients": [
+    {
+      "item": "minecraft:podzol"
+    },
+    {
+      "item": "minecraft:ice"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "galacticraftcore:gcc_item_liquid_podzol_bucket"
+  }
+}

@@ -1,7 +1,5 @@
 {
-  "parent": "neoforge:item/bucket",
-  "fluid": "galacticraftcore:crude_oil_still",
-  "loader": "neoforge:fluid_container",
+  "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "galacticraftcore:item/gcc_item_crude_oil_bucket"
   }

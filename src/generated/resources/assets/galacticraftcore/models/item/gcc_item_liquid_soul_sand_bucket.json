@@ -1,0 +1,5 @@
+{
+  "parent": "neoforge:item/bucket",
+  "fluid": "galacticraftcore:liquid_soul_sand",
+  "loader": "neoforge:fluid_container"
+}

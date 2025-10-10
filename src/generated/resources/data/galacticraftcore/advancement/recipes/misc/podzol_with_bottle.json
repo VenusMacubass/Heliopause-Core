@@ -1,0 +1,37 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "galacticraftcore:craft_with_water_bottle"
+    }
+  ],
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_podzol": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:podzol"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "galacticraftcore:podzol_with_bottle"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_podzol"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "galacticraftcore:podzol_with_bottle"
+    ]
+  }
+}
