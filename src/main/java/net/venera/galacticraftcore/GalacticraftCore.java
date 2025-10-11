@@ -4,9 +4,7 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.api.distmarker.Dist;
 import net.venera.galacticraftcore.block.ModBlocks;
 import net.venera.galacticraftcore.component.ModDataComponents;
-import net.venera.galacticraftcore.init.LiquidConditions;
 import net.venera.galacticraftcore.fluid.ModFluids;
-import net.venera.galacticraftcore.init.recipes.LiquidRecipes;
 import net.venera.galacticraftcore.item.ModCreativeModeTabs;
 import net.venera.galacticraftcore.item.ModItems;
 import org.slf4j.Logger;
@@ -37,10 +35,6 @@ public class GalacticraftCore {
         ModFluids.FLUIDS.register(modEventBus);
         ModFluids.FLUID_TYPES.register(modEventBus);
         ModFluids.BLOCK_ENTITY_TYPES.register(modEventBus);
-        ModFluids.CREATIVE_MODE_TABS.register(modEventBus);
-        LiquidRecipes.RECIPE_SERIALIZERS.register(modEventBus);
-        LiquidConditions.CONDITION_CODECS.register(modEventBus);
-        //modEventBus.addListener(ModFluids::registerCapabilities);
         if (modDist.isClient()) {
             modEventBus.addListener(GalacticraftCoreClient::registerBlockColors);
             modEventBus.addListener(GalacticraftCoreClient::registerItemColors);

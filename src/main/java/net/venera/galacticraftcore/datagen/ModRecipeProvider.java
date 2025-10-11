@@ -43,7 +43,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
 
 
-
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.ALUMINIUM_INGOT.get(), 9)
                 .requires(ModBlocks.ALUMINIUM_BLOCK.get(), 1)
                 .unlockedBy("has_aluminium_block", has(ModBlocks.ALUMINIUM_BLOCK.get()))
@@ -68,6 +67,5 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         for(ItemLike itemlike : ingredients) {
             SimpleCookingRecipeBuilder.generic(Ingredient.of(new ItemLike[]{itemlike}), category, result, experience, cookingTime, serializer, recipeFactory).group(group).unlockedBy(getHasName(itemlike), has(itemlike)).save(recipeOutput, GalacticraftCore.MOD_ID + ":" + getItemName(result) + suffix + "_" + getItemName(itemlike));
         }
-
     }
 }

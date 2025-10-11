@@ -23,59 +23,13 @@ public class LiquidBlockBlock extends LiquidBlock implements EntityBlock {
 		this.blockSupplier = blockSupplier;
 	}
 
-//	public void convertBlock(Level level, BlockPos pos) {
-//		level.removeBlockEntity(pos);
-//		level.setBlockAndUpdate(pos, blockSupplier.get().defaultBlockState());
-//		int fireChance = LiquidConfig.COMMON.netherrackFireChance.get();
-//		if (fireChance > 0) {
-//			if (blockSupplier.get() == Blocks.NETHERRACK) {
-//				if (!level.getBlockState(pos.above()).canOcclude() || level.getBlockState(pos.above()).canBeReplaced()) {
-//					if (level.random.nextInt(fireChance) <= 1) {
-//						level.setBlockAndUpdate(pos.above(), Blocks.FIRE.defaultBlockState().setValue(FireBlock.AGE, level.random.nextInt(15)));
-//					}
-//				}
-//			}
-//		}
-//	}
-
 	public Supplier<Block> getLiquifiedBlock() {
 		return blockSupplier;
 	}
-
-//	@Override
-//	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entityIn) {
-//		super.entityInside(state, level, pos, entityIn);
-//		if (entityIn instanceof LivingEntity entity) {
-//			if (state.getBlock() instanceof LiquidBlockBlock) {
-//				if (ModBlocks.RADIOACTIVE_BLOCK) {
-//					entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1, false, false));
-//				}
-//				if (LiquidConfig.COMMON.liquidCausesSlowness.get()) {
-//					entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 200, 1, false, false));
-//				}
-//			}
-//		}
-//	}
 
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 		return new LiquidBlockEntity(pos, state);
-	}
-
-	@Nullable
-	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-		return createLiquidTicker(level, blockEntityType, ModFluids.LIQUID_BLOCK_ENTITY.get());
-	}
-
-	@Nullable
-	protected static <T extends BlockEntity> BlockEntityTicker<T> createLiquidTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends LiquidBlockEntity> blockEntityType1) {
-		return level.isClientSide ? null : createTickerHelper(blockEntityType, blockEntityType1, LiquidBlockEntity::serverTick);
-	}
-
-	@Nullable
-	protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTickerHelper(BlockEntityType<A> p_152133_, BlockEntityType<E> p_152134_, BlockEntityTicker<? super E> p_152135_) {
-		return p_152134_ == p_152133_ ? (BlockEntityTicker<A>) p_152135_ : null;
 	}
 }

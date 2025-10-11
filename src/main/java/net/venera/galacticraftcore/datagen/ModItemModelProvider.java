@@ -15,7 +15,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.ModBlocks;
-import net.venera.galacticraftcore.init.LiquidBlockReg;
+import net.venera.galacticraftcore.fluid.ModLiquidBlockFactory;
 import net.venera.galacticraftcore.fluid.ModFluids;
 import net.venera.galacticraftcore.item.ModItems;
 import java.util.LinkedHashMap;
@@ -51,6 +51,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.DEHYDRATED_POTATO.get());
         basicItem(ModItems.DEHYDRATED_MELON.get());
         basicItem(ModFluids.CRUDE_OIL.getBucket());
+        basicItem(ModFluids.REFINED_FUEL.getBucket());
 
         basicItem(ModItems.RADIOACTIVE_CORE.get());
         handheldItem(ModItems.STANDARD_WRENCH.get());
@@ -90,62 +91,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(ModItems.STEEL_BOOTS);
 
         handheldItem(ModItems.TEMP_SWORD.get());
-
-        generateBucket(ModFluids.LIQUID_DIRT);
-        generateBucket(ModFluids.LIQUID_COARSE_DIRT);
-        generateBucket(ModFluids.LIQUID_PODZOL);
-        generateBucket(ModFluids.LIQUID_STONE);
-        generateBucket(ModFluids.LIQUID_GRANITE);
-        generateBucket(ModFluids.LIQUID_DIORITE);
-        generateBucket(ModFluids.LIQUID_ANDESITE);
-        generateBucket(ModFluids.LIQUID_SANDSTONE);
-        generateBucket(ModFluids.LIQUID_RED_SANDSTONE);
-        generateBucket(ModFluids.LIQUID_NETHERRACK);
-        generateBucket(ModFluids.LIQUID_SOUL_SAND);
-        generateBucket(ModFluids.LIQUID_MAGMA);
-        generateBucket(ModFluids.LIQUID_GLOWSTONE);
-//        generateBucket(ModFluids.LIQUID_SAND);
-//        generateBucket(ModFluids.LIQUID_RED_SAND);
-//        generateBucket(ModFluids.LIQUID_GRAVEL);
-//        generateBucket(ModFluids.LIQUID_ORE);
-//        generateBucket(ModFluids.LIQUID_CLAY);
-//        generateBucket(ModFluids.LIQUID_TERRACOTTA);
-//        generateBucket(ModFluids.LIQUID_WHITE_GLAZED_TERRACOTTA);
-//        generateBucket(ModFluids.LIQUID_ORANGE_GLAZED_TERRACOTTA);
-//        generateBucket(ModFluids.LIQUID_MAGENTA_GLAZED_TERRACOTTA);
-//        generateBucket(ModFluids.LIQUID_LIGHT_BLUE_GLAZED_TERRACOTTA);
-//        generateBucket(ModFluids.LIQUID_YELLOW_GLAZED_TERRACOTTA);
-//        generateBucket(ModFluids.LIQUID_LIME_GLAZED_TERRACOTTA);
-//        generateBucket(ModFluids.LIQUID_PINK_GLAZED_TERRACOTTA);
-//        generateBucket(ModFluids.LIQUID_GRAY_GLAZED_TERRACOTTA);
-//        generateBucket(ModFluids.LIQUID_LIGHT_GRAY_GLAZED_TERRACOTTA);
-//        generateBucket(ModFluids.LIQUID_CYAN_GLAZED_TERRACOTTA);
-//        generateBucket(ModFluids.LIQUID_PURPLE_GLAZED_TERRACOTTA);
-//        generateBucket(ModFluids.LIQUID_BLUE_GLAZED_TERRACOTTA);
-//        generateBucket(ModFluids.LIQUID_BROWN_GLAZED_TERRACOTTA);
-//        generateBucket(ModFluids.LIQUID_GREEN_GLAZED_TERRACOTTA);
-//        generateBucket(ModFluids.LIQUID_RED_GLAZED_TERRACOTTA);
-//        generateBucket(ModFluids.LIQUID_BLACK_GLAZED_TERRACOTTA);
-//        generateBucket(ModFluids.LIQUID_WHITE_CONCRETE);
-//        generateBucket(ModFluids.LIQUID_ORANGE_CONCRETE);
-//        generateBucket(ModFluids.LIQUID_MAGENTA_CONCRETE);
-//        generateBucket(ModFluids.LIQUID_LIGHT_BLUE_CONCRETE);
-//        generateBucket(ModFluids.LIQUID_YELLOW_CONCRETE);
-//        generateBucket(ModFluids.LIQUID_LIME_CONCRETE);
-//        generateBucket(ModFluids.LIQUID_PINK_CONCRETE);
-//        generateBucket(ModFluids.LIQUID_GRAY_CONCRETE);
-//        generateBucket(ModFluids.LIQUID_LIGHT_GRAY_CONCRETE);
-//        generateBucket(ModFluids.LIQUID_CYAN_CONCRETE);
-//        generateBucket(ModFluids.LIQUID_PURPLE_CONCRETE);
-//        generateBucket(ModFluids.LIQUID_BLUE_CONCRETE);
-//        generateBucket(ModFluids.LIQUID_BROWN_CONCRETE);
-//        generateBucket(ModFluids.LIQUID_GREEN_CONCRETE);
-//        generateBucket(ModFluids.LIQUID_RED_CONCRETE);
-//        generateBucket(ModFluids.LIQUID_BLACK_CONCRETE);
-
     }
 
-    private void generateBucket(LiquidBlockReg blockReg) {
+    private void generateBucket(ModLiquidBlockFactory blockReg) {
         withExistingParent(blockReg.getBucketRegistry().getId().getPath(),
                 ResourceLocation.fromNamespaceAndPath("neoforge", "item/bucket"))
                 .customLoader(DynamicFluidContainerModelBuilder::begin)

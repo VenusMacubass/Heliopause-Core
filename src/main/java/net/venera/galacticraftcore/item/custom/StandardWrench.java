@@ -16,9 +16,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.venera.galacticraftcore.component.ModDataComponents;
-
 import java.util.List;
-import java.util.Map;
+
 
 public class StandardWrench extends Item {
     public StandardWrench(Properties properties) {
@@ -39,7 +38,6 @@ public class StandardWrench extends Item {
         }
 
         if (!level.isClientSide) {
-            // Try to find a "facing" property on the block
             for (Property<?> property : blockState.getProperties()) {
                 if (property instanceof DirectionProperty dirProp) {
                     Direction current = blockState.getValue(dirProp);
@@ -48,15 +46,13 @@ public class StandardWrench extends Item {
                         case EAST -> Direction.SOUTH;
                         case SOUTH -> Direction.WEST;
                         case WEST -> Direction.NORTH;
-                        default -> current; // don’t rotate UP/DOWN
+                        default -> current;
                     };
-
                     level.setBlock(blockPos, blockState.setValue(dirProp, next), Block.UPDATE_ALL);
                     return InteractionResult.SUCCESS;
                 }
             }
         }
-
         return InteractionResult.PASS;
     }
 

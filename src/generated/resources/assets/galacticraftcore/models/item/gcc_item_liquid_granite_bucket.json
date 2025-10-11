@@ -1,5 +1,0 @@
-{
-  "parent": "neoforge:item/bucket",
-  "fluid": "galacticraftcore:liquid_granite",
-  "loader": "neoforge:fluid_container"
-}

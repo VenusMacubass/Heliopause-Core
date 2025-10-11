@@ -1,6 +1,7 @@
 package net.venera.galacticraftcore.fluid;
 
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
@@ -18,7 +19,7 @@ public class LiquidBlockFluid {
 			builder.add(LEVEL);
 		}
 
-		@Override
+        @Override
 		public boolean isSource(FluidState state) {
 			return false;
 		}
@@ -33,6 +34,11 @@ public class LiquidBlockFluid {
 		public Source(Properties properties) {
 			super(properties);
 		}
+
+        @Override
+        public int getTickDelay(LevelReader level) {
+            return Math.max(1, getFluidType().getViscosity() / 200);
+        }
 
 		public int getAmount(FluidState state) {
 			return 8;
