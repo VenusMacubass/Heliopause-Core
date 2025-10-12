@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:tin_building_wall_crafting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_tin_building_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftcore:gcc_block_tin_building_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_tin_building_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:tin_building_wall_crafting"
+    ]
+  }
+}

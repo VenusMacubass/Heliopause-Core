@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 400,
+  "experience": 1.8,
+  "group": "iridium_ingot",
+  "ingredient": {
+    "item": "galacticraftcore:gcc_item_raw_iridium"
+  },
+  "result": {
+    "count": 1,
+    "id": "galacticraftcore:gcc_item_iridium_ingot"
+  }
+}

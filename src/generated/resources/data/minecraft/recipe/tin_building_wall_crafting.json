@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "T": {
+      "item": "galacticraftcore:gcc_block_tin_building_block"
+    }
+  },
+  "pattern": [
+    "TTT",
+    "TTT"
+  ],
+  "result": {
+    "count": 6,
+    "id": "galacticraftcore:gcc_block_tin_building_wall"
+  }
+}

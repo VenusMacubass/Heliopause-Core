@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "M": {
+      "item": "galacticraftcore:gcc_block_mars_dungeon_bricks"
+    }
+  },
+  "pattern": [
+    "MMM"
+  ],
+  "result": {
+    "count": 6,
+    "id": "galacticraftcore:gcc_block_mars_dungeon_brick_slab"
+  }
+}

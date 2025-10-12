@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:tin_block_from_ingots"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_tin_ingots": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftcore:gcc_item_tin_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_tin_ingots"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:tin_block_from_ingots"
+    ]
+  }
+}

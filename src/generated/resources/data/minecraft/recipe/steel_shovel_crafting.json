@@ -10,12 +10,12 @@
     }
   },
   "pattern": [
-    "CCC",
+    " C ",
     " S ",
     " S "
   ],
   "result": {
     "count": 1,
-    "id": "galacticraftcore:gcc_item_steel_pickaxe"
+    "id": "galacticraftcore:gcc_item_steel_shovel"
   }
 }

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    },
+    "S": {
+      "item": "galacticraftcore:gcc_item_compressed_steel"
+    }
+  },
+  "pattern": [
+    "SGS",
+    "GRG",
+    "SGS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "galacticraftcore:arclamp"
+  }
+}
