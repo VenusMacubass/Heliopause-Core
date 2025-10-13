@@ -34,7 +34,6 @@ public class StandardWrench extends Item {
 
         context.getItemInHand().set(ModDataComponents.COORDINATES, context.getClickedPos());
         if(context.getItemInHand().get(ModDataComponents.COORDINATES) != null && context.isSecondaryUseActive()) {
-            player.displayClientMessage(Component.literal("Last block changed at: " + context.getItemInHand().get(ModDataComponents.COORDINATES)), false);
         }
 
         if (!level.isClientSide) {

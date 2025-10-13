@@ -1,7 +1,7 @@
 package net.venera.galacticraftcore.fluid;
 
 import net.venera.galacticraftcore.GalacticraftCore;
-import net.venera.galacticraftcore.blockentity.LiquidBlockEntity;
+import net.venera.galacticraftcore.block.entity.LiquidBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;

@@ -1,4 +1,4 @@
-package net.venera.galacticraftcore.blockentity;
+package net.venera.galacticraftcore.block.entity;
 
 import net.venera.galacticraftcore.fluid.ModFluids;
 import net.minecraft.core.BlockPos;

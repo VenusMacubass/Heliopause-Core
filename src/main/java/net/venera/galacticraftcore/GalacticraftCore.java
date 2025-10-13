@@ -3,10 +3,12 @@ package net.venera.galacticraftcore;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.api.distmarker.Dist;
 import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.block.entity.ModBlockEntities;
 import net.venera.galacticraftcore.component.ModDataComponents;
 import net.venera.galacticraftcore.fluid.ModFluids;
 import net.venera.galacticraftcore.item.ModCreativeModeTabs;
 import net.venera.galacticraftcore.item.ModItems;
+import net.venera.galacticraftcore.screen.ModMenuTypes;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -46,6 +48,8 @@ public class GalacticraftCore {
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModDataComponents.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
 

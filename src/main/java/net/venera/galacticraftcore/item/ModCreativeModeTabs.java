@@ -105,6 +105,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.ARC_LAMP.get());
                         output.accept(ModBlocks.IRIDIUM_BLOCK.get());
                         output.accept(ModBlocks.SAPPHIRE_ORE.get());
+                        output.accept(ModBlocks.COAL_COMPRESSOR.get());
 
                     })
                     .build()

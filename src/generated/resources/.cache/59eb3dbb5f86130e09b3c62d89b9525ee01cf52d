@@ -1,4 +1,4 @@
-// 1.21.1	2025-10-09T21:40:30.5833683	Loot Tables
+// 1.21.1	2025-10-12T13:53:10.7906941	Loot Tables
 a84026ee389becdfcbb02cf0ab8bc235890ad0e6 data/galacticraftcore/loot_table/blocks/arclamp.json
 32d8949df7b3f849c0c7cfd1269c3f88674ab5cc data/galacticraftcore/loot_table/blocks/gcc_block_aluminium_block.json
 4a5fc0934faf97b7543e4c5a5417ac66a2f0d5cc data/galacticraftcore/loot_table/blocks/gcc_block_aluminium_ore.json
@@ -36,3 +36,4 @@ e3e40b0949a8645cfb19251bcc1f17230265091f data/galacticraftcore/loot_table/blocks
 8c1539a089cbe21bd4054cdea8cd58de3bcea71b data/galacticraftcore/loot_table/blocks/gcc_block_tin_building_stairs.json
 2be6daf100361408521129348b2c423fb4fdea57 data/galacticraftcore/loot_table/blocks/gcc_block_tin_building_wall.json
 7fdeabf798f13a01bfb8c9fa44a0aed5d1019a0f data/galacticraftcore/loot_table/blocks/gcc_block_tin_ore.json
+a681f465f746c37d08c89f99b153656aaf3a9757 data/galacticraftcore/loot_table/blocks/gcc_coal_compressor.json

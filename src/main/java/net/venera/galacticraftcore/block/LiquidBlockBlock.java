@@ -1,15 +1,11 @@
 package net.venera.galacticraftcore.block;
 
-import net.venera.galacticraftcore.blockentity.LiquidBlockEntity;
-import net.venera.galacticraftcore.fluid.ModFluids;
+import net.venera.galacticraftcore.block.entity.LiquidBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FlowingFluid;
 import javax.annotation.Nullable;

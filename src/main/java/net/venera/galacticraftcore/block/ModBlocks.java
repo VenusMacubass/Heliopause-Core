@@ -9,10 +9,12 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.custom.ArcLamp;
+import net.venera.galacticraftcore.block.custom.CoalCompressorBlock;
 import net.venera.galacticraftcore.block.custom.RadioactiveBlock;
 import net.venera.galacticraftcore.item.ModItems;
 
 import java.awt.*;
+import java.util.function.Supplier;
 
 public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(GalacticraftCore.MOD_ID);
@@ -124,9 +126,12 @@ public class ModBlocks {
     public static final DeferredBlock<Block> SAPPHIRE_ORE = registerBlock("gcc_block_sapphire_ore",
             () -> new Block(BlockBehaviour.Properties.of().strength(4f).requiresCorrectToolForDrops()));
 
+    public static final DeferredBlock<Block> COAL_COMPRESSOR = registerBlock("gcc_coal_compressor",
+            () -> new CoalCompressorBlock(BlockBehaviour.Properties.of().strength(2f).sound(SoundType.METAL)));
 
 
-    private static <T extends Block> DeferredBlock<T> registerBlock(String name, java.util.function.Supplier<T> block){
+
+    private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);
         return toReturn;
