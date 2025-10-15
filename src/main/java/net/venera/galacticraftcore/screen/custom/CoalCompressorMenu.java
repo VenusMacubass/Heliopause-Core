@@ -4,6 +4,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -17,17 +18,19 @@ import net.venera.galacticraftcore.screen.ModMenuTypes;
 public class CoalCompressorMenu extends AbstractContainerMenu {
     public final CoalCompressorEntity blockEntity;
     private final Level level;
+    public final ContainerData data;
 
     public CoalCompressorMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
         this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()));
     }
 
-
     public CoalCompressorMenu(int containerId, Inventory  inventory, BlockEntity blockEntity) {
         super(ModMenuTypes.COAL_COMPRESSOR_MENU.get(), containerId);
         this.blockEntity = ((CoalCompressorEntity)blockEntity);
         this.level = inventory.player.level();
+        this.data = this.blockEntity.data;
 
+        addDataSlots(this.data);
         addPlayerInventory(inventory);
         addPlayerHotbar(inventory);
 
@@ -122,5 +125,18 @@ public class CoalCompressorMenu extends AbstractContainerMenu {
         for (int i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 168));
         }
+    }
+    public int getProgress() {
+        return data.get(0); // progress
+    }
+
+    public int getMaxProgress() {
+        return data.get(1); // maxProgress
+    }
+    public int getBurnTime() {
+        return data.get(2); // burnTime
+    }
+    public int getMaxBurnTime() {
+        return data.get(3); // maxBurnTime
     }
 }

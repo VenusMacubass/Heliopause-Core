@@ -1,0 +1,16 @@
+{
+  "type": "galacticraftcore:coal_compressor",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "galacticraftcore:gcc_item_iridium_ingot"
+    }
+  },
+  "pattern": [
+    "A"
+  ],
+  "result": {
+    "count": 1,
+    "id": "galacticraftcore:gcc_item_compressed_iridium"
+  }
+}

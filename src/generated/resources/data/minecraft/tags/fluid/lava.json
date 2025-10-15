@@ -1,6 +1,7 @@
 {
   "values": [
     "minecraft:lava",
-    "minecraft:flowing_lava"
+    "minecraft:flowing_lava",
+    "galacticraftcore:crude_oil"
   ]
 }

@@ -1,5 +1,6 @@
 package net.venera.galacticraftcore.fluid;
 
+import net.neoforged.bus.api.IEventBus;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.entity.LiquidBlockEntity;
 import net.minecraft.core.registries.Registries;
@@ -38,4 +39,10 @@ public class ModFluids {
             mcColor.getGreen() / 255F,
             mcColor.getBlue() / 255F
      );}
+
+    public static void register(IEventBus eventBus){
+        FLUIDS.register(eventBus);
+        FLUID_TYPES.register(eventBus);
+        BLOCK_ENTITY_TYPES.register(eventBus);
+    }
 }

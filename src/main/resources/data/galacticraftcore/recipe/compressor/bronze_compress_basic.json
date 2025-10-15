@@ -1,0 +1,19 @@
+{
+  "type": "galacticraftcore:coal_compressor",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "galacticraftcore:gcc_item_compressed_copper"
+    },
+    "T": {
+      "item": "galacticraftcore:gcc_item_compressed_tin"
+    }
+  },
+  "pattern": [
+    "CT"
+  ],
+  "result": {
+    "count": 1,
+    "id": "galacticraftcore:gcc_item_compressed_bronze"
+  }
+}

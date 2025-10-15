@@ -1,0 +1,17 @@
+{
+  "type": "galacticraftcore:coal_compressor",
+  "category": "misc",
+  "key": {
+    "T": {
+      "item": "galacticraftcore:gcc_item_tin_ingot"
+    }
+  },
+  "pattern": [
+    "T  ",
+    "T  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "galacticraftcore:gcc_item_compressed_tin"
+  }
+}

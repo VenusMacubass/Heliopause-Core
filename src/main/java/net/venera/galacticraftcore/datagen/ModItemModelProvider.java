@@ -70,6 +70,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.COMPRESSED_IRON.get());
         basicItem(ModItems.COMPRESSED_STEEL.get());
         basicItem(ModItems.COMPRESSED_TIN.get());
+        basicItem(ModItems.COMPRESSED_HD_PLATE.get());
 
         basicItem(ModItems.SENSOR_LENS.get());
 

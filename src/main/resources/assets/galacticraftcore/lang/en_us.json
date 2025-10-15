@@ -36,6 +36,7 @@
   "item.galacticraftcore.gcc_item_compressed_iron": "Compressed Iron",
   "item.galacticraftcore.gcc_item_compressed_steel": "Compressed Steel",
   "item.galacticraftcore.gcc_item_compressed_tin": "Compressed Tin",
+  "item.galacticraftcore.gcc_item_heavy_duty_plate": "Heavy Duty Plate",
 
   "item.galacticraftcore.gcc_item_sensor_lens": "Sensor Lens",
 
@@ -50,6 +51,8 @@
   "item.galacticraftcore.gcc_item_steel_boots": "Steel Boots",
   "item.galacticraftcore.gcc_item_crude_oil_bucket": "Crude Oil Bucket",
   "item.galacticraftcore.gcc_item_refined_fuel_bucket": "Refined Fuel Bucket",
+
+
 
 
 
@@ -94,6 +97,8 @@
   "block.galacticraftcore.gcc_block_mars_cobblestone_slab": "Mars Cobblestone Slab",
   "block.galacticraftcore.gcc_block_mars_dungeon_brick_slab": "Mars Dungeon Brick Slab",
   "block.galacticraftcore.arclamp": "Arc Lamp",
+
+  "block.galacticraftcore.gcc_coal_compressor": "Coal Powered Compressor",
 
 
 

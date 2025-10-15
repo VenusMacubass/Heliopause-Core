@@ -17,6 +17,7 @@ public class ModTags {
 
     public static class Items{
         public static final TagKey<Item> CANISTER = createTag("canister");
+        public static final TagKey<Item> COMPRESSIBLE_INGOTS = createTag("compressible_ingots");
 
 
         private static TagKey<Item> createTag(String name){

@@ -8,6 +8,7 @@ import net.venera.galacticraftcore.component.ModDataComponents;
 import net.venera.galacticraftcore.fluid.ModFluids;
 import net.venera.galacticraftcore.item.ModCreativeModeTabs;
 import net.venera.galacticraftcore.item.ModItems;
+import net.venera.galacticraftcore.recipe.ModRecipes;
 import net.venera.galacticraftcore.screen.ModMenuTypes;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
@@ -31,25 +32,22 @@ public class GalacticraftCore {
     public GalacticraftCore(IEventBus modEventBus, Dist modDist, ModContainer modContainer) {
 
         modEventBus.addListener(GalacticraftCoreClient::onClientSetup);
-
         modEventBus.addListener(this::commonSetup);
 
-        ModFluids.FLUIDS.register(modEventBus);
-        ModFluids.FLUID_TYPES.register(modEventBus);
-        ModFluids.BLOCK_ENTITY_TYPES.register(modEventBus);
         if (modDist.isClient()) {
             modEventBus.addListener(GalacticraftCoreClient::registerBlockColors);
             modEventBus.addListener(GalacticraftCoreClient::registerItemColors);
         }
-
         NeoForge.EVENT_BUS.register(this);
 
         ModCreativeModeTabs.register(modEventBus);
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModFluids.register(modEventBus);
         ModDataComponents.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
+        ModRecipes.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
 

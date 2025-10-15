@@ -1,0 +1,9 @@
+{
+  "values": [
+    "minecraft:copper_ingot",
+    "galacticraftcore:gcc_item_tin_ingot",
+    "galacticraftcore:gcc_item_aluminium_ingot",
+    "minecraft:iron_ingot",
+    "galacticraftcore:gcc_item_iridium_ingot"
+  ]
+}

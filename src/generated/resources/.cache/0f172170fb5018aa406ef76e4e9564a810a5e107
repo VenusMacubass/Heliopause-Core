@@ -1,4 +1,4 @@
-// 1.21.1	2025-10-11T10:37:51.6162638	Item Models: galacticraftcore
+// 1.21.1	2025-10-15T10:57:49.2769763	Item Models: galacticraftcore
 3dbe0dd8e793d34ee1b40f2c9687eea8737cc96e assets/galacticraftcore/models/item/gcc_block_mars_cobblestone_wall.json
 4a5f76e352c2d8ea114638f6ae38a31afefc8c36 assets/galacticraftcore/models/item/gcc_block_mars_dungeon_brick_wall.json
 a7d0cdd2ce625633627687ee022ba334de30abc2 assets/galacticraftcore/models/item/gcc_block_moon_dungeon_brick_wall.json
@@ -18,6 +18,7 @@ eb4d027879f36a88b516e44d719172eb0f65fcf1 assets/galacticraftcore/models/item/gcc
 11f7af2efe541d8bdbeb5eb017819c33cd7a93ee assets/galacticraftcore/models/item/gcc_item_dehydrated_carrot.json
 7c88e36593fb2643b1f44cf3b3a9dd8ee58d11af assets/galacticraftcore/models/item/gcc_item_dehydrated_melon.json
 0d0cc0a72d965a3fe3bf2443d4c13460c03ea51a assets/galacticraftcore/models/item/gcc_item_dehydrated_potato.json
+7ee3a6a0ddc0236b92fa6b16dcb61057548e1add assets/galacticraftcore/models/item/gcc_item_heavy_duty_plate.json
 1f726b02883d57d67a215292971717ba0189121d assets/galacticraftcore/models/item/gcc_item_iridium_ingot.json
 4ba36364c691913233e4901b429b2b3323a1d960 assets/galacticraftcore/models/item/gcc_item_lunar_sapphire.json
 81aad36edb27539e1fd6b5c378d9b80e0d25ff5c assets/galacticraftcore/models/item/gcc_item_radioactive_core.json

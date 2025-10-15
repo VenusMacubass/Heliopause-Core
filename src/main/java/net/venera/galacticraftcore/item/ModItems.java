@@ -52,6 +52,7 @@ public class ModItems {
     public static final DeferredItem<Item> COMPRESSED_IRON = ITEMS.register("gcc_item_compressed_iron", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> COMPRESSED_STEEL = ITEMS.register("gcc_item_compressed_steel", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> COMPRESSED_TIN = ITEMS.register("gcc_item_compressed_tin", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> COMPRESSED_HD_PLATE = ITEMS.register("gcc_item_heavy_duty_plate", () -> new Item(new Item.Properties()));
 
     public static final DeferredItem<Item> SENSOR_LENS = ITEMS.register("gcc_item_sensor_lens", () -> new Item(new Item.Properties()));
 
