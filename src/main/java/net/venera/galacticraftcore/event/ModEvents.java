@@ -1,18 +1,23 @@
 package net.venera.galacticraftcore.event;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.data.radiation.RadiationData;
 import net.venera.galacticraftcore.item.ModItems;
 import net.venera.galacticraftcore.item.custom.TempSword;
 
@@ -23,7 +28,7 @@ public class ModEvents {
     private static final Set<BlockPos> HARVESTED_BLOCKS = new HashSet<>();
 
     protected int RADIUS = 150;
-    public static void creeperSweeper(PlayerTickEvent event){
+    public static void creeperSweeper(PlayerTickEvent.Pre event){
         Player player = event.getEntity();
         BlockPos pos = player.getOnPos();
 
@@ -44,11 +49,12 @@ public class ModEvents {
                 if(pos == initialBlockPos || !shword.isCorrectToolForDrops(mainHandItem, event.getLevel().getBlockState(pos))) {
                     continue;
                 }
-
                 HARVESTED_BLOCKS.add(pos);
                 serverPlayer.gameMode.destroyBlock(pos);
                 HARVESTED_BLOCKS.remove(pos);
             }
         }
     }
+
+
 }

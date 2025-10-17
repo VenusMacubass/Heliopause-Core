@@ -5,6 +5,8 @@ import net.neoforged.api.distmarker.Dist;
 import net.venera.galacticraftcore.block.ModBlocks;
 import net.venera.galacticraftcore.block.entity.ModBlockEntities;
 import net.venera.galacticraftcore.component.ModDataComponents;
+import net.venera.galacticraftcore.data.ModAttachments;
+import net.venera.galacticraftcore.data.radiation.RadiationHandler;
 import net.venera.galacticraftcore.fluid.ModFluids;
 import net.venera.galacticraftcore.item.ModCreativeModeTabs;
 import net.venera.galacticraftcore.item.ModItems;
@@ -30,7 +32,6 @@ public class GalacticraftCore {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public GalacticraftCore(IEventBus modEventBus, Dist modDist, ModContainer modContainer) {
-
         modEventBus.addListener(GalacticraftCoreClient::onClientSetup);
         modEventBus.addListener(this::commonSetup);
 
@@ -38,7 +39,9 @@ public class GalacticraftCore {
             modEventBus.addListener(GalacticraftCoreClient::registerBlockColors);
             modEventBus.addListener(GalacticraftCoreClient::registerItemColors);
         }
+
         NeoForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(RadiationHandler.class);
 
         ModCreativeModeTabs.register(modEventBus);
         ModItems.register(modEventBus);
@@ -48,6 +51,7 @@ public class GalacticraftCore {
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
         ModRecipes.register(modEventBus);
+        ModAttachments.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
 

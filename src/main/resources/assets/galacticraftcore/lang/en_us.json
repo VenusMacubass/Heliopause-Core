@@ -102,5 +102,12 @@
 
 
 
-  "block.galacticraftcore.coal_compressor_menu_name": "Coal Compressor"
+  "block.galacticraftcore.coal_compressor_menu_name": "Coal Compressor",
+
+
+
+
+
+
+  "death.attack.radiation_damage": "%1$s succumbed to radiation poisoning."
 }
