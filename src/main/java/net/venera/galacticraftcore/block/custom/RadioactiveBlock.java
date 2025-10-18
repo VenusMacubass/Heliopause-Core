@@ -33,7 +33,6 @@ public class RadioactiveBlock extends Block {
                 double distanceSq = entity.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
                 double distance = Math.sqrt(distanceSq);
 
-                // Damage scales with distance: closer = stronger
                 double damage = Math.max(0.5, (RADIUS - distance) * 0.5);
 
                 living.hurt(new DamageSources(level.registryAccess())
