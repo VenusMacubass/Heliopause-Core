@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:beef"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "galacticraftcore:gcc_item_beef_patty_raw"
+  }
+}

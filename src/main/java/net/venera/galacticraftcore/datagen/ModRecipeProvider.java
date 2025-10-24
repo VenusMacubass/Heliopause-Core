@@ -6,6 +6,7 @@ import net.minecraft.data.recipes.*;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
@@ -29,7 +30,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         List<ItemLike> ALUMINIUM_SMELTABLES = List.of(ModBlocks.ALUMINIUM_ORE, ModItems.RAW_ALUMINIUM);
         List<ItemLike> TIN_SMELTABLES = List.of(ModBlocks.TIN_ORE, ModItems.RAW_TIN);
 
-        //Metals
+        //region Metals
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ALUMINIUM_BLOCK.get())
                 .pattern("AAA")
                 .pattern("AAA")
@@ -91,10 +92,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('R', ModItems.RAW_ALUMINIUM.get())
                 .unlockedBy("has_raw_aluminium", has(ModItems.RAW_ALUMINIUM.get()))
                 .save(recipeOutput, "raw_aluminium_block_crafting");
+        //endregion
 
-
-
-        //GC Ingredients
+        //region Ingredients
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.COPPER_CANISTER.get(), 2)
                 .pattern("C C")
                 .pattern("C C")
@@ -119,10 +119,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('I', ModItems.COMPRESSED_IRIDIUM)
                 .unlockedBy("has_compressed_iridium", has(ModItems.IRIDIUM_INGOT.get()))
                 .save(recipeOutput, "sensor_lens_crafting");
+        //endregion
 
-
-
-        //Tools
+        //region Tools
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.STEEL_SWORD.get())
                 .pattern(" C ")
                 .pattern(" S ")
@@ -163,10 +162,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', Items.STICK)
                 .unlockedBy("has_compressed_steel", has(ModItems.COMPRESSED_STEEL.get()))
                 .save(recipeOutput, "steel_hoe_crafting");
+        //endregion
 
-
-
-        //Mod Armors
+        //region Armors
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.STEEL_HELMET.get())
                 .pattern("SSS")
                 .pattern("S S")
@@ -193,10 +191,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', ModItems.COMPRESSED_STEEL.get())
                 .unlockedBy("has_compressed_steel", has(ModItems.COMPRESSED_STEEL.get()))
                 .save(recipeOutput, "steel_boots_crafting");
+        //endregion
 
-
-
-        //Special Tools
+        //region Special Tools
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.STANDARD_WRENCH)
                 .pattern("  S")
                 .pattern(" C ")
@@ -205,10 +202,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', ModItems.COMPRESSED_STEEL.get())
                 .unlockedBy("has_compressed_steel", has(ModItems.COMPRESSED_STEEL.get()))
                 .save(recipeOutput, "standard_wrench_crafting");
+        //endregion
 
-
-
-        //Mod Foods
+        //region Mod Foods
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ModItems.DEHYDRATED_APPLE.get())
                 .pattern("CA ")
                 .pattern("A  ")
@@ -216,6 +212,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('A', Items.APPLE)
                 .unlockedBy("has_tin_canister", has(ModItems.TIN_CANISTER.get()))
                 .save(recipeOutput, "dehydrated_apple_crafting");
+
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ModItems.DEHYDRATED_CARROT.get())
                 .pattern("CB ")
                 .pattern("B  ")
@@ -223,6 +220,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('B', Items.CARROT)
                 .unlockedBy("has_tin_canister", has(ModItems.TIN_CANISTER.get()))
                 .save(recipeOutput, "dehydrated_carrot_crafting");
+
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ModItems.DEHYDRATED_MELON.get())
                 .pattern("CM ")
                 .pattern("M  ")
@@ -230,6 +228,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('M', Items.MELON)
                 .unlockedBy("has_tin_canister", has(ModItems.TIN_CANISTER.get()))
                 .save(recipeOutput, "dehydrated_melon_crafting");
+
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ModItems.DEHYDRATED_POTATO.get())
                 .pattern("CP ")
                 .pattern("P  ")
@@ -237,14 +236,46 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('P', Items.POTATO)
                 .unlockedBy("has_tin_canister", has(ModItems.TIN_CANISTER.get()))
                 .save(recipeOutput, "dehydrated_potato_crafting");
-//        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.DEHYDRATED_APPLE.get())
-//                .pattern("CA ")
-//                .pattern("A  ")
-//                .pattern("   ")
-//                .define('C', ModItems.TIN_CANISTER.get())
-//                .define('A', Items.APPLE)
-//                .unlockedBy("has_compressed_steel", has(ModItems.TIN_CANISTER.get()))
-//                .save(recipeOutput, "dehydrated_apple_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.DEHYDRATED_BEEF.get())
+                .pattern("CB ")
+                .pattern("B  ")
+                .pattern("   ")
+                .define('C', ModItems.TIN_CANISTER.get())
+                .define('B', Items.BEEF)
+                .unlockedBy("has_tin_canister", has(ModItems.TIN_CANISTER.get()))
+                .save(recipeOutput, "dehydrated_beef_crafting");
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.BURGER_BUN.get(), 2)
+                .requires(Items.BREAD, 1)
+                .unlockedBy("has_bread", has(Items.BREAD))
+                .save(recipeOutput, "burger_bun_crafting");
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.BEEF_PATTY_RAW.get())
+                .requires(Items.BEEF, 1)
+                .unlockedBy("has_beef", has(Items.BEEF))
+                .save(recipeOutput, "beef_crafting");
+
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModItems.BEEF_PATTY_RAW.get()), RecipeCategory.FOOD, ModItems.BEEF_PATTY.get(),0.36f, 400)
+                .unlockedBy("has_raw_patty",  has(ModItems.BEEF_PATTY_RAW.get())).save(recipeOutput, "beef_patty_furnace");
+
+        SimpleCookingRecipeBuilder.smoking(Ingredient.of(ModItems.BEEF_PATTY_RAW.get()), RecipeCategory.FOOD, ModItems.BEEF_PATTY.get(),0.36f, 200)
+                .unlockedBy("has_raw_patty",  has(ModItems.BEEF_PATTY_RAW.get())).save(recipeOutput, "beef_patty_smoker");
+
+        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(ModItems.BEEF_PATTY_RAW.get()), RecipeCategory.FOOD, ModItems.BEEF_PATTY.get(),0.36f, 600)
+                .unlockedBy("has_raw_patty",  has(ModItems.BEEF_PATTY_RAW.get())).save(recipeOutput, "beef_patty_campfire");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.CHEESEBURGER.get())
+                .pattern(" B ")
+                .pattern("CP ")
+                .pattern(" B ")
+                .define('C', ModItems.CHEESE_SLICE.get())
+                .define('B', ModItems.BURGER_BUN.get())
+                .define('P', ModItems.BEEF_PATTY.get())
+                .unlockedBy("has_patty", has(ModItems.BEEF_PATTY.get()))
+                .save(recipeOutput, "cheeseburger_crafting");
+
+        //endregion
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------

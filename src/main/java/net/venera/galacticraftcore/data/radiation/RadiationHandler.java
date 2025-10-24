@@ -1,49 +1,51 @@
 package net.venera.galacticraftcore.data.radiation;
 
-import net.minecraft.core.Holder;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSources;
-import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.data.ModAttachments;
-
-import java.awt.*;
 
 @EventBusSubscriber(modid = GalacticraftCore.MOD_ID)
 public class RadiationHandler {
     private static final double EARTH_BG_RAD = 0.27;
     private static final double NETHER_BG_RAD = 0.23;
-    private static final double END_BG_RAD = 0.47;
+    private static final double END_BG_RAD = 0.48;
     private static final double MOON_DAY_BG_RAD = 54;
     private static final double MOON_NIGHT_BG_RAD = 46;
 
     @SubscribeEvent
-    public static void onPlayerTick(PlayerTickEvent.Post event) {
-        Player player = event.getEntity();
-        if (player.level().isClientSide || player.tickCount % 20 != 0) {return;}
-        RadiationData radiationData = player.getData(ModAttachments.RADIATION_DATA);
-        //radiationData.setRadiation(0);
+    public static void onEntityTick(EntityTickEvent.Post event) {
+        if(!(event.getEntity() instanceof LivingEntity aliveEntity)){return;}
+        if (aliveEntity.level().isClientSide || aliveEntity.tickCount % 20 != 0) {return;}
+        if (!aliveEntity.hasData(ModAttachments.RADIATION_DATA)) {return;}
+        RadiationData radiationData = aliveEntity.getData(ModAttachments.RADIATION_DATA);
+        //radiationData.setRadiation(0)
 
-
-
-        radiationChange(player, radiationData);
-        applyRadiationEffects(player, radiationData);
-        GalacticraftCore.LOGGER.info("Radiation level:" + radiationData.getRadiation());
+        radiationChange(aliveEntity, radiationData);
+        applyRadiationEffects(aliveEntity, radiationData);
+        if (aliveEntity.tickCount % (radiationData.getRadiation() >= 400 ? 40:100) != 0) {
+            applyRadiationDamage(aliveEntity, radiationData);
+        }
+        if(aliveEntity instanceof Player player){
+        GalacticraftCore.LOGGER.info(player.getName() + " radiation level: " + player.getData(ModAttachments.RADIATION_DATA).getRadiation());
+        }
     }
 
-    private static void radiationChange(Player player, RadiationData radiationData) {
+    private static void radiationChange(Entity entity, RadiationData radiationData) {
         double radLevel = radiationData.getRadiation();
-        var dim = player.level().dimension();
-        double difficulty = 0.01f;
-        switch (player.level().getDifficulty()) {
+        var dim = entity.level().dimension();
+        double difficulty;
+        switch (entity.level().getDifficulty()) {
             case PEACEFUL:
                 difficulty = 0f;
                 break;
@@ -56,35 +58,54 @@ public class RadiationHandler {
             case HARD:
                 difficulty = 0.013f;
                 break;
+            default:
+                difficulty = 0f;
+                break;
         }
         if (dim.equals(Level.OVERWORLD)) {
-            radiationData.addRadiation(Math.abs(EARTH_BG_RAD - radLevel) * difficulty);
+            radiationData.changeRadiation(Math.abs(EARTH_BG_RAD - radLevel) * difficulty, EARTH_BG_RAD > radLevel);
         } else if (dim.equals(Level.NETHER)) {
-            radiationData.addRadiation(Math.abs(NETHER_BG_RAD - radLevel) * difficulty);
+            radiationData.changeRadiation(Math.abs(NETHER_BG_RAD - radLevel) * difficulty, NETHER_BG_RAD > radLevel);
         } else if (dim.equals(Level.END)) {
-            radiationData.addRadiation(Math.abs(END_BG_RAD - radLevel) * difficulty);
+            radiationData.changeRadiation(Math.abs(END_BG_RAD - radLevel) * difficulty,  END_BG_RAD > radLevel);
         } else {
             throw new IllegalStateException("Unexpected value: " + dim);
         }
-
     }
 
-    private static void applyRadiationEffects(Player player, RadiationData radData) {
+    private static void applyRadiationEffects(LivingEntity entity, RadiationData radData) {
+        if(entity instanceof Player player && player.isCreative()){return;}
         double radLevel = radData.getRadiation();
-        if (radLevel > 200) {
-            player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 2000, radLevel > 600 ? 2 : 1));
+        if (radLevel > 150) {
+            entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 1200, radLevel > 600 ? 2 : 1));
         }
         if (radLevel > 400) {
-            player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 2000, 1));
-            player.hurt(new DamageSources(player.level().registryAccess()).source(DamageTypes.MAGIC), radLevel > 600 ? 2 : 1);
+            entity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 1200, 1));
         }
         if (radLevel > 600) {
-            player.addEffect(new MobEffectInstance(MobEffects.GLOWING, 2000, 1));
-            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 2000, 1));
+            entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 1200, 0));
+            entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 1200, 0));
         }
         if (radLevel > 800) {
-            player.hurt( new DamageSources(player.level().registryAccess()).source(DamageTypes.MAGIC), (float)(radLevel-800)*0.1f);
 
+        }
+    }
+
+    private static void applyRadiationDamage(LivingEntity entity, RadiationData radData) {
+        if(entity instanceof Player player && player.isCreative()){return;}
+        double radLevel = radData.getRadiation();
+        var damageSource = entity.damageSources().magic();
+        if (radLevel > 200) {
+            entity.hurt(damageSource, radLevel > 600 ? 2f : 1f);
+        }
+//        if (radLevel > 400) {
+//
+//        }
+        if (radLevel > 800) {
+            entity.hurt(damageSource, 2f);
+        }
+        if (radLevel > 900) {
+            entity.hurt(damageSource, (float)(radLevel-900)*0.3f);
         }
     }
 }

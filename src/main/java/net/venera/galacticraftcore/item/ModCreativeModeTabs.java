@@ -30,6 +30,12 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.DEHYDRATED_CARROT.get());
                         output.accept(ModItems.DEHYDRATED_POTATO.get());
                         output.accept(ModItems.DEHYDRATED_MELON.get());
+                        output.accept(ModItems.DEHYDRATED_BEEF.get());
+                        output.accept(ModItems.BURGER_BUN.get());
+                        output.accept(ModItems.BEEF_PATTY_RAW.get());
+                        output.accept(ModItems.BEEF_PATTY.get());
+                        output.accept(ModItems.CHEESE_SLICE.get());
+                        output.accept(ModItems.CHEESEBURGER.get());
                         output.accept(ModItems.RADIOACTIVE_CORE.get());
                         output.accept(ModItems.RAW_ALUMINIUM.get());
                         output.accept(ModItems.RAW_TIN.get());
@@ -58,6 +64,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.TEMP_SWORD.get());
                         output.accept(ModFluids.CRUDE_OIL.getBucket());
                         output.accept(ModFluids.REFINED_FUEL.getBucket());
+
 
                     })
                     .build()

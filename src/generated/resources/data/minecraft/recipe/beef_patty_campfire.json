@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "cookingtime": 600,
+  "experience": 0.36,
+  "ingredient": {
+    "item": "galacticraftcore:gcc_item_beef_patty_raw"
+  },
+  "result": {
+    "count": 1,
+    "id": "galacticraftcore:gcc_item_beef_patty"
+  }
+}

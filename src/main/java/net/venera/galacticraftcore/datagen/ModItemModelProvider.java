@@ -50,6 +50,13 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.DEHYDRATED_CARROT.get());
         basicItem(ModItems.DEHYDRATED_POTATO.get());
         basicItem(ModItems.DEHYDRATED_MELON.get());
+        basicItem(ModItems.DEHYDRATED_BEEF.get());
+        basicItem(ModItems.BURGER_BUN.get());
+        basicItem(ModItems.BEEF_PATTY_RAW.get());
+        basicItem(ModItems.BEEF_PATTY.get());
+        basicItem(ModItems.CHEESE_SLICE.get());
+        basicItem(ModItems.CHEESEBURGER.get());
+
         basicItem(ModFluids.CRUDE_OIL.getBucket());
         basicItem(ModFluids.REFINED_FUEL.getBucket());
 

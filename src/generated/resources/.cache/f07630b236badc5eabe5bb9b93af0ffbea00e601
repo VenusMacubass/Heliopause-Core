@@ -1,4 +1,4 @@
-// 1.21.1	2025-10-11T10:46:58.4446068	Block States: galacticraftcore
+// 1.21.1	2025-10-24T13:25:06.7424672	Block States: galacticraftcore
 bd6d6fb752ede662ce2baaa166f16ab857d87f01 assets/galacticraftcore/blockstates/gcc_block_aluminium_block.json
 35ea301ddcb6841f364822bc2ec860ea4ebc7c00 assets/galacticraftcore/blockstates/gcc_block_aluminium_ore.json
 2f305120f23371997cbca903d38be572537d4083 assets/galacticraftcore/blockstates/gcc_block_cheese_block.json
@@ -94,7 +94,6 @@ e62054b619db18f04ebde2338a4f33470d88de51 assets/galacticraftcore/models/block/gc
 b59ec2d4b5b36bb4c7082b23ffc328d06c4bb2af assets/galacticraftcore/models/block/gcc_block_tin_ore.json
 f566a9d999b40db97abce9dd6df4c9c5ef76908c assets/galacticraftcore/models/item/gcc_block_aluminium_block.json
 4116db87c434f592d3890a8df2e617a27957afa5 assets/galacticraftcore/models/item/gcc_block_aluminium_ore.json
-4f3d087596876ebe47443a3048d3c4f7009e7379 assets/galacticraftcore/models/item/gcc_block_cheese_block.json
 7f143c164c7bf05c376c08d387e8911cc2a4ba7b assets/galacticraftcore/models/item/gcc_block_iridium_block.json
 d04b35821fe2806e99148ec34b6df35a356d3814 assets/galacticraftcore/models/item/gcc_block_mars_cobblestone.json
 aee8f3e29bc5843f23afd36e4aac05c179229267 assets/galacticraftcore/models/item/gcc_block_mars_cobblestone_slab.json

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "minecraft:beef"
+    },
+    "C": {
+      "item": "galacticraftcore:gcc_item_tin_canister"
+    }
+  },
+  "pattern": [
+    "CB ",
+    "B  ",
+    "   "
+  ],
+  "result": {
+    "count": 1,
+    "id": "galacticraftcore:gcc_item_dehydrated_beef"
+  }
+}

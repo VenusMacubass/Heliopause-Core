@@ -15,6 +15,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.venera.galacticraftcore.data.ModAttachments;
+import net.venera.galacticraftcore.data.radiation.RadiationData;
+
 import java.util.List;
 
 public class RadioactiveBlock extends Block {
@@ -30,13 +33,13 @@ public class RadioactiveBlock extends Block {
 
         for (Entity entity : entities) {
             if (entity instanceof LivingEntity living) {
+                RadiationData radData = entity.getData(ModAttachments.RADIATION_DATA);
+                if (!living.hasData(ModAttachments.RADIATION_DATA)) continue;
                 double distanceSq = entity.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-                double distance = Math.sqrt(distanceSq);
-
-                double damage = Math.max(0.5, (RADIUS - distance) * 0.5);
-
-                living.hurt(new DamageSources(level.registryAccess())
-                        .source(DamageTypes.MAGIC), (float) damage);
+                if(distanceSq < (RADIUS *RADIUS)){
+                    double distance = Math.sqrt(distanceSq);
+                    radData.changeRadiation(Math.max(0.3, (RADIUS - distance) * 0.5), true);
+                }
             }
         }
         level.scheduleTick(pos, this, 20);

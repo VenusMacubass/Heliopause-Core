@@ -20,6 +20,7 @@ public class ModItems {
     public static final DeferredItem<Item> COPPER_CANISTER = ITEMS.register("gcc_item_copper_canister", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> TIN_CANISTER = ITEMS.register("gcc_item_tin_canister", () -> new Item(new Item.Properties()));
 
+    //region Foods
     public static final DeferredItem<Item> DEHYDRATED_APPLE = ITEMS.register("gcc_item_dehydrated_apple",
             () -> new Item(new Item.Properties().food(ModFoodProperties.DEHYDRATED_FOOD))
             {
@@ -36,10 +37,24 @@ public class ModItems {
             () -> new Item(new Item.Properties().food(ModFoodProperties.DEHYDRATED_FOOD)));
     public static final DeferredItem<Item> DEHYDRATED_MELON = ITEMS.register("gcc_item_dehydrated_melon",
             () -> new Item(new Item.Properties().food(ModFoodProperties.DEHYDRATED_FOOD)));
+    public static final DeferredItem<Item> BURGER_BUN = ITEMS.register("gcc_item_burger_bun",
+            () -> new Item(new Item.Properties().food(ModFoodProperties.EDIBLE_INGREDIENT)));
+    public static final DeferredItem<Item> BEEF_PATTY_RAW = ITEMS.register("gcc_item_beef_patty_raw",
+            () -> new Item(new Item.Properties().food(ModFoodProperties.RAW_FOOD)));
+    public static final DeferredItem<Item> BEEF_PATTY = ITEMS.register("gcc_item_beef_patty",
+            () -> new Item(new Item.Properties().food(ModFoodProperties.EDIBLE_INGREDIENT)));
+    public static final DeferredItem<Item> DEHYDRATED_BEEF = ITEMS.register("gcc_item_dehydrated_beef",
+            () -> new Item(new Item.Properties().food(ModFoodProperties.DEHYDRATED_FOOD)));
+    public static final DeferredItem<Item> CHEESE_SLICE = ITEMS.register("gcc_item_cheese_slice",
+            () -> new Item(new Item.Properties().food(ModFoodProperties.EDIBLE_INGREDIENT)));
+    public static final DeferredItem<Item> CHEESEBURGER = ITEMS.register("gcc_item_cheeseburger",
+            () -> new Item(new Item.Properties().food(ModFoodProperties.MODERN_FOOD)));
 
     public static final DeferredItem<Item> RADIOACTIVE_CORE = ITEMS.register("gcc_item_radioactive_core",
             () -> new FuelItem(new Item.Properties(), 20000));
+    //endregion
 
+    //region Ingredients
     public static final DeferredItem<Item> RAW_ALUMINIUM = ITEMS.register("gcc_item_raw_aluminium", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> RAW_TIN = ITEMS.register("gcc_item_raw_tin", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> RAW_SILICON= ITEMS.register("gcc_item_raw_silicon", () -> new Item(new Item.Properties()));
@@ -55,7 +70,9 @@ public class ModItems {
     public static final DeferredItem<Item> COMPRESSED_HD_PLATE = ITEMS.register("gcc_item_heavy_duty_plate", () -> new Item(new Item.Properties()));
 
     public static final DeferredItem<Item> SENSOR_LENS = ITEMS.register("gcc_item_sensor_lens", () -> new Item(new Item.Properties()));
+    //endregion
 
+    //region Tools
     public static final DeferredItem<SwordItem> STEEL_SWORD = ITEMS.register("gcc_item_steel_sword", ()-> new SwordItem(ModToolTiers.STEEL, new Item.Properties()
             .attributes(SwordItem.createAttributes(ModToolTiers.STEEL, 2,-2.4f))));
     public static final DeferredItem<AxeItem> STEEL_AXE = ITEMS.register("gcc_item_steel_axe", ()-> new AxeItem(ModToolTiers.STEEL, new Item.Properties()
@@ -66,7 +83,9 @@ public class ModItems {
             .attributes(ShovelItem.createAttributes(ModToolTiers.STEEL, 0.5f,-3f))));
     public static final DeferredItem<HoeItem> STEEL_HOE = ITEMS.register("gcc_item_steel_hoe", ()-> new HoeItem(ModToolTiers.STEEL, new Item.Properties()
             .attributes(HoeItem.createAttributes(ModToolTiers.STEEL, -3f,-1f))));
+    //endregion
 
+    //region Armors
     public static final DeferredItem<ArmorItem> STEEL_HELMET = ITEMS.register("gcc_item_steel_helmet", () ->
             new ArmorItem(ModArmorMaterials.STEEL_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(18))));
@@ -79,11 +98,12 @@ public class ModItems {
     public static final DeferredItem<ArmorItem> STEEL_BOOTS = ITEMS.register("gcc_item_steel_boots", () ->
             new ArmorItem(ModArmorMaterials.STEEL_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
                     new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(18))));
+    //endregion
+
     public static final DeferredItem<Item> RAW_IRIDIUM = ITEMS.register("gcc_item_raw_iridium",
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> LUNAR_SAPPHIRE = ITEMS.register("gcc_item_lunar_sapphire",
             () -> new Item(new Item.Properties()));
-
 
     public static final DeferredItem<TempSword> TEMP_SWORD = ITEMS.register("temp_item_claymore", () ->
             new TempSword(ModToolTiers.STEEL, (new Item.Properties().attributes(ShovelItem.createAttributes(ModToolTiers.STEEL, 12,-3.9f)))));

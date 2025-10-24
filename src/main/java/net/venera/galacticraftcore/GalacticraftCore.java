@@ -2,11 +2,15 @@ package net.venera.galacticraftcore;
 
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.venera.galacticraftcore.block.ModBlocks;
 import net.venera.galacticraftcore.block.entity.ModBlockEntities;
 import net.venera.galacticraftcore.component.ModDataComponents;
 import net.venera.galacticraftcore.data.ModAttachments;
 import net.venera.galacticraftcore.data.radiation.RadiationHandler;
+import net.venera.galacticraftcore.entity.ModEntities;
+import net.venera.galacticraftcore.entity.villager.ModVillagers;
+import net.venera.galacticraftcore.entity.zombie.SpaceZombieEntity;
 import net.venera.galacticraftcore.fluid.ModFluids;
 import net.venera.galacticraftcore.item.ModCreativeModeTabs;
 import net.venera.galacticraftcore.item.ModItems;
@@ -34,14 +38,17 @@ public class GalacticraftCore {
     public GalacticraftCore(IEventBus modEventBus, Dist modDist, ModContainer modContainer) {
         modEventBus.addListener(GalacticraftCoreClient::onClientSetup);
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(GalacticraftCoreClient::onRegisterRenderers);
+        modEventBus.addListener(this::onEntityCreation);
 
         if (modDist.isClient()) {
             modEventBus.addListener(GalacticraftCoreClient::registerBlockColors);
             modEventBus.addListener(GalacticraftCoreClient::registerItemColors);
         }
 
-        NeoForge.EVENT_BUS.register(this);
+        //NeoForge.EVENT_BUS.register(this);
         NeoForge.EVENT_BUS.register(RadiationHandler.class);
+
 
         ModCreativeModeTabs.register(modEventBus);
         ModItems.register(modEventBus);
@@ -52,6 +59,8 @@ public class GalacticraftCore {
         ModMenuTypes.register(modEventBus);
         ModRecipes.register(modEventBus);
         ModAttachments.register(modEventBus);
+        ModEntities.register(modEventBus);
+        ModVillagers.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
 
@@ -83,5 +92,10 @@ public class GalacticraftCore {
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
 
+    }
+
+    @SubscribeEvent
+    public void onEntityCreation(EntityAttributeCreationEvent event) {
+        event.put(ModEntities.SPACE_ZOMBIE.get(), SpaceZombieEntity.createAttributes().build());
     }
 }

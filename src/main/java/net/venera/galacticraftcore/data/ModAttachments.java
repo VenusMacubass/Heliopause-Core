@@ -1,5 +1,8 @@
 package net.venera.galacticraftcore.data;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityAttachment;
+import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -13,6 +16,7 @@ public class ModAttachments {
 
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<RadiationData>> RADIATION_DATA = ATTACHMENT_TYPES.register("radiation_data",
                     () -> AttachmentType.serializable(RadiationData::new).build());
+
 
     public static void register(IEventBus bus) {
         ATTACHMENT_TYPES.register(bus);

@@ -9,6 +9,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
@@ -16,6 +17,8 @@ import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.entity.ModEntities;
+import net.venera.galacticraftcore.entity.zombie.SpaceZombieRenderer;
 import net.venera.galacticraftcore.item.ModItems;
 import net.venera.galacticraftcore.screen.ModMenuTypes;
 import net.venera.galacticraftcore.screen.custom.CoalCompressorScreen;
@@ -56,6 +59,11 @@ public class GalacticraftCoreClient {
                         .orElse(0xFFFFFFFF);
             }, itemObject.get());
         }
+    }
+
+    @SubscribeEvent
+    public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(ModEntities.SPACE_ZOMBIE.get(), SpaceZombieRenderer::new);
     }
 
     @SubscribeEvent
