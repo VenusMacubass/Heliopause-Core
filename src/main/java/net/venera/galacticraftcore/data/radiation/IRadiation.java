@@ -15,8 +15,8 @@ public interface IRadiation extends INBTSerializable<CompoundTag> {
         getData().setRadiation(radiation);
     }
 
-    default void addRadiation(double amount) {
-        getData().addRadiation(amount);
+    default void changeRadiation(double amount, boolean vector) {
+        getData().changeRadiation(amount, vector);
     }
 
     default double getRadiationPercent() {
