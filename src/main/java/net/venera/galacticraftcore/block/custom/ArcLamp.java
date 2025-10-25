@@ -16,14 +16,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class ArcLamp extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
-  //  public static final EnumProperty<AttachFace> BASE = BlockStateProperties.ATTACH_FACE;
     public static final BooleanProperty CLICKED = BooleanProperty.create("clicked");
 
     public ArcLamp(Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState()
-                .setValue(FACING, Direction.NORTH)
-         //       .setValue(BASE, AttachFace.FLOOR)
+                .setValue(FACING, Direction.SOUTH)
                 .setValue(CLICKED, false));
     }
 
@@ -44,18 +42,16 @@ public class ArcLamp extends Block {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        BlockPos blockpos = context.getClickedPos();
-        Player player = context.getPlayer();
+        Direction clickedFace = context.getClickedFace();
 
-        if (context.getClickedFace().getAxis().isHorizontal()) {
-            Direction facingHorizontal = context.getHorizontalDirection();
-            player.displayClientMessage(Component.literal("We are in isHorizontal. Clicked Facing " + facingHorizontal.getOpposite().toString()), true);
-            return this.defaultBlockState().setValue(FACING, facingHorizontal);
+        // If placed on top/bottom, make the block face toward the player
+        if (clickedFace == Direction.UP || clickedFace == Direction.DOWN) {
+            return this.defaultBlockState()
+                    .setValue(FACING, clickedFace);
         }
-        else {
-            Direction facingHorizontal = context.getHorizontalDirection();
-            player.displayClientMessage(Component.literal("We are in isnotHorizontal. Clicked Facing " + facingHorizontal.getOpposite().toString()), true);
-            return this.defaultBlockState().setValue(FACING, facingHorizontal);
-        }
+
+        // If placed on side faces, face outward from that surface
+        return this.defaultBlockState()
+                .setValue(FACING, clickedFace);
     }
 }

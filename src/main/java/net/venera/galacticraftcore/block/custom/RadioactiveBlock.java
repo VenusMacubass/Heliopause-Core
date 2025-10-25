@@ -38,7 +38,7 @@ public class RadioactiveBlock extends Block {
                 double distanceSq = entity.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
                 if(distanceSq < (RADIUS *RADIUS)){
                     double distance = Math.sqrt(distanceSq);
-                    radData.changeRadiation(Math.max(0.3, (RADIUS - distance) * 0.5), true);
+                    radData.changeRadiation(Math.max(0.3, (RADIUS - distance) * 0.5f), true);
                 }
             }
         }

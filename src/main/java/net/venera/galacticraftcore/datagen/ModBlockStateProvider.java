@@ -21,7 +21,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.RADIOACTIVE_BLOCK);
         blockWithItem(ModBlocks.ALUMINIUM_ORE);
         blockWithItem(ModBlocks.SAPPHIRE_ORE);
-        simpleBlock(ModBlocks.CHEESE_BLOCK.get());
         blockWithItem(ModBlocks.MOON_TURF);
         blockWithItem(ModBlocks.MOON_DIRT);
         blockWithItem(ModBlocks.MOON_ROCK);

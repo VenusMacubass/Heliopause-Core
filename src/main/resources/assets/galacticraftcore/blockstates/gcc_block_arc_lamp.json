@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "facing=north,clicked=false": { "model": "galacticraftcore:block/arclamp/arclamp_off_north_model"},
+    "facing=south,clicked=false": { "model": "galacticraftcore:block/arclamp/arclamp_off_south_model"},
+    "facing=west,clicked=false": { "model": "galacticraftcore:block/arclamp/arclamp_off_west_model"},
+    "facing=east,clicked=false": { "model": "galacticraftcore:block/arclamp/arclamp_off_east_model"},
+
+    "facing=north,clicked=true": { "model": "galacticraftcore:block/arclamp/arclamp_on_north_model"},
+    "facing=south,clicked=true": { "model": "galacticraftcore:block/arclamp/arclamp_on_south_model"},
+    "facing=west,clicked=true": { "model": "galacticraftcore:block/arclamp/arclamp_on_west_model"},
+    "facing=east,clicked=true": { "model": "galacticraftcore:block/arclamp/arclamp_on_east_model"},
+
+    "facing=up,clicked=false": { "model": "galacticraftcore:block/arclamp/arclamp_off_ground_model"},
+    "facing=down,clicked=false": { "model": "galacticraftcore:block/arclamp/arclamp_off_ceiling_model"},
+    "facing=up,clicked=true": { "model": "galacticraftcore:block/arclamp/arclamp_on_ground_model"},
+    "facing=down,clicked=true": { "model": "galacticraftcore:block/arclamp/arclamp_on_ceiling_model"}
+  }
+}

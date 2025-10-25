@@ -63,11 +63,11 @@ public class RadiationHandler {
                 break;
         }
         if (dim.equals(Level.OVERWORLD)) {
-            radiationData.changeRadiation(Math.abs(EARTH_BG_RAD - radLevel) * difficulty, EARTH_BG_RAD > radLevel);
+            radiationData.changeRadiation(Math.abs(EARTH_BG_RAD - Math.min(radLevel, 100)) * difficulty, EARTH_BG_RAD > radLevel);
         } else if (dim.equals(Level.NETHER)) {
-            radiationData.changeRadiation(Math.abs(NETHER_BG_RAD - radLevel) * difficulty, NETHER_BG_RAD > radLevel);
+            radiationData.changeRadiation(Math.abs(NETHER_BG_RAD - Math.min(radLevel, 100)) * difficulty, NETHER_BG_RAD > radLevel);
         } else if (dim.equals(Level.END)) {
-            radiationData.changeRadiation(Math.abs(END_BG_RAD - radLevel) * difficulty,  END_BG_RAD > radLevel);
+            radiationData.changeRadiation(Math.abs(END_BG_RAD - Math.min(radLevel, 100)) * difficulty,  END_BG_RAD > radLevel);
         } else {
             throw new IllegalStateException("Unexpected value: " + dim);
         }

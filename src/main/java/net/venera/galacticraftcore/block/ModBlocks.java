@@ -9,6 +9,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.custom.ArcLamp;
+import net.venera.galacticraftcore.block.custom.CheeseBlock;
 import net.venera.galacticraftcore.block.custom.CoalCompressorBlock;
 import net.venera.galacticraftcore.block.custom.RadioactiveBlock;
 import net.venera.galacticraftcore.item.ModItems;
@@ -27,9 +28,6 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> RADIOACTIVE_BLOCK = registerBlock("gcc_block_radioactive_block",
             () -> new RadioactiveBlock(BlockBehaviour.Properties.of().strength(8f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
-
-    public static final DeferredBlock<Block> CHEESE_BLOCK = registerBlock("gcc_block_cheese_block",
-            () -> new Block(BlockBehaviour.Properties.of().strength(0.5f).sound(SoundType.CROP)));
 
     public static final DeferredBlock<Block> MOON_TURF = registerBlock("gcc_block_moon_turf",
             () -> new Block(BlockBehaviour.Properties.of()));
@@ -118,7 +116,7 @@ public class ModBlocks {
     public static final DeferredBlock<SlabBlock> MARS_DUNGEON_BRICK_SLAB = registerBlock("gcc_block_mars_dungeon_brick_slab",
             ()-> new SlabBlock(BlockBehaviour.Properties.of().strength(5f)));
 
-    public static final DeferredBlock<Block> ARC_LAMP = registerBlock("arclamp",
+    public static final DeferredBlock<Block> ARC_LAMP = registerBlock("gcc_block_arc_lamp",
             () -> new ArcLamp(BlockBehaviour.Properties.of().lightLevel(state -> state.getValue(ArcLamp.CLICKED) ? 15:0).noOcclusion().strength(2f)));
 
     public static final DeferredBlock<Block> IRIDIUM_BLOCK = registerBlock("gcc_block_iridium_block",
@@ -128,6 +126,9 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> COAL_COMPRESSOR = registerBlock("gcc_coal_compressor",
             () -> new CoalCompressorBlock(BlockBehaviour.Properties.of().strength(2f).sound(SoundType.METAL)));
+
+    public static final DeferredBlock<Block> CHEESE_BLOCK = registerBlock("gcc_block_cheese_block",
+            () -> new CheeseBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE)));
 
 
 
