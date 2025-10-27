@@ -114,6 +114,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.IRIDIUM_BLOCK.get());
                         output.accept(ModBlocks.SAPPHIRE_ORE.get());
                         output.accept(ModBlocks.COAL_COMPRESSOR.get());
+                        output.accept(ModBlocks.LAUNCH_PAD.get());
 
                     })
                     .build()

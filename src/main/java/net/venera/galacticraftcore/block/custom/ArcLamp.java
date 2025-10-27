@@ -6,22 +6,35 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.venera.galacticraftcore.GalacticraftCore;
 import org.jetbrains.annotations.NotNull;
 
 public class ArcLamp extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty CLICKED = BooleanProperty.create("clicked");
+    public static final IntegerProperty ROTATION = IntegerProperty.create("rotation", 0, 3);
+    // More accurate shapes based on your model
+    private static final VoxelShape UP_SHAPE = Block.box(2, 0, 2, 14, 1, 14);
+    private static final VoxelShape DOWN_SHAPE = Block.box(2, 15, 2, 14, 16, 14);
+    private static final VoxelShape NORTH_SHAPE = Block.box(2, 2, 15, 14, 14, 16);
+    private static final VoxelShape SOUTH_SHAPE = Block.box(2, 2, 0, 14, 14, 1);
+    private static final VoxelShape EAST_SHAPE = Block.box(0, 2, 2, 1, 14, 14);
+    private static final VoxelShape WEST_SHAPE = Block.box(15, 2, 2, 16, 14, 14);
 
     public ArcLamp(Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(FACING, Direction.SOUTH)
+                .setValue(ROTATION, 3)
                 .setValue(CLICKED, false));
     }
 
@@ -37,21 +50,94 @@ public class ArcLamp extends Block {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, CLICKED);
+        builder.add(FACING, ROTATION, CLICKED);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
+        Player player = context.getPlayer();
         Direction clickedFace = context.getClickedFace();
+        Direction hDirection = context.getHorizontalDirection().getOpposite();
+        float pitch = player.getXRot();
+        int absRotation = 0;
 
-        // If placed on top/bottom, make the block face toward the player
         if (clickedFace == Direction.UP || clickedFace == Direction.DOWN) {
-            return this.defaultBlockState()
-                    .setValue(FACING, clickedFace);
+            switch (hDirection) {
+                case NORTH:
+                    absRotation = 2;
+                    break;
+                case EAST:
+                    absRotation = 3;
+                    break;
+                case WEST:
+                    absRotation = 1;
+                    break;
+                case SOUTH:
+                    absRotation = 0;
+                    break;
+            }
+        }else if(clickedFace == Direction.SOUTH || clickedFace == Direction.NORTH) {
+            if (pitch < -45) {
+                absRotation = 0;
+            } else if (pitch > 45){
+                absRotation = 2;
+            }else{
+                switch (hDirection) {
+                    case EAST:
+                        absRotation = 3;
+                        break;
+                    case WEST:
+                        absRotation = 1;
+                        break;
+                }
+            }
+        }else {
+            if (pitch < -45) {
+                absRotation = 0;
+            } else if (pitch > 45) {
+                absRotation = 2;
+            }else{
+                switch (hDirection) {
+                    case NORTH:
+                        absRotation = 3;
+                        break;
+                    case SOUTH:
+                        absRotation = 1;
+                        break;
+                }
+            }
         }
-
-        // If placed on side faces, face outward from that surface
         return this.defaultBlockState()
-                .setValue(FACING, clickedFace);
+                .setValue(FACING, clickedFace)
+                .setValue(ROTATION, absRotation);
+    }
+
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        // This determines the visual outline and block picking overlay
+        return getVoxelShape(state);
+    }
+
+    @Override
+    protected VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
+        // This determines interaction area - use the same as shape
+        return getVoxelShape(state);
+    }
+
+    @Override
+    protected VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        // This determines culling - use the same as shape
+        return getVoxelShape(state);
+    }
+
+    private VoxelShape getVoxelShape(BlockState state) {
+        return switch (state.getValue(FACING)) {
+            case UP -> UP_SHAPE;
+            case DOWN -> DOWN_SHAPE;
+            case NORTH -> NORTH_SHAPE;
+            case SOUTH -> SOUTH_SHAPE;
+            case EAST -> EAST_SHAPE;
+            case WEST -> WEST_SHAPE;
+        };
     }
 }

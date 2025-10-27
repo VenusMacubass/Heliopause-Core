@@ -1,7 +1,7 @@
-// 1.21.1	2025-10-12T13:53:10.7906941	Loot Tables
-a84026ee389becdfcbb02cf0ab8bc235890ad0e6 data/galacticraftcore/loot_table/blocks/arclamp.json
+// 1.21.1	2025-10-27T23:54:09.3486799	Loot Tables
 32d8949df7b3f849c0c7cfd1269c3f88674ab5cc data/galacticraftcore/loot_table/blocks/gcc_block_aluminium_block.json
 4a5fc0934faf97b7543e4c5a5417ac66a2f0d5cc data/galacticraftcore/loot_table/blocks/gcc_block_aluminium_ore.json
+fd5010b5cbac90b5b1e4fe6aaf8e82652f8073b8 data/galacticraftcore/loot_table/blocks/gcc_block_arc_lamp.json
 5fb3d8600908a7ade902aeeb1aab844caeb60d5e data/galacticraftcore/loot_table/blocks/gcc_block_cheese_block.json
 0a0574479b542b2719e6570e95eb0f314e527981 data/galacticraftcore/loot_table/blocks/gcc_block_iridium_block.json
 f4cddc0480266745c567cfbd5358e95d7f3e49e9 data/galacticraftcore/loot_table/blocks/gcc_block_mars_cobblestone.json
@@ -37,3 +37,4 @@ e3e40b0949a8645cfb19251bcc1f17230265091f data/galacticraftcore/loot_table/blocks
 2be6daf100361408521129348b2c423fb4fdea57 data/galacticraftcore/loot_table/blocks/gcc_block_tin_building_wall.json
 7fdeabf798f13a01bfb8c9fa44a0aed5d1019a0f data/galacticraftcore/loot_table/blocks/gcc_block_tin_ore.json
 a681f465f746c37d08c89f99b153656aaf3a9757 data/galacticraftcore/loot_table/blocks/gcc_coal_compressor.json
+b15e03bf2fc81b2fe99c1d126c1ad33d90de8841 data/galacticraftcore/loot_table/blocks/gcc_launch_pad.json

@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "galacticraftcore:arclamp"
+          "name": "galacticraftcore:gcc_launch_pad"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "galacticraftcore:blocks/arclamp"
+  "random_sequence": "galacticraftcore:blocks/gcc_launch_pad"
 }

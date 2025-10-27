@@ -1,4 +1,4 @@
-// 1.21.1	2025-10-24T13:25:06.7420676	Recipes
+// 1.21.1	2025-10-27T23:54:09.3526934	Recipes
 0813cf8a950cf87b10d1445a91f1908e190db1b8 data/galacticraftcore/advancement/recipes/misc/gcc_item_aluminium_ingot_from_blasting_gcc_block_aluminium_ore.json
 8116263545645e0426a658206a61a245b0f52351 data/galacticraftcore/advancement/recipes/misc/gcc_item_aluminium_ingot_from_blasting_gcc_item_raw_aluminium.json
 934d14d3bcd85c2725ee12c674305c6c3bfec6e7 data/galacticraftcore/advancement/recipes/misc/gcc_item_aluminium_ingot_from_smelting_gcc_block_aluminium_ore.json
@@ -70,7 +70,7 @@ db758df483a535a09bdb9a3852b62c3617f2e536 data/minecraft/advancement/recipes/misc
 c3afb5eb7b8547b5744b05dda6290666e87dd006 data/minecraft/advancement/recipes/tools/steel_shovel_crafting.json
 c9eddcbaff1ebcaec31d2fb0a1bfe1ab0d6ec64e data/minecraft/recipe/aluminium_block_from_ingots.json
 5e89c78130c4f0a4d44a0618df08e2f1028efaf9 data/minecraft/recipe/aluminium_ingots_from_block.json
-2323a6fc5f3d7797be6d2d19719dc2e1aab7790a data/minecraft/recipe/arc_lamp_crafting.json
+938caf53bd62b45ee09a5b826d56c9411e5345cb data/minecraft/recipe/arc_lamp_crafting.json
 7bf407bdf015a661ff96869c005e9b19daa97471 data/minecraft/recipe/beef_crafting.json
 fa1d97df74baf194dbfdc4a77895315f274a874c data/minecraft/recipe/beef_patty_campfire.json
 b5e32c0892528341b840d5a34453a8b3bc8b6459 data/minecraft/recipe/beef_patty_furnace.json

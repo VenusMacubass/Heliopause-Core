@@ -96,7 +96,8 @@
   "block.galacticraftcore.gcc_block_mars_dungeon_brick_wall": "Mars Dungeon Brick Wall",
   "block.galacticraftcore.gcc_block_mars_cobblestone_slab": "Mars Cobblestone Slab",
   "block.galacticraftcore.gcc_block_mars_dungeon_brick_slab": "Mars Dungeon Brick Slab",
-  "block.galacticraftcore.arclamp": "Arc Lamp",
+  "block.galacticraftcore.gcc_block_arc_lamp": "Arc Lamp",
+  "block.galacticraftcore.gcc_launch_pad": "Launch Pad",
 
   "block.galacticraftcore.gcc_coal_compressor": "Coal Powered Compressor",
 
@@ -108,7 +109,7 @@
 
 
 
-  "entity.minecraft.villager.galacticraftcore.moon_villager": "Moon Villager",
+
 
   "death.attack.radiation_damage": "%1$s succumbed to radiation poisoning."
 }

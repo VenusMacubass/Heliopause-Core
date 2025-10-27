@@ -8,10 +8,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.galacticraftcore.GalacticraftCore;
-import net.venera.galacticraftcore.block.custom.ArcLamp;
-import net.venera.galacticraftcore.block.custom.CheeseBlock;
-import net.venera.galacticraftcore.block.custom.CoalCompressorBlock;
-import net.venera.galacticraftcore.block.custom.RadioactiveBlock;
+import net.venera.galacticraftcore.block.custom.*;
 import net.venera.galacticraftcore.item.ModItems;
 
 import java.awt.*;
@@ -129,6 +126,9 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> CHEESE_BLOCK = registerBlock("gcc_block_cheese_block",
             () -> new CheeseBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE)));
+
+    public static final DeferredBlock<Block> LAUNCH_PAD = registerBlock("gcc_launch_pad",
+            () -> new LaunchPadBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.REPEATER).strength(2f)));
 
 
 

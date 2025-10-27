@@ -1,0 +1,6 @@
+{
+  "parent":"galacticraftcore:block/launch_pad_model",
+  "textures": {
+    "layer0": "galacticraftcore:block/gcc_launch_pad"
+  }
+}

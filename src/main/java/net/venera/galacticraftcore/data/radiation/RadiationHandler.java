@@ -37,7 +37,7 @@ public class RadiationHandler {
             applyRadiationDamage(aliveEntity, radiationData);
         }
         if(aliveEntity instanceof Player player){
-        GalacticraftCore.LOGGER.info(player.getName() + " radiation level: " + player.getData(ModAttachments.RADIATION_DATA).getRadiation());
+        //GalacticraftCore.LOGGER.info(player.getName() + " radiation level: " + player.getData(ModAttachments.RADIATION_DATA).getRadiation());
         }
     }
 
