@@ -37,7 +37,7 @@ public class RefineryMenu extends AbstractContainerMenu {
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 0, 7, 7) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.getItem() == ModFluids.CRUDE_OIL.getBucket();
+                return stack.getItem() == ModFluids.CRUDE_OIL.getBucket() || stack.getItem() == Items.BUCKET;
             }
         });
 

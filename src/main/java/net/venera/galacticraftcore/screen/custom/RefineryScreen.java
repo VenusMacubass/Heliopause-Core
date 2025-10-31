@@ -25,21 +25,72 @@ public class RefineryScreen extends AbstractContainerScreen<RefineryMenu> {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
         guiGraphics.blit(REFINERY_GUI, x, y, 0, 0, 175, 167);
-        int oilHeight = menu.blockEntity.getOilScaled(37);
+
+        int oilHeight = menu.blockEntity.getOilScaled(38);
         if(oilHeight > 0) {
-            guiGraphics.blit(REFINERY_GUI, x + 7, y + 28, 176, (37 - oilHeight), 15, 37);
+            int renderY = y + 28 + (38 - oilHeight);
+            guiGraphics.blit(REFINERY_GUI, x + 7, renderY, 176, 38 - oilHeight, 16, oilHeight);
 
         }
 
-        int fuelHeight = menu.blockEntity.getFuelScaled(37);
+        int fuelHeight = menu.blockEntity.getFuelScaled(38);
         if(fuelHeight > 0) {
-            guiGraphics.blit(REFINERY_GUI, x + 153, y + 28, 192, (37 - fuelHeight), 15, 37);
+            int renderY = y + 28 + (38 - fuelHeight);
+            guiGraphics.blit(REFINERY_GUI, x + 153, renderY, 192, 38 - fuelHeight, 16, fuelHeight);
 
         }
 
         if(menu.isActive()){
-            guiGraphics.blit(REFINERY_GUI, x + 50, y + 17, 208, 0, 10, 10);
+            guiGraphics.blit(REFINERY_GUI, x + 49, y + 16, 208, 0, 11, 11);
         }
+    }
+
+    @Override
+    protected void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        super.renderTooltip(guiGraphics, mouseX, mouseY);
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
+
+        int oilX = x + 7;  // X of the tank texture
+        int oilY = y + 28;   // Y of the top of the tank
+        int oilWidth = 16;   // Width in pixels
+        int oilHeight = 38;   //Height in pixel
+        int fuelX = x + 153;
+        int fuelY = y + 28;
+        int fuelWidth = 16;
+        int fuelHeight = 38;
+
+        if (isMouseOver(mouseX, mouseY, oilX, oilY, oilWidth, oilHeight)) {
+            int currentOil = menu.blockEntity.getOilAmount();
+            int capacity = menu.blockEntity.getMaxCapacity();
+
+            guiGraphics.renderTooltip(font,
+                    Component.literal("Fuel: " + currentOil + "mL / " + capacity + "mL"),
+                    mouseX, mouseY
+            );
+        }
+
+        if (isMouseOver(mouseX, mouseY, fuelX, fuelY, fuelWidth, fuelHeight)) {
+            int currentFuel = menu.blockEntity.getFuelAmount();
+            int capacity = menu.blockEntity.getMaxCapacity();
+
+            guiGraphics.renderTooltip(font,
+                    Component.literal("Fuel: " + currentFuel + "mL / " + capacity + "mL"),
+                    mouseX, mouseY
+            );
+        }
+    }
+
+    private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {
+        return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
+    }
+
+    @Override
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        guiGraphics.drawString(this.font, this.title,
+                (imageWidth/2 - 14), 6,
+                0x404040, false);
+
     }
 
     @Override
