@@ -29,7 +29,7 @@ public class RadiationHandler {
         if (aliveEntity.level().isClientSide || aliveEntity.tickCount % 20 != 0) {return;}
         if (!aliveEntity.hasData(ModAttachments.RADIATION_DATA)) {return;}
         RadiationData radiationData = aliveEntity.getData(ModAttachments.RADIATION_DATA);
-        //radiationData.setRadiation(0)
+        radiationData.setRadiation(0);
 
         radiationChange(aliveEntity, radiationData);
         applyRadiationEffects(aliveEntity, radiationData);

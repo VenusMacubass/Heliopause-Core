@@ -1,6 +1,8 @@
 package net.venera.galacticraftcore.block.custom;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -39,6 +41,7 @@ public class LaunchPadBlock extends Block implements EntityBlock {
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!level.isClientSide && state.getBlock() != newState.getBlock()) {
+
             if (state.getValue(IS_CENTER)) {
                 breakPlatform(level, pos);
                 return;
@@ -72,7 +75,6 @@ public class LaunchPadBlock extends Block implements EntityBlock {
     }
 
     private boolean centerChecker(Level level, BlockPos centerPos) {
-        //For checking complete platform
         for (int x = -1; x <= 1; x++) {
             for (int z = -1; z <= 1; z++) {
                 BlockPos checkPos = centerPos.offset(x, 0, z);
@@ -88,7 +90,7 @@ public class LaunchPadBlock extends Block implements EntityBlock {
                 if (Math.abs(x) <= 1 && Math.abs(z) <= 1) continue; // skip inner 3x3
                 BlockPos outerPos = centerPos.offset(x, 0, z);
                 if (level.getBlockState(outerPos).is(this)) {
-                    return false; // too big; part of another cluster
+                    return false;
                 }
             }
         }
@@ -109,7 +111,7 @@ public class LaunchPadBlock extends Block implements EntityBlock {
                 BlockPos breakPos = centerPos.offset(x, 0, z);
                 BlockState state = level.getBlockState(breakPos);
                 if (state.is(this)) {
-                    level.destroyBlock(breakPos, true); // breaks and drops item
+                    level.destroyBlock(breakPos, !Minecraft.getInstance().player.isCreative());
                 }
             }
         }

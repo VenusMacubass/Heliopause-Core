@@ -81,6 +81,10 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         tag(ModTags.Blocks.INCORRECT_FOR_STEEL_TOOL).addTag(BlockTags.INCORRECT_FOR_IRON_TOOL)
                 .remove(ModTags.Blocks.NEEDS_STEEL_TOOLS);
 
+        tag(ModTags.Blocks.MACHINERY)
+                .add(ModBlocks.COAL_COMPRESSOR.get())
+                .add(ModBlocks.REFINERY.get());
+
 
     }
 }

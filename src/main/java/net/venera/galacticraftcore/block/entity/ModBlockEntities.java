@@ -15,6 +15,9 @@ public class ModBlockEntities {
     public static final Supplier<BlockEntityType<CoalCompressorEntity>> COAL_COMPRESSOR_ENTITY = BLOCK_ENTITIES.register("coal_compressor_entity",
             () -> BlockEntityType.Builder.of(CoalCompressorEntity::new, ModBlocks.COAL_COMPRESSOR.get()).build(null));
 
+    public static final Supplier<BlockEntityType<RefineryEntity>> REFINERY_ENTITY = BLOCK_ENTITIES.register("refinery_entity",
+            () -> BlockEntityType.Builder.of(RefineryEntity::new, ModBlocks.REFINERY.get()).build(null));
+
     public static final Supplier<BlockEntityType<LaunchPlatformEntity>> LAUNCH_PLATFORM_ENTITY = BLOCK_ENTITIES.register("launch_platform_entity",
             () -> BlockEntityType.Builder.of(LaunchPlatformEntity::new, ModBlocks.LAUNCH_PAD.get()).build(null));
 

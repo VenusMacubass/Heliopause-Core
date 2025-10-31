@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "galacticraftcore:block/gcc_machine",
+    "down": "galacticraftcore:block/gcc_machine",
+    "up": "galacticraftcore:block/machine_electric_input",
+    "north": "galacticraftcore:block/refinery_front",
+    "east": "galacticraftcore:block/machine_oil_port",
+    "south": "galacticraftcore:block/refinery_side",
+    "west": "galacticraftcore:block/machine_fuel_port"
+  }
+}

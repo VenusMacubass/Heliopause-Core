@@ -130,6 +130,9 @@ public class ModBlocks {
     public static final DeferredBlock<Block> LAUNCH_PAD = registerBlock("gcc_launch_pad",
             () -> new LaunchPadBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.REPEATER).strength(2f)));
 
+    public static final DeferredBlock<Block> REFINERY = registerBlock("gcc_refinery",
+            () -> new RefineryBlock(BlockBehaviour.Properties.of().strength(2f).sound(SoundType.HEAVY_CORE)));
+
 
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){
