@@ -13,6 +13,7 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 import net.venera.galacticraftcore.block.ModBlocks;
 import net.venera.galacticraftcore.block.entity.RefineryEntity;
 import net.venera.galacticraftcore.fluid.ModFluids;
+import net.venera.galacticraftcore.item.ModItems;
 import net.venera.galacticraftcore.screen.ModMenuTypes;
 
 public class RefineryMenu extends AbstractContainerMenu {
@@ -37,14 +38,14 @@ public class RefineryMenu extends AbstractContainerMenu {
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 0, 7, 7) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.getItem() == ModFluids.CRUDE_OIL.getBucket() || stack.getItem() == Items.BUCKET;
+                return stack.getItem() == ModFluids.CRUDE_OIL.getBucket() || stack.getItem() == Items.BUCKET || stack.getItem() == ModItems.CANISTER.get();
             }
         });
 
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 1, 153, 7) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.getItem() == Items.BUCKET;
+                return stack.getItem() == Items.BUCKET || stack.getItem() == ModItems.CANISTER.get();
             }
         });
 

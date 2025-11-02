@@ -6,6 +6,9 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.galacticraftcore.GalacticraftCore;
+import net.venera.galacticraftcore.data.component.CanisterData;
+import net.venera.galacticraftcore.data.component.ModDataComponents;
+import net.venera.galacticraftcore.item.custom.CanisterItem;
 import net.venera.galacticraftcore.item.custom.FuelItem;
 import net.venera.galacticraftcore.item.custom.StandardWrench;
 import net.venera.galacticraftcore.item.custom.TempSword;
@@ -108,7 +111,8 @@ public class ModItems {
     public static final DeferredItem<TempSword> TEMP_SWORD = ITEMS.register("temp_item_claymore", () ->
             new TempSword(ModToolTiers.STEEL, (new Item.Properties().attributes(ShovelItem.createAttributes(ModToolTiers.STEEL, 64,-1f)))));
 
-
+    public static final DeferredItem<CanisterItem> CANISTER = ITEMS.register("gcc_canister", () ->
+            new CanisterItem(new Item.Properties().component(ModDataComponents.CANISTER_COMPONENT.get(), new CanisterData(null, 0)).stacksTo(1)));
 
 
 

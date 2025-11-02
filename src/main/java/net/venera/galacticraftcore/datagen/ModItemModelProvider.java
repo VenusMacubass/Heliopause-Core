@@ -99,6 +99,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(ModItems.STEEL_BOOTS);
 
         handheldItem(ModItems.TEMP_SWORD.get());
+
     }
 
     private void generateBucket(ModLiquidBlockFactory blockReg) {

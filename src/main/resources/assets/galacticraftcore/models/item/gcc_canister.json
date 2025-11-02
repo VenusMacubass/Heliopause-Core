@@ -1,0 +1,11 @@
+{
+  "parent": "builtin/entity",
+  "gui_light": "front",
+  "textures": {
+    "particle": "galacticraftcore:item/gcc_canister"
+  },
+  "display": {},
+  "custom": {
+    "renderer": "true"
+  }
+}

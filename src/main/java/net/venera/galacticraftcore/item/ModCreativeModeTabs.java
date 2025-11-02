@@ -64,6 +64,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.TEMP_SWORD.get());
                         output.accept(ModFluids.CRUDE_OIL.getBucket());
                         output.accept(ModFluids.REFINED_FUEL.getBucket());
+                        output.accept(ModItems.CANISTER.get());
 
 
                     })

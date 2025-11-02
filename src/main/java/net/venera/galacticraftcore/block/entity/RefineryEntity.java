@@ -14,13 +14,19 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.venera.galacticraftcore.GalacticraftCore;
+import net.venera.galacticraftcore.data.component.CanisterData;
+import net.venera.galacticraftcore.data.component.ModDataComponents;
 import net.venera.galacticraftcore.fluid.ModFluids;
+import net.venera.galacticraftcore.item.ModItems;
+import net.venera.galacticraftcore.item.custom.CanisterItem;
 import net.venera.galacticraftcore.screen.custom.CoalCompressorMenu;
 import net.venera.galacticraftcore.screen.custom.RefineryMenu;
 import org.jetbrains.annotations.Nullable;
@@ -84,11 +90,11 @@ public class RefineryEntity extends BlockEntity implements MenuProvider {
         if (level.isClientSide()) return;
         boolean dirty = false;
 
-        if (processInputBucket()) {
+        if (processInputs()) {
             dirty = true;
         }
 
-        if (processOutputBucket()) {
+        if (processOutputs()) {
             dirty = true;
         }
 
@@ -104,24 +110,52 @@ public class RefineryEntity extends BlockEntity implements MenuProvider {
         if (dirty) setChanged();
     }
 
-    private boolean processInputBucket() {
+    private boolean processInputs() {
         ItemStack inputStack = inventory.getStackInSlot(INPUT_SLOT);
 
         if(inputStack.getItem() == ModFluids.CRUDE_OIL.getBucket() && oilAmount <= maxCapacity - BUCKET_CAPACITY) {
             oilAmount += BUCKET_CAPACITY;
             inventory.setStackInSlot(INPUT_SLOT, new ItemStack(Items.BUCKET));
             return true;
+        } else if(inputStack.getItem() instanceof CanisterItem canister){
+            CanisterData data = canister.getCanisterData(inputStack);
+
+            // ONLY accept canisters that have CRUDE OIL
+            if(data.isCrudeOil()) {
+                int spaceAvailable = maxCapacity - oilAmount;
+                int amountToDrain = Math.min(data.amount(), spaceAvailable);
+
+                if(amountToDrain > 0) {
+                    int actuallyDrained = canister.drain(inputStack, amountToDrain);
+                    GalacticraftCore.LOGGER.info("Draining the canister by " + actuallyDrained + " of " + amountToDrain);
+                    oilAmount += actuallyDrained;
+                    return actuallyDrained > 0;
+                }
+            }
         }
         return false;
     }
 
-    private boolean processOutputBucket() {
+    private boolean processOutputs() {
         ItemStack outputStack = inventory.getStackInSlot(OUTPUT_SLOT);
 
-        if (outputStack.getItem() == Items.BUCKET && fuelAmount >= BUCKET_CAPACITY) {
+        if(outputStack.getItem() == Items.BUCKET && fuelAmount >= BUCKET_CAPACITY) {
             fuelAmount -= BUCKET_CAPACITY;
             inventory.setStackInSlot(OUTPUT_SLOT, new ItemStack(ModFluids.REFINED_FUEL.getBucket()));
             return true;
+        } else if(outputStack.getItem() instanceof CanisterItem canister){
+            CanisterData data = canister.getCanisterData(outputStack);
+
+            // Accept empty canisters OR canisters with refined fuel
+            if(data.isEmpty() || data.isRefinedFuel()) {
+                int amountToFill = Math.min(fuelAmount, data.getSpace());
+                GalacticraftCore.LOGGER.info("Filling the canister by " + amountToFill);
+                if(amountToFill > 0) {
+                    int actuallyFilled = canister.fill(outputStack, CanisterData.REFINED_FUEL, amountToFill);
+                    fuelAmount -= actuallyFilled;
+                    return actuallyFilled > 0;
+                }
+            }
         }
         return false;
     }
@@ -150,10 +184,6 @@ public class RefineryEntity extends BlockEntity implements MenuProvider {
 
     public int getMaxCapacity() {
         return maxCapacity;
-    }
-
-    public boolean isActive() {
-        return isActive;
     }
 
     public void drops() {

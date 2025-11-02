@@ -5,7 +5,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.venera.galacticraftcore.block.ModBlocks;
 import net.venera.galacticraftcore.block.entity.ModBlockEntities;
-import net.venera.galacticraftcore.component.ModDataComponents;
+import net.venera.galacticraftcore.data.component.ModDataComponents;
 import net.venera.galacticraftcore.data.ModAttachments;
 import net.venera.galacticraftcore.data.radiation.RadiationHandler;
 import net.venera.galacticraftcore.entity.ModEntities;

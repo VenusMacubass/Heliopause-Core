@@ -51,6 +51,11 @@
   "item.galacticraftcore.gcc_item_steel_boots": "Steel Boots",
   "item.galacticraftcore.gcc_item_crude_oil_bucket": "Crude Oil Bucket",
   "item.galacticraftcore.gcc_item_refined_fuel_bucket": "Refined Fuel Bucket",
+  "item.galacticraftcore.gcc_canister": "Fluid Canister",
+  "item.galacticraftcore.canister": "Canister",
+  "item.galacticraftcore.canister.filled": "%s (%d %%%s)",
+  "fluid.galacticraftcore.crude_oil": "Crude Oil",
+  "fluid.galacticraftcore.refined_fuel": "Refined Fuel",
 
 
 
