@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "galacticraftcore:item/canister/gcc_oil_canister_full"
+  }
+}

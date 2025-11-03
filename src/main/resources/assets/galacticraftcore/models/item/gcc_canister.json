@@ -1,11 +1,21 @@
 {
-  "parent": "builtin/entity",
-  "gui_light": "front",
+  "parent": "item/generated",
   "textures": {
-    "particle": "galacticraftcore:item/gcc_canister"
+    "layer0": "galacticraftcore:item/canister_empty"
   },
-  "display": {},
-  "custom": {
-    "renderer": "true"
-  }
+  "overrides": [
+    {"predicate": {"galacticraftcore:fluid_type": 0}, "model": "galacticraftcore:item/canister_model/canister_empty"},
+    {"predicate": {"galacticraftcore:fluid_type": 1, "galacticraftcore:fill_level": 0.16}, "model": "galacticraftcore:item/canister_model/canister_oil_1"},
+    {"predicate": {"galacticraftcore:fluid_type": 1, "galacticraftcore:fill_level": 0.33}, "model": "galacticraftcore:item/canister_model/canister_oil_2"},
+    {"predicate": {"galacticraftcore:fluid_type": 1, "galacticraftcore:fill_level": 0.5}, "model": "galacticraftcore:item/canister_model/canister_oil_3"},
+    {"predicate": {"galacticraftcore:fluid_type": 1, "galacticraftcore:fill_level": 0.66}, "model": "galacticraftcore:item/canister_model/canister_oil_4"},
+    {"predicate": {"galacticraftcore:fluid_type": 1, "galacticraftcore:fill_level": 0.83}, "model": "galacticraftcore:item/canister_model/canister_oil_5"},
+    {"predicate": {"galacticraftcore:fluid_type": 1, "galacticraftcore:fill_level": 1.0}, "model": "galacticraftcore:item/canister_model/canister_oil_full"},
+    {"predicate": {"galacticraftcore:fluid_type": 2, "galacticraftcore:fill_level": 0.16}, "model": "galacticraftcore:item/canister_model/canister_fuel_1"},
+    {"predicate": {"galacticraftcore:fluid_type": 2, "galacticraftcore:fill_level": 0.33}, "model": "galacticraftcore:item/canister_model/canister_fuel_2"},
+    {"predicate": {"galacticraftcore:fluid_type": 2, "galacticraftcore:fill_level": 0.5}, "model": "galacticraftcore:item/canister_model/canister_fuel_3"},
+    {"predicate": {"galacticraftcore:fluid_type": 2, "galacticraftcore:fill_level": 0.66}, "model": "galacticraftcore:item/canister_model/canister_fuel_4"},
+    {"predicate": {"galacticraftcore:fluid_type": 2, "galacticraftcore:fill_level": 0.83}, "model": "galacticraftcore:item/canister_model/canister_fuel_5"},
+    {"predicate": {"galacticraftcore:fluid_type": 2, "galacticraftcore:fill_level": 1.0}, "model": "galacticraftcore:item/canister_model/canister_fuel_full"}
+  ]
 }

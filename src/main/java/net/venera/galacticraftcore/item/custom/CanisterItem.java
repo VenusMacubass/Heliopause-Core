@@ -1,20 +1,13 @@
 package net.venera.galacticraftcore.item.custom;
 
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
-import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.data.component.CanisterData;
 import net.venera.galacticraftcore.data.component.ModDataComponents;
-import net.venera.galacticraftcore.render.CanisterRenderer;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.function.Consumer;
 
 public class CanisterItem extends Item {
     public static final int MAX_CAPACITY = 1000;
@@ -22,19 +15,6 @@ public class CanisterItem extends Item {
 
     public CanisterItem(Properties properties) {
         super(properties);
-    }
-
-    public static final CanisterRenderer CANISTER_RENDERER = new CanisterRenderer();
-
-    @Override
-    @SuppressWarnings("removal")
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(new IClientItemExtensions() {
-            @Override
-            public @NotNull BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                return CANISTER_RENDERER;
-            }
-        });
     }
 
     @Override
@@ -48,12 +28,12 @@ public class CanisterItem extends Item {
         return stack.get(ModDataComponents.CANISTER_COMPONENT.get());
     }
 
-    public void setCanisterData(ItemStack stack, @Nullable ResourceLocation fluid, int amount) {
+    public ItemStack setCanisterData(ItemStack stack, @Nullable ResourceLocation fluid, int amount) {
         stack.set(ModDataComponents.CANISTER_COMPONENT.get(), new CanisterData(fluid, amount));
+        return stack;
     }
 
     public int fill(ItemStack stack, ResourceLocation fluid, int amountToAdd) {
-        GalacticraftCore.LOGGER.info("Filling canister item by " + amountToAdd);
         var data = getCanisterData(stack);
         if (data == null || data.fluidId() == null) {
             int filled = Math.min(MAX_CAPACITY, amountToAdd);
@@ -67,7 +47,6 @@ public class CanisterItem extends Item {
     }
 
     public int drain(ItemStack stack, int amountToDrain) {
-        GalacticraftCore.LOGGER.info("Draining canister item by " + amountToDrain);
         var data = getCanisterData(stack);
         if (data == null || data.amount() <= 0) return 0;
 
