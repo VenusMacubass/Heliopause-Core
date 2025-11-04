@@ -1,0 +1,7 @@
+{
+  "parent":"galacticraftcore:block/fluid_tank_ace",
+  "textures": {
+    "layer0": "galacticraftcore:block/fluid_tank",
+    "layer1": "galacticraftcore:block/fluid_tank_base"
+  }
+}

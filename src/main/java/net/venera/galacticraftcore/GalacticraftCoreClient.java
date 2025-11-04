@@ -38,6 +38,7 @@ public class GalacticraftCoreClient {
         // Some client setup code
         GalacticraftCore.LOGGER.info("HELLO FROM CLIENT SETUP");
         GalacticraftCore.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.FLUID_TANK.get(), RenderType.translucent());
     }
 
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {

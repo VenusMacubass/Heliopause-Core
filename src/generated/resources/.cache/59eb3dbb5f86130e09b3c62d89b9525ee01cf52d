@@ -1,4 +1,5 @@
-// 1.21.1	2025-10-31T16:21:55.5746077	Loot Tables
+// 1.21.1	2025-11-04T00:53:41.1086996	Loot Tables
+884161730bcc8bcd000c4722823e231761f4748a data/galacticraftcore/loot_table/blocks/fluid_tank.json
 32d8949df7b3f849c0c7cfd1269c3f88674ab5cc data/galacticraftcore/loot_table/blocks/gcc_block_aluminium_block.json
 4a5fc0934faf97b7543e4c5a5417ac66a2f0d5cc data/galacticraftcore/loot_table/blocks/gcc_block_aluminium_ore.json
 fd5010b5cbac90b5b1e4fe6aaf8e82652f8073b8 data/galacticraftcore/loot_table/blocks/gcc_block_arc_lamp.json

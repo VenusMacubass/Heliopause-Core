@@ -49,6 +49,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.COAL_COMPRESSOR.get());
         dropSelf(ModBlocks.REFINERY.get());
         dropSelf(ModBlocks.LAUNCH_PAD.get());
+        dropSelf(ModBlocks.FLUID_TANK.get());
 
         dropSelf(ModBlocks.TIN_BUILDING_WALL.get());
         dropSelf(ModBlocks.MOON_ROCK_WALL.get());

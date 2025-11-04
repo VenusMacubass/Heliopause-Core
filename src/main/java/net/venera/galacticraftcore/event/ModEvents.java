@@ -33,13 +33,6 @@ import java.util.Set;
 public class ModEvents {
     private static final Set<BlockPos> HARVESTED_BLOCKS = new HashSet<>();
 
-    protected int RADIUS = 150;
-    public static void creeperSweeper(PlayerTickEvent.Pre event){
-        Player player = event.getEntity();
-        BlockPos pos = player.getOnPos();
-
-    }
-
     @SubscribeEvent
     public static void onShwordUsage(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();

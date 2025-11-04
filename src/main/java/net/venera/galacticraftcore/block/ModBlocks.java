@@ -133,6 +133,9 @@ public class ModBlocks {
     public static final DeferredBlock<Block> REFINERY = registerBlock("gcc_refinery",
             () -> new RefineryBlock(BlockBehaviour.Properties.of().strength(2f).sound(SoundType.HEAVY_CORE)));
 
+    public static final DeferredBlock<Block> FLUID_TANK = registerBlock("fluid_tank",
+            () -> new FluidTankBlock(BlockBehaviour.Properties.of().noOcclusion().strength(2f).sound(SoundType.GLASS)));
+
 
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){

@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "expansions=0": {"model": "galacticraftcore:block/fluid_tank_ace"},
+    "expansions=1": {"model": "galacticraftcore:block/fluid_tank_bottom"},
+    "expansions=2": {"model": "galacticraftcore:block/fluid_tank_top"},
+    "expansions=3": {"model": "galacticraftcore:block/fluid_tank_vers"}
+  }
+}

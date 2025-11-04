@@ -120,6 +120,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.COAL_COMPRESSOR.get());
                         output.accept(ModBlocks.REFINERY.get());
                         output.accept(ModBlocks.LAUNCH_PAD.get());
+                        output.accept(ModBlocks.FLUID_TANK.get());
 
                     })
                     .build()
