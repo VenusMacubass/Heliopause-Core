@@ -215,13 +215,13 @@ public class RefineryEntity extends BlockEntity implements MenuProvider {
     }
 
     public int getOilScaled(int pixels) {
-        if (maxCapacity == 0) return 0;
+        if (oilAmount == 0) return 0;
         int scaled = (int) ((float) oilAmount / maxCapacity * pixels);
         return Math.min(scaled, pixels);
     }
 
     public int getFuelScaled(int pixels) {
-        if (maxCapacity == 0) return 0;
+        if (fuelAmount == 0) return 0;
         int scaled = (int) ((float) fuelAmount / maxCapacity * pixels);
         return Math.min(scaled, pixels);
     }

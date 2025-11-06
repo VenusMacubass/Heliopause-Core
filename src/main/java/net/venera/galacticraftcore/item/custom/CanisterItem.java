@@ -11,7 +11,6 @@ import javax.annotation.Nullable;
 
 public class CanisterItem extends Item {
     public static final int MAX_CAPACITY = 1000;
-    public boolean isEmpty;
 
     public CanisterItem(Properties properties) {
         super(properties);
