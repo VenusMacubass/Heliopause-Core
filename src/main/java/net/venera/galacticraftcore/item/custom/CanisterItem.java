@@ -59,6 +59,13 @@ public class CanisterItem extends Item {
     }
 
     @Override
+    public int getMaxStackSize(ItemStack stack) {
+        var data = getCanisterData(stack);
+        if(data == null || data.isEmpty()){return 64;}
+        else{return 1;}
+    }
+
+    @Override
     public Component getName(ItemStack stack) {
         var data = getCanisterData(stack);
         if (data != null && data.amount() > 0 && data.fluidId() != null) {

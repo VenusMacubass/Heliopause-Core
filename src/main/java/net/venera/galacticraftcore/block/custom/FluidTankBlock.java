@@ -1,77 +1,77 @@
 package net.venera.galacticraftcore.block.custom;
 
+import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.entity.FluidTankEntity;
 import net.venera.galacticraftcore.data.component.CanisterData;
-import net.venera.galacticraftcore.fluid.ModFluids;
 import net.venera.galacticraftcore.item.custom.CanisterItem;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Function;
+
 public class FluidTankBlock extends BaseEntityBlock {
     public static final MapCodec<FluidTankBlock> CODEC = simpleCodec(FluidTankBlock::new);
-    public static final IntegerProperty EXPANSIONS = IntegerProperty.create("expansions", 0, 3);
+    public static final IntegerProperty CONFIGURATION = IntegerProperty.create("configuration", 0, 3);
 
     public FluidTankBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState()
-                .setValue(EXPANSIONS, 0));
+                .setValue(CONFIGURATION, 0));
     }
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if(level.isClientSide()){return ItemInteractionResult.SUCCESS;}
-        if (!(level.getBlockEntity(pos) instanceof FluidTankEntity fluidTankEntity)) {
-            return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
-        }
+        BlockPos newPos = findValidTank(level, pos);
+        if (!level.isClientSide() && level.getBlockEntity(newPos) instanceof FluidTankEntity fluidTankEntity) {
+            ItemStack result;
+            switch (stack.getItem()) {
+                case CanisterItem canisterItem when stack.getCount() > 1 -> {
+                    result = fluidTankEntity.handleInteractions(stack.copyWithCount(1), player);
+                    stack.shrink(1);
+                    if (!player.addItem(result)) {
+                        player.drop(result, false);
+                    }
+                    return ItemInteractionResult.SUCCESS;
+                }
+                case CanisterItem canisterItem when stack.getCount() == 1 -> {
+                    result = fluidTankEntity.handleInteractions(stack, player);
+                    player.setItemInHand(hand, result);
+                    return ItemInteractionResult.SUCCESS;
+                }
+                case BucketItem bucketItem -> {
+                    fluidTankEntity.handleInteractions(stack, player);
+                    return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+                }
 
-        if(stack.getItem() == Items.BUCKET){
-            player.setItemInHand(hand, fluidTankEntity.drainTank(stack));
-            return ItemInteractionResult.SUCCESS;
-        }else if(stack.getItem() == ModFluids.CRUDE_OIL.getBucket()){
-            player.setItemInHand(hand, fluidTankEntity.fillTank(stack));
-            return ItemInteractionResult.SUCCESS;
-        }else if(stack.getItem() == ModFluids.REFINED_FUEL.getBucket()){
-            player.setItemInHand(hand, fluidTankEntity.fillTank(stack));
-            return ItemInteractionResult.SUCCESS;
-        }else if(stack.getItem() instanceof CanisterItem canisterItem){
-            CanisterData data = canisterItem.getCanisterData(stack);
-            if (data.isEmpty() || (data.isCrudeOil() && fluidTankEntity.data.get(0) > 0) ||
-                    (data.isRefinedFuel() && fluidTankEntity.data.get(1) > 0)) {
-                fluidTankEntity.drainTank(stack);
-            } else if ((data.isCrudeOil() && fluidTankEntity.getOilSpace() > 0) ||
-                    (data.isRefinedFuel() && fluidTankEntity.getFuelSpace() > 0)) {
-                fluidTankEntity.fillTank(stack);
+                default -> {
+                }
             }
-            return ItemInteractionResult.SUCCESS;
         }
-
-        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
+
+
 
     @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
@@ -100,7 +100,7 @@ public class FluidTankBlock extends BaseEntityBlock {
             expansions = 0;
         }
 
-        BlockState newState = state.setValue(EXPANSIONS, expansions);
+        BlockState newState = state.setValue(CONFIGURATION, expansions);
 
         if (!state.equals(newState)) {
             level.setBlock(pos, newState, Block.UPDATE_ALL);
@@ -128,9 +128,56 @@ public class FluidTankBlock extends BaseEntityBlock {
         }
     }
 
+    protected BlockPos findValidTank(Level level, BlockPos pos){
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if(!(blockEntity instanceof FluidTankEntity fluidTankEntity)){return pos;}
+        if (fluidTankEntity.getTankSpace() <= 0) {
+            int offset = 1;
+            BlockPos lastTankPos = pos;
+
+            while (true) {
+                BlockPos checkPos = pos.above(offset);
+                BlockEntity checkBE = level.getBlockEntity(checkPos);
+
+                if (checkBE instanceof FluidTankEntity checkTank) {
+                    lastTankPos = checkPos;
+                    if (checkTank.getTankSpace() > 0)
+                        return checkPos;
+                    offset++;
+                    continue;
+                }
+                if(offset > level.getMaxBuildHeight()){return lastTankPos;}
+                return lastTankPos;
+
+            }
+        }else if (fluidTankEntity.getFluidAmount() <= 0) {
+            int offset = 1;
+            BlockPos lastTankPos = pos;
+
+            while (true) {
+                BlockPos checkPos = pos.below(offset);
+                BlockEntity checkBE = level.getBlockEntity(checkPos);
+
+                if (checkBE instanceof FluidTankEntity checkTank) {
+                    lastTankPos = checkPos;
+
+                    if (checkTank.getFluidAmount() > 0)
+                        return checkPos;
+
+                    offset++;
+                    continue;
+                }
+                if(offset > level.getMinBuildHeight()){return lastTankPos;}
+                return lastTankPos;
+            }
+        }else{
+            return pos;
+        }
+    }
+
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(EXPANSIONS);
+        builder.add(CONFIGURATION);
     }
 
     @Override

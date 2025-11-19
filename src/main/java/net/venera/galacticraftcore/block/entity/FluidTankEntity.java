@@ -2,26 +2,28 @@ package net.venera.galacticraftcore.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.fluids.FluidType;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.venera.galacticraftcore.data.component.CanisterData;
-import net.venera.galacticraftcore.data.component.ModDataComponents;
 import net.venera.galacticraftcore.fluid.ModFluids;
-import net.venera.galacticraftcore.item.ModItems;
 import net.venera.galacticraftcore.item.custom.CanisterItem;
 
+import javax.annotation.Nullable;
+
 public class FluidTankEntity extends BlockEntity {
-    private int currentOil = 0;
-    private int currentFuel = 0;
+    private int fluidAmount = 0;
+    private Fluid currentFluid = Fluids.EMPTY;
     private final int BUCKET_CAPACITY = 1000;
     public static final int FLUID_TANK_CAPACITY = 8000;
     public final ContainerData data;
@@ -32,9 +34,8 @@ public class FluidTankEntity extends BlockEntity {
             @Override
             public int get(int i) {
                 return switch (i) {
-                    case 0 -> currentOil;
-                    case 1 -> currentFuel;
-                    case 2 -> FLUID_TANK_CAPACITY;
+                    case 0 -> fluidAmount;
+                    case 1 -> FLUID_TANK_CAPACITY;
                     default -> 0;
                 };
             }
@@ -42,105 +43,177 @@ public class FluidTankEntity extends BlockEntity {
             @Override
             public void set(int i, int value) {
                 switch (i) {
-                    case 0 -> currentOil = value;
-                    case 1 -> currentFuel = value;
+                    case 0 -> fluidAmount = value;
                 }
             }
 
             @Override
             public int getCount() {
-                return 3;
+                return 2;
             }
 
         };
     }
 
-    public ItemStack fillTank(ItemStack container){
-        Item containerItem = container.getItem();
-        if(containerItem == ModFluids.CRUDE_OIL.getBucket() && getOilSpace() >= BUCKET_CAPACITY && currentFuel <= 0){
-            currentOil += BUCKET_CAPACITY;
-            return Items.BUCKET.getDefaultInstance();
-        }else if(containerItem == ModFluids.REFINED_FUEL.getBucket() && getFuelSpace() >= BUCKET_CAPACITY && currentOil <= 0){
-            currentFuel += BUCKET_CAPACITY;
-            return Items.BUCKET.getDefaultInstance();
-        }else if(containerItem instanceof CanisterItem canisterItem){
-            CanisterData data = canisterItem.getCanisterData(container);
-            if(data.isCrudeOil() && getOilSpace() > 0 && data.isCrudeOil()){
-                int transferAmount = Math.min(data.amount(),  getOilSpace());
-                currentOil += transferAmount;
-                canisterItem.drain(container, transferAmount);
-
-            }else if(data.isRefinedFuel() && getFuelSpace() > 0 && data.isRefinedFuel()){
-                int transferAmount = Math.min(data.amount(),  getFuelSpace());
-                currentFuel += transferAmount;
-                canisterItem.drain(container, transferAmount);
-            }
-        }
-        setChanged();
-        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+    public ItemStack handleInteractions(ItemStack container, Player player){
+        if(container.getItem() instanceof BucketItem){return handleBucket(container, player);}
+        else if(container.getItem() instanceof CanisterItem){return handleCanister(container, player);}
         return container;
     }
 
-    public ItemStack drainTank(ItemStack container){
-        Item containerItem = container.getItem();
-        if(containerItem == Items.BUCKET){
-            if(currentOil >= BUCKET_CAPACITY){
-                currentOil -= BUCKET_CAPACITY;
-                return new ItemStack(ModFluids.CRUDE_OIL.getBucket());
-            }else if(currentFuel >= BUCKET_CAPACITY){
-                currentFuel -= BUCKET_CAPACITY;
-                return new ItemStack(ModFluids.REFINED_FUEL.getBucket());
-            }
-        }else if(containerItem instanceof CanisterItem canisterItem){
+    public ItemStack handleBucket(ItemStack container, Player player){
+        if(container.getItem() == Items.BUCKET){
+            return drainTank(container, player);
+        }else if(container.is(ModFluids.CRUDE_OIL.getBucket()) || container.is(ModFluids.REFINED_FUEL.getBucket())){
+            return fillTank(container, player);
+        }
+        return container;
+    }
+
+    public ItemStack handleCanister(ItemStack container, Player player){
+        if(container.getItem() instanceof CanisterItem canisterItem){
             CanisterData data = canisterItem.getCanisterData(container);
-            if(data.isCrudeOil()){
-                int transferAmount = Math.min(data.getSpace(), currentOil);
-                currentOil -= transferAmount;
-                canisterItem.fill(container, CanisterData.CRUDE_OIL,  transferAmount);
-            }else if(data.isRefinedFuel()){
-                int transferAmount = Math.min(data.getSpace(), currentFuel);
-                currentFuel -= transferAmount;
-                canisterItem.fill(container, CanisterData.REFINED_FUEL,  transferAmount);
-            }else if(data.isEmpty()){
-                if(currentOil > 0){
-                    canisterItem.fill(container, CanisterData.CRUDE_OIL, Math.min(currentOil, data.getSpace()));
-                }else if(currentFuel > 0){
-                    canisterItem.fill(container, CanisterData.REFINED_FUEL, Math.min(currentFuel, data.getSpace()));
-                }
+            if(data.getSpace() > data.amount()){
+                return drainTank(container, player);
+            }else{
+                return fillTank(container, player);
             }
         }
+        return container;
+    }
+
+    public ItemStack fillTank(ItemStack container, Player player){
+        if(container.getItem() instanceof BucketItem){
+            if(BUCKET_CAPACITY > getTankSpace()){return container;}
+            if(container.is(ModFluids.CRUDE_OIL.getBucket()) && (currentFluid.isSame(ModFluids.CRUDE_OIL.getSource()) || currentFluid == Fluids.EMPTY)){
+                currentFluid = ModFluids.CRUDE_OIL.getSource();
+                fluidAmount += BUCKET_CAPACITY;
+                container.shrink(1);
+                if(!player.addItem(new ItemStack(Items.BUCKET))){
+                    player.drop(new ItemStack(Items.BUCKET), false);
+                }
+                return returnHelper(container);
+            }
+            else if(container.is(ModFluids.REFINED_FUEL.getBucket()) && (currentFluid.isSame(ModFluids.REFINED_FUEL.getSource()) || currentFluid == Fluids.EMPTY)){
+                currentFluid = ModFluids.REFINED_FUEL.getSource();
+                fluidAmount += BUCKET_CAPACITY;
+                container.shrink(1);
+                if(!player.addItem(new ItemStack(Items.BUCKET))){
+                    player.drop(new ItemStack(Items.BUCKET), false);
+                }
+                return returnHelper(container);
+            }
+        }
+        else if(container.getItem() instanceof CanisterItem canisterItem){
+            CanisterData data = canisterItem.getCanisterData(container);
+            if(data.isEmpty()){return container;}
+            if(data.isCrudeOil() && (currentFluid.isSame(ModFluids.CRUDE_OIL.getSource()) || currentFluid == Fluids.EMPTY)){
+                currentFluid = ModFluids.CRUDE_OIL.getSource();
+                int transferAmount = Math.min(data.amount(), getTankSpace());
+                canisterItem.drain(container, transferAmount);
+                fluidAmount += transferAmount;
+                return returnHelper(container);
+            }else if(data.isRefinedFuel() && (currentFluid.isSame(ModFluids.REFINED_FUEL.getSource()) || currentFluid == Fluids.EMPTY)){
+                currentFluid = ModFluids.REFINED_FUEL.getSource();
+                int transferAmount = Math.min(data.amount(), getTankSpace());
+                canisterItem.drain(container, transferAmount);
+                fluidAmount += transferAmount;
+                return returnHelper(container);
+            }
+        }
+        return container;
+    }
+
+    public ItemStack drainTank(ItemStack container, Player player){
+        if(container.getItem() instanceof BucketItem){
+            if(fluidAmount < BUCKET_CAPACITY){return container;}
+            if(currentFluid.isSame(ModFluids.CRUDE_OIL.getSource())){
+                fluidAmount -= BUCKET_CAPACITY;
+                container.shrink(1);
+                if(!player.addItem(new ItemStack(ModFluids.CRUDE_OIL.getBucket()))){
+                    player.drop(new ItemStack(ModFluids.CRUDE_OIL.getBucket()), false);
+                }
+                returnHelper(container);
+            }else if(currentFluid.isSame(ModFluids.REFINED_FUEL.getSource())){
+                fluidAmount -= BUCKET_CAPACITY;
+                container.shrink(1);
+                if(!player.addItem(new ItemStack(ModFluids.REFINED_FUEL.getBucket()))){
+                    player.drop(new ItemStack(ModFluids.REFINED_FUEL.getBucket()), false);
+                }
+                returnHelper(container);
+            }
+        }else if(container.getItem() instanceof CanisterItem canisterItem){
+            CanisterData data = canisterItem.getCanisterData(container);
+            if(data.getSpace() <= 0 || fluidAmount <= 0){return container;}
+            if(data.isCrudeOil() && currentFluid.isSame(ModFluids.CRUDE_OIL.getSource())){
+                int transferAmount = Math.min(fluidAmount, data.getSpace());
+                fluidAmount -= transferAmount;
+                canisterItem.fill(container, CanisterData.CRUDE_OIL, transferAmount);
+                return returnHelper(container);
+            }else if(data.isRefinedFuel() && currentFluid.isSame(ModFluids.REFINED_FUEL.getSource())){
+                int transferAmount = Math.min(fluidAmount, data.getSpace());
+                fluidAmount -= transferAmount;
+                canisterItem.fill(container, CanisterData.REFINED_FUEL, transferAmount);
+                return returnHelper(container);
+            }else if(data.isEmpty()){
+                int transferAmount = Math.min(fluidAmount, data.getSpace());
+                if(currentFluid.isSame(ModFluids.CRUDE_OIL.getSource())){
+                    fluidAmount -= transferAmount;
+                    canisterItem.fill(container, CanisterData.CRUDE_OIL, transferAmount);
+                }
+                else if(currentFluid.isSame(ModFluids.REFINED_FUEL.getSource())){
+                    fluidAmount -= transferAmount;
+                    canisterItem.fill(container, CanisterData.REFINED_FUEL, transferAmount);
+                }
+                return returnHelper(container);
+            }
+        }
+        return container;
+    }
+
+    public int getTankSpace(){
+        return FLUID_TANK_CAPACITY - fluidAmount;
+    }
+
+    public Fluid getCurrentFluid() {
+        return currentFluid;
+    }
+
+    public int getFluidAmount() {
+        return fluidAmount;
+    }
+
+    private ItemStack returnHelper(ItemStack itemStack){
+        if (fluidAmount <= 0) {
+            fluidAmount = 0;
+            currentFluid = Fluids.EMPTY;
+        }
         setChanged();
-        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
-        return new ItemStack(container.getItem());
+        if(level != null){level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);}
+        return itemStack;
     }
 
-    public int getOilSpace(){
-        return FLUID_TANK_CAPACITY - currentOil;
-    }
-
-    public int getFuelSpace(){
-        return FLUID_TANK_CAPACITY - currentFuel;
-    }
-
-    public int getOilScaled(int pixels){
-        return (int) ((float) currentOil / FLUID_TANK_CAPACITY * pixels);
-    }
-
-    public int getFuelScaled(int pixels){
-        return (int) ((float) currentFuel / FLUID_TANK_CAPACITY * pixels);
+    public int getFluidScaled(int pixels){
+        return (int) ((float) fluidAmount / FLUID_TANK_CAPACITY * pixels);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.putInt("CurrentOil", currentOil);
-        tag.putInt("CurrentFuel", currentFuel);
+        tag.putInt("FluidAmount", fluidAmount);
+        if (currentFluid != null && currentFluid != Fluids.EMPTY) {
+            tag.putString("FluidType", BuiltInRegistries.FLUID.getKey(currentFluid).toString());
+        }
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        currentOil = tag.getInt("CurrentOil");
-        currentFuel = tag.getInt("CurrentFuel");
+        fluidAmount = tag.getInt("FluidAmount");
+        if (tag.contains("FluidType")) {
+            currentFluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(tag.getString("FluidType")));
+        } else {
+            currentFluid = Fluids.EMPTY;
+        }
     }
 }

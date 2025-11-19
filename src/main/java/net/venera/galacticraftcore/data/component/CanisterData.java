@@ -68,4 +68,6 @@ public record CanisterData(@Nullable ResourceLocation fluidId, int amount) {
         return CanisterItem.MAX_CAPACITY - amount;
     }
 
+    public int getCapacity(){return CanisterItem.MAX_CAPACITY;}
+
 }
