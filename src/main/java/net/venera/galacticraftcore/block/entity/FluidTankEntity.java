@@ -55,121 +55,114 @@ public class FluidTankEntity extends BlockEntity {
         };
     }
 
-    public ItemStack handleInteractions(ItemStack container, Player player){
-        if(container.getItem() instanceof BucketItem){return handleBucket(container, player);}
-        else if(container.getItem() instanceof CanisterItem){return handleCanister(container, player);}
-        return container;
-    }
-
     public ItemStack handleBucket(ItemStack container, Player player){
-        if(container.getItem() == Items.BUCKET){
-            return drainTank(container, player);
-        }else if(container.is(ModFluids.CRUDE_OIL.getBucket()) || container.is(ModFluids.REFINED_FUEL.getBucket())){
-            return fillTank(container, player);
+        // 1) EMPTY BUCKET -> try to drain 1000 mB from the tank and return a filled bucket
+        if (container.getItem() == Items.BUCKET) {
+            if (fluidAmount < BUCKET_CAPACITY) return container;                // not enough fluid
+            if (currentFluid.isSame(Fluids.EMPTY)) return container;            // no known fluid type
+
+            ItemStack filled;
+            if (currentFluid.isSame(Fluids.WATER)) {
+                filled = new ItemStack(Items.WATER_BUCKET);
+            } else if (currentFluid.isSame(ModFluids.CRUDE_OIL.getSource())) {
+                filled = new ItemStack(ModFluids.CRUDE_OIL.getBucket());
+            } else if (currentFluid.isSame(ModFluids.REFINED_FUEL.getSource())) {
+                filled = new ItemStack(ModFluids.REFINED_FUEL.getBucket());
+            } else {
+                return container; // unsupported fluid for buckets
+            }
+
+            // remove fluid, sync, and return the filled bucket
+            fluidAmount -= BUCKET_CAPACITY;
+            return returnHelper(filled);
         }
+
+        // 2) FULL BUCKET -> try to add 1000 mB to the tank and return an empty bucket
+        //    Use ItemStack#is(...) checks for mod buckets and vanilla checks for vanilla buckets.
+        if (container.is(Items.WATER_BUCKET) || container.is(ModFluids.CRUDE_OIL.getBucket()) || container.is(ModFluids.REFINED_FUEL.getBucket())) {
+
+            // determine fluid type of this bucket
+            Fluid bucketFluid = Fluids.EMPTY;
+            if (container.is(Items.WATER_BUCKET)) bucketFluid = Fluids.WATER;
+            else if (container.is(ModFluids.CRUDE_OIL.getBucket())) bucketFluid = ModFluids.CRUDE_OIL.getSource();
+            else if (container.is(ModFluids.REFINED_FUEL.getBucket())) bucketFluid = ModFluids.REFINED_FUEL.getSource();
+
+            // need space
+            if (getTankSpace() < BUCKET_CAPACITY) return container;
+
+            // if tank empty, adopt bucket fluid; otherwise must match
+            if (currentFluid.isSame(Fluids.EMPTY)) {
+                currentFluid = bucketFluid;
+            } else if (!currentFluid.isSame(bucketFluid)) {
+                return container; // incompatible fluid
+            }
+
+            // add fluid, sync, and return an empty bucket
+            fluidAmount += BUCKET_CAPACITY;
+            return returnHelper(new ItemStack(Items.BUCKET));
+        }
+
+        // 3) Not a bucket the tank understands
         return container;
     }
 
     public ItemStack handleCanister(ItemStack container, Player player){
-        if(container.getItem() instanceof CanisterItem canisterItem){
-            CanisterData data = canisterItem.getCanisterData(container);
-            if(data.getSpace() > data.amount()){
-                return drainTank(container, player);
-            }else{
-                return fillTank(container, player);
+        if (!(container.getItem() instanceof CanisterItem canisterItem))
+            return container;
+        CanisterData data = canisterItem.getCanisterData(container);
+        if (data == null) return container; // NEVER allow null to continue
+
+        boolean canisterIsEmpty = data.isEmpty();
+        boolean tankHasFluid = fluidAmount > 0;
+        boolean tankHasSpace = getTankSpace() > 0;
+
+        // -----------------------------
+        // 1. CANISTER → TANK (drain canister)
+        // -----------------------------
+        if (!canisterIsEmpty && tankHasSpace) {
+            int transfer = Math.min(data.amount(), getTankSpace());
+
+            // Match fluid types or tank empty
+            if (currentFluid.isSame(Fluids.EMPTY) ||
+                    currentFluid.isSame(BuiltInRegistries.FLUID.get(data.fluidId()))) {
+
+                // Set tank fluid type if empty
+                if (currentFluid.isSame(Fluids.EMPTY)) {
+                    if (data.isCrudeOil()) currentFluid = ModFluids.CRUDE_OIL.getSource();
+                    else if (data.isRefinedFuel()) currentFluid = ModFluids.REFINED_FUEL.getSource();
+                }
+
+                canisterItem.drain(container, transfer);
+                fluidAmount += transfer;
+                return returnHelper(container);
             }
         }
+
+        // -----------------------------
+        // 2. TANK → CANISTER (fill canister)
+        // -----------------------------
+        if (tankHasFluid && data.getSpace() > 0) {
+
+            int transfer = Math.min(fluidAmount, data.getSpace());
+
+            if (currentFluid.isSame(ModFluids.CRUDE_OIL.getSource()) && (data.getSpace() > 0 && (data.isCrudeOil() || data.isEmpty()))) {
+                fluidAmount -= transfer;
+                canisterItem.fill(container, CanisterData.CRUDE_OIL, transfer);
+                return returnHelper(container);
+            }
+
+            if (currentFluid.isSame(ModFluids.REFINED_FUEL.getSource()) && (data.getSpace() > 0 && (data.isCrudeOil() || data.isEmpty()))) {
+                fluidAmount -= transfer;
+                canisterItem.fill(container, CanisterData.REFINED_FUEL, transfer);
+                return returnHelper(container);
+            }
+        }
+
         return container;
     }
 
-    public ItemStack fillTank(ItemStack container, Player player){
-        if(container.getItem() instanceof BucketItem){
-            if(BUCKET_CAPACITY > getTankSpace()){return container;}
-            if(container.is(ModFluids.CRUDE_OIL.getBucket()) && (currentFluid.isSame(ModFluids.CRUDE_OIL.getSource()) || currentFluid == Fluids.EMPTY)){
-                currentFluid = ModFluids.CRUDE_OIL.getSource();
-                fluidAmount += BUCKET_CAPACITY;
-                container.shrink(1);
-                if(!player.addItem(new ItemStack(Items.BUCKET))){
-                    player.drop(new ItemStack(Items.BUCKET), false);
-                }
-                return returnHelper(container);
-            }
-            else if(container.is(ModFluids.REFINED_FUEL.getBucket()) && (currentFluid.isSame(ModFluids.REFINED_FUEL.getSource()) || currentFluid == Fluids.EMPTY)){
-                currentFluid = ModFluids.REFINED_FUEL.getSource();
-                fluidAmount += BUCKET_CAPACITY;
-                container.shrink(1);
-                if(!player.addItem(new ItemStack(Items.BUCKET))){
-                    player.drop(new ItemStack(Items.BUCKET), false);
-                }
-                return returnHelper(container);
-            }
-        }
-        else if(container.getItem() instanceof CanisterItem canisterItem){
-            CanisterData data = canisterItem.getCanisterData(container);
-            if(data.isEmpty()){return container;}
-            if(data.isCrudeOil() && (currentFluid.isSame(ModFluids.CRUDE_OIL.getSource()) || currentFluid == Fluids.EMPTY)){
-                currentFluid = ModFluids.CRUDE_OIL.getSource();
-                int transferAmount = Math.min(data.amount(), getTankSpace());
-                canisterItem.drain(container, transferAmount);
-                fluidAmount += transferAmount;
-                return returnHelper(container);
-            }else if(data.isRefinedFuel() && (currentFluid.isSame(ModFluids.REFINED_FUEL.getSource()) || currentFluid == Fluids.EMPTY)){
-                currentFluid = ModFluids.REFINED_FUEL.getSource();
-                int transferAmount = Math.min(data.amount(), getTankSpace());
-                canisterItem.drain(container, transferAmount);
-                fluidAmount += transferAmount;
-                return returnHelper(container);
-            }
-        }
-        return container;
-    }
 
-    public ItemStack drainTank(ItemStack container, Player player){
-        if(container.getItem() instanceof BucketItem){
-            if(fluidAmount < BUCKET_CAPACITY){return container;}
-            if(currentFluid.isSame(ModFluids.CRUDE_OIL.getSource())){
-                fluidAmount -= BUCKET_CAPACITY;
-                container.shrink(1);
-                if(!player.addItem(new ItemStack(ModFluids.CRUDE_OIL.getBucket()))){
-                    player.drop(new ItemStack(ModFluids.CRUDE_OIL.getBucket()), false);
-                }
-                returnHelper(container);
-            }else if(currentFluid.isSame(ModFluids.REFINED_FUEL.getSource())){
-                fluidAmount -= BUCKET_CAPACITY;
-                container.shrink(1);
-                if(!player.addItem(new ItemStack(ModFluids.REFINED_FUEL.getBucket()))){
-                    player.drop(new ItemStack(ModFluids.REFINED_FUEL.getBucket()), false);
-                }
-                returnHelper(container);
-            }
-        }else if(container.getItem() instanceof CanisterItem canisterItem){
-            CanisterData data = canisterItem.getCanisterData(container);
-            if(data.getSpace() <= 0 || fluidAmount <= 0){return container;}
-            if(data.isCrudeOil() && currentFluid.isSame(ModFluids.CRUDE_OIL.getSource())){
-                int transferAmount = Math.min(fluidAmount, data.getSpace());
-                fluidAmount -= transferAmount;
-                canisterItem.fill(container, CanisterData.CRUDE_OIL, transferAmount);
-                return returnHelper(container);
-            }else if(data.isRefinedFuel() && currentFluid.isSame(ModFluids.REFINED_FUEL.getSource())){
-                int transferAmount = Math.min(fluidAmount, data.getSpace());
-                fluidAmount -= transferAmount;
-                canisterItem.fill(container, CanisterData.REFINED_FUEL, transferAmount);
-                return returnHelper(container);
-            }else if(data.isEmpty()){
-                int transferAmount = Math.min(fluidAmount, data.getSpace());
-                if(currentFluid.isSame(ModFluids.CRUDE_OIL.getSource())){
-                    fluidAmount -= transferAmount;
-                    canisterItem.fill(container, CanisterData.CRUDE_OIL, transferAmount);
-                }
-                else if(currentFluid.isSame(ModFluids.REFINED_FUEL.getSource())){
-                    fluidAmount -= transferAmount;
-                    canisterItem.fill(container, CanisterData.REFINED_FUEL, transferAmount);
-                }
-                return returnHelper(container);
-            }
-        }
-        return container;
-    }
+
 
     public int getTankSpace(){
         return FLUID_TANK_CAPACITY - fluidAmount;

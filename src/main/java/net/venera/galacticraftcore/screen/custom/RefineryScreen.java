@@ -65,7 +65,7 @@ public class RefineryScreen extends AbstractContainerScreen<RefineryMenu> {
             int capacity = menu.blockEntity.getMaxCapacity();
 
             guiGraphics.renderTooltip(font,
-                    Component.literal("Crude Oil: " + currentOil + "mL / " + capacity + "mL"),
+                    Component.literal("Crude Oil: " + currentOil + "mB / " + capacity + "mB"),
                     mouseX, mouseY
             );
         }
@@ -75,7 +75,7 @@ public class RefineryScreen extends AbstractContainerScreen<RefineryMenu> {
             int capacity = menu.blockEntity.getMaxCapacity();
 
             guiGraphics.renderTooltip(font,
-                    Component.literal("Fuel: " + currentFuel + "mL / " + capacity + "mL"),
+                    Component.literal("Fuel: " + currentFuel + "mB / " + capacity + "mB"),
                     mouseX, mouseY
             );
         }

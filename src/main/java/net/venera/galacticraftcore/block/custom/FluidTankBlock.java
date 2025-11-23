@@ -7,6 +7,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -43,39 +44,53 @@ public class FluidTankBlock extends BaseEntityBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         BlockPos newPos = findValidTank(level, pos);
-        if (!level.isClientSide() && level.getBlockEntity(newPos) instanceof FluidTankEntity fluidTankEntity) {
-            ItemStack result;
-            switch (stack.getItem()) {
-                case CanisterItem canisterItem when stack.getCount() > 1 -> {
-                    result = fluidTankEntity.handleInteractions(stack.copyWithCount(1), player);
-                    stack.shrink(1);
-                    if (!player.addItem(result)) {
-                        player.drop(result, false);
-                    }
-                    return ItemInteractionResult.SUCCESS;
-                }
-                case CanisterItem canisterItem when stack.getCount() == 1 -> {
-                    result = fluidTankEntity.handleInteractions(stack, player);
-                    player.setItemInHand(hand, result);
-                    return ItemInteractionResult.SUCCESS;
-                }
-                case BucketItem bucketItem -> {
-                    fluidTankEntity.handleInteractions(stack, player);
-                    return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
-                }
+        if (level.getBlockEntity(newPos) instanceof FluidTankEntity fluidTankEntity) {
+            ItemStack resultItem;
 
-                default -> {
+            if (stack.getItem() instanceof CanisterItem) {
+                if (player.isCreative()) {
+                    fluidTankEntity.handleCanister(stack.copyWithCount(1), player);
+                } else {
+                    resultItem = fluidTankEntity.handleCanister(stack.copyWithCount(1), player);
+                    stack.shrink(1);
+                    if (!player.addItem(resultItem)) player.drop(resultItem, false);
+                }
+            } else if (stack.getItem() instanceof BucketItem) {
+                if (player.isCreative()) {
+                    fluidTankEntity.handleBucket(stack.copyWithCount(1), player);
+                } else {
+                    resultItem = fluidTankEntity.handleBucket(stack.copyWithCount(1), player);
+                    stack.shrink(1);
+                    if (!player.addItem(resultItem)) player.drop(resultItem, false);
+                }
+            }else if (stack.getItem() instanceof BlockItem blockItem) {
+                if (blockItem.getBlock() instanceof FluidTankBlock) {
+                    return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
                 }
             }
+
+            // Always prevent vanilla from placing the liquid
+            return ItemInteractionResult.SUCCESS;
         }
+
+        // Not your tank → let vanilla handle it
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
-
-
 
     @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState();
+    }
+
+    @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        super.onPlace(state, level, pos, oldState, movedByPiston);
+
+        if (!level.isClientSide()) {
+            updateBlockState(level, pos);
+            updateBlockState(level, pos.above());
+            updateBlockState(level, pos.below());
+        }
     }
 
     private void updateBlockState(Level level, BlockPos pos) {
@@ -141,38 +156,43 @@ public class FluidTankBlock extends BaseEntityBlock {
 
                 if (checkBE instanceof FluidTankEntity checkTank) {
                     lastTankPos = checkPos;
-                    if (checkTank.getTankSpace() > 0)
+                    if (checkTank.getTankSpace() > 0){
                         return checkPos;
+                    }
                     offset++;
                     continue;
                 }
-                if(offset > level.getMaxBuildHeight()){return lastTankPos;}
+                if(offset > 256){break;}
                 return lastTankPos;
-
             }
         }else if (fluidTankEntity.getFluidAmount() <= 0) {
             int offset = 1;
             BlockPos lastTankPos = pos;
-
             while (true) {
                 BlockPos checkPos = pos.below(offset);
                 BlockEntity checkBE = level.getBlockEntity(checkPos);
+                BlockState checkState = level.getBlockState(checkPos);
 
                 if (checkBE instanceof FluidTankEntity checkTank) {
                     lastTankPos = checkPos;
 
-                    if (checkTank.getFluidAmount() > 0)
+                    if (checkTank.getFluidAmount() > 0 || (checkState.getValue(CONFIGURATION) == 1)){
+                        if(checkTank.getTankSpace() <= 0){
+                            return checkPos.above();
+                        }
                         return checkPos;
+                    }
 
                     offset++;
                     continue;
                 }
-                if(offset > level.getMinBuildHeight()){return lastTankPos;}
+                if(offset > 256){break;}
                 return lastTankPos;
             }
         }else{
             return pos;
         }
+        return pos;
     }
 
     @Override
