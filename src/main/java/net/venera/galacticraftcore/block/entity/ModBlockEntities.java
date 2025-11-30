@@ -24,6 +24,9 @@ public class ModBlockEntities {
     public static final Supplier<BlockEntityType<FluidTankEntity>> FLUID_TANK_ENTITY = BLOCK_ENTITIES.register("fluid_tank_entity",
             () -> BlockEntityType.Builder.of(FluidTankEntity::new, ModBlocks.FLUID_TANK.get()).build(null));
 
+    public static final Supplier<BlockEntityType<EnergyStorageUnitEntity>> ENERGY_STORAGE_UNIT_ENTITY = BLOCK_ENTITIES.register("energy_storage_unit_entity",
+            () -> BlockEntityType.Builder.of(EnergyStorageUnitEntity::new, ModBlocks.ENERGY_STORAGE_UNIT.get()).build(null));
+
 
     public static void register(IEventBus eventBus){
         BLOCK_ENTITIES.register(eventBus);

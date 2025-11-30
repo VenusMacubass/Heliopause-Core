@@ -80,6 +80,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.COMPRESSED_HD_PLATE.get());
 
         basicItem(ModItems.SENSOR_LENS.get());
+        basicItem(ModItems.SMALL_BATTERY.get());
 
         wallItem(ModBlocks.TIN_BUILDING_WALL, ModBlocks.TIN_BUILDING_BLOCK);
         wallItem(ModBlocks.MOON_ROCK_WALL, ModBlocks.MOON_ROCK);

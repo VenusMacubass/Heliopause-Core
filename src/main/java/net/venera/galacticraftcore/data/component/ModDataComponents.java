@@ -19,6 +19,9 @@ public class ModDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<CanisterData>> CANISTER_COMPONENT = register("canister_content",
             builder -> builder.persistent(CanisterData.CODEC).networkSynchronized(CanisterData.STREAM_CODEC));
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<BatteryData>> BATTERY_COMPONENT = register("battery_content",
+            builder -> builder.persistent(BatteryData.CODEC).networkSynchronized(BatteryData.STREAM_CODEC));
+
     private static <T>DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
         return DATA_COMPONENT_TYPES.register(name, () -> builderOperator.apply(DataComponentType.builder()).build());
     }

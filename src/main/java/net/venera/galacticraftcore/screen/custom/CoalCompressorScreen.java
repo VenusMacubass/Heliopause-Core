@@ -42,5 +42,4 @@ public class CoalCompressorScreen extends AbstractContainerScreen<CoalCompressor
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         this.renderTooltip(pGuiGraphics, pMouseX, pMouseY);
     }
-
 }

@@ -9,7 +9,9 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.data.component.BatteryData;
 import net.venera.galacticraftcore.data.component.CanisterData;
+import net.venera.galacticraftcore.data.component.ModDataComponents;
 import net.venera.galacticraftcore.fluid.ModFluids;
 import net.venera.galacticraftcore.item.custom.CanisterItem;
 
@@ -69,6 +71,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.CANISTER.get());
                         output.accept(ModItems.CANISTER.get().setCanisterData(new ItemStack(ModItems.CANISTER.get()), CanisterData.CRUDE_OIL, CanisterItem.MAX_CAPACITY));
                         output.accept(ModItems.CANISTER.get().setCanisterData(new ItemStack(ModItems.CANISTER.get()), CanisterData.REFINED_FUEL, CanisterItem.MAX_CAPACITY));
+                        output.accept(ModItems.SMALL_BATTERY.get());
+                        output.accept(ModItems.SMALL_BATTERY.get().createFullInstance());
 
                     })
                     .build()
@@ -121,6 +125,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.REFINERY.get());
                         output.accept(ModBlocks.LAUNCH_PAD.get());
                         output.accept(ModBlocks.FLUID_TANK.get());
+                        output.accept(ModBlocks.ENERGY_STORAGE_UNIT.get());
 
                     })
                     .build()

@@ -10,6 +10,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.screen.custom.CoalCompressorMenu;
+import net.venera.galacticraftcore.screen.custom.EnergyStorageUnitMenu;
 import net.venera.galacticraftcore.screen.custom.RefineryMenu;
 
 public class ModMenuTypes {
@@ -20,6 +21,9 @@ public class ModMenuTypes {
 
     public static final DeferredHolder<MenuType<?>, MenuType<RefineryMenu>> REFINERY_MENU =
             registerMenuType("refinery_menu", RefineryMenu::new);
+
+    public static final DeferredHolder<MenuType<?>, MenuType<EnergyStorageUnitMenu>> ENERGY_STORAGE_UNIT_MENU =
+            registerMenuType("energy_storage_unit_menu", EnergyStorageUnitMenu::new);
 
     private static <T extends AbstractContainerMenu>DeferredHolder<MenuType<?>, MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENU_TYPES.register(name, () -> IMenuTypeExtension.create(factory));

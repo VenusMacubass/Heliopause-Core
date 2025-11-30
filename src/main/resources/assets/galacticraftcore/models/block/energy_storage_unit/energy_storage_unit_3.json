@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "galacticraftcore:block/machine/gcc_machine",
+    "down": "galacticraftcore:block/machine/gcc_machine",
+    "up": "galacticraftcore:block/machine/gcc_machine",
+    "north": "galacticraftcore:block/machine/energy_storage_unit/energy_storage_unit_3",
+    "east": "galacticraftcore:block/machine/machine_energy_output",
+    "south": "galacticraftcore:block/machine/energy_storage_unit/energy_storage_unit_3",
+    "west": "galacticraftcore:block/machine/machine_electric_input"
+  }
+}

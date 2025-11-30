@@ -22,6 +22,7 @@ import net.venera.galacticraftcore.entity.zombie.SpaceZombieRenderer;
 import net.venera.galacticraftcore.item.ModItems;
 import net.venera.galacticraftcore.screen.ModMenuTypes;
 import net.venera.galacticraftcore.screen.custom.CoalCompressorScreen;
+import net.venera.galacticraftcore.screen.custom.EnergyStorageUnitScreen;
 import net.venera.galacticraftcore.screen.custom.RefineryScreen;
 
 
@@ -29,7 +30,6 @@ import net.venera.galacticraftcore.screen.custom.RefineryScreen;
 @EventBusSubscriber(modid = GalacticraftCore.MOD_ID, value = Dist.CLIENT)
 public class GalacticraftCoreClient {
     public GalacticraftCoreClient(ModContainer container) {
-
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
 
@@ -72,6 +72,7 @@ public class GalacticraftCoreClient {
     public static void registerScreens(RegisterMenuScreensEvent event) {
         event.register(ModMenuTypes.COAL_COMPRESSOR_MENU.get(), CoalCompressorScreen::new);
         event.register(ModMenuTypes.REFINERY_MENU.get(), RefineryScreen::new);
+        event.register(ModMenuTypes.ENERGY_STORAGE_UNIT_MENU.get(), EnergyStorageUnitScreen::new);
     }
 
 }

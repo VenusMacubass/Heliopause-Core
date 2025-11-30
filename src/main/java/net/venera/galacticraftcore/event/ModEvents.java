@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
@@ -21,6 +22,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.block.entity.ModBlockEntities;
 import net.venera.galacticraftcore.data.component.CanisterData;
 import net.venera.galacticraftcore.data.radiation.RadiationData;
 import net.venera.galacticraftcore.item.ModItems;
@@ -75,5 +77,12 @@ public class ModEvents {
                 });
     }
 
-
+    @SubscribeEvent
+    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(
+                Capabilities.EnergyStorage.BLOCK, // The Capability we are registering
+                ModBlockEntities.ENERGY_STORAGE_UNIT_ENTITY.get(), // The BlockEntity type
+                (myBlockEntity, direction) -> myBlockEntity.getEnergyStorage() // The logic object to return
+        );
+    }
 }

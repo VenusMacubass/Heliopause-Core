@@ -1,6 +1,7 @@
 {
   "values": [
     "galacticraftcore:gcc_coal_compressor",
-    "galacticraftcore:gcc_refinery"
+    "galacticraftcore:gcc_refinery",
+    "galacticraftcore:energy_storage_unit"
   ]
 }

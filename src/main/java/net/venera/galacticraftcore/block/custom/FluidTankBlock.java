@@ -43,8 +43,8 @@ public class FluidTankBlock extends BaseEntityBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        BlockPos newPos = findValidTank(level, pos);
-        if (level.getBlockEntity(newPos) instanceof FluidTankEntity fluidTankEntity) {
+        //BlockPos newPos = findValidTank(level, pos);
+        if (level.getBlockEntity(pos) instanceof FluidTankEntity fluidTankEntity) {
             ItemStack resultItem;
 
             if (stack.getItem() instanceof CanisterItem) {

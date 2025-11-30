@@ -136,7 +136,8 @@ public class ModBlocks {
     public static final DeferredBlock<Block> FLUID_TANK = registerBlock("fluid_tank",
             () -> new FluidTankBlock(BlockBehaviour.Properties.of().noOcclusion().strength(2f).sound(SoundType.GLASS)));
 
-
+    public static final DeferredBlock<Block> ENERGY_STORAGE_UNIT = registerBlock("energy_storage_unit",
+            () -> new EnergyStorageUnitBlock(BlockBehaviour.Properties.of().strength(2f).sound(SoundType.METAL)));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

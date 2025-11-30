@@ -70,7 +70,7 @@ public class CoalCompressorBlock extends BaseEntityBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if(level.getBlockEntity(pos) instanceof CoalCompressorEntity coalBlockEntity){
             if(!level.isClientSide){
-                ((ServerPlayer) player).openMenu(new SimpleMenuProvider(coalBlockEntity, Component.translatable("block.galacticraftcore.coal_compressor_menu_name")), pos);
+                player.openMenu(new SimpleMenuProvider(coalBlockEntity, Component.translatable("block.galacticraftcore.coal_compressor_menu_name")), pos);
                 return InteractionResult.SUCCESS;
             }
         }

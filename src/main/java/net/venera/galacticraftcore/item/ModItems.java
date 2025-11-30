@@ -6,12 +6,11 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.galacticraftcore.GalacticraftCore;
+import net.venera.galacticraftcore.data.component.BatteryData;
 import net.venera.galacticraftcore.data.component.CanisterData;
 import net.venera.galacticraftcore.data.component.ModDataComponents;
-import net.venera.galacticraftcore.item.custom.CanisterItem;
-import net.venera.galacticraftcore.item.custom.FuelItem;
-import net.venera.galacticraftcore.item.custom.StandardWrench;
-import net.venera.galacticraftcore.item.custom.TempSword;
+import net.venera.galacticraftcore.item.custom.*;
+
 import java.util.List;
 
 public class ModItems {
@@ -114,6 +113,9 @@ public class ModItems {
     public static final DeferredItem<CanisterItem> CANISTER = ITEMS.register("gcc_canister", () ->
             new CanisterItem(new Item.Properties().component(ModDataComponents.CANISTER_COMPONENT.get(), new CanisterData(null, 0)).stacksTo(1)));
 
+    public static final DeferredItem<BatteryItem> SMALL_BATTERY = ITEMS.register("small_battery", () ->
+            new BatteryItem(new Item.Properties().component(ModDataComponents.BATTERY_COMPONENT.get(), new BatteryData(0, 500)),
+                    500, 1));
 
 
 

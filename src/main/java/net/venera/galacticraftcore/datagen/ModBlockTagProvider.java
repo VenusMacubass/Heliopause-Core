@@ -83,7 +83,8 @@ public class ModBlockTagProvider extends BlockTagsProvider {
 
         tag(ModTags.Blocks.MACHINERY)
                 .add(ModBlocks.COAL_COMPRESSOR.get())
-                .add(ModBlocks.REFINERY.get());
+                .add(ModBlocks.REFINERY.get())
+                .add(ModBlocks.ENERGY_STORAGE_UNIT.get());
 
 
     }
