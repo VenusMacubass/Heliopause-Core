@@ -8,6 +8,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.venera.galacticraftcore.data.component.BatteryData;
 import net.venera.galacticraftcore.data.component.ModDataComponents;
 
+import java.awt.*;
 import java.util.List;
 
 public class BatteryItem extends Item {
@@ -81,6 +82,18 @@ public class BatteryItem extends Item {
         // Avoid divide by zero
         if (data.capacity() == 0) return 0;
         return Math.round(13.0F * ((float)data.energy() / data.capacity()));
+    }
+
+    @Override
+    public int getBarColor(ItemStack stack) {
+        BatteryData batteryData = getBatteryData(stack);
+        if(batteryData.getEnergy() >= batteryData.capacity() * 0.66f){
+            return Color.GREEN.getRGB();
+        }else if(batteryData.getEnergy() >= batteryData.capacity() * 0.33f){
+            return Color.YELLOW.getRGB();
+        }else{
+            return Color.RED.getRGB();
+        }
     }
 
     @Override

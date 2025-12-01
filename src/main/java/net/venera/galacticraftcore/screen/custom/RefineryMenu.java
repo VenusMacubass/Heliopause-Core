@@ -14,6 +14,7 @@ import net.venera.galacticraftcore.block.ModBlocks;
 import net.venera.galacticraftcore.block.entity.RefineryEntity;
 import net.venera.galacticraftcore.fluid.ModFluids;
 import net.venera.galacticraftcore.item.ModItems;
+import net.venera.galacticraftcore.item.custom.BatteryItem;
 import net.venera.galacticraftcore.screen.ModMenuTypes;
 
 public class RefineryMenu extends AbstractContainerMenu {
@@ -40,6 +41,11 @@ public class RefineryMenu extends AbstractContainerMenu {
             public boolean mayPlace(ItemStack stack) {
                 return stack.getItem() == ModFluids.CRUDE_OIL.getBucket() || stack.getItem() == Items.BUCKET || stack.getItem() == ModItems.CANISTER.get();
             }
+
+            @Override
+            public int getMaxStackSize(ItemStack stack) {
+                return 1;
+            }
         });
 
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 1, 153, 7) {
@@ -47,12 +53,20 @@ public class RefineryMenu extends AbstractContainerMenu {
             public boolean mayPlace(ItemStack stack) {
                 return stack.getItem() == Items.BUCKET || stack.getItem() == ModItems.CANISTER.get();
             }
+            @Override
+            public int getMaxStackSize(ItemStack stack) {
+                return 1;
+            }
         });
 
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 2, 38, 51) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.getItem() == Items.NETHER_STAR; //TODO: Placeholder, change when the time comes.
+                return stack.getItem() instanceof BatteryItem;
+            }
+            @Override
+            public int getMaxStackSize(ItemStack stack) {
+                return 1;
             }
         });
     }

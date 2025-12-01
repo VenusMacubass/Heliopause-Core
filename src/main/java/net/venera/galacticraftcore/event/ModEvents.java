@@ -84,5 +84,10 @@ public class ModEvents {
                 ModBlockEntities.ENERGY_STORAGE_UNIT_ENTITY.get(), // The BlockEntity type
                 (myBlockEntity, direction) -> myBlockEntity.getEnergyStorage() // The logic object to return
         );
+        event.registerBlockEntity(
+                Capabilities.EnergyStorage.BLOCK, //The capability that is registered
+                ModBlockEntities.REFINERY_ENTITY.get(), //The BlockEntity type
+                (myBlockEntity, direction) -> myBlockEntity.getEnergyStorage() //The logic object to return
+        );
     }
 }

@@ -41,12 +41,21 @@ public class EnergyStorageUnitMenu extends AbstractContainerMenu {
             public boolean mayPlace(ItemStack stack) {
                 return stack.getItem() instanceof BatteryItem;
             }
+            @Override
+            public int getMaxStackSize(ItemStack stack) {
+                return 1;
+            }
         });
-
+        //Output slot
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 1, 33, 24) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return stack.getItem() instanceof BatteryItem;
+            }
+
+            @Override
+            public int getMaxStackSize(ItemStack stack) {
+                return 1;
             }
         });
     }
