@@ -40,8 +40,30 @@ public class EnergyStorageUnitScreen extends AbstractContainerScreen<EnergyStora
     }
 
     @Override
+    protected void renderTooltip(GuiGraphics guiGraphics, int x, int y) {
+        super.renderTooltip(guiGraphics, x, y);
+        int imageX = (width - imageWidth) / 2;
+        int imageY = (height - imageHeight) / 2;
+        int energyX = imageX + 86;
+        int energyY = imageY + 51;
+        int energyWidth = 73;
+        int energyHeight = 4;
+
+        if (isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)) {
+            guiGraphics.renderTooltip(font,
+                    Component.literal("Stored Energy: " + menu.data.get(0) + "."),
+                    x, y
+            );
+        }
+    }
+
+    @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         this.renderTooltip(pGuiGraphics, pMouseX, pMouseY);
+    }
+
+    private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {
+        return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
     }
 }

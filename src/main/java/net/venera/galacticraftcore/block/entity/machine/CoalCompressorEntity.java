@@ -1,4 +1,4 @@
-package net.venera.galacticraftcore.block.entity;
+package net.venera.galacticraftcore.block.entity.machine;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -15,27 +15,20 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforgespi.locating.ForgeFeature;
-import net.venera.galacticraftcore.item.ModItems;
+import net.venera.galacticraftcore.block.entity.ModBlockEntities;
 import net.venera.galacticraftcore.recipe.CoalCompressorRecipe;
 import net.venera.galacticraftcore.recipe.ModRecipes;
 import net.venera.galacticraftcore.screen.custom.CoalCompressorMenu;
-import net.venera.galacticraftcore.util.ModTags;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CoalCompressorEntity extends BlockEntity implements MenuProvider {
         public final ItemStackHandler inventory = new ItemStackHandler(11) {

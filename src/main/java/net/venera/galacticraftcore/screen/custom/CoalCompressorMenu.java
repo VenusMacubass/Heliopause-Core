@@ -12,7 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import net.venera.galacticraftcore.block.ModBlocks;
-import net.venera.galacticraftcore.block.entity.CoalCompressorEntity;
+import net.venera.galacticraftcore.block.entity.machine.CoalCompressorEntity;
 import net.venera.galacticraftcore.screen.ModMenuTypes;
 
 public class CoalCompressorMenu extends AbstractContainerMenu {

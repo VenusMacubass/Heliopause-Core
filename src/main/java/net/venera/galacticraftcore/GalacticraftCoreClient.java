@@ -21,6 +21,7 @@ import net.venera.galacticraftcore.entity.ModEntities;
 import net.venera.galacticraftcore.entity.zombie.SpaceZombieRenderer;
 import net.venera.galacticraftcore.item.ModItems;
 import net.venera.galacticraftcore.screen.ModMenuTypes;
+import net.venera.galacticraftcore.screen.custom.BasicSolarScreen;
 import net.venera.galacticraftcore.screen.custom.CoalCompressorScreen;
 import net.venera.galacticraftcore.screen.custom.EnergyStorageUnitScreen;
 import net.venera.galacticraftcore.screen.custom.RefineryScreen;
@@ -73,6 +74,7 @@ public class GalacticraftCoreClient {
         event.register(ModMenuTypes.COAL_COMPRESSOR_MENU.get(), CoalCompressorScreen::new);
         event.register(ModMenuTypes.REFINERY_MENU.get(), RefineryScreen::new);
         event.register(ModMenuTypes.ENERGY_STORAGE_UNIT_MENU.get(), EnergyStorageUnitScreen::new);
+        event.register(ModMenuTypes.BASIC_SOLAR_MENU.get(), BasicSolarScreen::new);
     }
 
 }

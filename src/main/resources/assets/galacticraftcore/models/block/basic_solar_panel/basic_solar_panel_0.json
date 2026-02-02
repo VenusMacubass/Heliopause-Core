@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "galacticraftcore:block/machine/gcc_machine",
+    "down": "galacticraftcore:block/machine/gcc_machine",
+    "up": "galacticraftcore:block/machine/machine_solar_top",
+    "north": "galacticraftcore:block/machine/machine_energy_output",
+    "east": "galacticraftcore:block/machine/energy_storage_unit/energy_storage_unit_0",
+    "south": "galacticraftcore:block/machine/machine_basic_solar_panel",
+    "west": "galacticraftcore:block/machine/energy_storage_unit/energy_storage_unit_0"
+  }
+}

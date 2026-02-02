@@ -3,67 +3,44 @@ package net.venera.galacticraftcore.screen.custom;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.*;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import net.venera.galacticraftcore.block.ModBlocks;
-import net.venera.galacticraftcore.block.entity.machine.electric.RefineryEntity;
-import net.venera.galacticraftcore.fluid.ModFluids;
-import net.venera.galacticraftcore.item.ModItems;
+import net.venera.galacticraftcore.block.entity.machine.electric.SolarPanelEntity;
 import net.venera.galacticraftcore.item.custom.BatteryItem;
 import net.venera.galacticraftcore.screen.ModMenuTypes;
 
-public class RefineryMenu extends AbstractContainerMenu {
-    public final RefineryEntity blockEntity;
+public class BasicSolarMenu extends AbstractContainerMenu {
+    public final SolarPanelEntity blockEntity;
     private final Level level;
     public final ContainerData data;
 
-    public RefineryMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()));
+    public BasicSolarMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
+        this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(5));
     }
 
-    public RefineryMenu(int containerId, Inventory  inventory, BlockEntity blockEntity) {
-        super(ModMenuTypes.REFINERY_MENU.get(), containerId);
-        this.blockEntity = ((RefineryEntity)blockEntity);
+    public BasicSolarMenu(int containerId, Inventory  inventory, BlockEntity blockEntity, ContainerData data) {
+        super(ModMenuTypes.BASIC_SOLAR_MENU.get(), containerId);
+
+        checkContainerSize(inventory, 5);
+        this.blockEntity = ((SolarPanelEntity)blockEntity);
         this.level = inventory.player.level();
-        this.data = this.blockEntity.data;
+        this.data = data;
+        
 
         addDataSlots(this.data);
         addPlayerInventory(inventory);
         addPlayerHotbar(inventory);
 
-        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 0, 7, 7) {
+        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 0, 152, 83) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.getItem() == ModFluids.CRUDE_OIL.getBucket() || stack.getItem() == Items.BUCKET || stack.getItem() == ModItems.CANISTER.get();
+                return  stack.getItem() instanceof BatteryItem;
             }
 
-            @Override
-            public int getMaxStackSize(ItemStack stack) {
-                return 1;
-            }
-        });
-
-        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 1, 153, 7) {
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                return stack.getItem() == Items.BUCKET || stack.getItem() == ModItems.CANISTER.get();
-            }
-            @Override
-            public int getMaxStackSize(ItemStack stack) {
-                return 1;
-            }
-        });
-
-        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 2, 38, 51) {
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                return stack.getItem() instanceof BatteryItem;
-            }
             @Override
             public int getMaxStackSize(ItemStack stack) {
                 return 1;
@@ -78,7 +55,7 @@ public class RefineryMenu extends AbstractContainerMenu {
     private static final int VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INVENTORY_SLOT_COUNT;
     private static final int VANILLA_FIRST_SLOT_INDEX = 0;
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
-    private static final int TE_INVENTORY_SLOT_COUNT = 3;
+    private static final int TE_INVENTORY_SLOT_COUNT = 1;
 
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
@@ -90,14 +67,13 @@ public class RefineryMenu extends AbstractContainerMenu {
         if (pIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
             if (!moveItemStackTo(sourceStack, TE_INVENTORY_FIRST_SLOT_INDEX, TE_INVENTORY_FIRST_SLOT_INDEX
                     + TE_INVENTORY_SLOT_COUNT, false)) {
-                return ItemStack.EMPTY;  // EMPTY_ITEM
+                return ItemStack.EMPTY;  
             }
         } else if (pIndex < TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT) {
             if (!moveItemStackTo(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)) {
                 return ItemStack.EMPTY;
             }
         } else {
-            System.out.println("Invalid slotIndex:" + pIndex);
             return ItemStack.EMPTY;
         }
 
@@ -113,46 +89,33 @@ public class RefineryMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                player, ModBlocks.REFINERY.get());
+                player, ModBlocks.BASIC_SOLAR_BLOCK.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 86 + i * 18));
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 119 + i * 18));
             }
         }
     }
 
     private void addPlayerHotbar(Inventory playerInventory) {
         for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 144));
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 177));
         }
     }
-
-    public int getOilAmount() {
+    
+    public int getEnergyScaled(int pixels){
+        int energy = this.data.get(0);
+        int capacity = this.data.get(1);
+        if(capacity == 0) {
+            return 0;
+        }
+        return energy * pixels / capacity;
+    }
+    
+    public int getCurrentEnergy() {
         return data.get(0);
-    }
-
-    public int getFuelAmount() {
-        return data.get(1);
-    }
-
-    public int getMaxCapacity() {
-        return data.get(2);
-    }
-
-    public boolean isActive() {
-        return data.get(3) == 1;
-    }
-
-    public int getOilScaled(int pixels) {
-        int max = getMaxCapacity();
-        return max == 0 ? 0 : getOilAmount() * pixels / max;
-    }
-
-    public int getFuelScaled(int pixels) {
-        int max = getMaxCapacity();
-        return max == 0 ? 0 : getFuelAmount() * pixels / max;
     }
 }

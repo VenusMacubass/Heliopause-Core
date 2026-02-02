@@ -126,6 +126,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.LAUNCH_PAD.get());
                         output.accept(ModBlocks.FLUID_TANK.get());
                         output.accept(ModBlocks.ENERGY_STORAGE_UNIT.get());
+                        output.accept(ModBlocks.BASIC_SOLAR_BLOCK.get());
 
                     })
                     .build()
