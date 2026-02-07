@@ -21,6 +21,7 @@ import java.util.function.Supplier;
 
 public class SolarPanelBlock extends BaseMachineBlock<SolarPanelEntity> {
     public static final MapCodec<SolarPanelBlock> CODEC = simpleCodec(SolarPanelBlock::new);
+    
     public SolarPanelBlock(Properties properties) {
         this(properties, ModBlockEntities.BASIC_SOLAR_PANEL_ENTITY);
     }

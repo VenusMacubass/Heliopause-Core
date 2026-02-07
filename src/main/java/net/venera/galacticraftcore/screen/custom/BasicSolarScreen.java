@@ -27,6 +27,7 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
         guiGraphics.blit(BASIC_SOLAR_SCREEN_GUI, x, y, 0, 0, 175, 200); //Gui
 
         if(menu.data.get(0) > 0){ 
+            //guiGraphics.blit(SOURCE_GUI, whereToDrawX, whereToDrawY, textureX, textureY, textureW, textureH);
             guiGraphics.blit(BASIC_SOLAR_SCREEN_GUI, x + 82, y + 24, 176, 0, 11, 10); //Lightning Icon
         }
         if(menu.data.get(4) > 0) {
@@ -73,7 +74,7 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
 
         if(isMouseOver(x, y, sunX, sunY, sunArea, sunArea)){
             guiGraphics.renderTooltip(font, Component.literal(
-                            "Generating Energy"),x,y);
+                            "Sun is visible."),x,y);
         }
     }
 

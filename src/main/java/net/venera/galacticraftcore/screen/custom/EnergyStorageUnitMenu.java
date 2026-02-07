@@ -12,12 +12,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import net.venera.galacticraftcore.block.ModBlocks;
-import net.venera.galacticraftcore.block.entity.machine.electric.EnergyStorageUnitEntity;
+import net.venera.galacticraftcore.block.entity.machine.electric.EnergyStorageEntity;
 import net.venera.galacticraftcore.item.custom.BatteryItem;
 import net.venera.galacticraftcore.screen.ModMenuTypes;
 
 public class EnergyStorageUnitMenu extends AbstractContainerMenu {
-    public final EnergyStorageUnitEntity blockEntity;
+    public final EnergyStorageEntity blockEntity;
     private final Level level;
     public final ContainerData data;
 
@@ -27,7 +27,7 @@ public class EnergyStorageUnitMenu extends AbstractContainerMenu {
 
     public EnergyStorageUnitMenu(int containerId, Inventory  inventory, BlockEntity blockEntity) {
         super(ModMenuTypes.ENERGY_STORAGE_UNIT_MENU.get(), containerId);
-        this.blockEntity = ((EnergyStorageUnitEntity)blockEntity);
+        this.blockEntity = ((EnergyStorageEntity)blockEntity);
         this.level = inventory.player.level();
         this.data = this.blockEntity.data;
 

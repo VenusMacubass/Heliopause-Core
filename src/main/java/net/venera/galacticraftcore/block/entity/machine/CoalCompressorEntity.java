@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class CoalCompressorEntity extends BlockEntity implements MenuProvider {
+public class CoalCompressorEntity extends BaseMachineEntity{
         public final ItemStackHandler inventory = new ItemStackHandler(11) {
             @Override
             protected void onContentsChanged(int slot) {
@@ -44,15 +44,19 @@ public class CoalCompressorEntity extends BlockEntity implements MenuProvider {
     private final int[] INPUT_SLOTS = {0, 1, 2, 3, 4, 5, 6, 7, 8};
     private final int FUEL_SLOT = 9;
     private final int OUTPUT_SLOT = 10;
-    public final ContainerData data;
     private int progress = 0;
     private int maxProgress = 200;
     public int burnTime = 0;
     public int maxBurnTime;
     public boolean isActive = false;
     public CoalCompressorEntity(BlockPos pos, BlockState blockState) {
-        super(ModBlockEntities.COAL_COMPRESSOR_ENTITY.get(), pos, blockState);
-        data = new ContainerData() {
+        super(ModBlockEntities.COAL_COMPRESSOR_ENTITY.get(), pos, blockState, 11);
+
+    }
+
+    @Override
+    protected ContainerData initContainerData() {
+        return new ContainerData() {
             @Override
             public int get(int i) {
                 return switch (i) {
@@ -78,7 +82,6 @@ public class CoalCompressorEntity extends BlockEntity implements MenuProvider {
             public int getCount() {
                 return 4;
             }
-
         };
     }
 
@@ -135,46 +138,45 @@ public class CoalCompressorEntity extends BlockEntity implements MenuProvider {
         if (dirty) setChanged();
     }
 
+    private boolean canCraft(){
+        if (level == null) return false;
+        if (isActive) return false;
 
-   private boolean canCraft(){
-       if (level == null) return false;
-       if (isActive) return false;
+        CoalCompressorRecipe recipe = getMatchingRecipe();
+        if (recipe == null) return false;
 
-       CoalCompressorRecipe recipe = getMatchingRecipe();
-       if (recipe == null) return false;
+        // Check fuel - only if we're out of burn time
+        if (burnTime <= 0 && getFuelStack().getBurnTime(null) <= 0) return false;
 
-       // Check fuel - only if we're out of burn time
-       if (burnTime <= 0 && getFuelStack().getBurnTime(null) <= 0) return false;
+        // Check output
+        ItemStack output = getOutputStack();
+        ItemStack result = recipe.getResultItem(level.registryAccess());
 
-       // Check output
-       ItemStack output = getOutputStack();
-       ItemStack result = recipe.getResultItem(level.registryAccess());
+        if (!output.isEmpty()) {
+            if (!ItemStack.isSameItemSameComponents(output, result)) return false;
+            if (output.getCount() + result.getCount() > output.getMaxStackSize()) return false;
+        }
 
-       if (!output.isEmpty()) {
-           if (!ItemStack.isSameItemSameComponents(output, result)) return false;
-           if (output.getCount() + result.getCount() > output.getMaxStackSize()) return false;
-       }
+        return true;
+    }
 
-       return true;
-   }
-
-   private void startCrafting() {
+    private void startCrafting() {
         burnFuel();
         progress = 0;
         setChanged();
     }
 
-   private void burnFuel() {
-       ItemStack fuelStack = getFuelStack();
-       if (fuelStack.isEmpty()) return;
+    private void burnFuel() {
+        ItemStack fuelStack = getFuelStack();
+        if (fuelStack.isEmpty()) return;
 
-       int burnTimeValue = fuelStack.getBurnTime(null);
-       if (burnTimeValue > 0) {
-           burnTime = burnTimeValue;
-           maxBurnTime = burnTimeValue;
-           fuelStack.shrink(1);
-           inventory.setStackInSlot(FUEL_SLOT, fuelStack);
-       }
+        int burnTimeValue = fuelStack.getBurnTime(null);
+        if (burnTimeValue > 0) {
+            burnTime = burnTimeValue;
+            maxBurnTime = burnTimeValue;
+            fuelStack.shrink(1);
+            inventory.setStackInSlot(FUEL_SLOT, fuelStack);
+        }
     }
 
     private void craftItem(CoalCompressorRecipe recipe) {
@@ -231,12 +233,11 @@ public class CoalCompressorEntity extends BlockEntity implements MenuProvider {
     public void setOutputStack(ItemStack outputStack) {
         inventory.setStackInSlot(OUTPUT_SLOT, outputStack);
     }
-
     public void drops(){
         SimpleContainer inv = new SimpleContainer(inventory.getSlots());
         for(int i = 0; i < inventory.getSlots(); i++){
             inv.setItem(i, inventory.getStackInSlot(i));
-            }
+        }
         Containers.dropContents(this.level, this.worldPosition, inv);
     }
 
@@ -247,7 +248,7 @@ public class CoalCompressorEntity extends BlockEntity implements MenuProvider {
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new CoalCompressorMenu(i, inventory, this);
+        return new CoalCompressorMenu(i, inventory, this, this.data);
     }
 
     @Override

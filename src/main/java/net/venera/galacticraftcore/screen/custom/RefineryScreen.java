@@ -32,14 +32,13 @@ public class RefineryScreen extends AbstractContainerScreen<RefineryMenu> {
         if(oilHeight > 0) {
             int renderY = y + 28 + (38 - oilHeight);
             guiGraphics.blit(REFINERY_GUI, x + 7, renderY, 176, 38 - oilHeight, 16, oilHeight);
-
         }
 
         int fuelHeight = menu.getFuelScaled(38);
         if(fuelHeight > 0) {
             int renderY = y + 28 + (38 - fuelHeight);
+            //guiGraphics.blit(SOURCE_GUI, whereToDrawX, whereToDrawY, textureX, textureY, textureW, textureH);
             guiGraphics.blit(REFINERY_GUI, x + 153, renderY, 192, 38 - fuelHeight, 16, fuelHeight);
-
         }
 
         int currentEnergy = menu.data.get(4);

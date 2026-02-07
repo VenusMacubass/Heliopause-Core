@@ -36,6 +36,7 @@ public class EnergyStorageUnitScreen extends AbstractContainerScreen<EnergyStora
                 chargeLength = Math.round(((float) currentEnergy / capacity) * 72);
             }
         }
+        //guiGraphics.blit(SOURCE_GUI, whereToDrawX, whereToDrawY, textureX, textureY, textureW, textureH);
         guiGraphics.blit(GUI_TEXTURE, x + 87, y + 52, 176, 0, chargeLength, 3);
     }
 

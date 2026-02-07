@@ -20,20 +20,14 @@ public class CheeseBlock extends Block {
     public static final IntegerProperty SLICES = IntegerProperty.create("slices", 0, 6);
 
     private static final VoxelShape[] SLICE_SHAPES = new VoxelShape[]{
-            // Slice 0: Full cheese (from first JSON)
-            Block.box(1.0, 0.0, 1.0, 15.0, 8.0, 15.0),
-            // Slice 1: Slightly eaten
-            Block.box(3.0, 0.0, 1.0, 15.0, 8.0, 15.0),
-            // Slice 2: More eaten
-            Block.box(5.0, 0.0, 1.0, 15.0, 8.0, 15.0),
-            // Slice 3: Half eaten
-            Block.box(7.0, 0.0, 1.0, 15.0, 8.0, 15.0),
-            // Slice 4: Mostly eaten
-            Block.box(9.0, 0.0, 1.0, 15.0, 8.0, 15.0),
-            // Slice 5: Almost gone
-            Block.box(11.0, 0.0, 1.0, 15.0, 8.0, 15.0),
-            // Slice 6: Last piece (from second JSON)
-            Block.box(13.0, 0.0, 1.0, 15.0, 8.0, 15.0)
+            
+            Block.box(1.0, 0.0, 1.0, 15.0, 8.0, 15.0), //Slice 0: Full cheese (from first JSON)
+            Block.box(3.0, 0.0, 1.0, 15.0, 8.0, 15.0), //Slice 1: Slightly eaten
+            Block.box(5.0, 0.0, 1.0, 15.0, 8.0, 15.0), //Slice 2: More eaten
+            Block.box(7.0, 0.0, 1.0, 15.0, 8.0, 15.0), //Slice 3: Half eaten
+            Block.box(9.0, 0.0, 1.0, 15.0, 8.0, 15.0), //Slice 4: Mostly eaten
+            Block.box(11.0, 0.0, 1.0, 15.0, 8.0, 15.0), //Slice 5: Almost gone
+            Block.box(13.0, 0.0, 1.0, 15.0, 8.0, 15.0) //Slice 6: Last piece (from second JSON)
     };
 
     public CheeseBlock(BlockBehaviour.Properties properties) {
@@ -51,19 +45,16 @@ public class CheeseBlock extends Block {
         if (level.isClientSide) return InteractionResult.SUCCESS;
 
         int slices = state.getValue(SLICES);
-
-        // Give player 2 cheese slices
-        ItemStack cheese = new ItemStack(ModItems.CHEESE_SLICE.get(), 2);
+        
+        ItemStack cheese = new ItemStack(ModItems.CHEESE_SLICE.get(), 2); // Give player 2 cheese slices
         if (!player.addItem(cheese)) {
             player.drop(cheese, false);
         }
-
-        // Update bite state
+        
         if (slices < 6) {
-            level.setBlock(pos, state.setValue(SLICES, slices + 1), 6);
+            level.setBlock(pos, state.setValue(SLICES, slices + 1), 6); // Update bite state
         } else {
-            // Fully eaten, remove block
-            level.removeBlock(pos, false);
+            level.removeBlock(pos, false);  // Fully eaten, remove block
         }
         return InteractionResult.SUCCESS;
     }

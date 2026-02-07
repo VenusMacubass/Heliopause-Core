@@ -21,15 +21,12 @@ import net.venera.galacticraftcore.block.entity.machine.CoalCompressorEntity;
 import net.venera.galacticraftcore.block.entity.ModBlockEntities;
 import org.jetbrains.annotations.Nullable;
 
-public class CoalCompressorBlock extends BaseEntityBlock {
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+public class CoalCompressorBlock extends BaseMachineBlock<CoalCompressorEntity> {
     public static final MapCodec<CoalCompressorBlock> CODEC = simpleCodec(CoalCompressorBlock::new);
 
 
     public CoalCompressorBlock(Properties properties) {
-        super(properties);
-        this.registerDefaultState(this.defaultBlockState()
-                .setValue(FACING, this.defaultBlockState().getValue(FACING)));
+        super(properties, ModBlockEntities.COAL_COMPRESSOR_ENTITY);
     }
 
     @Override
@@ -59,26 +56,16 @@ public class CoalCompressorBlock extends BaseEntityBlock {
         return new CoalCompressorEntity(blockPos, blockState);
     }
 
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if(level.getBlockEntity(pos) instanceof CoalCompressorEntity coalBlockEntity){
-            if(!level.isClientSide){
-                player.openMenu(new SimpleMenuProvider(coalBlockEntity, Component.translatable("block.galacticraftcore.coal_compressor_menu_name")), pos);
-                return InteractionResult.SUCCESS;
-            }
-        }
-        return InteractionResult.SUCCESS;
-    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
-    }
-
-    @Override
-    public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-    }
+//    @Override
+//    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+//        if(level.getBlockEntity(pos) instanceof CoalCompressorEntity coalBlockEntity){
+//            if(!level.isClientSide){
+//                player.openMenu(new SimpleMenuProvider(coalBlockEntity, Component.translatable("block.galacticraftcore.coal_compressor_menu_name")), pos);
+//                return InteractionResult.SUCCESS;
+//            }
+//        }
+//        return InteractionResult.SUCCESS;
+//    }
 
     @Nullable
     @Override

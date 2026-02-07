@@ -2,39 +2,30 @@ package net.venera.galacticraftcore.block.custom.machine.electric;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.SimpleMenuProvider;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.phys.BlockHitResult;
 import net.venera.galacticraftcore.block.custom.machine.BaseMachineBlock;
-import net.venera.galacticraftcore.block.entity.machine.electric.EnergyStorageUnitEntity;
+import net.venera.galacticraftcore.block.entity.machine.electric.EnergyStorageEntity;
 import net.venera.galacticraftcore.block.entity.ModBlockEntities;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
-public class EnergyStorageUnitBlock extends BaseMachineBlock<EnergyStorageUnitEntity> {
-    public static final MapCodec<EnergyStorageUnitBlock> CODEC = simpleCodec(EnergyStorageUnitBlock::new);
+public class EnergyStorageBlock extends BaseMachineBlock<EnergyStorageEntity> {
+    public static final MapCodec<EnergyStorageBlock> CODEC = simpleCodec(EnergyStorageBlock::new);
     public static final IntegerProperty CHARGE = IntegerProperty.create("charge", 0, 16);
-    public EnergyStorageUnitBlock(Properties properties) {
-        this(properties, ModBlockEntities.ENERGY_STORAGE_UNIT_ENTITY);
+    public EnergyStorageBlock(Properties properties) {
+        this(properties, ModBlockEntities.ENERGY_STORAGE_ENTITY);
     }
-    public EnergyStorageUnitBlock(Properties properties, Supplier<BlockEntityType<EnergyStorageUnitEntity>> type) {
+    public EnergyStorageBlock(Properties properties, Supplier<BlockEntityType<EnergyStorageEntity>> type) {
         super(properties, type);
         this.registerDefaultState(this.defaultBlockState().setValue(CHARGE, 0));
     }

@@ -7,6 +7,6 @@
     "north": "galacticraftcore:block/machine/energy_storage_unit/energy_storage_unit_4",
     "east": "galacticraftcore:block/machine/machine_energy_output",
     "south": "galacticraftcore:block/machine/energy_storage_unit/energy_storage_unit_4",
-    "west": "galacticraftcore:block/machine/machine_electric_input"
+    "west": "galacticraftcore:block/machine/machine_energy_input"
   }
 }

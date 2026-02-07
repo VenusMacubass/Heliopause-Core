@@ -3,7 +3,7 @@
   "textures": {
     "particle": "galacticraftcore:block/machine/gcc_machine",
     "down": "galacticraftcore:block/machine/gcc_machine",
-    "up": "galacticraftcore:block/machine/machine_electric_input",
+    "up": "galacticraftcore:block/machine/machine_energy_input",
     "north": "galacticraftcore:block/machine/refinery_front",
     "east": "galacticraftcore:block/machine/machine_oil_port",
     "south": "galacticraftcore:block/machine/refinery_side",

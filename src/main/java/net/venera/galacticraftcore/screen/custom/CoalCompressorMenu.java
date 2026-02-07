@@ -3,10 +3,7 @@ package net.venera.galacticraftcore.screen.custom;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -21,14 +18,14 @@ public class CoalCompressorMenu extends AbstractContainerMenu {
     public final ContainerData data;
 
     public CoalCompressorMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()));
+        this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
 
-    public CoalCompressorMenu(int containerId, Inventory  inventory, BlockEntity blockEntity) {
+    public CoalCompressorMenu(int containerId, Inventory  inventory, BlockEntity blockEntity, ContainerData data) {
         super(ModMenuTypes.COAL_COMPRESSOR_MENU.get(), containerId);
         this.blockEntity = ((CoalCompressorEntity)blockEntity);
         this.level = inventory.player.level();
-        this.data = this.blockEntity.data;
+        this.data = data;
 
         addDataSlots(this.data);
         addPlayerInventory(inventory);
