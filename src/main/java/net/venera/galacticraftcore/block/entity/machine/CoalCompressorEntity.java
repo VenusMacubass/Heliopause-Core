@@ -9,7 +9,6 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Containers;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.venera.galacticraftcore.block.entity.ModBlockEntities;
@@ -27,7 +25,6 @@ import net.venera.galacticraftcore.recipe.CoalCompressorRecipe;
 import net.venera.galacticraftcore.recipe.ModRecipes;
 import net.venera.galacticraftcore.screen.custom.CoalCompressorMenu;
 import org.jetbrains.annotations.Nullable;
-
 import java.util.List;
 
 public class CoalCompressorEntity extends BaseMachineEntity{
@@ -89,15 +86,13 @@ public class CoalCompressorEntity extends BaseMachineEntity{
         if (level.isClientSide()) return;
         CoalCompressorRecipe recipe = getMatchingRecipe();
         boolean dirty = false;
-
-        // Consume burn time
-        if (burnTime > 0) {
+        
+        if (burnTime > 0) { //Consume burn time
             burnTime--;
             dirty = true;
         }
-
-        // If burning and can craft, progress
-        if (burnTime > 0 && canCraft()) {
+        
+        if (burnTime > 0 && canCraft()) { //If burning and can craft, progress
             progress++;
             isActive = true;
             dirty = true;
@@ -109,32 +104,27 @@ public class CoalCompressorEntity extends BaseMachineEntity{
                     dirty = true;
                 }
             }
-        } else {
-            // Not burning or can't craft
+        } else {//Not burning or can't craft
             if (isActive) {
                 isActive = false;
                 dirty = true;
             }
-
-            // Rapid decay ONLY when we have no fuel but had progress
-            if (burnTime <= 0 && progress > 0 && getFuelStack().getCount() <= 0) {
+            
+            if (burnTime <= 0 && progress > 0 && getFuelStack().getCount() <= 0) { // Rapid decay ONLY when we have no fuel but had progress
                 progress = Math.max(0, progress - 2); // Controlled decay
                 dirty = true;
             }
-            // Reset completely if recipe inputs are gone
-            else if (progress > 0 && getMatchingRecipe() == null) {
+            else if (progress > 0 && getMatchingRecipe() == null) { // Reset completely if recipe inputs are gone
                 progress = 0;
                 dirty = true;
             }
 
-            // Try to start crafting if we have fuel
-            if (burnTime <= 0 && canCraft()) {
+            
+            if (burnTime <= 0 && canCraft()) { //Try to start crafting if the furnace have fuel
                 burnFuel();
                 dirty = true;
             }
         }
-
-
         if (dirty) setChanged();
     }
 
@@ -144,19 +134,16 @@ public class CoalCompressorEntity extends BaseMachineEntity{
 
         CoalCompressorRecipe recipe = getMatchingRecipe();
         if (recipe == null) return false;
-
-        // Check fuel - only if we're out of burn time
-        if (burnTime <= 0 && getFuelStack().getBurnTime(null) <= 0) return false;
-
-        // Check output
-        ItemStack output = getOutputStack();
+        
+        if (burnTime <= 0 && getFuelStack().getBurnTime(null) <= 0) return false; //Check fuel - only if furnace is out of burn time
+        
+        ItemStack output = getOutputStack(); //Check output
         ItemStack result = recipe.getResultItem(level.registryAccess());
 
         if (!output.isEmpty()) {
             if (!ItemStack.isSameItemSameComponents(output, result)) return false;
             if (output.getCount() + result.getCount() > output.getMaxStackSize()) return false;
         }
-
         return true;
     }
 
@@ -181,15 +168,13 @@ public class CoalCompressorEntity extends BaseMachineEntity{
 
     private void craftItem(CoalCompressorRecipe recipe) {
         ItemStack result = recipe.getResultItem(level.registryAccess()).copy();
-
-        // Consume each input stack by 1 if not empty
-        for (int i : INPUT_SLOTS) {
+        
+        for (int i : INPUT_SLOTS) { //Consume each input stack by 1 if not empty
             ItemStack stack = inventory.getStackInSlot(i);
             if (!stack.isEmpty()) stack.shrink(1);
         }
-
-        // Output result
-        ItemStack output = inventory.getStackInSlot(OUTPUT_SLOT);
+        
+        ItemStack output = inventory.getStackInSlot(OUTPUT_SLOT); //Output result
         if (output.isEmpty()) {
             inventory.setStackInSlot(OUTPUT_SLOT, result);
         } else {
@@ -200,17 +185,15 @@ public class CoalCompressorEntity extends BaseMachineEntity{
 
     private CoalCompressorRecipe getMatchingRecipe() {
         if (level == null) return null;
-
-        // Create a CraftingInput from our input slots
-        NonNullList<ItemStack> craftingGrid = NonNullList.withSize(9, ItemStack.EMPTY);
+        
+        NonNullList<ItemStack> craftingGrid = NonNullList.withSize(9, ItemStack.EMPTY); //Create a CraftingInput from our input slots
         for (int i = 0; i < INPUT_SLOTS.length; i++) {
             craftingGrid.set(i, inventory.getStackInSlot(INPUT_SLOTS[i]));
         }
 
         CraftingInput input = CraftingInput.of(3, 3, craftingGrid);
-
-        // Get all recipes and find the first match
-        List<RecipeHolder<CoalCompressorRecipe>> recipeHolders = level.getRecipeManager()
+        
+        List<RecipeHolder<CoalCompressorRecipe>> recipeHolders = level.getRecipeManager() //Get all recipes and find the first match
                 .getAllRecipesFor(ModRecipes.COAL_COMPRESSOR_TYPE.get());
 
         for (RecipeHolder<CoalCompressorRecipe> holder : recipeHolders) {
@@ -229,10 +212,7 @@ public class CoalCompressorEntity extends BaseMachineEntity{
     public ItemStack getOutputStack() {
         return inventory.getStackInSlot(OUTPUT_SLOT);
     }
-
-    public void setOutputStack(ItemStack outputStack) {
-        inventory.setStackInSlot(OUTPUT_SLOT, outputStack);
-    }
+    
     public void drops(){
         SimpleContainer inv = new SimpleContainer(inventory.getSlots());
         for(int i = 0; i < inventory.getSlots(); i++){
@@ -263,21 +243,17 @@ public class CoalCompressorEntity extends BaseMachineEntity{
 
     public int getArrowScaled(int pixels) {
         if (maxProgress == 0) return 0;
-
-        // Calculate the scaled progress based on texture length
-        int scaledProgress = (int) ((float) progress / maxProgress * pixels);
-
-        // Ensure we don't exceed the texture bounds
-        return Math.min(scaledProgress, pixels);
+        
+        int scaledProgress = (int) ((float) progress / maxProgress * pixels); //Calculate the scaled progress based on texture length
+        
+        return Math.min(scaledProgress, pixels); //Within the texture bounds
     }
     public int getFireIconScaled(int pixels) {
         if (burnTime == 0) return 0;
-
-        // Calculate the scaled progress based on texture length
-        int scaledFire = (int) ((float) burnTime / maxBurnTime * pixels);
-
-        // Ensure we don't exceed the texture bounds
-        return Math.min(scaledFire, pixels);
+        
+        int scaledFire = (int) ((float) burnTime / maxBurnTime * pixels); //Calculate the scaled progress based on texture length
+        
+        return Math.min(scaledFire, pixels); //Within the texture bounds
     }
 
     @Override
@@ -298,16 +274,5 @@ public class CoalCompressorEntity extends BaseMachineEntity{
         maxProgress = tag.getInt("MaxProgress");
         burnTime = tag.getInt("BurnTime");
         maxBurnTime = tag.getInt("MaxBurnTime");
-    }
-    private void sendDebugMessage() {
-        if (level == null || level.isClientSide) return;
-
-        // Find the nearest player within 16 blocks
-        Player nearestPlayer = level.getNearestPlayer(getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), 16, false);
-
-        if (nearestPlayer != null) {
-            nearestPlayer.sendSystemMessage(Component.literal(
-                    "[CoalCompressor] Crafted item! Burn Time: " + burnTime));
-        }
     }
 }

@@ -21,13 +21,13 @@ public class CheeseBlock extends Block {
 
     private static final VoxelShape[] SLICE_SHAPES = new VoxelShape[]{
             
-            Block.box(1.0, 0.0, 1.0, 15.0, 8.0, 15.0), //Slice 0: Full cheese (from first JSON)
+            Block.box(1.0, 0.0, 1.0, 15.0, 8.0, 15.0), //Slice 0: Full cheese 
             Block.box(3.0, 0.0, 1.0, 15.0, 8.0, 15.0), //Slice 1: Slightly eaten
             Block.box(5.0, 0.0, 1.0, 15.0, 8.0, 15.0), //Slice 2: More eaten
             Block.box(7.0, 0.0, 1.0, 15.0, 8.0, 15.0), //Slice 3: Half eaten
             Block.box(9.0, 0.0, 1.0, 15.0, 8.0, 15.0), //Slice 4: Mostly eaten
             Block.box(11.0, 0.0, 1.0, 15.0, 8.0, 15.0), //Slice 5: Almost gone
-            Block.box(13.0, 0.0, 1.0, 15.0, 8.0, 15.0) //Slice 6: Last piece (from second JSON)
+            Block.box(13.0, 0.0, 1.0, 15.0, 8.0, 15.0) //Slice 6: Last piece
     };
 
     public CheeseBlock(BlockBehaviour.Properties properties) {

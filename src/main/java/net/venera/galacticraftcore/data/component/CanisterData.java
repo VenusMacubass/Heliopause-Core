@@ -2,19 +2,12 @@ package net.venera.galacticraftcore.data.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentContents;
-import net.minecraft.network.chat.Style;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FormattedCharSequence;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.item.custom.CanisterItem;
-
 import javax.annotation.Nullable;
-import java.util.List;
 
 public record CanisterData(@Nullable ResourceLocation fluidId, int amount) {
     public static final ResourceLocation CRUDE_OIL =
@@ -29,20 +22,17 @@ public record CanisterData(@Nullable ResourceLocation fluidId, int amount) {
 
     public static final StreamCodec<RegistryFriendlyByteBuf, CanisterData> STREAM_CODEC =
             StreamCodec.of(
-                    // encoder: write data into the buffer
-                    (buf, data) -> {
-                        // write nullable ResourceLocation manually
-                        if (data.fluidId() == null) {
+                    (buf, data) -> { // encoder: write data into the buffer
+                        if (data.fluidId() == null) { // write nullable ResourceLocation manually
                             buf.writeBoolean(false);
                         } else {
                             buf.writeBoolean(true);
                             buf.writeResourceLocation(data.fluidId());
                         }
-                        // write amount as varint
-                        buf.writeVarInt(data.amount());
+                        buf.writeVarInt(data.amount()); //write amount as varint
                     },
-                    // decoder: read data back from buffer
-                    buf -> {
+                    
+                    buf -> { // decoder: read data back from buffer
                         ResourceLocation fluid = null;
                         if (buf.readBoolean()) {
                             fluid = buf.readResourceLocation();
@@ -67,7 +57,5 @@ public record CanisterData(@Nullable ResourceLocation fluidId, int amount) {
     public int getSpace() {
         return CanisterItem.MAX_CAPACITY - amount;
     }
-
-    public int getCapacity(){return CanisterItem.MAX_CAPACITY;}
 
 }

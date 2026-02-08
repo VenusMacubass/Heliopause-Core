@@ -2,7 +2,6 @@ package net.venera.galacticraftcore.block.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -15,14 +14,12 @@ import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.venera.galacticraftcore.GalacticraftCore;
-import org.jetbrains.annotations.NotNull;
 
 public class ArcLamp extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty CLICKED = BooleanProperty.create("clicked");
     public static final IntegerProperty ROTATION = IntegerProperty.create("rotation", 0, 3);
-    // More accurate shapes based on your model
+    
     private static final VoxelShape UP_SHAPE = Block.box(2, 0, 2, 14, 1, 14);
     private static final VoxelShape DOWN_SHAPE = Block.box(2, 15, 2, 14, 16, 14);
     private static final VoxelShape NORTH_SHAPE = Block.box(2, 2, 15, 14, 14, 16);
@@ -114,20 +111,17 @@ public class ArcLamp extends Block {
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        // This determines the visual outline and block picking overlay
-        return getVoxelShape(state);
+        return getVoxelShape(state); //This determines the visual outline and block picking overlay
     }
 
     @Override
-    protected VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
-        // This determines interaction area - use the same as shape
-        return getVoxelShape(state);
+    protected VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {  
+        return getVoxelShape(state); //This determines interaction area, used the same as shape 
     }
 
     @Override
     protected VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        // This determines culling - use the same as shape
-        return getVoxelShape(state);
+        return getVoxelShape(state); //This determines culling, used the same as shape
     }
 
     private VoxelShape getVoxelShape(BlockState state) {

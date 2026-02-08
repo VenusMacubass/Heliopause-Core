@@ -103,13 +103,6 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     }
 
-    private void generateBucket(ModLiquidBlockFactory blockReg) {
-        withExistingParent(blockReg.getBucketRegistry().getId().getPath(),
-                ResourceLocation.fromNamespaceAndPath("neoforge", "item/bucket"))
-                .customLoader(DynamicFluidContainerModelBuilder::begin)
-                .fluid(blockReg.getSource());
-    }
-
     private void trimmedArmorItem(DeferredItem<ArmorItem> itemDeferredItem) {
         final String MOD_ID = GalacticraftCore.MOD_ID; // Change this to your mod id
 
@@ -131,9 +124,7 @@ public class ModItemModelProvider extends ItemModelProvider {
                 ResourceLocation armorItemResLoc = ResourceLocation.parse(armorItemPath);
                 ResourceLocation trimResLoc = ResourceLocation.parse(trimPath); // minecraft namespace
                 ResourceLocation trimNameResLoc = ResourceLocation.parse(currentTrimName);
-
-                // This is used for making the ExistingFileHelper acknowledge that this texture exist, so this will
-                // avoid an IllegalArgumentException
+                
                 existingFileHelper.trackGenerated(trimResLoc, PackType.CLIENT_RESOURCES, ".png", "textures");
 
                 // Trimmed armorItem files
@@ -142,7 +133,7 @@ public class ModItemModelProvider extends ItemModelProvider {
                         .texture("layer0", armorItemResLoc.getNamespace() + ":item/" + armorItemResLoc.getPath())
                         .texture("layer1", trimResLoc);
 
-                // Non-trimmed armorItem file (normal variant)
+                // Non-trimmed armorItem file 
                 this.withExistingParent(itemDeferredItem.getId().getPath(),
                                 mcLoc("item/generated"))
                         .override()

@@ -14,17 +14,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.EnergyStorage;
-import net.venera.galacticraftcore.GalacticraftCore;
-import net.venera.galacticraftcore.block.entity.ModBlockEntities;
 import net.venera.galacticraftcore.data.component.CanisterData;
 import net.venera.galacticraftcore.fluid.ModFluids;
-import net.venera.galacticraftcore.item.custom.BatteryItem;
 import net.venera.galacticraftcore.item.custom.CanisterItem;
 import net.venera.galacticraftcore.screen.custom.RefineryMenu;
 import org.jetbrains.annotations.Nullable;
 
 public class RefineryEntity extends BaseElectricMachineEntity {
-
     private final int INPUT_SLOT = 0;
     private final int OUTPUT_SLOT = 1;
     private final int BATTERY_SLOT = 2;
@@ -102,15 +98,13 @@ public class RefineryEntity extends BaseElectricMachineEntity {
             return true;
         } else if(inputStack.getItem() instanceof CanisterItem canister){
             CanisterData data = canister.getCanisterData(inputStack);
-
-            // ONLY accept canisters that have CRUDE OIL
-            if(data.isCrudeOil()) {
+            
+            if(data.isCrudeOil()) { //Only accept canisters that have crude oil
                 int spaceAvailable = maxCapacity - oilAmount;
                 int amountToDrain = Math.min(data.amount(), spaceAvailable);
 
                 if(amountToDrain > 0) {
                     int actuallyDrained = canister.drain(inputStack, amountToDrain);
-                    //GalacticraftCore.LOGGER.info("Draining the canister by " + actuallyDrained + " of " + amountToDrain);
                     oilAmount += actuallyDrained;
                     return actuallyDrained > 0;
                 }
@@ -128,11 +122,9 @@ public class RefineryEntity extends BaseElectricMachineEntity {
             return true;
         } else if(outputStack.getItem() instanceof CanisterItem canister){
             CanisterData data = canister.getCanisterData(outputStack);
-
-            // Accept empty canisters OR canisters with refined fuel
-            if(data.isEmpty() || data.isRefinedFuel()) {
+            
+            if(data.isEmpty() || data.isRefinedFuel()) { //Accept empty canisters or canisters with refined fuel
                 int amountToFill = Math.min(fuelAmount, data.getSpace());
-                //GalacticraftCore.LOGGER.info("Filling the canister by " + amountToFill);
                 if(amountToFill > 0) {
                     int actuallyFilled = canister.fill(outputStack, CanisterData.REFINED_FUEL, amountToFill);
                     fuelAmount -= actuallyFilled;
@@ -180,18 +172,6 @@ public class RefineryEntity extends BaseElectricMachineEntity {
     @Override
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
         return new RefineryMenu(i, inventory, this);
-    }
-
-    public int getOilScaled(int pixels) {
-        if (oilAmount == 0) return 0;
-        int scaled = (int) ((float) oilAmount / maxCapacity * pixels);
-        return Math.min(scaled, pixels);
-    }
-
-    public int getFuelScaled(int pixels) {
-        if (fuelAmount == 0) return 0;
-        int scaled = (int) ((float) fuelAmount / maxCapacity * pixels);
-        return Math.min(scaled, pixels);
     }
 
     @Override

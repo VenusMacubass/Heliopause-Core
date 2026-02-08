@@ -12,7 +12,6 @@ import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.venera.galacticraftcore.GalacticraftCore;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

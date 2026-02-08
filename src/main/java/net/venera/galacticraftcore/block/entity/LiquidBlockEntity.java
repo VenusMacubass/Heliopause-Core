@@ -10,8 +10,4 @@ public class LiquidBlockEntity extends BlockEntity {
 	public LiquidBlockEntity(BlockPos pos, BlockState state) {
 		super(ModFluids.LIQUID_BLOCK_ENTITY.get(), pos, state);
 	}
-
-	public static void serverTick(Level level, BlockPos pos, BlockState state, LiquidBlockEntity blockEntity) {
-
-	}
 }

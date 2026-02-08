@@ -49,10 +49,8 @@ public abstract class BaseElectricMachineEntity extends BaseMachineEntity {
         return this.energyStorage;
     }
 
-    // --- SHARED HELPER METHODS ---
-
-    // Any machine can call this in tick() to drain a battery slot
-    protected boolean processBatterySlot(int slotIndex) {
+    //--- SHARED HELPER METHODS ---
+    protected boolean processBatterySlot(int slotIndex) { //Any machine can call this in tick() to drain a battery slot
         ItemStack batteryStack = inventory.getStackInSlot(slotIndex);
         if (batteryStack.getItem() instanceof BatteryItem batteryItem) {
             int spaceInMachine = energyStorage.receiveEnergy(Integer.MAX_VALUE, true);

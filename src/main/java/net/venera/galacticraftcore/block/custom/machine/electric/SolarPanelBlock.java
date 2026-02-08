@@ -16,7 +16,6 @@ import net.venera.galacticraftcore.block.custom.machine.BaseMachineBlock;
 import net.venera.galacticraftcore.block.entity.ModBlockEntities;
 import net.venera.galacticraftcore.block.entity.machine.electric.SolarPanelEntity;
 import org.jetbrains.annotations.Nullable;
-
 import java.util.function.Supplier;
 
 public class SolarPanelBlock extends BaseMachineBlock<SolarPanelEntity> {

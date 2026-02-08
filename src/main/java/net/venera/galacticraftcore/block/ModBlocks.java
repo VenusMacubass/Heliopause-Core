@@ -15,7 +15,6 @@ import net.venera.galacticraftcore.block.custom.machine.electric.RefineryBlock;
 import net.venera.galacticraftcore.block.custom.machine.electric.SolarPanelBlock;
 import net.venera.galacticraftcore.block.entity.ModBlockEntities;
 import net.venera.galacticraftcore.item.ModItems;
-
 import java.util.function.Supplier;
 
 public class ModBlocks {

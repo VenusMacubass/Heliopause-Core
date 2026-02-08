@@ -3,17 +3,13 @@ package net.venera.galacticraftcore.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.world.level.block.LiquidBlock;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.ModBlocks;
-
 import net.venera.galacticraftcore.util.ModTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
 import java.util.concurrent.CompletableFuture;
 
 public class ModBlockTagProvider extends BlockTagsProvider {
@@ -86,7 +82,6 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.REFINERY.get())
                 .add(ModBlocks.ENERGY_STORAGE_UNIT.get())
                 .add(ModBlocks.BASIC_SOLAR_BLOCK.get());
-
-
+        
     }
 }

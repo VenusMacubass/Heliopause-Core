@@ -17,11 +17,9 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import javax.annotation.Nullable;
 
 public abstract class BaseMachineEntity extends BlockEntity implements MenuProvider {
-    // 1. Standard Inventory for all machines
-    public final ItemStackHandler inventory;
-
-    // 2. Standard Data Syncing for GUIs
-    public final ContainerData data;
+    public final ItemStackHandler inventory; //Standard Inventory for all machines
+    
+    public final ContainerData data; //Standard Data Syncing for GUIs
 
     public BaseMachineEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int slotCount) {
         super(type, pos, state);
@@ -35,14 +33,12 @@ public abstract class BaseMachineEntity extends BlockEntity implements MenuProvi
                 }
             }
         };
-
-        // Abstract: Forces child classes to define what their data is (Progress, Heat, etc.)
         this.data = initContainerData();
     }
 
     protected abstract ContainerData initContainerData();
-
-    // --- STANDARD METHODS (Write once, use everywhere) ---
+    
+    //--- STANDARD METHODS ---//
 
     public void drops() {
         SimpleContainer inv = new SimpleContainer(inventory.getSlots());

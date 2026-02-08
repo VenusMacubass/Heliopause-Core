@@ -24,7 +24,6 @@ import org.jetbrains.annotations.Nullable;
 public class CoalCompressorBlock extends BaseMachineBlock<CoalCompressorEntity> {
     public static final MapCodec<CoalCompressorBlock> CODEC = simpleCodec(CoalCompressorBlock::new);
 
-
     public CoalCompressorBlock(Properties properties) {
         super(properties, ModBlockEntities.COAL_COMPRESSOR_ENTITY);
     }
@@ -55,17 +54,6 @@ public class CoalCompressorBlock extends BaseMachineBlock<CoalCompressorEntity> 
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return new CoalCompressorEntity(blockPos, blockState);
     }
-
-//    @Override
-//    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-//        if(level.getBlockEntity(pos) instanceof CoalCompressorEntity coalBlockEntity){
-//            if(!level.isClientSide){
-//                player.openMenu(new SimpleMenuProvider(coalBlockEntity, Component.translatable("block.galacticraftcore.coal_compressor_menu_name")), pos);
-//                return InteractionResult.SUCCESS;
-//            }
-//        }
-//        return InteractionResult.SUCCESS;
-//    }
 
     @Nullable
     @Override

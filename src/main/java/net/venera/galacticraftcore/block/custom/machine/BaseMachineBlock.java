@@ -11,8 +11,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -20,8 +18,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.venera.galacticraftcore.block.entity.machine.BaseMachineEntity;
-
-import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public abstract class BaseMachineBlock<T extends BaseMachineEntity> extends BaseEntityBlock {
@@ -52,11 +48,10 @@ public abstract class BaseMachineBlock<T extends BaseMachineEntity> extends Base
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
-
-    // 2. Standard Drop Logic
+    
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (state.getBlock() != newState.getBlock()) {
+        if (state.getBlock() != newState.getBlock()) { //Standard Drop Logic
             if (level.getBlockEntity(pos) instanceof BaseMachineEntity blockEntity) {
                 blockEntity.drops();
                 level.updateNeighbourForOutputSignal(pos, this);
@@ -64,11 +59,10 @@ public abstract class BaseMachineBlock<T extends BaseMachineEntity> extends Base
             super.onRemove(state, level, pos, newState, movedByPiston);
         }
     }
-
-    // 3. Standard GUI Opener
+    
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof MenuProvider menuProvider) {
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof MenuProvider menuProvider) { //Standard GUI Opener
             player.openMenu(menuProvider, pos);
             return InteractionResult.SUCCESS;
         }

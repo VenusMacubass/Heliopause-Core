@@ -16,7 +16,6 @@ import net.venera.galacticraftcore.block.custom.machine.BaseMachineBlock;
 import net.venera.galacticraftcore.block.entity.machine.electric.EnergyStorageEntity;
 import net.venera.galacticraftcore.block.entity.ModBlockEntities;
 import org.jetbrains.annotations.Nullable;
-
 import java.util.function.Supplier;
 
 public class EnergyStorageBlock extends BaseMachineBlock<EnergyStorageEntity> {

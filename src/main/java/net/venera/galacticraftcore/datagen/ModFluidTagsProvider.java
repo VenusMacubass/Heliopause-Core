@@ -8,7 +8,6 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.fluid.ModFluids;
 import org.jetbrains.annotations.Nullable;
-
 import java.util.concurrent.CompletableFuture;
 
 public class ModFluidTagsProvider extends FluidTagsProvider {
@@ -21,9 +20,6 @@ public class ModFluidTagsProvider extends FluidTagsProvider {
         super.addTags(provider);
         tag(FluidTags.LAVA).add(ModFluids.CRUDE_OIL.getSource());
         tag(FluidTags.WATER).add(ModFluids.REFINED_FUEL.getSource());
-
-
-
 
     }
 }

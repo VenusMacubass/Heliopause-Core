@@ -100,7 +100,7 @@ public class SolarPanelEntity extends BaseElectricMachineEntity{
         }
     }
     
-    private float theSunFactor(Level level, BlockPos pos) {
+    private float theSunFactor(Level level, BlockPos pos) { //Returns the total light coefficient
         int dimensionCheck = (!dimensionCheck(level)) ? 0 : 1;
         float lightEfficiency = lightEfficiencyCheck(level, pos);
         if(level.isRaining() || level.isThundering()) {
@@ -112,7 +112,7 @@ public class SolarPanelEntity extends BaseElectricMachineEntity{
         return 1.0f * lightEfficiency * sunFactor * dimensionCheck;
     }
     
-    private float lightEfficiencyCheck(Level level, BlockPos pos) {
+    private float lightEfficiencyCheck(Level level, BlockPos pos) { //Returns how much sunlight is available 
         int blockedPanelits = 0;
         for(int x=-1; x<=1; x++) {
             for(int z=-1; z<=1; z++) {

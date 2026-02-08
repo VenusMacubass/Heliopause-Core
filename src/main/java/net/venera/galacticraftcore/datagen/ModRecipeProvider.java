@@ -3,10 +3,6 @@ package net.venera.galacticraftcore.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
@@ -15,7 +11,6 @@ import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.ModBlocks;
 import net.venera.galacticraftcore.item.ModItems;
-
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -391,10 +386,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput, "mars_dungeon_brick_slab_crafting");
 
 
-
-
-
-
+        
 
     }
 //----------------------------------------------------------------------------------------------------------------------

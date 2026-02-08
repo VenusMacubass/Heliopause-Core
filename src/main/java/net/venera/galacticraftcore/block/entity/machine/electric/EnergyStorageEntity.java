@@ -14,7 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.venera.galacticraftcore.block.custom.machine.electric.EnergyStorageBlock;
 import net.venera.galacticraftcore.item.custom.BatteryItem;
 import net.venera.galacticraftcore.screen.custom.EnergyStorageUnitMenu;
-
 import javax.annotation.Nullable;
 
 public class EnergyStorageEntity extends BaseElectricMachineEntity {
