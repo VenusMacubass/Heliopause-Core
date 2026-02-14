@@ -1,0 +1,31 @@
+{
+  "multipart": [
+    {
+      "apply": { "model": "galacticraftcore:block/cu_wire_center" }
+    },
+    {
+      "when": { "north": "true" },
+      "apply": { "model": "galacticraftcore:block/cu_wire_arm" }
+    },
+    {
+      "when": { "east": "true" },
+      "apply": { "model": "galacticraftcore:block/cu_wire_arm", "y": 90 }
+    },
+    {
+      "when": { "south": "true" },
+      "apply": { "model": "galacticraftcore:block/cu_wire_arm", "y": 180 }
+    },
+    {
+      "when": { "west": "true" },
+      "apply": { "model": "galacticraftcore:block/cu_wire_arm", "y": 270 }
+    },
+    {
+      "when": { "up": "true" },
+      "apply": { "model": "galacticraftcore:block/cu_wire_arm", "x": 270 }
+    },
+    {
+      "when": { "down": "true" },
+      "apply": { "model": "galacticraftcore:block/cu_wire_arm", "x": 90 }
+    }
+  ]
+}

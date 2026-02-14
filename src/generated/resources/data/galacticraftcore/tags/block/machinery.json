@@ -2,6 +2,7 @@
   "values": [
     "galacticraftcore:gcc_coal_compressor",
     "galacticraftcore:gcc_refinery",
-    "galacticraftcore:energy_storage_unit"
+    "galacticraftcore:energy_storage_unit",
+    "galacticraftcore:basic_solar_block"
   ]
 }

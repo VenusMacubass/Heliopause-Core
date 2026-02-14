@@ -1,4 +1,6 @@
-// 1.21.1	2025-11-30T18:54:16.4904672	Loot Tables
+// 1.21.1	2026-02-11T19:42:15.1355487	Loot Tables
+e0170f672ad433c3faedb7a8906bc6e72a48e4cb data/galacticraftcore/loot_table/blocks/basic_solar_block.json
+0b27598caa02f2c174fbda69c2a9b0df8da8a311 data/galacticraftcore/loot_table/blocks/copper_wire.json
 46b78792bea2bce485cdab8fd6694b90233eb7fd data/galacticraftcore/loot_table/blocks/energy_storage_unit.json
 884161730bcc8bcd000c4722823e231761f4748a data/galacticraftcore/loot_table/blocks/fluid_tank.json
 32d8949df7b3f849c0c7cfd1269c3f88674ab5cc data/galacticraftcore/loot_table/blocks/gcc_block_aluminium_block.json

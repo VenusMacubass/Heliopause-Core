@@ -13,6 +13,7 @@ import net.venera.galacticraftcore.block.custom.machine.CoalCompressorBlock;
 import net.venera.galacticraftcore.block.custom.machine.electric.EnergyStorageBlock;
 import net.venera.galacticraftcore.block.custom.machine.electric.RefineryBlock;
 import net.venera.galacticraftcore.block.custom.machine.electric.SolarPanelBlock;
+import net.venera.galacticraftcore.block.custom.machine.electric.WireBlock;
 import net.venera.galacticraftcore.block.entity.ModBlockEntities;
 import net.venera.galacticraftcore.item.ModItems;
 import java.util.function.Supplier;
@@ -144,6 +145,9 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> BASIC_SOLAR_BLOCK = registerBlock("basic_solar_block",
             () -> new SolarPanelBlock(BlockBehaviour.Properties.of().strength(2f), ModBlockEntities.BASIC_SOLAR_PANEL_ENTITY));
+    
+    public static final DeferredBlock<Block> COPPER_WIRE = registerBlock("copper_wire",
+            () -> new WireBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).sound(SoundType.COPPER)));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
