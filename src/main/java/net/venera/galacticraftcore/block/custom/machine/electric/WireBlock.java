@@ -2,6 +2,14 @@ package net.venera.galacticraftcore.block.custom.machine.electric;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -12,10 +20,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.venera.galacticraftcore.block.entity.machine.electric.BaseElectricMachineEntity;
+import net.venera.galacticraftcore.data.energy.GraphManager;
 import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 
@@ -84,6 +94,40 @@ public class WireBlock extends Block {
         }
 
         return false;
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (!level.isClientSide && player.getItemInHand(InteractionHand.OFF_HAND).getItem() == Items.STICK) { // Or your custom "Multimeter" item
+            GraphManager manager = GraphManager.get(level);
+            if (manager != null) {
+                // We need a helper method in GraphManager to "peek" at data
+                // (You can add 'public String getDebugInfo(BlockPos pos)' to GraphManager later)
+
+                player.sendSystemMessage(Component.literal("§e[Wire Debug] Checking Graph..."));
+                // For now, just trigger a rebuild to force-fix any bugs
+                manager.onWirePlaced(level, pos);
+                player.sendSystemMessage(Component.literal("§a[Wire Debug] Force Re-scanned Network."));
+            }
+            return InteractionResult.SUCCESS;
+        }
+        return InteractionResult.PASS;
+    }
+
+    @Override
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
+        if (!level.isClientSide && !state.is(oldState.getBlock())) {
+            GraphManager.get(level).onWirePlaced(level, pos);
+        }
+        super.onPlace(state, level, pos, oldState, isMoving);
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!level.isClientSide && !state.is(newState.getBlock())) {
+            GraphManager.get(level).onWireBroken(level, pos);
+        }
+        super.onRemove(state, level, pos, newState, isMoving);
     }
     
     @Override

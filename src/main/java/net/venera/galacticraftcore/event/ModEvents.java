@@ -14,6 +14,8 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.venera.galacticraftcore.GalacticraftCore;
+import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.block.custom.machine.electric.WireBlock;
 import net.venera.galacticraftcore.block.entity.ModBlockEntities;
 import net.venera.galacticraftcore.block.entity.machine.electric.BaseElectricMachineEntity;
 import net.venera.galacticraftcore.data.component.CanisterData;
@@ -80,11 +82,7 @@ public class ModEvents {
         // 3. Register Solar Panel (and any future machines)
         registerElectric(event, ModBlockEntities.BASIC_SOLAR_PANEL_ENTITY.get());
     }
-
-    /**
-     * Helper method to register any machine that extends BaseElectricMachineEntity.
-     * It automatically applies the Input/Output side configuration.
-     */
+    
     private static void registerElectric(RegisterCapabilitiesEvent event, BlockEntityType<? extends BaseElectricMachineEntity> type) {
         event.registerBlockEntity(
                 Capabilities.EnergyStorage.BLOCK,

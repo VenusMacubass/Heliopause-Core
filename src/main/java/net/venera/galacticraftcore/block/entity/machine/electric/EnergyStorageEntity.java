@@ -53,6 +53,8 @@ public class EnergyStorageEntity extends BaseElectricMachineEntity {
         processOutputBattery();
 
         updateBlockState(level, pos, state);
+
+        BaseElectricMachineEntity.tick(level, pos, state, this);
     }
 
     private void processOutputBattery() {

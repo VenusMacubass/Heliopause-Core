@@ -87,6 +87,7 @@ public class RefineryEntity extends BaseElectricMachineEntity {
             }
         }
         if (dirty) setChanged();
+        BaseElectricMachineEntity.tick(level, pos, state, this);
     }
 
     private boolean processInputs() {

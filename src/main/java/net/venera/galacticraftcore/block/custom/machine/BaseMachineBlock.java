@@ -11,13 +11,18 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.entity.machine.BaseMachineEntity;
+import net.venera.galacticraftcore.block.entity.machine.electric.BaseElectricMachineEntity;
+import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public abstract class BaseMachineBlock<T extends BaseMachineEntity> extends BaseEntityBlock {
@@ -67,5 +72,21 @@ public abstract class BaseMachineBlock<T extends BaseMachineEntity> extends Base
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.SUCCESS;
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        // 1. Client Check
+        if (level.isClientSide()) return null;
+        
+        return (lvl, pos, st, entity) -> {
+
+            // Check if this entity is one of our Electric Machines
+            if (entity instanceof BaseElectricMachineEntity electricMachine) {
+                // FORCE THE TICK
+                BaseElectricMachineEntity.tick(lvl, pos, st, electricMachine);
+            }
+        };
     }
 }

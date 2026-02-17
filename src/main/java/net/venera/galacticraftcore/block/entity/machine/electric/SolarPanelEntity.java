@@ -57,6 +57,7 @@ public class SolarPanelEntity extends BaseElectricMachineEntity{
         generateEnergy(level, pos);
         updateBlockState(level, pos, state);
         }
+        BaseElectricMachineEntity.tick(level, pos, state, this);
     }
 
     private void processOutputBattery() {
