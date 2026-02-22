@@ -11,13 +11,10 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.energy.EnergyStorage;
-import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.entity.machine.BaseMachineEntity;
-import net.venera.galacticraftcore.data.energy.GraphManager;
+import net.venera.galacticraftcore.data.energy.GridManager;
 import net.venera.galacticraftcore.item.custom.BatteryItem;
 import net.venera.galacticraftcore.util.MachineConfigHelper;
-
-import java.util.Map;
 
 public abstract class BaseElectricMachineEntity extends BaseMachineEntity {
     protected final EnergyStorage energyStorage;
@@ -56,45 +53,10 @@ public abstract class BaseElectricMachineEntity extends BaseMachineEntity {
     public EnergyStorage getEnergyStorage() {
         return this.energyStorage;
     }
-
-    private void pushEnergyToNetwork(Level level, BlockPos pos) {
-        // 1. Snapshot our starting energy
-        int energyStored = energyStorage.getEnergyStored();
-        if (energyStored <= 0) return;
-
-        // 2. Define our maximum output rate (e.g., 1000 FE/tick)
-        int maxOutputRate = 1000;
-        int energyRemainingToSend = Math.min(energyStored, maxOutputRate);
-
-        // 3. Iterate all output sides
-        for (Direction dir : Direction.values()) {
-            // If we ran out of energy mid-loop, stop!
-            if (energyRemainingToSend <= 0) break;
-
-            if (isOutputSide(dir)) {
-                BlockPos neighborPos = pos.relative(dir);
-
-                // Check for Graph
-                GraphManager manager = GraphManager.get(level);
-                if (manager != null) {
-                    // Try to push whatever is remaining in this tick's budget
-                    int consumedByNetwork = manager.distributeEnergy(level, neighborPos, energyRemainingToSend);
-
-                    // 4. Update the budget
-                    if (consumedByNetwork > 0) {
-                        // Deduct from our "active budget"
-                        energyRemainingToSend -= consumedByNetwork;
-
-                        // Deduct from the REAL storage
-                        energyStorage.extractEnergy(consumedByNetwork, false);
-                    }
-                }
-            }
-        }
-    }
+    
 
     //--- SHARED HELPER METHODS ---//
-    protected boolean processBatterySlot(int slotIndex) { //Any machine can call this in tick() to drain a battery slot
+    protected boolean processBatterySlot(int slotIndex) { 
         ItemStack batteryStack = inventory.getStackInSlot(slotIndex);
         if (batteryStack.getItem() instanceof BatteryItem batteryItem) {
             int spaceInMachine = energyStorage.receiveEnergy(Integer.MAX_VALUE, true);
@@ -103,7 +65,7 @@ public abstract class BaseElectricMachineEntity extends BaseMachineEntity {
             if (toTransfer > 0) {
                 batteryItem.extractEnergy(batteryStack, toTransfer, false);
                 energyStorage.receiveEnergy(toTransfer, false);
-                inventory.setStackInSlot(slotIndex, batteryStack); // Force Update
+                inventory.setStackInSlot(slotIndex, batteryStack); 
                 return true;
             }
         }
@@ -111,19 +73,12 @@ public abstract class BaseElectricMachineEntity extends BaseMachineEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, BaseElectricMachineEntity entity) {
-        if (level.getGameTime() % 20 == 0) {
-            GalacticraftCore.LOGGER.debug("DEBUG: Machine Ticking at " + pos + " | Energy: " + entity.energyStorage.getEnergyStored());
-        }
-
-        // 2. Push Energy (Server Side Only)
-        if (!level.isClientSide) {
-            entity.pushEnergyToNetwork(level, pos);
-        }
+        
     }
-    
+
     public boolean isValidPort(Direction side) {
         var config = MachineConfigHelper.getConfigFor(this.getType());
-        if (config == null) return false; // This machine isn't in the config file
+        if (config == null) return false; 
         
         Direction facing = this.getBlockState().getValue(BlockStateProperties.FACING);
         
@@ -150,9 +105,9 @@ public abstract class BaseElectricMachineEntity extends BaseMachineEntity {
         Direction modelSide = MachineConfigHelper.getRelativeSide(side, facing);
         
         if (config.containsKey(modelSide)) {
-            return !config.get(modelSide); // If Value is False, it is an Output.
+            return !config.get(modelSide); 
         }
-        return false; // Not in map = Wall
+        return false; 
     }
 
     @Override

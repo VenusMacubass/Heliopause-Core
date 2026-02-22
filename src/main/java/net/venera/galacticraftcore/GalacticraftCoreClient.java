@@ -76,5 +76,4 @@ public class GalacticraftCoreClient {
         event.register(ModMenuTypes.ENERGY_STORAGE_UNIT_MENU.get(), EnergyStorageUnitScreen::new);
         event.register(ModMenuTypes.BASIC_SOLAR_MENU.get(), BasicSolarScreen::new);
     }
-
 }

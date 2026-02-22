@@ -8,6 +8,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.ModBlocks;
 import net.venera.galacticraftcore.block.entity.machine.CoalCompressorEntity;
+import net.venera.galacticraftcore.block.entity.machine.electric.BaseElectricMachineEntity;
 import net.venera.galacticraftcore.block.entity.machine.electric.EnergyStorageEntity;
 import net.venera.galacticraftcore.block.entity.machine.electric.RefineryEntity;
 import net.venera.galacticraftcore.block.entity.machine.electric.SolarPanelEntity;

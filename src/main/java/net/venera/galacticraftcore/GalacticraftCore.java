@@ -1,12 +1,16 @@
 package net.venera.galacticraftcore;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.venera.galacticraftcore.block.ModBlocks;
 import net.venera.galacticraftcore.block.entity.ModBlockEntities;
 import net.venera.galacticraftcore.data.component.ModDataComponents;
 import net.venera.galacticraftcore.data.ModAttachments;
+import net.venera.galacticraftcore.data.energy.GridManager;
 import net.venera.galacticraftcore.data.radiation.RadiationHandler;
 import net.venera.galacticraftcore.entity.ModEntities;
 import net.venera.galacticraftcore.entity.villager.ModVillagers;
@@ -40,6 +44,7 @@ public class GalacticraftCore {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(GalacticraftCoreClient::onRegisterRenderers);
         modEventBus.addListener(this::onEntityCreation);
+        NeoForge.EVENT_BUS.addListener(this::onServerTick);
 
         if (modDist.isClient()) {
             modEventBus.addListener(GalacticraftCoreClient::registerBlockColors);
@@ -97,5 +102,11 @@ public class GalacticraftCore {
     @SubscribeEvent
     public void onEntityCreation(EntityAttributeCreationEvent event) {
         event.put(ModEntities.SPACE_ZOMBIE.get(), SpaceZombieEntity.createAttributes().build());
+    }
+
+    private void onServerTick(ServerTickEvent.Post event) { 
+        for (ServerLevel level : event.getServer().getAllLevels()) {
+            GridManager.get(level).tickAll(level);
+        }
     }
 }
