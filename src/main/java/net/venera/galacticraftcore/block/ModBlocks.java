@@ -148,6 +148,15 @@ public class ModBlocks {
     
     public static final DeferredBlock<Block> COPPER_WIRE = registerBlock("copper_wire",
             () -> new WireBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).sound(SoundType.COPPER)));
+    
+    public static final DeferredBlock<Block> T1_ROCKET_BOT = registerBlock("rocket_bot",
+            () -> new Tier1RocketBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).noLootTable().sound(SoundType.METAL)));
+
+    public static final DeferredBlock<Block> T1_ROCKET_MID = registerBlock("rocket_mid",
+            () -> new Tier1RocketMiddleBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).noLootTable().sound(SoundType.METAL)));
+
+    public static final DeferredBlock<Block> T1_ROCKET_TOP = registerBlock("rocket_top",
+            () -> new Tier1RocketTopBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).noLootTable().sound(SoundType.METAL)));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

@@ -7,8 +7,10 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.galacticraftcore.GalacticraftCore;
-import net.venera.galacticraftcore.entity.villager.MoonVillagerEntity;
+import net.venera.galacticraftcore.entity.rideable.Tier1RocketEntity;
 import net.venera.galacticraftcore.entity.zombie.SpaceZombieEntity;
+
+import java.util.function.Supplier;
 
 public class ModEntities {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
@@ -19,6 +21,12 @@ public class ModEntities {
                     () -> EntityType.Builder.of(SpaceZombieEntity::new, MobCategory.MONSTER)
                             .sized(0.6F, 1.95F)
                             .build("space_zombie"));
+    
+    public static final Supplier<EntityType<Tier1RocketEntity>> TIER_1_ROCKET = ENTITY_TYPES.register("tier_1_rocket",
+            () -> EntityType.Builder.of(Tier1RocketEntity::new, MobCategory.MISC)
+                    .sized(1.0F, 2.5F)
+                    .build("tier_1_rocket"));
+                   
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

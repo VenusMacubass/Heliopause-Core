@@ -3,6 +3,7 @@ package net.venera.galacticraftcore;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -18,6 +19,7 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.venera.galacticraftcore.block.ModBlocks;
 import net.venera.galacticraftcore.entity.ModEntities;
+import net.venera.galacticraftcore.entity.client.Tier1RocketRenderer;
 import net.venera.galacticraftcore.entity.zombie.SpaceZombieRenderer;
 import net.venera.galacticraftcore.item.ModItems;
 import net.venera.galacticraftcore.screen.ModMenuTypes;
@@ -40,6 +42,7 @@ public class GalacticraftCoreClient {
         GalacticraftCore.LOGGER.info("HELLO FROM CLIENT SETUP");
         GalacticraftCore.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.FLUID_TANK.get(), RenderType.translucent());
+        EntityRenderers.register(ModEntities.TIER_1_ROCKET.get(), Tier1RocketRenderer::new);
     }
 
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
