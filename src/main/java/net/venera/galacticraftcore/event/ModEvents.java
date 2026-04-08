@@ -1,5 +1,7 @@
 package net.venera.galacticraftcore.event;
 
+import net.minecraft.client.CameraType;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -12,6 +14,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.ModBlocks;
@@ -19,6 +22,7 @@ import net.venera.galacticraftcore.block.custom.machine.electric.WireBlock;
 import net.venera.galacticraftcore.block.entity.ModBlockEntities;
 import net.venera.galacticraftcore.block.entity.machine.electric.BaseElectricMachineEntity;
 import net.venera.galacticraftcore.data.component.CanisterData;
+import net.venera.galacticraftcore.entity.rideable.Tier1RocketEntity;
 import net.venera.galacticraftcore.item.ModItems;
 import net.venera.galacticraftcore.item.custom.CanisterItem;
 import net.venera.galacticraftcore.item.custom.TempSword;
@@ -75,10 +79,8 @@ public class ModEvents {
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         // 1. Register Energy Storage
         registerElectric(event, ModBlockEntities.ENERGY_STORAGE_ENTITY.get());
-
         // 2. Register Refinery
         registerElectric(event, ModBlockEntities.REFINERY_ENTITY.get());
-
         // 3. Register Solar Panel (and any future machines)
         registerElectric(event, ModBlockEntities.BASIC_SOLAR_PANEL_ENTITY.get());
     }
@@ -92,21 +94,32 @@ public class ModEvents {
                     if (side == null) {
                         return machine.getEnergyStorage();
                     }
-
                     // B. Input Side -> ALLOW connection
                     if (machine.isInputSide(side)) {
                         return machine.getEnergyStorage();
                     }
-
                     // C. Output Side -> ALLOW connection
                     if (machine.isOutputSide(side)) {
                         return machine.getEnergyStorage();
                     }
-
                     // D. Otherwise -> DENY connection (Return null)
                     // This tells the wire/pipe: "I have no energy capability on this side."
                     return null;
                 }
         );
+    }
+
+    @SubscribeEvent
+    public static void onPlayerMountRocket(EntityMountEvent event) {
+        if (event.getLevel().isClientSide()) {
+            if (event.getEntityMounting() instanceof Player player && player == Minecraft.getInstance().player) {
+                if (event.isMounting() && event.getEntityBeingMounted() instanceof Tier1RocketEntity) {
+                    Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
+                }
+                else if (!event.isMounting() && event.getEntityBeingMounted() instanceof Tier1RocketEntity) {
+                    Minecraft.getInstance().options.setCameraType(CameraType.FIRST_PERSON);
+                }
+            }
+        }
     }
 }

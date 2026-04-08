@@ -51,15 +51,15 @@ public abstract class BaseRocketBlock extends Block {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if(!level.isClientSide) {
-            Entity rocketEntity = null;
-            List<Tier1RocketEntity> rockets = level.getEntities(ModEntities.TIER_1_ROCKET.get(), new AABB(pos), rocket -> true);
-            if (rockets.isEmpty()) {
-                rocketEntity = ModEntities.TIER_1_ROCKET.get().spawn(((ServerLevel) level), pos, MobSpawnType.TRIGGERED);
-            }else{
-                rocketEntity = rockets.get(0);
+        if (!level.isClientSide) {
+
+            Tier1RocketEntity rocketEntity = ModEntities.TIER_1_ROCKET.get().create(level);
+            if (rocketEntity != null) {
+                rocketEntity.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+                level.addFreshEntity(rocketEntity);
+                player.startRiding(rocketEntity);
+                level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
             }
-            player.startRiding(rocketEntity);
         }
         return InteractionResult.SUCCESS;
     }
