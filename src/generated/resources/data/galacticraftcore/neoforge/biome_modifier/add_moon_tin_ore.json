@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#galacticraftcore:is_moon",
+  "features": "galacticraftcore:moon_tin_ore_placed",
+  "step": "underground_ores"
+}

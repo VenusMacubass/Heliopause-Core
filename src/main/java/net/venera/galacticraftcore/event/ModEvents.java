@@ -6,6 +6,10 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -16,6 +20,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.ModBlocks;
 import net.venera.galacticraftcore.block.custom.machine.electric.WireBlock;
@@ -122,4 +127,45 @@ public class ModEvents {
             }
         }
     }
+//-----------------------------------------------------------------
+    // In 1.21, modifiers use ResourceLocations instead of UUIDs!
+    private static final ResourceLocation MOON_GRAVITY_ID = ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon_gravity");
+    private static final ResourceLocation MOON_FALL_ID = ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon_safe_fall");
+
+    @SubscribeEvent
+    public static void onEntityTick(EntityTickEvent.Pre event) {
+        if (!(event.getEntity() instanceof LivingEntity livingEntity)) return;
+
+        AttributeInstance gravityAttribute = livingEntity.getAttribute(Attributes.GRAVITY);
+        // 2. Grab the Safe Fall attribute
+        AttributeInstance safeFallAttribute = livingEntity.getAttribute(Attributes.SAFE_FALL_DISTANCE);
+
+        if (gravityAttribute == null || safeFallAttribute == null) return;
+
+        boolean isOnMoon = livingEntity.level().dimension().location().equals(ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon"));
+
+        if (isOnMoon) {
+            // Gravity Modifier (Keep this the same)
+            if (!gravityAttribute.hasModifier(MOON_GRAVITY_ID)) {
+                gravityAttribute.addTransientModifier(new AttributeModifier(MOON_GRAVITY_ID, -0.83, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+            }
+
+            // 3. Safe Fall Modifier
+            if (!safeFallAttribute.hasModifier(MOON_FALL_ID)) {
+                // ADD_MULTIPLIED_TOTAL with 5.0 increases the safe fall distance by 500%
+                // (Vanilla is 3 blocks. 3 + (3 * 5.0) = 18 blocks safe fall distance!)
+                safeFallAttribute.addTransientModifier(new AttributeModifier(MOON_FALL_ID, 5.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+            }
+
+        } else {
+            // Remove both modifiers when they leave the Moon
+            if (gravityAttribute.hasModifier(MOON_GRAVITY_ID)) {
+                gravityAttribute.removeModifier(MOON_GRAVITY_ID);
+            }
+            if (safeFallAttribute.hasModifier(MOON_FALL_ID)) {
+                safeFallAttribute.removeModifier(MOON_FALL_ID);
+            }
+        }
+    }
+    //-------------------------------------------------
 }

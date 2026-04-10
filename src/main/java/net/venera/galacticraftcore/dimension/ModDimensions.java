@@ -11,11 +11,11 @@ public class ModDimensions {
     
     public static final ResourceKey<Level> MOON_LEVEL_KEY = ResourceKey.create(
             Registries.DIMENSION,
-            ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "gcc_moon")
+            ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon")
     );
     
     public static final ResourceKey<DimensionType> MOON_TYPE_KEY = ResourceKey.create(
             Registries.DIMENSION_TYPE,
-            ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "gcc_moon")
+            ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon")
     );
 }

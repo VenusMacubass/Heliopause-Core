@@ -1,0 +1,11 @@
+{
+  "type": "galacticraftcore:moon",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "galacticraftcore:moon_terrain",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "galacticraftcore:moon_plains"
+    }
+  }
+}
