@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "galacticraftcore:lunar_highlands",
+  "features": "galacticraftcore:moon_crater_placed",
+  "step": "surface_structures"
+}

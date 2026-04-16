@@ -1,2 +1,3 @@
-// 1.21.1	2026-04-09T21:35:28.9593912	Tags for minecraft:worldgen/biome mod id galacticraftcore
-6220dcd7d6b2b19e1ba6a774ae072081683de3ee data/galacticraftcore/tags/worldgen/biome/is_moon.json
+// 1.21.1	2026-04-14T20:48:45.0610604	Tags for minecraft:worldgen/biome mod id galacticraftcore
+362c71e229fad2f59312144787f492f6fd46fccf data/galacticraftcore/tags/worldgen/biome/lunar_highlands.json
+26eb6610df06c50c5a8509ebe3ecf172582eb963 data/galacticraftcore/tags/worldgen/biome/lunar_maria.json

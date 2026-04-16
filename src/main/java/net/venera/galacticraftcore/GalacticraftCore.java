@@ -12,6 +12,7 @@ import net.venera.galacticraftcore.data.component.ModDataComponents;
 import net.venera.galacticraftcore.data.ModAttachments;
 import net.venera.galacticraftcore.data.energy.GridManager;
 import net.venera.galacticraftcore.data.radiation.RadiationHandler;
+import net.venera.galacticraftcore.dimension.worldgen.feature.ModFeatures;
 import net.venera.galacticraftcore.entity.ModEntities;
 import net.venera.galacticraftcore.entity.villager.ModVillagers;
 import net.venera.galacticraftcore.entity.zombie.SpaceZombieEntity;
@@ -66,6 +67,7 @@ public class GalacticraftCore {
         ModAttachments.register(modEventBus);
         ModEntities.register(modEventBus);
         ModVillagers.register(modEventBus);
+        ModFeatures.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
 

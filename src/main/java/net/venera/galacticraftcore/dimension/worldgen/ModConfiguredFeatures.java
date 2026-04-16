@@ -9,12 +9,14 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.dimension.worldgen.feature.ModFeatures;
 import net.venera.galacticraftcore.util.ModTags;
 
 import java.util.List;
@@ -24,6 +26,8 @@ public class ModConfiguredFeatures { //What to place
     public static final ResourceKey<ConfiguredFeature<?, ?>> NETHER_TIN_ORE_KEY = registerKey("nether_tin_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> END_TIN_ORE_KEY = registerKey("end_tin_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_TIN_ORE_KEY = registerKey("moon_tin_ore");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_CRATER_KEY = registerKey("moon_crater");
     
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context){
 
@@ -48,7 +52,11 @@ public class ModConfiguredFeatures { //What to place
         register(context, NETHER_TIN_ORE_KEY, Feature.ORE, new OreConfiguration(netherTinOres, 12));
         register(context, END_TIN_ORE_KEY, Feature.ORE, new OreConfiguration(endTinOres, 12));
         register(context, MOON_TIN_ORE_KEY, Feature.ORE, new OreConfiguration(moonTinOres, 12));
-                
+
+        context.register(MOON_CRATER_KEY, new ConfiguredFeature<>(
+                ModFeatures.CRATER_FEATURE.get(),
+                NoneFeatureConfiguration.INSTANCE
+        ));
     }
     
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name){

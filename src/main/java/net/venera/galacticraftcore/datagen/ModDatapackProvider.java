@@ -7,9 +7,11 @@ import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.venera.galacticraftcore.GalacticraftCore;
+import net.venera.galacticraftcore.dimension.ModDimensions;
 import net.venera.galacticraftcore.dimension.biome.ModBiomes;
 import net.venera.galacticraftcore.dimension.worldgen.ModBiomeModifiers;
 import net.venera.galacticraftcore.dimension.worldgen.ModConfiguredFeatures;
+import net.venera.galacticraftcore.dimension.worldgen.ModNoiseSettings;
 import net.venera.galacticraftcore.dimension.worldgen.ModPlacedFeatures;
 
 import java.util.Set;
@@ -20,7 +22,10 @@ public class ModDatapackProvider extends DatapackBuiltinEntriesProvider {
             .add(Registries.CONFIGURED_FEATURE, ModConfiguredFeatures::bootstrap)
             .add(Registries.PLACED_FEATURE, ModPlacedFeatures::bootstrap)
             .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, ModBiomeModifiers::bootstrap)
-            .add(Registries.BIOME, ModBiomes::bootstrap);
+            .add(Registries.BIOME, ModBiomes::bootstrap)
+            .add(Registries.DIMENSION_TYPE, ModDimensions::typeBootstrap)
+            .add(Registries.NOISE_SETTINGS, ModNoiseSettings::bootstrap)
+            .add(Registries.LEVEL_STEM, ModDimensions::bootstrap);
     
     public ModDatapackProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, Set.of(GalacticraftCore.MOD_ID));

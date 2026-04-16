@@ -6,11 +6,13 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -128,42 +130,56 @@ public class ModEvents {
         }
     }
 //-----------------------------------------------------------------
-    // In 1.21, modifiers use ResourceLocations instead of UUIDs!
     private static final ResourceLocation MOON_GRAVITY_ID = ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon_gravity");
     private static final ResourceLocation MOON_FALL_ID = ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon_safe_fall");
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Pre event) {
-        if (!(event.getEntity() instanceof LivingEntity livingEntity)) return;
+        Entity entity = event.getEntity();
+        boolean isOnMoon = entity.level().dimension().location().equals(ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon"));
+        
+        if (entity instanceof LivingEntity livingEntity) {
+            AttributeInstance gravityAttribute = livingEntity.getAttribute(Attributes.GRAVITY);
+            AttributeInstance safeFallAttribute = livingEntity.getAttribute(Attributes.SAFE_FALL_DISTANCE);
 
-        AttributeInstance gravityAttribute = livingEntity.getAttribute(Attributes.GRAVITY);
-        // 2. Grab the Safe Fall attribute
-        AttributeInstance safeFallAttribute = livingEntity.getAttribute(Attributes.SAFE_FALL_DISTANCE);
-
-        if (gravityAttribute == null || safeFallAttribute == null) return;
-
-        boolean isOnMoon = livingEntity.level().dimension().location().equals(ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon"));
-
-        if (isOnMoon) {
-            // Gravity Modifier (Keep this the same)
-            if (!gravityAttribute.hasModifier(MOON_GRAVITY_ID)) {
-                gravityAttribute.addTransientModifier(new AttributeModifier(MOON_GRAVITY_ID, -0.83, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+            if (gravityAttribute != null && safeFallAttribute != null) {
+                if (isOnMoon) {
+                    if (!gravityAttribute.hasModifier(MOON_GRAVITY_ID)) {
+                        gravityAttribute.addTransientModifier(new AttributeModifier(MOON_GRAVITY_ID, -0.83, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+                    }
+                    if (!safeFallAttribute.hasModifier(MOON_FALL_ID)) {
+                        safeFallAttribute.addTransientModifier(new AttributeModifier(MOON_FALL_ID, 5.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+                    }
+                } else {
+                    gravityAttribute.removeModifier(MOON_GRAVITY_ID);
+                    safeFallAttribute.removeModifier(MOON_FALL_ID);
+                }
             }
+        }
+        else if (entity instanceof net.minecraft.world.entity.projectile.Projectile projectile) {
+            if (isOnMoon && !projectile.isNoGravity()) {
+                net.minecraft.world.phys.Vec3 movement = projectile.getDeltaMovement();
 
-            // 3. Safe Fall Modifier
-            if (!safeFallAttribute.hasModifier(MOON_FALL_ID)) {
-                // ADD_MULTIPLIED_TOTAL with 5.0 increases the safe fall distance by 500%
-                // (Vanilla is 3 blocks. 3 + (3 * 5.0) = 18 blocks safe fall distance!)
-                safeFallAttribute.addTransientModifier(new AttributeModifier(MOON_FALL_ID, 5.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+                
+                if (projectile instanceof net.minecraft.world.entity.projectile.AbstractArrow) {
+                    projectile.setDeltaMovement(movement.x, movement.y + 0.04D, movement.z);
+                }
+                
+                else if (projectile instanceof net.minecraft.world.entity.projectile.ThrowableItemProjectile) {
+                    
+                    projectile.setDeltaMovement(movement.x, movement.y + 0.02D, movement.z);
+                }
+               
+                else {
+                    projectile.setDeltaMovement(movement.x, movement.y + 0.02D, movement.z);
+                }
             }
-
-        } else {
-            // Remove both modifiers when they leave the Moon
-            if (gravityAttribute.hasModifier(MOON_GRAVITY_ID)) {
-                gravityAttribute.removeModifier(MOON_GRAVITY_ID);
-            }
-            if (safeFallAttribute.hasModifier(MOON_FALL_ID)) {
-                safeFallAttribute.removeModifier(MOON_FALL_ID);
+        }
+        else if (entity instanceof net.minecraft.world.entity.item.FallingBlockEntity fallingBlock) {
+            if (isOnMoon && !fallingBlock.isNoGravity()) {
+                net.minecraft.world.phys.Vec3 movement = fallingBlock.getDeltaMovement();
+                // Vanilla drops by -0.04 per tick. Adding +0.03 leaves a slow -0.01 drop.
+                fallingBlock.setDeltaMovement(movement.x, movement.y + 0.03D, movement.z);
             }
         }
     }

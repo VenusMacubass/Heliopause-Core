@@ -12,8 +12,9 @@ import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.venera.galacticraftcore.GalacticraftCore;
 
 public class ModBiomes {
-    public static final ResourceKey<Biome> MOON_PLAINS = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon_plains"));
-
+    public static final ResourceKey<Biome> LUNAR_HIGHLANDS = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "lunar_highlands"));
+    public static final ResourceKey<Biome> LUNAR_MARIA = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "lunar_maria"));
+    
     public static void bootstrap(BootstrapContext<Biome> context) {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
         var configuredCarvers = context.lookup(Registries.CONFIGURED_CARVER);
@@ -25,7 +26,24 @@ public class ModBiomes {
         BiomeGenerationSettings.Builder biomeBuilder = new BiomeGenerationSettings.Builder(placedFeatures, configuredCarvers);
 
         // 3. The Biome Definition
-        context.register(MOON_PLAINS, new Biome.BiomeBuilder()
+        context.register(LUNAR_HIGHLANDS , new Biome.BiomeBuilder()
+                .hasPrecipitation(false)
+                .temperature(0.5f)
+                .downfall(0.0f)
+                .specialEffects((new BiomeSpecialEffects.Builder())
+                        .skyColor(0) // Pitch Black
+                        .fogColor(0)
+                        .waterColor(4159204)
+                        .waterFogColor(329011)
+                        .grassColorOverride(8368696)
+                        .foliageColorOverride(8368696)
+                        .ambientLoopSound(SoundEvents.AMBIENT_BASALT_DELTAS_LOOP)
+                        .build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .generationSettings(biomeBuilder.build())
+                .build());
+        
+        context.register(LUNAR_MARIA , new Biome.BiomeBuilder()
                 .hasPrecipitation(false)
                 .temperature(0.5f)
                 .downfall(0.0f)

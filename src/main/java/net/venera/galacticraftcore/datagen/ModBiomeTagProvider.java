@@ -18,7 +18,9 @@ public class ModBiomeTagProvider extends BiomeTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        this.tag(ModTags.Biomes.IS_MOON)
-                .addOptional(ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon_plains"));
+        this.tag(ModTags.Biomes.LUNAR_HIGHLANDS)
+                .addOptional(ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon_highlands"));
+        this.tag(ModTags.Biomes.LUNAR_MARIA)
+                .addOptional(ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon_maria"));
     }
 }

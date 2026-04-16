@@ -39,9 +39,14 @@ public class ModTags {
     }
 
     public static class Biomes {
-        public static final TagKey<Biome> IS_MOON = TagKey.create(
+        public static final TagKey<Biome> LUNAR_HIGHLANDS = TagKey.create(
                 Registries.BIOME,
-                ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "is_moon")
+                ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "lunar_highlands")
+        );
+
+        public static final TagKey<Biome> LUNAR_MARIA = TagKey.create(
+                Registries.BIOME,
+                ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "lunar_maria")
         );
     }
 
