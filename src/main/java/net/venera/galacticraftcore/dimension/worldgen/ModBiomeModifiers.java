@@ -22,7 +22,8 @@ public class ModBiomeModifiers {  //In what biome and in what stage shall I plac
     public static final ResourceKey<BiomeModifier> ADD_END_TIN_ORE = registerKey("add_end_tin_ore");
     public static final ResourceKey<BiomeModifier> ADD_MOON_TIN_ORE = registerKey("add_moon_tin_ore");
 
-    public static final ResourceKey<BiomeModifier> ADD_MOON_CRATERS = registerKey("add_moon_craters");
+    public static final ResourceKey<BiomeModifier> ADD_MARIA_CRATERS = registerKey("add_maria_craters");
+    public static final ResourceKey<BiomeModifier> ADD_HIGHLANDS_CRATERS = registerKey("add_highlands_craters");
 
     public static void bootstrap(BootstrapContext<BiomeModifier> context) {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
@@ -55,11 +56,15 @@ public class ModBiomeModifiers {  //In what biome and in what stage shall I plac
 
 
 
-        context.register(ADD_MOON_CRATERS, new BiomeModifiers.AddFeaturesBiomeModifier(
-                // Notice we only use the LUNAR_HIGHLANDS here, NOT a combined HolderSet!
+        context.register(ADD_MARIA_CRATERS, new BiomeModifiers.AddFeaturesBiomeModifier(
+                HolderSet.direct(biomes.getOrThrow(ModBiomes.LUNAR_MARIA)),
+                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.MARIA_CRATER_PLACED_KEY)),
+                GenerationStep.Decoration.SURFACE_STRUCTURES
+        ));
+
+        context.register(ADD_HIGHLANDS_CRATERS, new BiomeModifiers.AddFeaturesBiomeModifier(
                 HolderSet.direct(biomes.getOrThrow(ModBiomes.LUNAR_HIGHLANDS)),
-                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.MOON_CRATER_PLACED_KEY)),
-                // SURFACE_STRUCTURES runs after the terrain is shaped, but before ores generate
+                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.HIGHLANDS_CRATER_PLACED_KEY)),
                 GenerationStep.Decoration.SURFACE_STRUCTURES
         ));
     }

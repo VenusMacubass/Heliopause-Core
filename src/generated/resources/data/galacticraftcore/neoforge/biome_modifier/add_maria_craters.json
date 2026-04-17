@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "galacticraftcore:lunar_maria",
+  "features": "galacticraftcore:maria_crater_placed",
+  "step": "surface_structures"
+}

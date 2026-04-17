@@ -16,6 +16,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.dimension.worldgen.feature.CraterConfig;
 import net.venera.galacticraftcore.dimension.worldgen.feature.ModFeatures;
 import net.venera.galacticraftcore.util.ModTags;
 
@@ -27,7 +28,8 @@ public class ModConfiguredFeatures { //What to place
     public static final ResourceKey<ConfiguredFeature<?, ?>> END_TIN_ORE_KEY = registerKey("end_tin_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_TIN_ORE_KEY = registerKey("moon_tin_ore");
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_CRATER_KEY = registerKey("moon_crater");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MARIA_CRATER_KEY = registerKey("maria_crater");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> HIGHLANDS_CRATER_KEY = registerKey("highlands_crater");
     
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context){
 
@@ -53,9 +55,14 @@ public class ModConfiguredFeatures { //What to place
         register(context, END_TIN_ORE_KEY, Feature.ORE, new OreConfiguration(endTinOres, 12));
         register(context, MOON_TIN_ORE_KEY, Feature.ORE, new OreConfiguration(moonTinOres, 12));
 
-        context.register(MOON_CRATER_KEY, new ConfiguredFeature<>(
+        context.register(MARIA_CRATER_KEY, new ConfiguredFeature<>(
                 ModFeatures.CRATER_FEATURE.get(),
-                NoneFeatureConfiguration.INSTANCE
+                new CraterConfig(5, 25, 5.0) 
+        ));
+
+        context.register(HIGHLANDS_CRATER_KEY, new ConfiguredFeature<>(
+                ModFeatures.CRATER_FEATURE.get(),
+                new CraterConfig(3, 15, 2.0) 
         ));
     }
     

@@ -11,10 +11,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -134,7 +140,7 @@ public class ModEvents {
     private static final ResourceLocation MOON_FALL_ID = ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon_safe_fall");
 
     @SubscribeEvent
-    public static void onEntityTick(EntityTickEvent.Pre event) {
+    public static void onEntityTick(EntityTickEvent.Pre event) { //Moon Gravity Manager
         Entity entity = event.getEntity();
         boolean isOnMoon = entity.level().dimension().location().equals(ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon"));
         
@@ -156,16 +162,16 @@ public class ModEvents {
                 }
             }
         }
-        else if (entity instanceof net.minecraft.world.entity.projectile.Projectile projectile) {
+        else if (entity instanceof Projectile projectile) {
             if (isOnMoon && !projectile.isNoGravity()) {
-                net.minecraft.world.phys.Vec3 movement = projectile.getDeltaMovement();
+                Vec3 movement = projectile.getDeltaMovement();
 
                 
-                if (projectile instanceof net.minecraft.world.entity.projectile.AbstractArrow) {
+                if (projectile instanceof AbstractArrow) {
                     projectile.setDeltaMovement(movement.x, movement.y + 0.04D, movement.z);
                 }
                 
-                else if (projectile instanceof net.minecraft.world.entity.projectile.ThrowableItemProjectile) {
+                else if (projectile instanceof ThrowableItemProjectile) {
                     
                     projectile.setDeltaMovement(movement.x, movement.y + 0.02D, movement.z);
                 }
@@ -175,11 +181,17 @@ public class ModEvents {
                 }
             }
         }
-        else if (entity instanceof net.minecraft.world.entity.item.FallingBlockEntity fallingBlock) {
+        else if (entity instanceof FallingBlockEntity fallingBlock) {
             if (isOnMoon && !fallingBlock.isNoGravity()) {
                 net.minecraft.world.phys.Vec3 movement = fallingBlock.getDeltaMovement();
-                // Vanilla drops by -0.04 per tick. Adding +0.03 leaves a slow -0.01 drop.
+                // Vanilla drops by -0.04 per tick. 
                 fallingBlock.setDeltaMovement(movement.x, movement.y + 0.03D, movement.z);
+            }
+        }
+        else if (entity instanceof ItemEntity  itemEntity) {
+            if (isOnMoon && !itemEntity.isNoGravity()) {
+                Vec3 movement = itemEntity.getDeltaMovement();
+                itemEntity.setDeltaMovement(movement.x, movement.y + 0.03D, movement.z);
             }
         }
     }

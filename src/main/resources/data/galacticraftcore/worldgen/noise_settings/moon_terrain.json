@@ -14,7 +14,7 @@
   "noise": {
     "height": 320,
     "min_y": -64,
-    "size_horizontal": 1,
+    "size_horizontal": 4,
     "size_vertical": 2
   },
   "noise_router": {
@@ -24,16 +24,16 @@
       "xz_scale": 1,
       "y_scale": 0.5
     },
-    "continents": "minecraft:overworld_large_biomes/continents",
-    "depth": "minecraft:overworld_large_biomes/depth",
-    "erosion": "minecraft:overworld_large_biomes/erosion",
+    "continents": "minecraft:overworld/continents",
+    "depth": "minecraft:overworld/depth",
+    "erosion": "minecraft:overworld/erosion",
     "final_density": {
       "type": "minecraft:min",
       "argument1": {
         "type": "minecraft:squeeze",
         "argument": {
           "type": "minecraft:mul",
-          "argument1": 0.64,
+          "argument1": 0.2,
           "argument2": {
             "type": "minecraft:interpolated",
             "argument": {
@@ -70,12 +70,12 @@
                           "argument1": 0.078125,
                           "argument2": {
                             "type": "minecraft:range_choice",
-                            "input": "minecraft:overworld_large_biomes/sloped_cheese",
+                            "input": "minecraft:overworld/sloped_cheese",
                             "max_exclusive": 1.5625,
                             "min_inclusive": -1000000,
                             "when_in_range": {
                               "type": "minecraft:min",
-                              "argument1": "minecraft:overworld_large_biomes/sloped_cheese",
+                              "argument1": "minecraft:overworld/sloped_cheese",
                               "argument2": {
                                 "type": "minecraft:mul",
                                 "argument1": 5,
@@ -128,7 +128,7 @@
                                           "argument2": {
                                             "type": "minecraft:mul",
                                             "argument1": -0.64,
-                                            "argument2": "minecraft:overworld_large_biomes/sloped_cheese"
+                                            "argument2": "minecraft:overworld/sloped_cheese"
                                           }
                                         },
                                         "max": 0.5,
@@ -215,15 +215,15 @@
                     "argument1": -0.703125,
                     "argument2": {
                       "type": "minecraft:mul",
-                      "argument1": 4,
+                      "argument1": 1,
                       "argument2": {
                         "type": "minecraft:quarter_negative",
                         "argument": {
                           "type": "minecraft:mul",
-                          "argument1": "minecraft:overworld_large_biomes/depth",
+                          "argument1": "minecraft:overworld/depth",
                           "argument2": {
                             "type": "minecraft:cache_2d",
-                            "argument": "minecraft:overworld_large_biomes/factor"
+                            "argument": "minecraft:overworld/factor"
                           }
                         }
                       }
@@ -247,7 +247,7 @@
     "ridges": "minecraft:overworld/ridges",
     "temperature": {
       "type": "minecraft:shifted_noise",
-      "noise": "minecraft:temperature_large",
+      "noise": "minecraft:temperature",
       "shift_x": "minecraft:shift_x",
       "shift_y": 0,
       "shift_z": "minecraft:shift_z",
@@ -256,7 +256,7 @@
     },
     "vegetation": {
       "type": "minecraft:shifted_noise",
-      "noise": "minecraft:vegetation_large",
+      "noise": "minecraft:vegetation",
       "shift_x": "minecraft:shift_x",
       "shift_y": 0,
       "shift_z": "minecraft:shift_z",
@@ -341,7 +341,7 @@
       ],
       "depth": 0,
       "erosion": [
-        0.5,
+        -1,
         1
       ],
       "humidity": [
@@ -365,7 +365,7 @@
       ],
       "depth": 0,
       "erosion": [
-        0.5,
+        -1,
         1
       ],
       "humidity": [
@@ -427,7 +427,8 @@
                 "then_run": {
                   "type": "minecraft:block",
                   "result_state": {
-                    "Name": "galacticraftcore:gcc_block_moon_turf"
+                    "Name": "galacticraftcore:gcc_block_moon_turf",
+                    "Properties": { "snowy": "false" }
                   }
                 }
               },
@@ -452,7 +453,8 @@
         "then_run": {
           "type": "minecraft:block",
           "result_state": {
-            "Name": "galacticraftcore:gcc_block_moon_rock"
+            "Name": "galacticraftcore:gcc_block_moon_rock",
+            "Properties": { "axis": "y" }
           }
         }
       }

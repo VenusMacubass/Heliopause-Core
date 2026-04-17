@@ -6,6 +6,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -20,7 +21,8 @@ public class ModPlacedFeatures {  //Where to place and how to place
     public static final ResourceKey<PlacedFeature> END_TIN_ORE_PLACED_KEY = registerKey("end_tin_ore_placed");
     public static final ResourceKey<PlacedFeature> MOON_TIN_ORE_PLACED_KEY = registerKey("moon_tin_ore_placed");
 
-    public static final ResourceKey<PlacedFeature> MOON_CRATER_PLACED_KEY = registerKey("moon_crater_placed");
+    public static final ResourceKey<PlacedFeature> MARIA_CRATER_PLACED_KEY = registerKey("maria_crater_placed");
+    public static final ResourceKey<PlacedFeature> HIGHLANDS_CRATER_PLACED_KEY = registerKey("highlands_crater_placed");
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         var configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -34,18 +36,22 @@ public class ModPlacedFeatures {  //Where to place and how to place
         register(context, MOON_TIN_ORE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.MOON_TIN_ORE_KEY),
                 ModOrePlacement.commonOrePlacement(12, HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(80))));
 
-        
-
-        context.register(MOON_CRATER_PLACED_KEY, new PlacedFeature(
-                configuredFeatures.getOrThrow(ModConfiguredFeatures.MOON_CRATER_KEY),
+        context.register(MARIA_CRATER_PLACED_KEY, new PlacedFeature(
+                configuredFeatures.getOrThrow(ModConfiguredFeatures.MARIA_CRATER_KEY),
                 List.of(
-                        // Spawns on average in 1 out of every 3 chunks. Adjust this if you want more/less craters!
-                        RarityFilter.onAverageOnceEvery(5),
-                        // Scatters it randomly along the X and Z axis of the chunk
+                        RarityFilter.onAverageOnceEvery(9), // Subtle, rare placement
                         InSquarePlacement.spread(),
-                        // Forces the engine to find the highest solid block touching the sky before it carves
                         HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
-                        // Ensures it only spawns if the biome actually allows it
+                        BiomeFilter.biome()
+                )
+        ));
+
+        context.register(HIGHLANDS_CRATER_PLACED_KEY, new PlacedFeature(
+                configuredFeatures.getOrThrow(ModConfiguredFeatures.HIGHLANDS_CRATER_KEY),
+                List.of(
+                        RarityFilter.onAverageOnceEvery(5), // Heavy bombardment
+                        InSquarePlacement.spread(),
+                        HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
                         BiomeFilter.biome()
                 )
         ));

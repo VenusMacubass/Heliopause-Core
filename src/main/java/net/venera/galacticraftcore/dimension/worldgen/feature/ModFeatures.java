@@ -12,8 +12,8 @@ import java.util.function.Supplier;
 public class ModFeatures {
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(Registries.FEATURE, GalacticraftCore.MOD_ID);
 
-    public static final Supplier<Feature<NoneFeatureConfiguration>> CRATER_FEATURE = FEATURES.register("crater",
-            () -> new CraterFeature(NoneFeatureConfiguration.CODEC));
+    public static final Supplier<Feature<CraterConfig>> CRATER_FEATURE = FEATURES.register("crater",
+            () -> new CraterFeature(CraterConfig.CODEC));
 
     public static void register(IEventBus eventBus) {
         FEATURES.register(eventBus);
