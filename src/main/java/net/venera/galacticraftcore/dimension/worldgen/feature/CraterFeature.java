@@ -8,9 +8,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.venera.galacticraftcore.block.ModBlocks;
-import net.venera.galacticraftcore.dimension.biome.ModBiomes;
 
 public class CraterFeature extends Feature<CraterConfig> {
     public CraterFeature(Codec<CraterConfig> codec) {

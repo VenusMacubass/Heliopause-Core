@@ -70,7 +70,6 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void onModelEvent(ModelEvent.RegisterAdditional event) {
-        // Register custom item properties
         ItemProperties.register(ModItems.CANISTER.get(),
                 ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "fluid_type"),
                 (stack, level, entity, seed) -> {
@@ -90,11 +89,8 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        // 1. Register Energy Storage
         registerElectric(event, ModBlockEntities.ENERGY_STORAGE_ENTITY.get());
-        // 2. Register Refinery
         registerElectric(event, ModBlockEntities.REFINERY_ENTITY.get());
-        // 3. Register Solar Panel (and any future machines)
         registerElectric(event, ModBlockEntities.BASIC_SOLAR_PANEL_ENTITY.get());
     }
     
@@ -103,20 +99,20 @@ public class ModEvents {
                 Capabilities.EnergyStorage.BLOCK,
                 type,
                 (machine, side) -> {
-                    // A. Internal Access (e.g. GUI or the machine itself) -> ALWAYS ALLOW
+                    //Internal Access (e.g. GUI or the machine itself) -> ALWAYS ALLOW
                     if (side == null) {
                         return machine.getEnergyStorage();
                     }
-                    // B. Input Side -> ALLOW connection
+                    //Input Side -> ALLOW connection
                     if (machine.isInputSide(side)) {
                         return machine.getEnergyStorage();
                     }
-                    // C. Output Side -> ALLOW connection
+                    //Output Side -> ALLOW connection
                     if (machine.isOutputSide(side)) {
                         return machine.getEnergyStorage();
                     }
-                    // D. Otherwise -> DENY connection (Return null)
-                    // This tells the wire/pipe: "I have no energy capability on this side."
+                    //Otherwise -> DENY connection (Return null)
+                    //This tells the wire/pipe: "I have no energy capability on this side."
                     return null;
                 }
         );
@@ -140,7 +136,7 @@ public class ModEvents {
     private static final ResourceLocation MOON_FALL_ID = ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon_safe_fall");
 
     @SubscribeEvent
-    public static void onEntityTick(EntityTickEvent.Pre event) { //Moon Gravity Manager
+    public static void onEntityTick(EntityTickEvent.Pre event) { //Gravity Manager
         Entity entity = event.getEntity();
         boolean isOnMoon = entity.level().dimension().location().equals(ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon"));
         
@@ -184,7 +180,7 @@ public class ModEvents {
         else if (entity instanceof FallingBlockEntity fallingBlock) {
             if (isOnMoon && !fallingBlock.isNoGravity()) {
                 net.minecraft.world.phys.Vec3 movement = fallingBlock.getDeltaMovement();
-                // Vanilla drops by -0.04 per tick. 
+                //Vanilla drops by -0.04 per tick. 
                 fallingBlock.setDeltaMovement(movement.x, movement.y + 0.03D, movement.z);
             }
         }
