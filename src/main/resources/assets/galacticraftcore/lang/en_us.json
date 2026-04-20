@@ -21,6 +21,12 @@
   "item.galacticraftcore.gcc_item_dehydrated_carrot": "Dehydrated Carrot",
   "item.galacticraftcore.gcc_item_dehydrated_potato": "Dehydrated Potato",
   "item.galacticraftcore.gcc_item_dehydrated_melon": "Dehydrated Melon",
+  "item.galacticraftcore.gcc_item_dehydrated_beef": "Dehydrated Beef",
+  "item.galacticraftcore.gcc_item_cheeseburger": "Cheeseburger",
+  "item.galacticraftcore.gcc_item_cheese_slice": "Cheese Slice",
+  "item.galacticraftcore.gcc_item_beef_patty": "Beef Patty",
+  "item.galacticraftcore.gcc_item_beef_patty_raw": "Raw Beef Patty",
+  "item.galacticraftcore.gcc_item_burger_bun": "Burger Bun",
 
   "item.galacticraftcore.gcc_item_raw_aluminium": "Raw Aluminium",
   "item.galacticraftcore.gcc_item_raw_tin": "Raw Tin",
@@ -39,6 +45,7 @@
   "item.galacticraftcore.gcc_item_heavy_duty_plate": "Heavy Duty Plate",
 
   "item.galacticraftcore.gcc_item_sensor_lens": "Sensor Lens",
+  "item.galacticraftcore.small_battery": "Small Battery",
 
   "item.galacticraftcore.gcc_item_steel_sword": "Steel Sword",
   "item.galacticraftcore.gcc_item_steel_axe": "Steel Axe",
@@ -51,9 +58,11 @@
   "item.galacticraftcore.gcc_item_steel_boots": "Steel Boots",
   "item.galacticraftcore.gcc_item_crude_oil_bucket": "Crude Oil Bucket",
   "item.galacticraftcore.gcc_item_refined_fuel_bucket": "Refined Fuel Bucket",
+  
   "item.galacticraftcore.gcc_canister": "Fluid Canister",
   "item.galacticraftcore.canister": "Canister",
   "item.galacticraftcore.canister.filled": "%s (%d %%%s)",
+  
   "fluid.galacticraftcore.crude_oil": "Crude Oil",
   "fluid.galacticraftcore.refined_fuel": "Refined Fuel",
 
@@ -67,6 +76,7 @@
   "block.galacticraftcore.gcc_block_iridium_block": "Block of Iridium",
   "block.galacticraftcore.gcc_block_sapphire_ore": "Sapphire Ore",
   "block.galacticraftcore.gcc_block_cheese_block": "Cheese Block",
+  
 
   "block.galacticraftcore.gcc_block_moon_turf": "Moon Turf",
   "block.galacticraftcore.gcc_block_moon_dirt": "Moon Dirt",
@@ -101,12 +111,18 @@
   "block.galacticraftcore.gcc_block_mars_dungeon_brick_wall": "Mars Dungeon Brick Wall",
   "block.galacticraftcore.gcc_block_mars_cobblestone_slab": "Mars Cobblestone Slab",
   "block.galacticraftcore.gcc_block_mars_dungeon_brick_slab": "Mars Dungeon Brick Slab",
+  
   "block.galacticraftcore.gcc_block_arc_lamp": "Arc Lamp",
+  "block.galacticraftcore.prismatic_glass": "Prismatic Glass",
   "block.galacticraftcore.gcc_launch_pad": "Launch Pad",
   "block.galacticraftcore.fluid_tank": "Fluid Tank",
+  "block.galacticraftcore.copper_wire": "Copper Wire",
+  "block.galacticraftcore.rocket_bot": "Tier 1 Rocket",
 
   "block.galacticraftcore.gcc_coal_compressor": "Coal Powered Compressor",
   "block.galacticraftcore.energy_storage_unit": "Energy Storage Unit",
+  "block.galacticraftcore.gcc_refinery": "Oil Refinery",
+  "block.galacticraftcore.basic_solar_block": "Basic Solar Panel",
 
 
   "block.galacticraftcore.coal_compressor_menu_name": "Coal Compressor",

@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-03T17:34:31.4480671	Loot Tables
+// 1.21.1	2026-04-20T19:16:55.3653798	Loot Tables
 e0170f672ad433c3faedb7a8906bc6e72a48e4cb data/galacticraftcore/loot_table/blocks/basic_solar_block.json
 0b27598caa02f2c174fbda69c2a9b0df8da8a311 data/galacticraftcore/loot_table/blocks/copper_wire.json
 46b78792bea2bce485cdab8fd6694b90233eb7fd data/galacticraftcore/loot_table/blocks/energy_storage_unit.json
@@ -43,3 +43,4 @@ e3e40b0949a8645cfb19251bcc1f17230265091f data/galacticraftcore/loot_table/blocks
 a681f465f746c37d08c89f99b153656aaf3a9757 data/galacticraftcore/loot_table/blocks/gcc_coal_compressor.json
 b15e03bf2fc81b2fe99c1d126c1ad33d90de8841 data/galacticraftcore/loot_table/blocks/gcc_launch_pad.json
 81fadfd036acaa52bb26ac201f5a987d0c6362df data/galacticraftcore/loot_table/blocks/gcc_refinery.json
+316e75375f21577ef1c636264014b44edeaa64f2 data/galacticraftcore/loot_table/blocks/prismatic_glass.json

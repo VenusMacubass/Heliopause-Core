@@ -38,6 +38,8 @@ import net.venera.galacticraftcore.screen.custom.EnergyStorageUnitScreen;
 import net.venera.galacticraftcore.screen.custom.RefineryScreen;
 import org.joml.Matrix4f;
 
+import java.awt.*;
+
 
 //@Mod(value = GalacticraftCore.MOD_ID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = GalacticraftCore.MOD_ID, value = Dist.CLIENT)
@@ -65,6 +67,17 @@ public class GalacticraftCoreClient {
                 } else return 0xFFFFFFFF;
             }, blockObject.get());
         }
+        event.register((state, level, pos, tintIndex) -> {
+            long time = System.currentTimeMillis();
+
+            // Dividing by 4000 means a full rainbow takes 4 seconds. 
+            // Increase the number to slow it down!
+            float hue = (time % 4000) / 4000.0f;
+
+            // Convert the Hue to an RGB integer
+            return Color.HSBtoRGB(hue, 1.0f, 1.0f);
+
+        }, ModBlocks.PRISMATIC_GLASS.get());
     }
 
     @SubscribeEvent

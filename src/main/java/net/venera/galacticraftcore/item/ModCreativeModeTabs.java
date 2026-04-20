@@ -129,6 +129,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.BASIC_SOLAR_BLOCK.get());
                         output.accept(ModBlocks.COPPER_WIRE.get());
                         output.accept(ModBlocks.T1_ROCKET_BOT.get());
+                        output.accept(ModBlocks.PRISMATIC_GLASS.get());
 
                     })
                     .build()

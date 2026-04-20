@@ -157,6 +157,9 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> T1_ROCKET_TOP = registerBlock("rocket_top",
             () -> new Tier1RocketTopBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).noLootTable().sound(SoundType.METAL)));
+    
+    public static final DeferredBlock<Block> PRISMATIC_GLASS = registerBlock("prismatic_glass",
+            () -> new TintedGlassBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).sound(SoundType.GLASS)));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

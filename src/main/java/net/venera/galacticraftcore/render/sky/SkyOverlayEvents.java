@@ -54,7 +54,7 @@ public class SkyOverlayEvents {
                     .rotateX((float) Math.toRadians(drifterRotation))
                     .rotateY((float) Math.toRadians(30.0));
 
-            float planetSize = 2.0F;
+            float planetSize = 0.5F;
 
             RenderSystem.setShaderTexture(0, SATURN_TEXTURE);
 
