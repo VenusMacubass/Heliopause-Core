@@ -18,6 +18,8 @@ import net.venera.galacticraftcore.block.ModBlocks;
 import net.venera.galacticraftcore.dimension.ModDimensions;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
     public Tier1RocketEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
@@ -37,10 +39,8 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
 
         double targetAltitude = 1500.0;
         if (!this.level().isClientSide() && this.getY() >= targetAltitude) {
-                if (this.level() instanceof ServerLevel serverLevel) {
-                    
+                if (this.level() instanceof ServerLevel serverLevel && this.level().dimension() == Level.OVERWORLD) {
                     ServerLevel moonDimension = serverLevel.getServer().getLevel(ModDimensions.MOON_LEVEL_KEY);
-
                     if (moonDimension != null) {
                         Entity passenger = this.getFirstPassenger();
 
@@ -59,6 +59,22 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
                             );
                             player.changeDimension(transition);
                         }
+                    }
+                }
+                else if(this.level() instanceof ServerLevel serverLevel && this.level().dimension() == ModDimensions.MOON_LEVEL_KEY) {
+                    Entity passenger = this.getFirstPassenger();
+                    if(passenger instanceof LivingEntity entity) {
+                        entity.stopRiding();
+                        Vec3 landingPos = new Vec3(0.0, 300.0, 0.0);
+                        DimensionTransition transition = new DimensionTransition(
+                                Objects.requireNonNull(serverLevel.getServer().getLevel(Level.OVERWORLD)), 
+                                landingPos,               
+                                Vec3.ZERO,               
+                                passenger.getYRot(),        
+                                passenger.getXRot(),        
+                                DimensionTransition.DO_NOTHING 
+                        );
+                        entity.changeDimension(transition);
                     }
                 }
                 this.discard();
@@ -87,7 +103,6 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
                     Level.ExplosionInteraction.TNT
             );
             this.discard();
-            return;
         }
     }
 

@@ -130,6 +130,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.COPPER_WIRE.get());
                         output.accept(ModBlocks.T1_ROCKET_BOT.get());
                         output.accept(ModBlocks.PRISMATIC_GLASS.get());
+                        output.accept(ModBlocks.COPPER_WIRE_BLOCK.get());
 
                     })
                     .build()

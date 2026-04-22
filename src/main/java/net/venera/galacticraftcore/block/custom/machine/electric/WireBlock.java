@@ -70,19 +70,15 @@ public class WireBlock extends Block {
     private boolean connectsTo(LevelAccessor level, BlockPos wirePos, Direction wireFacing) {
         BlockPos neighborPos = wirePos.relative(wireFacing);
         BlockState neighborState = level.getBlockState(neighborPos);
-
-        // 1. Connect to other Wires
+        
         if (neighborState.getBlock() instanceof WireBlock) {
             return true;
         }
-
-        // 2. Connect to Machines (The Smart Check)
+        
         BlockEntity be = level.getBlockEntity(neighborPos);
         if (be instanceof BaseElectricMachineEntity machine) {
-            // IMPORTANT: The wire is looking East, so it touches the Machine's West face.
             Direction faceTouchingWire = wireFacing.getOpposite();
-
-            // Ask the machine: "Do you have a port on this face?"
+            
             return machine.isValidPort(faceTouchingWire);
         }
 

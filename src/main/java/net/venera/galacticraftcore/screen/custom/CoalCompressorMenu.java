@@ -68,8 +68,7 @@ public class CoalCompressorMenu extends AbstractContainerMenu {
     private static final int VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INVENTORY_SLOT_COUNT;
     private static final int VANILLA_FIRST_SLOT_INDEX = 0;
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
-
-    // THIS YOU HAVE TO DEFINE!
+    
     private static final int TE_INVENTORY_SLOT_COUNT = 11;  // must be the number of slots you have!
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
@@ -78,15 +77,22 @@ public class CoalCompressorMenu extends AbstractContainerMenu {
         ItemStack sourceStack = sourceSlot.getItem();
         ItemStack copyOfSourceStack = sourceStack.copy();
 
-        // Check if the slot clicked is one of the vanilla container slots
         if (pIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
-            // This is a vanilla container slot so merge the stack into the tile inventory
-            if (!moveItemStackTo(sourceStack, TE_INVENTORY_FIRST_SLOT_INDEX, TE_INVENTORY_FIRST_SLOT_INDEX
-                    + TE_INVENTORY_SLOT_COUNT, false)) {
-                return ItemStack.EMPTY;  // EMPTY_ITEM
+            
+            if (sourceStack.getBurnTime(null) > 0) {
+                if (!moveItemStackTo(sourceStack, 45, 46, false)) {
+                    if (!moveItemStackTo(sourceStack, 36, 45, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                }
             }
+            else {
+                if (!moveItemStackTo(sourceStack, 36, 45, false)) {
+                    return ItemStack.EMPTY;
+                }
+            }
+
         } else if (pIndex < TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT) {
-            // This is a TE slot so merge the stack into the players inventory
             if (!moveItemStackTo(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)) {
                 return ItemStack.EMPTY;
             }
@@ -94,7 +100,6 @@ public class CoalCompressorMenu extends AbstractContainerMenu {
             System.out.println("Invalid slotIndex:" + pIndex);
             return ItemStack.EMPTY;
         }
-        // If stack size == 0 (the entire stack was moved) set slot contents to null
         if (sourceStack.getCount() == 0) {
             sourceSlot.set(ItemStack.EMPTY);
         } else {
@@ -123,17 +128,17 @@ public class CoalCompressorMenu extends AbstractContainerMenu {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 168));
         }
     }
-    public int getProgress() {
-        return data.get(0); // progress
+    public int getArrowScaled(int pixels) {
+        int progress = this.data.get(0);
+        int maxProgress = this.data.get(1);
+        if (maxProgress == 0 || progress == 0) return 0;
+        return Math.min((int) ((float) progress / maxProgress * pixels), pixels);
     }
 
-    public int getMaxProgress() {
-        return data.get(1); // maxProgress
-    }
-    public int getBurnTime() {
-        return data.get(2); // burnTime
-    }
-    public int getMaxBurnTime() {
-        return data.get(3); // maxBurnTime
+    public int getFireIconScaled(int pixels) {
+        int burnTime = this.data.get(2);
+        int maxBurnTime = this.data.get(3);
+        if (maxBurnTime == 0 || burnTime == 0) return 0;
+        return Math.min((int) ((float) burnTime / maxBurnTime * pixels), pixels);
     }
 }

@@ -3,7 +3,6 @@ package net.venera.galacticraftcore.render.sky;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.GameRenderer;
@@ -43,9 +42,7 @@ public class SkyOverlayEvents {
                     GlStateManager.DestFactor.ZERO
             );
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
-
-            // --- THE FIX: USE MODELVIEW, NOT PROJECTION ---
-            // If your IDE says getModelViewMatrix() doesn't exist, use event.getPoseStack().last().pose()
+            
             Matrix4f matrix4f = new Matrix4f(event.getModelViewMatrix());
 
             float drifterRotation = (level.getGameTime() % 240000L) / 240000.0F * 360.0F;
@@ -54,7 +51,7 @@ public class SkyOverlayEvents {
                     .rotateX((float) Math.toRadians(drifterRotation))
                     .rotateY((float) Math.toRadians(30.0));
 
-            float planetSize = 0.5F;
+            float planetSize = 0.1F;
 
             RenderSystem.setShaderTexture(0, SATURN_TEXTURE);
 

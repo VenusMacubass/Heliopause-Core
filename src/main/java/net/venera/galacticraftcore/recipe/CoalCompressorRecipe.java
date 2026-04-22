@@ -106,9 +106,9 @@ public class CoalCompressorRecipe implements CraftingRecipe {
 
         private static CoalCompressorRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
             String s = buffer.readUtf();
-            CraftingBookCategory craftingbookcategory = (CraftingBookCategory)buffer.readEnum(CraftingBookCategory.class);
-            ShapedRecipePattern shapedrecipepattern = (ShapedRecipePattern)ShapedRecipePattern.STREAM_CODEC.decode(buffer);
-            ItemStack itemstack = (ItemStack)ItemStack.STREAM_CODEC.decode(buffer);
+            CraftingBookCategory craftingbookcategory = buffer.readEnum(CraftingBookCategory.class);
+            ShapedRecipePattern shapedrecipepattern = ShapedRecipePattern.STREAM_CODEC.decode(buffer);
+            ItemStack itemstack = ItemStack.STREAM_CODEC.decode(buffer);
             boolean flag = buffer.readBoolean();
             return new CoalCompressorRecipe(s, craftingbookcategory, shapedrecipepattern, itemstack, flag);
         }

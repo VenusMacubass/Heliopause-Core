@@ -17,18 +17,18 @@ public class MoonSkyRenderer {
     private static final ResourceLocation SUN_TEXTURE = ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "textures/environment/sun_from_space.png");
     // 1. The memory cache for our stars
     private static VertexBuffer starBuffer;
+    
 
     public static void renderSky(ClientLevel level, float partialTick, Matrix4f modelViewMatrix, Camera camera, Matrix4f projectionMatrix, Runnable setupFog) {
-
+        final int STAR_COUNT = 2000;
         setupFog.run();
 
         if (starBuffer == null) {
-            createStars();
+            createStars(STAR_COUNT);
         }
 
         RenderSystem.depthMask(false);
-
-        // 1. THE NEW FIX: Turn off Backface Culling so we can see the inside of the sky sphere!
+        
         RenderSystem.disableCull();
 
         RenderSystem.enableBlend();
@@ -40,14 +40,7 @@ public class MoonSkyRenderer {
         );
 
         Tesselator tesselator = Tesselator.getInstance();
-
-        // ----------------------------------------------------
-        // LAYER 0: THE STARS
-        // ----------------------------------------------------
-        // 1. PUSH THE FOG TO INFINITY so it doesn't tint the stars black!
         RenderSystem.setShaderFogStart(Float.MAX_VALUE);
-
-        // 2. TURN OFF BLENDING so the stars draw as solid, bright white pixels
         RenderSystem.disableBlend();
 
         RenderSystem.setShader(GameRenderer::getPositionShader);
@@ -61,8 +54,7 @@ public class MoonSkyRenderer {
         starBuffer.bind();
         starBuffer.drawWithShader(starMatrix, projectionMatrix, GameRenderer.getPositionShader());
         VertexBuffer.unbind();
-
-        // 3. BRING THE FOG BACK so the planets look correct!
+        
         setupFog.run();
 
         RenderSystem.enableBlend();
@@ -72,10 +64,7 @@ public class MoonSkyRenderer {
                 GlStateManager.SourceFactor.ONE,
                 GlStateManager.DestFactor.ZERO
         );
-
-        // ----------------------------------------------------
-        // LAYER 1: THE WHITE SUN 
-        // ----------------------------------------------------
+        
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         Matrix4f sunMatrix = new Matrix4f(modelViewMatrix);
         float timeRotation = level.getTimeOfDay(partialTick) * 360.0F;
@@ -94,12 +83,7 @@ public class MoonSkyRenderer {
         sunBuilder.addVertex(sunMatrix, -sunSize, 100.0F, sunSize).setUv(0.0F, 1.0F);
 
         BufferUploader.drawWithShader(sunBuilder.buildOrThrow());
-
-        // ----------------------------------------------------
-        // LAYER 2: THE 8-PHASE EARTH
-        // ----------------------------------------------------
         Matrix4f earthMatrix = new Matrix4f(modelViewMatrix);
-
         earthMatrix.rotateX((float) Math.toRadians(45.0))
                 .rotateY((float) Math.toRadians(45.0));
 
@@ -122,21 +106,19 @@ public class MoonSkyRenderer {
         earthBuilder.addVertex(earthMatrix, -earthSize, 100.0F, earthSize).setUv(u1, v2);
 
         BufferUploader.drawWithShader(earthBuilder.buildOrThrow());
-
-        // 3. Clean up the engine state!
         RenderSystem.depthMask(true);
         RenderSystem.enableCull(); 
         RenderSystem.disableBlend();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    private static void createStars() {
+    private static void createStars(int starCount) {
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder builder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
 
         RandomSource random = RandomSource.create(10842L);
 
-        for (int i = 0; i < 1500; ++i) {
+        for (int i = 0; i < starCount; ++i) {
             double x = random.nextFloat() * 2.0F - 1.0F;
             double y = random.nextFloat() * 2.0F - 1.0F;
             double z = random.nextFloat() * 2.0F - 1.0F;

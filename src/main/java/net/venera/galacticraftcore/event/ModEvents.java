@@ -166,12 +166,10 @@ public class ModEvents {
                 if (projectile instanceof AbstractArrow) {
                     projectile.setDeltaMovement(movement.x, movement.y + 0.04D, movement.z);
                 }
-                
                 else if (projectile instanceof ThrowableItemProjectile) {
                     
                     projectile.setDeltaMovement(movement.x, movement.y + 0.02D, movement.z);
                 }
-               
                 else {
                     projectile.setDeltaMovement(movement.x, movement.y + 0.02D, movement.z);
                 }

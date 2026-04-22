@@ -37,6 +37,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.MARS_DUNGEON_BRICKS);
         blockWithItem(ModBlocks.MARS_ROCK);
         blockWithItem(ModBlocks.MARS_COBBLESTONE);
+        blockWithItem(ModBlocks.COPPER_WIRE_BLOCK);
 
         wallBlock(ModBlocks.TIN_BUILDING_WALL.get(), blockTexture(ModBlocks.TIN_BUILDING_BLOCK.get()));
         wallBlock(ModBlocks.MOON_ROCK_WALL.get(), blockTexture(ModBlocks.MOON_ROCK.get()));

@@ -1,9 +1,15 @@
 package net.venera.galacticraftcore.block;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -159,7 +165,15 @@ public class ModBlocks {
             () -> new Tier1RocketTopBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).noLootTable().sound(SoundType.METAL)));
     
     public static final DeferredBlock<Block> PRISMATIC_GLASS = registerBlock("prismatic_glass",
-            () -> new TintedGlassBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).sound(SoundType.GLASS)));
+            () -> new TransparentBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).sound(SoundType.GLASS)));
+    
+    public static final DeferredBlock<Block> COPPER_WIRE_BLOCK = registerBlock("copper_wire_block", 
+            () -> new WireBlock(BlockBehaviour.Properties.of().sound(SoundType.COPPER)){
+                @Override
+                public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+                    return Shapes.block();
+                }
+            });
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

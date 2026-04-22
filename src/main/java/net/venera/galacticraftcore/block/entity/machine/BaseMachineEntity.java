@@ -37,8 +37,6 @@ public abstract class BaseMachineEntity extends BlockEntity implements MenuProvi
     }
 
     protected abstract ContainerData initContainerData();
-    
-    //--- STANDARD METHODS ---//
 
     public void drops() {
         SimpleContainer inv = new SimpleContainer(inventory.getSlots());

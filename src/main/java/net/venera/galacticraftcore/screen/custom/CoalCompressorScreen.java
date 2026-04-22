@@ -26,13 +26,13 @@ public class CoalCompressorScreen extends AbstractContainerScreen<CoalCompressor
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
         guiGraphics.blit(GUI_TEXTURE, x, y, 0, 0, 175, 191);
-        int progressWidth = menu.blockEntity.getArrowScaled(52);
+        int progressWidth = menu.getArrowScaled(52);
         if (progressWidth > 0){
             //guiGraphics.blit(SOURCE_GUI, whereToDrawX, whereToDrawY, textureX, textureY, textureW, textureH);
             guiGraphics.blit(GUI_TEXTURE, x + 77, y + 37, 176, 13, progressWidth + 1, 16);
             guiGraphics.blit(GUI_TEXTURE, x + 101, y + 29, 176, 0, (progressWidth > 23 ? progressWidth - 23 : 0), 13);}
 
-        int fireHeight = menu.blockEntity.getFireIconScaled(13);
+        int fireHeight = menu.getFireIconScaled(13);
         if (fireHeight > 0){
             guiGraphics.blit(GUI_TEXTURE, x + 81, (y + 27 + (13 - fireHeight)), 176, 30 + (13 - fireHeight), 13, (fireHeight+1));
         }
@@ -40,6 +40,7 @@ public class CoalCompressorScreen extends AbstractContainerScreen<CoalCompressor
 
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        this.renderBackground(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         this.renderTooltip(pGuiGraphics, pMouseX, pMouseY);
     }
