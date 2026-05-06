@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 
 public class EnergyStorageBlock extends BaseMachineBlock<EnergyStorageEntity> {
     public static final MapCodec<EnergyStorageBlock> CODEC = simpleCodec(EnergyStorageBlock::new);
-    public static final IntegerProperty CHARGE = IntegerProperty.create("charge", 0, 16);
+    public static final IntegerProperty CHARGE = IntegerProperty.create("charge", 0, 15);
     public EnergyStorageBlock(Properties properties) {
         this(properties, ModBlockEntities.ENERGY_STORAGE_ENTITY);
     }

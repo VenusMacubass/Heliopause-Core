@@ -24,7 +24,7 @@ public class SolarPanelBlock extends BaseMachineBlock<SolarPanelEntity> {
     public SolarPanelBlock(Properties properties) {
         this(properties, ModBlockEntities.BASIC_SOLAR_PANEL_ENTITY);
     }
-    public static final IntegerProperty CHARGE = IntegerProperty.create("charge", 0, 16);
+    public static final IntegerProperty CHARGE = IntegerProperty.create("charge", 0, 15);
     
     public SolarPanelBlock(Properties properties, Supplier<BlockEntityType<SolarPanelEntity>> type) {
         super(properties, type);

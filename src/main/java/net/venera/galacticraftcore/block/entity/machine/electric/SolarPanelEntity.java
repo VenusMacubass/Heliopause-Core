@@ -93,7 +93,7 @@ public class SolarPanelEntity extends BaseElectricMachineEntity{
 
         int chargeLevel = 0;
         if (max > 0) {
-            chargeLevel = (current * 16) / max;
+            chargeLevel = (current * 15) / max;
         }
 
         if (state.getValue(SolarPanelBlock.CHARGE) != chargeLevel) {

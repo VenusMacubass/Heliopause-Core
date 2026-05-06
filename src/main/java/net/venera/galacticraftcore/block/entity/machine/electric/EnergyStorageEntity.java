@@ -80,7 +80,7 @@ public class EnergyStorageEntity extends BaseElectricMachineEntity {
 
         int chargeLevel = 0;
         if (max > 0) {
-            chargeLevel = (current * 16) / max;
+            chargeLevel = (current * 15) / max;
         }
 
         if (state.getValue(EnergyStorageBlock.CHARGE) != chargeLevel) {
