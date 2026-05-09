@@ -12,6 +12,7 @@ import net.venera.galacticraftcore.data.component.ModDataComponents;
 import net.venera.galacticraftcore.item.custom.*;
 
 import java.util.List;
+import java.util.Stack;
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(GalacticraftCore.MOD_ID);
@@ -107,8 +108,8 @@ public class ModItems {
     public static final DeferredItem<Item> LUNAR_SAPPHIRE = ITEMS.register("gcc_item_lunar_sapphire",
             () -> new Item(new Item.Properties()));
 
-    public static final DeferredItem<TempSword> TEMP_SWORD = ITEMS.register("temp_item_claymore", () ->
-            new TempSword(ModToolTiers.STEEL, (new Item.Properties().attributes(ShovelItem.createAttributes(ModToolTiers.STEEL, 64,-1f)))));
+    public static final DeferredItem<SwordItem> GLASS_SWORD = ITEMS.register("glass_sword", () ->
+            new SwordItem(ModToolTiers.GLASS, (new Item.Properties().attributes(SwordItem.createAttributes(ModToolTiers.GLASS, 64,1.8f)))));
 
     public static final DeferredItem<CanisterItem> CANISTER = ITEMS.register("gcc_canister", () ->
             new CanisterItem(new Item.Properties().component(ModDataComponents.CANISTER_COMPONENT.get(), new CanisterData(null, 0)).stacksTo(1)));

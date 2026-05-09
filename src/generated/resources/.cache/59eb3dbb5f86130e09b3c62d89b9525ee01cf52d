@@ -1,4 +1,4 @@
-// 1.21.1	2026-04-22T09:54:02.0983204	Loot Tables
+// 1.21.1	2026-05-09T14:52:53.7018787	Loot Tables
 e0170f672ad433c3faedb7a8906bc6e72a48e4cb data/galacticraftcore/loot_table/blocks/basic_solar_block.json
 0b27598caa02f2c174fbda69c2a9b0df8da8a311 data/galacticraftcore/loot_table/blocks/copper_wire.json
 c082cc93416e15de484a025e80054257555ca086 data/galacticraftcore/loot_table/blocks/copper_wire_block.json
@@ -29,7 +29,6 @@ f3e2576e6e9d05c7a8768c15b3c1b87379ddd412 data/galacticraftcore/loot_table/blocks
 ec2dd34ff9e7e56993ed9177e6a2c12350a47f68 data/galacticraftcore/loot_table/blocks/gcc_block_moon_rock_wall.json
 05ba351792cf549cd5535bb411bcb20b114733cd data/galacticraftcore/loot_table/blocks/gcc_block_moon_tin_ore.json
 d9f156cbb4c1e4f28196e1eb6c8cbff127b8cb1b data/galacticraftcore/loot_table/blocks/gcc_block_moon_turf.json
-fa0cb3df648a5adf353becbd316ba35aabc09270 data/galacticraftcore/loot_table/blocks/gcc_block_radioactive_block.json
 6e75d07e4f8badb6ec8cc8cd8fc25bfcad0ece03 data/galacticraftcore/loot_table/blocks/gcc_block_raw_aluminium_block.json
 878cf843ef7ec3df9cf277ce8fe74f1f4f749c4b data/galacticraftcore/loot_table/blocks/gcc_block_raw_tin_block.json
 eee450b574df7166446484a4aac93d21b8ef8a3b data/galacticraftcore/loot_table/blocks/gcc_block_sapphire_ore.json
@@ -45,3 +44,4 @@ a681f465f746c37d08c89f99b153656aaf3a9757 data/galacticraftcore/loot_table/blocks
 b15e03bf2fc81b2fe99c1d126c1ad33d90de8841 data/galacticraftcore/loot_table/blocks/gcc_launch_pad.json
 81fadfd036acaa52bb26ac201f5a987d0c6362df data/galacticraftcore/loot_table/blocks/gcc_refinery.json
 316e75375f21577ef1c636264014b44edeaa64f2 data/galacticraftcore/loot_table/blocks/prismatic_glass.json
+29f46569e095343e6becca0d57d405ee01e25f6d data/galacticraftcore/loot_table/blocks/radioactive_block.json

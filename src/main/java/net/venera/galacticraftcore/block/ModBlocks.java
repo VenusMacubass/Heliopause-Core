@@ -33,7 +33,7 @@ public class ModBlocks {
     public static final DeferredBlock<Block> ALUMINIUM_BLOCK = registerBlock("gcc_block_aluminium_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
-    public static final DeferredBlock<Block> RADIOACTIVE_BLOCK = registerBlock("gcc_block_radioactive_block",
+    public static final DeferredBlock<Block> RADIOACTIVE_BLOCK = registerBlock("radioactive_block",
             () -> new RadioactiveBlock(BlockBehaviour.Properties.of().strength(8f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
     public static final DeferredBlock<Block> MOON_TURF = registerBlock("gcc_block_moon_turf",

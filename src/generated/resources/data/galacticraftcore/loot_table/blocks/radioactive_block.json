@@ -26,7 +26,7 @@
                   }
                 }
               ],
-              "name": "galacticraftcore:gcc_block_radioactive_block"
+              "name": "galacticraftcore:radioactive_block"
             },
             {
               "type": "minecraft:item",
@@ -57,5 +57,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "galacticraftcore:blocks/gcc_block_radioactive_block"
+  "random_sequence": "galacticraftcore:blocks/radioactive_block"
 }

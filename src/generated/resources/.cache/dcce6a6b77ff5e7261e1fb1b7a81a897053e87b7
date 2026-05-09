@@ -1,11 +1,11 @@
-// 1.21.1	2026-04-09T21:35:28.9619056	Tags for minecraft:block mod id galacticraftcore
+// 1.21.1	2026-05-09T14:52:53.7007908	Tags for minecraft:block mod id galacticraftcore
 9b07c9402611dd7f5de01db696b943ca5a2000bb data/galacticraftcore/tags/block/incorrect_for_steel_tool.json
 01d8e959e8b48ebf39cfc5a83effdb162fb03b8d data/galacticraftcore/tags/block/machinery.json
 114ec2346828154f85e81315470ddb781271990d data/galacticraftcore/tags/block/moon_stone_replaceables.json
 cb79cdb118a3c07f7b8766294e8d55b0cd6c193b data/galacticraftcore/tags/block/needs_steel_tools.json
-ef336e5c41ac2afd3f0a1318597dfd0ddc5f66de data/minecraft/tags/block/mineable/pickaxe.json
+fb7000f21f35c7fa8cc18ef98943f3bdb0c5b2a7 data/minecraft/tags/block/mineable/pickaxe.json
 5219d6f438471e4cbbd43f1879a1191e72b6451e data/minecraft/tags/block/mineable/shovel.json
-f7053498e1152d53b117a63fbf01cd1a90ceb62a data/minecraft/tags/block/needs_diamond_tool.json
+6bdf5cd77184eaf0b6b4c7da691d15e14f903c72 data/minecraft/tags/block/needs_diamond_tool.json
 27bb842487e9853c8d2cec0ab6b290ab2a8edd07 data/minecraft/tags/block/needs_iron_tool.json
 371ee7c360c0a07f702ba98a671dbee848a9366e data/minecraft/tags/block/needs_stone_tool.json
 60dd341ae0a7ad08b39fb3274010c5da54f02226 data/minecraft/tags/block/walls.json

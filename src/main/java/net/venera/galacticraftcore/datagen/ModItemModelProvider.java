@@ -99,7 +99,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(ModItems.STEEL_LEGGINGS);
         trimmedArmorItem(ModItems.STEEL_BOOTS);
 
-        handheldItem(ModItems.TEMP_SWORD.get());
+        handheldItem(ModItems.GLASS_SWORD.get());
 
     }
 

@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -17,7 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
-import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.phys.Vec3;
@@ -27,45 +26,35 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
-import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.venera.galacticraftcore.GalacticraftCore;
-import net.venera.galacticraftcore.block.ModBlocks;
-import net.venera.galacticraftcore.block.custom.machine.electric.WireBlock;
 import net.venera.galacticraftcore.block.entity.ModBlockEntities;
 import net.venera.galacticraftcore.block.entity.machine.electric.BaseElectricMachineEntity;
 import net.venera.galacticraftcore.data.component.CanisterData;
 import net.venera.galacticraftcore.entity.rideable.Tier1RocketEntity;
 import net.venera.galacticraftcore.item.ModItems;
 import net.venera.galacticraftcore.item.custom.CanisterItem;
-import net.venera.galacticraftcore.item.custom.TempSword;
 
+import java.text.BreakIterator;
 import java.util.HashSet;
 import java.util.Set;
+
 @EventBusSubscriber
 public class ModEvents {
     private static final Set<BlockPos> HARVESTED_BLOCKS = new HashSet<>();
 
     @SubscribeEvent
-    public static void onShwordUsage(BlockEvent.BreakEvent event) {
-        Player player = event.getPlayer();
-        ItemStack mainHandItem = player.getMainHandItem();
-
-        if(mainHandItem.getItem() instanceof TempSword shword && player instanceof ServerPlayer serverPlayer) {
-            BlockPos initialBlockPos = event.getPos();
-            if(HARVESTED_BLOCKS.contains(initialBlockPos)) {
-                return;
-            }
-
-            for(BlockPos pos : TempSword.getBlocksToBeDestroyed(1, initialBlockPos, serverPlayer)) {
-                if(pos == initialBlockPos || !shword.isCorrectToolForDrops(mainHandItem, event.getLevel().getBlockState(pos))) {
-                    continue;
-                }
-                HARVESTED_BLOCKS.add(pos);
-                serverPlayer.gameMode.destroyBlock(pos);
-                HARVESTED_BLOCKS.remove(pos);
-            }
-        }
+    public static void onGlassSwordUsage(LivingDamageEvent.Pre event) {
+      Entity entity = event.getSource().getEntity();
+      if(entity instanceof LivingEntity attacker) {
+          ItemStack attackerItem = attacker.getMainHandItem();
+          if(attackerItem.getItem() == ModItems.GLASS_SWORD.get()){
+              float damageBuff = (float) ((float) attackerItem.getDamageValue()/(attackerItem.getMaxDamage() + 0.001));
+              event.setNewDamage(event.getOriginalDamage() * (1f + damageBuff));
+          }
+      }
     }
 
     @SubscribeEvent
@@ -132,6 +121,7 @@ public class ModEvents {
         }
     }
 //-----------------------------------------------------------------
+    //MOON GRAVITY
     private static final ResourceLocation MOON_GRAVITY_ID = ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon_gravity");
     private static final ResourceLocation MOON_FALL_ID = ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "moon_safe_fall");
 
