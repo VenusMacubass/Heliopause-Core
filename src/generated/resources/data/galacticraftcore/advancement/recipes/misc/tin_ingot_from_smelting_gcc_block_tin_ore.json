@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_compressed_iridium": {
+    "has_gcc_block_tin_ore": {
       "conditions": {
         "items": [
           {
-            "items": "galacticraftcore:iridium_ingot"
+            "items": "galacticraftcore:gcc_block_tin_ore"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:sensor_lens_crafting"
+        "recipe": "galacticraftcore:tin_ingot_from_smelting_gcc_block_tin_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_compressed_iridium"
+      "has_gcc_block_tin_ore"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:sensor_lens_crafting"
+      "galacticraftcore:tin_ingot_from_smelting_gcc_block_tin_ore"
     ]
   }
 }

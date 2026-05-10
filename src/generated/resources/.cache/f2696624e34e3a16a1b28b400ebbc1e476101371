@@ -1,6 +1,6 @@
-// 1.21.1	2025-10-13T23:31:17.4929437	Tags for minecraft:item mod id galacticraftcore
+// 1.21.1	2026-05-10T16:08:32.0989666	Tags for minecraft:item mod id galacticraftcore
 25b3f76627aaa380f98406cbe067ed0440650c9c data/galacticraftcore/tags/item/canister.json
-613a0dfca9389d3f534f08d870618c96bc8b52ad data/galacticraftcore/tags/item/compressible_ingots.json
+1cd6c5a3f797db2f359bb207e7adbd9834c0a021 data/galacticraftcore/tags/item/compressible_ingots.json
 d29a7e542d756ff7a746a61569c3bce98c56a417 data/minecraft/tags/item/axes.json
 2202ba4c4642e313666153cd5400d82e5b1a8fa0 data/minecraft/tags/item/hoes.json
 dc87757cc6e579ec3a183d7053e02de83bc92b1e data/minecraft/tags/item/pickaxes.json

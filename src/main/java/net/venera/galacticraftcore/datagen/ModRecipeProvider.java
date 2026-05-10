@@ -208,21 +208,21 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_tin_canister", has(ModItems.TIN_CANISTER.get()))
                 .save(recipeOutput, "dehydrated_apple_crafting");
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ModItems.DEHYDRATED_CARROT.get())
-                .pattern("CB ")
-                .pattern("B  ")
-                .define('C', ModItems.TIN_CANISTER.get())
-                .define('B', Items.CARROT)
-                .unlockedBy("has_tin_canister", has(ModItems.TIN_CANISTER.get()))
-                .save(recipeOutput, "dehydrated_carrot_crafting");
+//        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ModItems.DEHYDRATED_CARROT.get())
+//                .pattern("CB ")
+//                .pattern("B  ")
+//                .define('C', ModItems.TIN_CANISTER.get())
+//                .define('B', Items.CARROT)
+//                .unlockedBy("has_tin_canister", has(ModItems.TIN_CANISTER.get()))
+//                .save(recipeOutput, "dehydrated_carrot_crafting");
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ModItems.DEHYDRATED_MELON.get())
-                .pattern("CM ")
-                .pattern("M  ")
-                .define('C', ModItems.TIN_CANISTER.get())
-                .define('M', Items.MELON)
-                .unlockedBy("has_tin_canister", has(ModItems.TIN_CANISTER.get()))
-                .save(recipeOutput, "dehydrated_melon_crafting");
+//        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ModItems.DEHYDRATED_MELON.get())
+//                .pattern("CM ")
+//                .pattern("M  ")
+//                .define('C', ModItems.TIN_CANISTER.get())
+//                .define('M', Items.MELON)
+//                .unlockedBy("has_tin_canister", has(ModItems.TIN_CANISTER.get()))
+//                .save(recipeOutput, "dehydrated_melon_crafting");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ModItems.DEHYDRATED_POTATO.get())
                 .pattern("CP ")

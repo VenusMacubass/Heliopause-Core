@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_compressed_iridium": {
+    "has_gcc_item_raw_iridium": {
       "conditions": {
         "items": [
           {
-            "items": "galacticraftcore:iridium_ingot"
+            "items": "galacticraftcore:gcc_item_raw_iridium"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:sensor_lens_crafting"
+        "recipe": "galacticraftcore:iridium_ingot_from_smelting_gcc_item_raw_iridium"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_compressed_iridium"
+      "has_gcc_item_raw_iridium"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:sensor_lens_crafting"
+      "galacticraftcore:iridium_ingot_from_smelting_gcc_item_raw_iridium"
     ]
   }
 }

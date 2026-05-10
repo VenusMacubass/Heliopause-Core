@@ -41,16 +41,16 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        basicItem(ModItems.IRIDIUM_INGOT.get());
-        basicItem(ModItems.ALUMINIUM_INGOT.get());
-
         basicItem(ModItems.COPPER_CANISTER.get());
         basicItem(ModItems.TIN_CANISTER.get());
         basicItem(ModItems.DEHYDRATED_APPLE.get());
-        basicItem(ModItems.DEHYDRATED_CARROT.get());
+        basicItem(ModItems.DEHYDRATED_GLOW_BERRIES.get());
         basicItem(ModItems.DEHYDRATED_POTATO.get());
-        basicItem(ModItems.DEHYDRATED_MELON.get());
+        basicItem(ModItems.DEHYDRATED_BERRIES.get());
         basicItem(ModItems.DEHYDRATED_BEEF.get());
+        basicItem(ModItems.DEHYDRATED_RABBIT.get());
+        basicItem(ModItems.DEHYDRATED_CHICKEN.get());
+        basicItem(ModItems.DEHYDRATED_COD.get());
         basicItem(ModItems.BURGER_BUN.get());
         basicItem(ModItems.BEEF_PATTY_RAW.get());
         basicItem(ModItems.BEEF_PATTY.get());
@@ -66,7 +66,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.RAW_ALUMINIUM.get());
         basicItem(ModItems.RAW_TIN.get());
         basicItem(ModItems.RAW_SILICON.get());
-        basicItem(ModItems.TIN_INGOT.get());
         basicItem(ModItems.RAW_IRIDIUM.get());
         basicItem(ModItems.LUNAR_SAPPHIRE.get());
 

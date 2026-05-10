@@ -31,9 +31,12 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.COPPER_CANISTER.get());
                         output.accept(ModItems.TIN_CANISTER.get());
                         output.accept(ModItems.DEHYDRATED_APPLE.get());
-                        output.accept(ModItems.DEHYDRATED_CARROT.get());
+                        output.accept(ModItems.DEHYDRATED_RABBIT.get());
                         output.accept(ModItems.DEHYDRATED_POTATO.get());
-                        output.accept(ModItems.DEHYDRATED_MELON.get());
+                        output.accept(ModItems.DEHYDRATED_BERRIES.get());
+                        output.accept(ModItems.DEHYDRATED_GLOW_BERRIES.get());
+                        output.accept(ModItems.DEHYDRATED_COD.get());
+                        output.accept(ModItems.DEHYDRATED_CHICKEN.get());
                         output.accept(ModItems.DEHYDRATED_BEEF.get());
                         output.accept(ModItems.BURGER_BUN.get());
                         output.accept(ModItems.BEEF_PATTY_RAW.get());

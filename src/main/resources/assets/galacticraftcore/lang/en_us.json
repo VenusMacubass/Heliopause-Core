@@ -11,8 +11,8 @@
 
 
 
-  "item.galacticraftcore.gcc_item_iridium_ingot": "Iridium Ingot",
-  "item.galacticraftcore.gcc_item_aluminium_ingot": "Aluminium Ingot",
+  "item.galacticraftcore.iridium_ingot": "Iridium Ingot",
+  "item.galacticraftcore.aluminium_ingot": "Aluminium Ingot",
   "item.galacticraftcore.gcc_item_standard_wrench": "Standard Wrench",
   "item.galacticraftcore.gcc_item_radioactive_core": "Radioactive Core",
   "item.galacticraftcore.gcc_item_copper_canister": "Copper Canister",
@@ -31,7 +31,7 @@
   "item.galacticraftcore.gcc_item_raw_aluminium": "Raw Aluminium",
   "item.galacticraftcore.gcc_item_raw_tin": "Raw Tin",
   "item.galacticraftcore.gcc_item_raw_silicon": "Raw Silicon",
-  "item.galacticraftcore.gcc_item_tin_ingot": "Tin Ingot",
+  "item.galacticraftcore.tin_ingot": "Tin Ingot",
   "item.galacticraftcore.gcc_item_raw_iridium": "Raw Iridium",
   "item.galacticraftcore.gcc_item_lunar_sapphire": "Lunar Sapphire",
 
@@ -119,6 +119,7 @@
   "block.galacticraftcore.fluid_tank": "Fluid Tank",
   "block.galacticraftcore.copper_wire": "Copper Wire",
   "block.galacticraftcore.rocket_bot": "Tier 1 Rocket",
+  "block.galacticraftcore.copper_wire_block": "Copper Wire Block",
 
   "block.galacticraftcore.gcc_coal_compressor": "Coal Powered Compressor",
   "block.galacticraftcore.energy_storage_unit": "Energy Storage Unit",

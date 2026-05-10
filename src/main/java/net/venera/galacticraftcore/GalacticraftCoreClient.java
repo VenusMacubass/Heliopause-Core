@@ -90,6 +90,18 @@ public class GalacticraftCoreClient {
                         .orElse(0xFFFFFFFF);
             }, itemObject.get());
         }
+        // ALUMINIUM (Added FF to the front!)
+        event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFFA9CDE5 : -1,
+                ModItems.ALUMINIUM_INGOT.get());
+
+        // IRIDIUM
+        event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFFA871C6 : -1,
+                ModItems.IRIDIUM_INGOT.get());
+        
+        // TIN
+        event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFFF0F0DF : -1,
+                ModItems.TIN_INGOT.get());
+        
     }
 
     @SubscribeEvent

@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": "galacticraftcore:gcc_item_tin_ingot"
+            "items": "galacticraftcore:tin_ingot"
           }
         ]
       },

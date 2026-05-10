@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "galacticraftcore:gcc_item_aluminium_ingot"
+      "item": "galacticraftcore:aluminium_ingot"
     }
   },
   "pattern": [
