@@ -84,8 +84,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         wallItem(ModBlocks.TIN_BUILDING_WALL, ModBlocks.TIN_BUILDING_BLOCK);
         wallItem(ModBlocks.MOON_ROCK_WALL, ModBlocks.MOON_ROCK);
         wallItem(ModBlocks.MOON_DUNGEON_BRICK_WALL, ModBlocks.MOON_DUNGEON_BRICKS);
-        wallItem(ModBlocks.MARS_COBBLESTONE_WALL, ModBlocks.MARS_COBBLESTONE);
-        wallItem(ModBlocks.MARS_DUNGEON_BRICK_WALL, ModBlocks.MARS_DUNGEON_BRICKS);
+        
 
         handheldItem(ModItems.STEEL_SWORD.get());
         handheldItem(ModItems.STEEL_AXE.get());

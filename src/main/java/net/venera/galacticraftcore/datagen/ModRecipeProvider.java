@@ -316,24 +316,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('L', ModBlocks.MOON_ROCK.get())
                 .unlockedBy("has_moon_rock", has(ModBlocks.MOON_ROCK.get()))
                 .save(recipeOutput, "moon_rock_wall_crafting");
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.MARS_COBBLESTONE_WALL.get(), 6)
-                .pattern("MMM")
-                .pattern("MMM")
-                .define('M', ModBlocks.MARS_COBBLESTONE.get())
-                .unlockedBy("has_mars_cobblestone", has(ModBlocks.MARS_COBBLESTONE.get()))
-                .save(recipeOutput, "mars_cobblestone_wall_crafting");
+        
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.MOON_DUNGEON_BRICK_WALL.get(), 6)
                 .pattern("LLL")
                 .pattern("LLL")
                 .define('L', ModBlocks.MOON_DUNGEON_BRICKS.get())
                 .unlockedBy("has_moon_dungeon_bricks", has(ModBlocks.MOON_DUNGEON_BRICKS.get()))
                 .save(recipeOutput, "moon_dungeon_brick_wall_crafting");
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.MARS_DUNGEON_BRICK_WALL.get(), 6)
-                .pattern("MMM")
-                .pattern("MMM")
-                .define('M', ModBlocks.MARS_DUNGEON_BRICKS.get())
-                .unlockedBy("has_mars_dungeon_bricks", has(ModBlocks.MARS_DUNGEON_BRICKS.get()))
-                .save(recipeOutput, "mars_dungeon_brick_wall_crafting");
+       
 
         //Stairs
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TIN_BUILDING_STAIRS.get(), 4)
@@ -374,16 +364,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('L', ModBlocks.MOON_DUNGEON_BRICKS.get())
                 .unlockedBy("has_moon_dungeon_bricks", has(ModBlocks.MOON_DUNGEON_BRICKS.get()))
                 .save(recipeOutput, "moon_dungeon_brick_slab_crafting");
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.MARS_COBBLESTONE_SLAB.get(), 6)
-                .pattern("MMM")
-                .define('M', ModBlocks.MARS_COBBLESTONE.get())
-                .unlockedBy("has_mars_cobblestone", has(ModBlocks.MARS_COBBLESTONE.get()))
-                .save(recipeOutput, "mars_cobblestone_slab_crafting");
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.MARS_DUNGEON_BRICK_SLAB.get(), 6)
-                .pattern("MMM")
-                .define('M', ModBlocks.MARS_DUNGEON_BRICKS.get())
-                .unlockedBy("has_mars_dungeon_bricks", has(ModBlocks.MARS_DUNGEON_BRICKS.get()))
-                .save(recipeOutput, "mars_dungeon_brick_slab_crafting");
+        
 
 
         

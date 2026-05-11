@@ -15,16 +15,9 @@
     "galacticraftcore:gcc_block_moon_tin_ore",
     "galacticraftcore:gcc_block_moon_cobblestone",
     "galacticraftcore:gcc_block_moon_dungeon_bricks",
-    "galacticraftcore:gcc_block_mars_dungeon_bricks",
-    "galacticraftcore:gcc_block_mars_rock",
-    "galacticraftcore:gcc_block_mars_cobblestone",
     "galacticraftcore:gcc_block_tin_building_slab",
     "galacticraftcore:gcc_block_moon_rock_slab",
     "galacticraftcore:gcc_block_moon_dungeon_brick_slab",
-    "galacticraftcore:gcc_block_mars_cobblestone_wall",
-    "galacticraftcore:gcc_block_mars_dungeon_brick_wall",
-    "galacticraftcore:gcc_block_mars_cobblestone_slab",
-    "galacticraftcore:gcc_block_mars_dungeon_brick_slab",
     "galacticraftcore:gcc_block_iridium_block",
     "galacticraftcore:gcc_block_sapphire_ore"
   ]

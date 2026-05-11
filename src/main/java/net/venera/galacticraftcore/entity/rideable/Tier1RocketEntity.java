@@ -43,7 +43,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
                     ServerLevel moonDimension = serverLevel.getServer().getLevel(ModDimensions.MOON_LEVEL_KEY);
                     if (moonDimension != null) {
                         Entity passenger = this.getFirstPassenger();
-
+                        if(passenger == null){this.discard(); return;}
                         if (passenger instanceof ServerPlayer player) {
                             player.stopRiding();
 
@@ -63,6 +63,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
                 }
                 else if(this.level() instanceof ServerLevel serverLevel && this.level().dimension() == ModDimensions.MOON_LEVEL_KEY) {
                     Entity passenger = this.getFirstPassenger();
+                    if(passenger == null){this.discard(); return;}
                     if(passenger instanceof LivingEntity entity) {
                         entity.stopRiding();
                         Vec3 landingPos = new Vec3(0.0, 300.0, 0.0);
@@ -78,7 +79,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
                     }
                 }
                 this.discard();
-                return;
+                
         }
         if (this.entityData.get(IS_LAUNCHED)) {
             Vec3 currentVelocity = this.getDeltaMovement();

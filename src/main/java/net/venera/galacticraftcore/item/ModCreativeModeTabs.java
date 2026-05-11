@@ -105,9 +105,6 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.MOON_TIN_ORE.get());
                         output.accept(ModBlocks.MOON_COPPER_ORE.get());
                         output.accept(ModBlocks.MOON_DUNGEON_BRICKS.get());
-                        output.accept(ModBlocks.MARS_DUNGEON_BRICKS.get());
-                        output.accept(ModBlocks.MARS_ROCK.get());
-                        output.accept(ModBlocks.MARS_COBBLESTONE.get());
                         output.accept(ModBlocks.TIN_BUILDING_WALL.get());
                         output.accept(ModBlocks.MOON_ROCK_WALL.get());
                         output.accept(ModBlocks.MOON_DUNGEON_BRICK_WALL.get());
@@ -117,10 +114,6 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.TIN_BUILDING_SLAB.get());
                         output.accept(ModBlocks.MOON_ROCK_SLAB.get());
                         output.accept(ModBlocks.MOON_DUNGEON_BRICK_SLAB.get());
-                        output.accept(ModBlocks.MARS_COBBLESTONE_WALL.get());
-                        output.accept(ModBlocks.MARS_DUNGEON_BRICK_WALL.get());
-                        output.accept(ModBlocks.MARS_COBBLESTONE_SLAB.get());
-                        output.accept(ModBlocks.MARS_DUNGEON_BRICK_SLAB.get());
                         output.accept(ModBlocks.ARC_LAMP.get());
                         output.accept(ModBlocks.IRIDIUM_BLOCK.get());
                         output.accept(ModBlocks.SAPPHIRE_ORE.get());

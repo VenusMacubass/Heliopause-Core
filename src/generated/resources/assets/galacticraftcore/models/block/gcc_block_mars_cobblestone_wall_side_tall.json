@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/template_wall_side_tall",
-  "textures": {
-    "wall": "galacticraftcore:block/gcc_block_mars_cobblestone"
-  }
-}

@@ -70,14 +70,18 @@ public class GalacticraftCoreClient {
         event.register((state, level, pos, tintIndex) -> {
             long time = System.currentTimeMillis();
 
-            // Dividing by 4000 means a full rainbow takes 4 seconds. 
-            // Increase the number to slow it down!
+            // 4000 ms
+            // Increase the number to slow it down
             float hue = (time % 4000) / 4000.0f;
-
-            // Convert the Hue to an RGB integer
+            
             return Color.HSBtoRGB(hue, 1.0f, 1.0f);
 
         }, ModBlocks.PRISMATIC_GLASS.get());
+
+        event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? 0xFFB4D6ED : -1,
+                ModBlocks.RAW_ALUMINIUM_BLOCK.get());
+        event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? 0xFFFFFAD6 : -1,
+                ModBlocks.RAW_TIN_BLOCK.get());
     }
 
     @SubscribeEvent
@@ -90,17 +94,14 @@ public class GalacticraftCoreClient {
                         .orElse(0xFFFFFFFF);
             }, itemObject.get());
         }
-        // ALUMINIUM (Added FF to the front!)
-        event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFFA9CDE5 : -1,
-                ModItems.ALUMINIUM_INGOT.get());
-
-        // IRIDIUM
-        event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFFA871C6 : -1,
+        event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFFB4D6ED : -1,
+                ModItems.ALUMINIUM_INGOT.get(), ModBlocks.RAW_ALUMINIUM_BLOCK.get());
+        
+        event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFFD9AAF2 : -1,
                 ModItems.IRIDIUM_INGOT.get());
         
-        // TIN
-        event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFFF0F0DF : -1,
-                ModItems.TIN_INGOT.get());
+        event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFFFFFAD6 : -1,
+                ModItems.TIN_INGOT.get(),  ModBlocks.RAW_TIN_BLOCK.get());
         
     }
 

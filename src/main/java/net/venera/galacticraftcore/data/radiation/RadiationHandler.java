@@ -11,6 +11,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.venera.galacticraftcore.GalacticraftCore;
 import net.venera.galacticraftcore.data.ModAttachments;
+import net.venera.galacticraftcore.dimension.ModDimensions;
 
 @EventBusSubscriber(modid = GalacticraftCore.MOD_ID)
 public class RadiationHandler {
@@ -66,6 +67,9 @@ public class RadiationHandler {
             radiationData.changeRadiation(Math.abs(NETHER_BG_RAD - Math.min(radLevel, 100)) * difficulty, NETHER_BG_RAD > radLevel);
         } else if (dim.equals(Level.END)) {
             radiationData.changeRadiation(Math.abs(END_BG_RAD - Math.min(radLevel, 100)) * difficulty,  END_BG_RAD > radLevel);
+        }
+        else if (dim.equals(ModDimensions.MOON_LEVEL_KEY)) {
+            radiationData.changeRadiation(Math.abs(MOON_DAY_BG_RAD - Math.min(radLevel, 100)) * difficulty,  MOON_DAY_BG_RAD > radLevel);
         } else {
             throw new IllegalStateException("Unexpected value: " + dim);
         }

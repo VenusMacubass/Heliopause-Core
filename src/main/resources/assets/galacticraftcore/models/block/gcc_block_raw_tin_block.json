@@ -1,0 +1,7 @@
+{
+  "parent": "galacticraftcore:block/tinted_cube_all",
+  "textures": {
+    "all": "galacticraftcore:block/gcc_block_raw_tin_block",
+    "particle": "galacticraftcore:block/gcc_block_raw_tin_block"
+  }
+}

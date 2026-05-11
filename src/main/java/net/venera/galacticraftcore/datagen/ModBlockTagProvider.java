@@ -35,16 +35,10 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.MOON_TIN_ORE.get())
                 .add(ModBlocks.MOON_COBBLESTONE.get())
                 .add(ModBlocks.MOON_DUNGEON_BRICKS.get())
-                .add(ModBlocks.MARS_DUNGEON_BRICKS.get())
-                .add(ModBlocks.MARS_ROCK.get())
-                .add(ModBlocks.MARS_COBBLESTONE.get())
                 .add(ModBlocks.TIN_BUILDING_SLAB.get())
                 .add(ModBlocks.MOON_ROCK_SLAB.get())
                 .add(ModBlocks.MOON_DUNGEON_BRICK_SLAB.get())
-                .add(ModBlocks.MARS_COBBLESTONE_WALL.get())
-                .add(ModBlocks.MARS_DUNGEON_BRICK_WALL.get())
-                .add(ModBlocks.MARS_COBBLESTONE_SLAB.get())
-                .add(ModBlocks.MARS_DUNGEON_BRICK_SLAB.get())
+                
                 .add(ModBlocks.IRIDIUM_BLOCK.get())
                 .add(ModBlocks.SAPPHIRE_ORE.get());
 
@@ -52,9 +46,8 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.MOON_DIRT.get());
 
         tag(BlockTags.NEEDS_STONE_TOOL)
-                .add(ModBlocks.TIN_ORE.get())
-                .add(ModBlocks.MARS_ROCK.get());
-
+                .add(ModBlocks.TIN_ORE.get());
+        
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(ModBlocks.ALUMINIUM_ORE.get())
                 .add(ModBlocks.ALUMINIUM_BLOCK.get())
@@ -70,9 +63,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         tag(BlockTags.WALLS)
                 .add(ModBlocks.TIN_BUILDING_WALL.get())
                 .add(ModBlocks.MOON_ROCK_WALL.get())
-                .add(ModBlocks.MOON_DUNGEON_BRICK_WALL.get())
-                .add(ModBlocks.MARS_COBBLESTONE_WALL.get())
-                .add(ModBlocks.MARS_DUNGEON_BRICK_WALL.get());
+                .add(ModBlocks.MOON_DUNGEON_BRICK_WALL.get());
 
         tag(ModTags.Blocks.INCORRECT_FOR_STEEL_TOOL).addTag(BlockTags.INCORRECT_FOR_IRON_TOOL)
                 .remove(ModTags.Blocks.NEEDS_STEEL_TOOLS);

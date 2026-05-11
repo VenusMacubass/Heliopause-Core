@@ -39,8 +39,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.SILICON_BLOCK.get());
         dropSelf(ModBlocks.MOON_DUNGEON_BRICKS.get());
         dropSelf(ModBlocks.MOON_COBBLESTONE.get());
-        dropSelf(ModBlocks.MARS_DUNGEON_BRICKS.get());
-        dropSelf(ModBlocks.MARS_COBBLESTONE.get());
+       
         dropSelf(ModBlocks.ARC_LAMP.get());
         dropSelf(ModBlocks.COAL_COMPRESSOR.get());
         dropSelf(ModBlocks.REFINERY.get());
@@ -53,8 +52,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.TIN_BUILDING_WALL.get());
         dropSelf(ModBlocks.MOON_ROCK_WALL.get());
         dropSelf(ModBlocks.MOON_DUNGEON_BRICK_WALL.get());
-        dropSelf(ModBlocks.MARS_COBBLESTONE_WALL.get());
-        dropSelf(ModBlocks.MARS_DUNGEON_BRICK_WALL.get());
+        
         dropSelf(ModBlocks.TIN_BUILDING_STAIRS.get());
         dropSelf(ModBlocks.MOON_ROCK_STAIRS.get());
         dropSelf(ModBlocks.MOON_DUNGEON_BRICK_STAIRS.get());
@@ -63,7 +61,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.COPPER_WIRE_BLOCK.get());
 
         dropOther(ModBlocks.MOON_ROCK.get(), ModBlocks.MOON_COBBLESTONE.get());
-        dropOther(ModBlocks.MARS_ROCK.get(), ModBlocks.MARS_COBBLESTONE.get());
+        
 
         add(ModBlocks.ALUMINIUM_ORE.get(),
                 block -> createOreDrop(ModBlocks.ALUMINIUM_ORE.get(), ModItems.ALUMINIUM_INGOT.get()));
@@ -89,8 +87,6 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         add(ModBlocks.TIN_BUILDING_SLAB.get(), block -> createSlabItemTable(ModBlocks.TIN_BUILDING_SLAB.get()));
         add(ModBlocks.MOON_ROCK_SLAB.get(), block -> createSlabItemTable(ModBlocks.MOON_ROCK_SLAB.get()));
         add(ModBlocks.MOON_DUNGEON_BRICK_SLAB.get(), block -> createSlabItemTable(ModBlocks.MOON_DUNGEON_BRICK_SLAB.get()));
-        add(ModBlocks.MARS_COBBLESTONE_SLAB.get(), block -> createSlabItemTable(ModBlocks.MARS_COBBLESTONE_SLAB.get()));
-        add(ModBlocks.MARS_DUNGEON_BRICK_SLAB.get(), block -> createSlabItemTable(ModBlocks.MARS_DUNGEON_BRICK_SLAB.get()));
 
     }
 
