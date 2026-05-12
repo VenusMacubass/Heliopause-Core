@@ -61,16 +61,11 @@ public class ModItems {
     public static final DeferredItem<Item> DEHYDRATED_CHICKEN = ITEMS.register("dehydrated_chicken",
             () -> new Item(new Item.Properties().food(ModFoodProperties.DEHYDRATED_FOOD)));
     
-    public static final DeferredItem<Item> BURGER_BUN = ITEMS.register("gcc_item_burger_bun",
-            () -> new Item(new Item.Properties().food(ModFoodProperties.EDIBLE_INGREDIENT)));
-    
     public static final DeferredItem<Item> BEEF_PATTY_RAW = ITEMS.register("gcc_item_beef_patty_raw",
             () -> new Item(new Item.Properties().food(ModFoodProperties.RAW_FOOD)));
     
     public static final DeferredItem<Item> BEEF_PATTY = ITEMS.register("gcc_item_beef_patty",
             () -> new Item(new Item.Properties().food(ModFoodProperties.EDIBLE_INGREDIENT)));
-    
-   
     
     public static final DeferredItem<Item> CHEESE_SLICE = ITEMS.register("gcc_item_cheese_slice",
             () -> new Item(new Item.Properties().food(ModFoodProperties.EDIBLE_INGREDIENT)));
@@ -93,9 +88,8 @@ public class ModItems {
     public static final DeferredItem<Item> COMPRESSED_STEEL = ITEMS.register("gcc_item_compressed_steel", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> COMPRESSED_TIN = ITEMS.register("gcc_item_compressed_tin", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> COMPRESSED_HD_PLATE = ITEMS.register("gcc_item_heavy_duty_plate", () -> new Item(new Item.Properties()));
-    public static final DeferredItem<CanisterItem> CANISTER = ITEMS.register("gcc_canister", () ->
-            new CanisterItem(new Item.Properties().component(ModDataComponents.CANISTER_COMPONENT.get(), new CanisterData(null, 0)).stacksTo(1)));
-    public static final DeferredItem<Item> SENSOR_LENS = ITEMS.register("gcc_item_sensor_lens", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<CanisterItem> CANISTER = ITEMS.register("gcc_canister", () -> new CanisterItem(new Item.Properties().component(
+            ModDataComponents.CANISTER_COMPONENT.get(), new CanisterData(null, 0)).stacksTo(1)));
     //endregion
 
     //region Tools

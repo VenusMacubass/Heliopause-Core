@@ -51,7 +51,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.DEHYDRATED_RABBIT.get());
         basicItem(ModItems.DEHYDRATED_CHICKEN.get());
         basicItem(ModItems.DEHYDRATED_COD.get());
-        basicItem(ModItems.BURGER_BUN.get());
         basicItem(ModItems.BEEF_PATTY_RAW.get());
         basicItem(ModItems.BEEF_PATTY.get());
         basicItem(ModItems.CHEESE_SLICE.get());
@@ -68,17 +67,13 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.RAW_SILICON.get());
         basicItem(ModItems.RAW_IRIDIUM.get());
         basicItem(ModItems.LUNAR_SAPPHIRE.get());
-
-        basicItem(ModItems.COMPRESSED_ALUMINIUM.get());
+        
         basicItem(ModItems.COMPRESSED_BRONZE.get());
         basicItem(ModItems.COMPRESSED_COPPER.get());
-        basicItem(ModItems.COMPRESSED_IRIDIUM.get());
         basicItem(ModItems.COMPRESSED_IRON.get());
         basicItem(ModItems.COMPRESSED_STEEL.get());
-        basicItem(ModItems.COMPRESSED_TIN.get());
         basicItem(ModItems.COMPRESSED_HD_PLATE.get());
-
-        basicItem(ModItems.SENSOR_LENS.get());
+        
         basicItem(ModItems.SMALL_BATTERY.get());
 
         wallItem(ModBlocks.TIN_BUILDING_WALL, ModBlocks.TIN_BUILDING_BLOCK);

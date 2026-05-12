@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "B": {
-      "item": "galacticraftcore:gcc_item_burger_bun"
+      "item": "minecraft:bread"
     },
     "C": {
       "item": "galacticraftcore:gcc_item_cheese_slice"

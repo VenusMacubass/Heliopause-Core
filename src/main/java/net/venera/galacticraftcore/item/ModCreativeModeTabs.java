@@ -26,6 +26,7 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.galacticraftcore_items"))
                     .displayItems((parameters, output) -> {
                         output.accept(ModItems.IRIDIUM_INGOT.get());
+                        output.accept(ModItems.TIN_INGOT.get());
                         output.accept(ModItems.ALUMINIUM_INGOT.get());
                         output.accept(ModItems.STANDARD_WRENCH.get());
                         output.accept(ModItems.COPPER_CANISTER.get());
@@ -38,7 +39,6 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.DEHYDRATED_COD.get());
                         output.accept(ModItems.DEHYDRATED_CHICKEN.get());
                         output.accept(ModItems.DEHYDRATED_BEEF.get());
-                        output.accept(ModItems.BURGER_BUN.get());
                         output.accept(ModItems.BEEF_PATTY_RAW.get());
                         output.accept(ModItems.BEEF_PATTY.get());
                         output.accept(ModItems.CHEESE_SLICE.get());
@@ -47,7 +47,6 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.RAW_ALUMINIUM.get());
                         output.accept(ModItems.RAW_TIN.get());
                         output.accept(ModItems.RAW_SILICON.get());
-                        output.accept(ModItems.TIN_INGOT.get());
                         output.accept(ModItems.COMPRESSED_ALUMINIUM.get());
                         output.accept(ModItems.COMPRESSED_BRONZE.get());
                         output.accept(ModItems.COMPRESSED_COPPER.get());
@@ -56,7 +55,6 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.COMPRESSED_STEEL.get());
                         output.accept(ModItems.COMPRESSED_TIN.get());
                         output.accept(ModItems.COMPRESSED_HD_PLATE.get());
-                        output.accept(ModItems.SENSOR_LENS.get());
                         output.accept(ModItems.STEEL_SWORD.get());
                         output.accept(ModItems.STEEL_AXE.get());
                         output.accept(ModItems.STEEL_PICKAXE.get());

@@ -104,16 +104,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('T', ModItems.TIN_INGOT.get())
                 .unlockedBy("has_tin_ingot", has(ModItems.TIN_INGOT.get()))
                 .save(recipeOutput, "tin_canister_crafting");
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SENSOR_LENS)
-                .pattern("RGR")
-                .pattern("GIG")
-                .pattern("RGR")
-                .define('R', Items.REDSTONE)
-                .define('G', Items.GLASS_PANE)
-                .define('I', ModItems.COMPRESSED_IRIDIUM)
-                .unlockedBy("has_compressed_iridium", has(ModItems.IRIDIUM_INGOT.get()))
-                .save(recipeOutput, "sensor_lens_crafting");
+        
         //endregion
 
         //region Tools
@@ -208,22 +199,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_tin_canister", has(ModItems.TIN_CANISTER.get()))
                 .save(recipeOutput, "dehydrated_apple_crafting");
 
-//        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ModItems.DEHYDRATED_CARROT.get())
-//                .pattern("CB ")
-//                .pattern("B  ")
-//                .define('C', ModItems.TIN_CANISTER.get())
-//                .define('B', Items.CARROT)
-//                .unlockedBy("has_tin_canister", has(ModItems.TIN_CANISTER.get()))
-//                .save(recipeOutput, "dehydrated_carrot_crafting");
-
-//        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ModItems.DEHYDRATED_MELON.get())
-//                .pattern("CM ")
-//                .pattern("M  ")
-//                .define('C', ModItems.TIN_CANISTER.get())
-//                .define('M', Items.MELON)
-//                .unlockedBy("has_tin_canister", has(ModItems.TIN_CANISTER.get()))
-//                .save(recipeOutput, "dehydrated_melon_crafting");
-
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ModItems.DEHYDRATED_POTATO.get())
                 .pattern("CP ")
                 .pattern("P  ")
@@ -240,12 +215,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('B', Items.BEEF)
                 .unlockedBy("has_tin_canister", has(ModItems.TIN_CANISTER.get()))
                 .save(recipeOutput, "dehydrated_beef_crafting");
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.BURGER_BUN.get(), 2)
-                .requires(Items.BREAD, 1)
-                .unlockedBy("has_bread", has(Items.BREAD))
-                .save(recipeOutput, "burger_bun_crafting");
-
+        
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.BEEF_PATTY_RAW.get())
                 .requires(Items.BEEF, 1)
                 .unlockedBy("has_beef", has(Items.BEEF))
@@ -265,7 +235,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("CP ")
                 .pattern(" B ")
                 .define('C', ModItems.CHEESE_SLICE.get())
-                .define('B', ModItems.BURGER_BUN.get())
+                .define('B', Items.BREAD)
                 .define('P', ModItems.BEEF_PATTY.get())
                 .unlockedBy("has_patty", has(ModItems.BEEF_PATTY.get()))
                 .save(recipeOutput, "cheeseburger_crafting");
