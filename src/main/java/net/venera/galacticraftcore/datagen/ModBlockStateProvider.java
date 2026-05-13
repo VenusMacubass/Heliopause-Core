@@ -18,14 +18,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.ALUMINIUM_BLOCK);
         blockWithItem(ModBlocks.IRIDIUM_BLOCK);
         blockWithItem(ModBlocks.RADIOACTIVE_BLOCK);
-        blockWithItem(ModBlocks.ALUMINIUM_ORE);
         blockWithItem(ModBlocks.SAPPHIRE_ORE);
         blockWithItem(ModBlocks.MOON_TURF);
         blockWithItem(ModBlocks.MOON_DIRT);
         blockWithItem(ModBlocks.MOON_ROCK);
         blockWithItem(ModBlocks.TIN_BUILDING_BLOCK);
         blockWithItem(ModBlocks.TIN_BLOCK);
-        blockWithItem(ModBlocks.TIN_ORE);
         blockWithItem(ModBlocks.SILICON_ORE);
         blockWithItem(ModBlocks.SILICON_BLOCK);
         blockWithItem(ModBlocks.MOON_COPPER_ORE);

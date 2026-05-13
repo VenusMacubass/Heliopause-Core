@@ -79,9 +79,9 @@ public class GalacticraftCoreClient {
         }, ModBlocks.PRISMATIC_GLASS.get());
 
         event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? 0xFFB4D6ED : -1,
-                ModBlocks.RAW_ALUMINIUM_BLOCK.get());
+                ModBlocks.DEEPSLATE_ALUMINIUM_ORE.get(), ModBlocks.ALUMINIUM_ORE.get(), ModBlocks.RAW_ALUMINIUM_BLOCK.get());
         event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? 0xFFFFFAD6 : -1,
-                ModBlocks.RAW_TIN_BLOCK.get());
+                ModBlocks.DEEPSLATE_TIN_ORE.get(), ModBlocks.TIN_ORE.get(), ModBlocks.RAW_TIN_BLOCK.get());
     }
 
     @SubscribeEvent
@@ -95,13 +95,15 @@ public class GalacticraftCoreClient {
             }, itemObject.get());
         }
         event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFFB4D6ED : -1,
-                ModItems.ALUMINIUM_INGOT.get(), ModBlocks.RAW_ALUMINIUM_BLOCK.get(), ModItems.COMPRESSED_ALUMINIUM.get());
+                ModBlocks.ALUMINIUM_ORE.get(), ModBlocks.DEEPSLATE_ALUMINIUM_ORE.get(), ModItems.ALUMINIUM_INGOT.get(), 
+                ModBlocks.RAW_ALUMINIUM_BLOCK.get(), ModItems.COMPRESSED_ALUMINIUM.get());
         
         event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFFD9AAF2 : -1,
                 ModItems.IRIDIUM_INGOT.get(), ModItems.COMPRESSED_IRIDIUM.get());
         
         event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFFFFFAD6 : -1,
-                ModItems.TIN_INGOT.get(),  ModBlocks.RAW_TIN_BLOCK.get(), ModItems.COMPRESSED_TIN.get());
+                ModBlocks.TIN_ORE.get(), ModBlocks.DEEPSLATE_TIN_ORE.get(), ModItems.RAW_TIN.get(), ModItems.TIN_INGOT.get(),  
+                ModBlocks.RAW_TIN_BLOCK.get(), ModItems.COMPRESSED_TIN.get());
         
     }
 

@@ -26,7 +26,7 @@
                   }
                 }
               ],
-              "name": "galacticraftcore:gcc_block_aluminium_ore"
+              "name": "galacticraftcore:deepslate_tin_ore"
             },
             {
               "type": "minecraft:item",
@@ -40,7 +40,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "galacticraftcore:gcc_item_raw_aluminium"
+              "name": "galacticraftcore:gcc_item_raw_tin"
             }
           ]
         }
@@ -48,5 +48,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "galacticraftcore:blocks/gcc_block_aluminium_ore"
+  "random_sequence": "galacticraftcore:blocks/deepslate_tin_ore"
 }

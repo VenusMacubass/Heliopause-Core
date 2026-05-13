@@ -86,6 +86,7 @@ public class ModCreativeModeTabs {
                     .withTabsBefore(ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "galacticraftcore_items"))
                     .displayItems((parameters, output) -> {
                         output.accept(ModBlocks.ALUMINIUM_ORE.get());
+                        output.accept(ModBlocks.DEEPSLATE_ALUMINIUM_ORE.get());
                         output.accept(ModBlocks.ALUMINIUM_BLOCK.get());
                         output.accept(ModBlocks.RADIOACTIVE_BLOCK.get());
                         output.accept(ModBlocks.CHEESE_BLOCK.get());
@@ -95,6 +96,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.TIN_BUILDING_BLOCK.get());
                         output.accept(ModBlocks.TIN_BLOCK.get());
                         output.accept(ModBlocks.TIN_ORE.get());
+                        output.accept(ModBlocks.DEEPSLATE_TIN_ORE.get());
                         output.accept(ModBlocks.RAW_TIN_BLOCK.get());
                         output.accept(ModBlocks.RAW_ALUMINIUM_BLOCK.get());
                         output.accept(ModBlocks.SILICON_ORE.get());
