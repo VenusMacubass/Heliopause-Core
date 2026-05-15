@@ -15,7 +15,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        blockWithItem(ModBlocks.ALUMINIUM_BLOCK);
         blockWithItem(ModBlocks.IRIDIUM_BLOCK);
         blockWithItem(ModBlocks.RADIOACTIVE_BLOCK);
         blockWithItem(ModBlocks.SAPPHIRE_ORE);
@@ -23,8 +22,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.MOON_DIRT);
         blockWithItem(ModBlocks.MOON_ROCK);
         blockWithItem(ModBlocks.TIN_BUILDING_BLOCK);
-        blockWithItem(ModBlocks.TIN_BLOCK);
-        blockWithItem(ModBlocks.SILICON_ORE);
         blockWithItem(ModBlocks.SILICON_BLOCK);
         blockWithItem(ModBlocks.MOON_COPPER_ORE);
         blockWithItem(ModBlocks.MOON_TIN_ORE);
@@ -59,7 +56,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(deferredBlock.get(), cubeAll(deferredBlock.get()));
 
     }
-
     private void blockItem(DeferredBlock<?> deferredBlock){
         simpleBlockItem(deferredBlock.get(), new ModelFile.UncheckedModelFile("galacticraftcore:block/" + deferredBlock.getId().getPath()));
     }

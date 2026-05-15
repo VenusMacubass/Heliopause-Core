@@ -1,0 +1,7 @@
+{
+  "parent": "galacticraftcore:block/tinted_cube_all",
+  "textures": {
+    "all": "galacticraftcore:block/metal_block",
+    "particle": "galacticraftcore:block/metal_block"
+  }
+}

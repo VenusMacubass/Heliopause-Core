@@ -100,6 +100,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.RAW_TIN_BLOCK.get());
                         output.accept(ModBlocks.RAW_ALUMINIUM_BLOCK.get());
                         output.accept(ModBlocks.SILICON_ORE.get());
+                        output.accept(ModBlocks.DEEPSLATE_SILICON_ORE.get());
                         output.accept(ModBlocks.SILICON_BLOCK.get());
                         output.accept(ModBlocks.MOON_COBBLESTONE.get());
                         output.accept(ModBlocks.MOON_TIN_ORE.get());

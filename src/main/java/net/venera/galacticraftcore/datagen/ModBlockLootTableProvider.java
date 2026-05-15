@@ -81,6 +81,9 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         add(ModBlocks.SILICON_ORE.get(),
                 block -> createOreDrop(ModBlocks.SILICON_ORE.get(), ModItems.RAW_SILICON.get()));
 
+        add(ModBlocks.DEEPSLATE_SILICON_ORE.get(),
+                block -> createOreDrop(ModBlocks.DEEPSLATE_SILICON_ORE.get(), ModItems.RAW_SILICON.get()));
+
         add(ModBlocks.MOON_TIN_ORE.get(),
                 block -> createMultipleOreDrops(ModBlocks.MOON_TIN_ORE.get(), ModItems.RAW_TIN.get(), 1,5));
 
