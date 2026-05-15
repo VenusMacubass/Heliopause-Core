@@ -51,8 +51,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.DEHYDRATED_RABBIT.get());
         basicItem(ModItems.DEHYDRATED_CHICKEN.get());
         basicItem(ModItems.DEHYDRATED_COD.get());
-        basicItem(ModItems.BEEF_PATTY_RAW.get());
-        basicItem(ModItems.BEEF_PATTY.get());
         basicItem(ModItems.CHEESE_SLICE.get());
         basicItem(ModItems.CHEESEBURGER.get());
 

@@ -30,6 +30,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.ALUMINIUM_BLOCK.get());
         dropSelf(ModBlocks.RADIOACTIVE_BLOCK.get());
         dropSelf(ModBlocks.CHEESE_BLOCK.get());
+        dropSelf(ModBlocks.PIZZA_BLOCK.get());
         dropSelf(ModBlocks.MOON_TURF.get());
         dropSelf(ModBlocks.MOON_DIRT.get());
         dropSelf(ModBlocks.TIN_BUILDING_BLOCK.get());

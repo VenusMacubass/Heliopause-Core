@@ -9,7 +9,7 @@
       "item": "galacticraftcore:gcc_item_cheese_slice"
     },
     "P": {
-      "item": "galacticraftcore:gcc_item_beef_patty"
+      "item": "minecraft:cooked_beef"
     }
   },
   "pattern": [

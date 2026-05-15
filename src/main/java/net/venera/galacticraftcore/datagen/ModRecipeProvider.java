@@ -215,20 +215,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('B', Items.BEEF)
                 .unlockedBy("has_tin_canister", has(ModItems.TIN_CANISTER.get()))
                 .save(recipeOutput, "dehydrated_beef_crafting");
-        
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.BEEF_PATTY_RAW.get())
-                .requires(Items.BEEF, 1)
-                .unlockedBy("has_beef", has(Items.BEEF))
-                .save(recipeOutput, "beef_crafting");
-
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModItems.BEEF_PATTY_RAW.get()), RecipeCategory.FOOD, ModItems.BEEF_PATTY.get(),0.36f, 400)
-                .unlockedBy("has_raw_patty",  has(ModItems.BEEF_PATTY_RAW.get())).save(recipeOutput, "beef_patty_furnace");
-
-        SimpleCookingRecipeBuilder.smoking(Ingredient.of(ModItems.BEEF_PATTY_RAW.get()), RecipeCategory.FOOD, ModItems.BEEF_PATTY.get(),0.36f, 200)
-                .unlockedBy("has_raw_patty",  has(ModItems.BEEF_PATTY_RAW.get())).save(recipeOutput, "beef_patty_smoker");
-
-        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(ModItems.BEEF_PATTY_RAW.get()), RecipeCategory.FOOD, ModItems.BEEF_PATTY.get(),0.36f, 600)
-                .unlockedBy("has_raw_patty",  has(ModItems.BEEF_PATTY_RAW.get())).save(recipeOutput, "beef_patty_campfire");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.CHEESEBURGER.get())
                 .pattern(" B ")
@@ -236,8 +222,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern(" B ")
                 .define('C', ModItems.CHEESE_SLICE.get())
                 .define('B', Items.BREAD)
-                .define('P', ModItems.BEEF_PATTY.get())
-                .unlockedBy("has_patty", has(ModItems.BEEF_PATTY.get()))
+                .define('P', Items.COOKED_BEEF)
+                .unlockedBy("has_patty", has(Items.COOKED_BEEF))
                 .save(recipeOutput, "cheeseburger_crafting");
 
         //endregion

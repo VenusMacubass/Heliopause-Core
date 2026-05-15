@@ -61,12 +61,6 @@ public class ModItems {
     public static final DeferredItem<Item> DEHYDRATED_CHICKEN = ITEMS.register("dehydrated_chicken",
             () -> new Item(new Item.Properties().food(ModFoodProperties.DEHYDRATED_FOOD)));
     
-    public static final DeferredItem<Item> BEEF_PATTY_RAW = ITEMS.register("gcc_item_beef_patty_raw",
-            () -> new Item(new Item.Properties().food(ModFoodProperties.RAW_FOOD)));
-    
-    public static final DeferredItem<Item> BEEF_PATTY = ITEMS.register("gcc_item_beef_patty",
-            () -> new Item(new Item.Properties().food(ModFoodProperties.EDIBLE_INGREDIENT)));
-    
     public static final DeferredItem<Item> CHEESE_SLICE = ITEMS.register("gcc_item_cheese_slice",
             () -> new Item(new Item.Properties().food(ModFoodProperties.EDIBLE_INGREDIENT)));
     

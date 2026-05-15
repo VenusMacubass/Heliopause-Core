@@ -39,8 +39,6 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.DEHYDRATED_COD.get());
                         output.accept(ModItems.DEHYDRATED_CHICKEN.get());
                         output.accept(ModItems.DEHYDRATED_BEEF.get());
-                        output.accept(ModItems.BEEF_PATTY_RAW.get());
-                        output.accept(ModItems.BEEF_PATTY.get());
                         output.accept(ModItems.CHEESE_SLICE.get());
                         output.accept(ModItems.CHEESEBURGER.get());
                         output.accept(ModItems.RADIOACTIVE_CORE.get());
@@ -90,6 +88,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.ALUMINIUM_BLOCK.get());
                         output.accept(ModBlocks.RADIOACTIVE_BLOCK.get());
                         output.accept(ModBlocks.CHEESE_BLOCK.get());
+                        output.accept(ModBlocks.PIZZA_BLOCK.get());
                         output.accept(ModBlocks.MOON_TURF.get());
                         output.accept(ModBlocks.MOON_DIRT.get());
                         output.accept(ModBlocks.MOON_ROCK.get());

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "galacticraftcore:gcc_item_beef_patty"
+            "items": "minecraft:cooked_beef"
           }
         ]
       },
