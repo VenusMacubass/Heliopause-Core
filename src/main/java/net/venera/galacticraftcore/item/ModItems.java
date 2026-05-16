@@ -21,7 +21,6 @@ public class ModItems {
     public static final DeferredItem<Item> RAW_TIN = ITEMS.register("gcc_item_raw_tin", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> RAW_ALUMINIUM = ITEMS.register("gcc_item_raw_aluminium", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> RAW_SILICON = ITEMS.register("gcc_item_raw_silicon", () -> new Item(new Item.Properties()));
-    public static final DeferredItem<Item> RAW_IRIDIUM = ITEMS.register("gcc_item_raw_iridium", () -> new Item(new Item.Properties()));
     
     public static final DeferredItem<Item> ALUMINIUM_INGOT = ITEMS.register("aluminium_ingot", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> TIN_INGOT = ITEMS.register("tin_ingot", () -> new Item(new Item.Properties()));

@@ -235,8 +235,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         oreBlasting(recipeOutput, TIN_SMELTABLES, RecipeCategory.MISC, ModItems.TIN_INGOT.get(),0.5f, 200, "tin_ingot");
         oreSmelting(recipeOutput, ALUMINIUM_SMELTABLES, RecipeCategory.MISC, ModItems.ALUMINIUM_INGOT.get(),0.7f, 400, "aluminium_ingot");
         oreBlasting(recipeOutput, ALUMINIUM_SMELTABLES, RecipeCategory.MISC, ModItems.ALUMINIUM_INGOT.get(),0.7f, 200, "aluminium_ingot");
-        oreSmelting(recipeOutput, ModItems.RAW_IRIDIUM, RecipeCategory.MISC, ModItems.IRIDIUM_INGOT.get(),1.8f, 400, "iridium_ingot");
-        oreBlasting(recipeOutput, ModItems.RAW_IRIDIUM, RecipeCategory.MISC, ModItems.IRIDIUM_INGOT.get(),1.8f, 200, "iridium_ingot");
+        oreSmelting(recipeOutput, ModBlocks.IRIDIUM_ORE, RecipeCategory.MISC, ModItems.IRIDIUM_INGOT.get(),1.8f, 400, "iridium_ingot");
+        oreBlasting(recipeOutput, ModBlocks.IRIDIUM_ORE, RecipeCategory.MISC, ModItems.IRIDIUM_INGOT.get(),1.8f, 200, "iridium_ingot");
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //Special Blocks
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.ARC_LAMP.get())

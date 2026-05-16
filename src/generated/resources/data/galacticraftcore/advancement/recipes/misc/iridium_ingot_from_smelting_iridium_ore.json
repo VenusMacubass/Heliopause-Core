@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_gcc_item_raw_iridium": {
+    "has_iridium_ore": {
       "conditions": {
         "items": [
           {
-            "items": "galacticraftcore:gcc_item_raw_iridium"
+            "items": "galacticraftcore:iridium_ore"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftcore:iridium_ingot_from_blasting_gcc_item_raw_iridium"
+        "recipe": "galacticraftcore:iridium_ingot_from_smelting_iridium_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_gcc_item_raw_iridium"
+      "has_iridium_ore"
     ]
   ],
   "rewards": {
     "recipes": [
-      "galacticraftcore:iridium_ingot_from_blasting_gcc_item_raw_iridium"
+      "galacticraftcore:iridium_ingot_from_smelting_iridium_ore"
     ]
   }
 }

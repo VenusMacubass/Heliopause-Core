@@ -40,7 +40,10 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.SILICON_BLOCK.get());
         dropSelf(ModBlocks.MOON_DUNGEON_BRICKS.get());
         dropSelf(ModBlocks.MOON_COBBLESTONE.get());
-       
+        dropSelf(ModBlocks.IRIDIUM_ORE.get());
+        dropSelf(ModBlocks.DEEPSLATE_IRIDIUM_ORE.get());
+        dropSelf(ModBlocks.MOON_IRIDIUM_ORE.get());
+        
         dropSelf(ModBlocks.ARC_LAMP.get());
         dropSelf(ModBlocks.COAL_COMPRESSOR.get());
         dropSelf(ModBlocks.REFINERY.get());
@@ -69,6 +72,9 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
 
         add(ModBlocks.DEEPSLATE_TIN_ORE.get(),
                 block -> createOreDrop(ModBlocks.DEEPSLATE_TIN_ORE.get(), ModItems.RAW_TIN.get()));
+
+        add(ModBlocks.MOON_TIN_ORE.get(),
+                block -> createOreDrop(ModBlocks.MOON_TIN_ORE.get(), ModItems.RAW_TIN.get()));
         
         add(ModBlocks.ALUMINIUM_ORE.get(),
                 block -> createOreDrop(ModBlocks.ALUMINIUM_ORE.get(), ModItems.RAW_ALUMINIUM.get()));
@@ -76,11 +82,17 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         add(ModBlocks.DEEPSLATE_ALUMINIUM_ORE.get(),
                 block -> createOreDrop(ModBlocks.DEEPSLATE_ALUMINIUM_ORE.get(), ModItems.RAW_ALUMINIUM.get()));
 
+        add(ModBlocks.MOON_ALUMINIUM_ORE.get(),
+                block -> createOreDrop(ModBlocks.MOON_ALUMINIUM_ORE.get(), ModItems.RAW_ALUMINIUM.get()));
+
         add(ModBlocks.RADIOACTIVE_BLOCK.get(),
                 block -> createMultipleOreDrops(ModBlocks.RADIOACTIVE_BLOCK.get(), ModItems.RADIOACTIVE_CORE.get(), 1,2));
         
         add(ModBlocks.SILICON_ORE.get(),
                 block -> createOreDrop(ModBlocks.SILICON_ORE.get(), ModItems.RAW_SILICON.get()));
+
+        add(ModBlocks.MOON_SILICON_ORE.get(),
+                block -> createOreDrop(ModBlocks.MOON_SILICON_ORE.get(), ModItems.RAW_SILICON.get()));
 
         add(ModBlocks.DEEPSLATE_SILICON_ORE.get(),
                 block -> createOreDrop(ModBlocks.DEEPSLATE_SILICON_ORE.get(), ModItems.RAW_SILICON.get()));
@@ -90,6 +102,9 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
 
         add(ModBlocks.MOON_COPPER_ORE.get(),
                 block -> createMultipleOreDrops(ModBlocks.MOON_COPPER_ORE.get(), Items.RAW_COPPER,1,5));
+        
+        add(ModBlocks.MOON_IRON_ORE.get(),
+                block -> createMultipleOreDrops(ModBlocks.MOON_IRON_ORE.get(), Items.RAW_IRON,1,5));
 
         add(ModBlocks.SAPPHIRE_ORE.get(),
                 block -> createOreDrop(ModBlocks.SAPPHIRE_ORE.get(), ModItems.LUNAR_SAPPHIRE.get()));

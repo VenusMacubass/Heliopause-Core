@@ -46,6 +46,8 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops()));
     public static final DeferredBlock<Block> ALUMINIUM_ORE = registerBlock("gcc_block_aluminium_ore",
             () -> new Block(BlockBehaviour.Properties.of().strength(3f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
+    public static final DeferredBlock<Block> MOON_ALUMINIUM_ORE = registerBlock("moon_aluminium_ore",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(ModBlocks.ALUMINIUM_ORE.get())));
     public static final DeferredBlock<Block> DEEPSLATE_ALUMINIUM_ORE = registerBlock("deepslate_aluminium_ore",
             () -> new Block(BlockBehaviour.Properties.of().strength(3f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
     public static final DeferredBlock<Block> ALUMINIUM_BLOCK = registerBlock("gcc_block_aluminium_block",
@@ -53,6 +55,9 @@ public class ModBlocks {
 
     
     public static final DeferredBlock<Block> SILICON_ORE = registerBlock("gcc_block_silicon_ore",
+            () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops()));
+
+    public static final DeferredBlock<Block> MOON_SILICON_ORE = registerBlock("moon_silicon_ore",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops()));
 
     public static final DeferredBlock<Block> DEEPSLATE_SILICON_ORE = registerBlock("deepslate_silicon_ore",
@@ -63,9 +68,21 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> IRIDIUM_BLOCK = registerBlock("gcc_block_iridium_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(8f).requiresCorrectToolForDrops()));
+
+    public static final DeferredBlock<Block> IRIDIUM_ORE = registerBlock("iridium_ore",
+            () -> new Block(BlockBehaviour.Properties.of().strength(8f).requiresCorrectToolForDrops()));
+
+    public static final DeferredBlock<Block> DEEPSLATE_IRIDIUM_ORE = registerBlock("deepslate_iridium_ore",
+            () -> new Block(BlockBehaviour.Properties.of().strength(8f).requiresCorrectToolForDrops()));
+
+    public static final DeferredBlock<Block> MOON_IRIDIUM_ORE = registerBlock("moon_iridium_ore",
+            () -> new Block(BlockBehaviour.Properties.of().strength(8f).requiresCorrectToolForDrops()));
     
     public static final DeferredBlock<Block> SAPPHIRE_ORE = registerBlock("gcc_block_sapphire_ore",
             () -> new Block(BlockBehaviour.Properties.of().strength(4f).requiresCorrectToolForDrops()));
+    
+    public static final DeferredBlock<Block> MOON_IRON_ORE = registerBlock("moon_iron_ore",
+            ()-> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_ORE)));
     //endregion
     
     //region Machines

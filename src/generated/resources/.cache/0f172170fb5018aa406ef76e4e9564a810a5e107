@@ -1,4 +1,4 @@
-// 1.21.1	2026-05-16T00:43:49.7853191	Item Models: galacticraftcore
+// 1.21.1	2026-05-16T12:40:48.4077553	Item Models: galacticraftcore
 8c417416c8ccff54922c9549212968c074e48f89 assets/galacticraftcore/models/item/dehydrated_berries.json
 60477f4e0b64b366f7dded7f715141449c207519 assets/galacticraftcore/models/item/dehydrated_chicken.json
 0503fce22465eb990cf7e93152ca4d636c05d0de assets/galacticraftcore/models/item/dehydrated_cod.json
@@ -22,7 +22,6 @@ d8c5ca339445865df196be440e56c3cc1c3f2fc3 assets/galacticraftcore/models/item/gcc
 4ba36364c691913233e4901b429b2b3323a1d960 assets/galacticraftcore/models/item/gcc_item_lunar_sapphire.json
 81aad36edb27539e1fd6b5c378d9b80e0d25ff5c assets/galacticraftcore/models/item/gcc_item_radioactive_core.json
 92bd112c78630b6541820f8f4c05fc20bb61617f assets/galacticraftcore/models/item/gcc_item_raw_aluminium.json
-345d5e3cd2cc86d70ae26e59040225742ffa4d21 assets/galacticraftcore/models/item/gcc_item_raw_iridium.json
 cbb0807be93c3d590a4e1ab702d2ecb488b40e3c assets/galacticraftcore/models/item/gcc_item_raw_silicon.json
 1f7d1b8b277e7864cf1cab08f18713fff0bd3924 assets/galacticraftcore/models/item/gcc_item_raw_tin.json
 b9ce020301c62b4ce3de14912f70179ef55e2c00 assets/galacticraftcore/models/item/gcc_item_refined_fuel_bucket.json

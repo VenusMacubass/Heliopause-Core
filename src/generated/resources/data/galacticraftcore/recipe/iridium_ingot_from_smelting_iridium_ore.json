@@ -1,11 +1,11 @@
 {
-  "type": "minecraft:blasting",
+  "type": "minecraft:smelting",
   "category": "misc",
-  "cookingtime": 200,
+  "cookingtime": 400,
   "experience": 1.8,
   "group": "iridium_ingot",
   "ingredient": {
-    "item": "galacticraftcore:gcc_item_raw_iridium"
+    "item": "galacticraftcore:iridium_ore"
   },
   "result": {
     "count": 1,

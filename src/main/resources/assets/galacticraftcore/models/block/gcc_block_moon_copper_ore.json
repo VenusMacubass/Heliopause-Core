@@ -1,0 +1,7 @@
+{
+  "parent": "galacticraftcore:block/tinted_ore_template",
+  "textures": {
+    "base": "galacticraftcore:block/gcc_block_moon_rock",
+    "overlay": "galacticraftcore:block/copper_ore"
+  }
+}

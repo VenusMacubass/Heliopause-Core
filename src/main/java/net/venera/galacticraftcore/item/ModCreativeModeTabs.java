@@ -62,7 +62,6 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.STEEL_CHESTPLATE.get());
                         output.accept(ModItems.STEEL_LEGGINGS.get());
                         output.accept(ModItems.STEEL_BOOTS.get());
-                        output.accept(ModItems.RAW_IRIDIUM.get());
                         output.accept(ModItems.LUNAR_SAPPHIRE.get());
                         output.accept(ModItems.GLASS_SWORD.get());
                         output.accept(ModFluids.CRUDE_OIL.getBucket());
@@ -103,6 +102,9 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.SILICON_BLOCK.get());
                         output.accept(ModBlocks.MOON_COBBLESTONE.get());
                         output.accept(ModBlocks.MOON_TIN_ORE.get());
+                        output.accept(ModBlocks.MOON_SILICON_ORE.get());
+                        output.accept(ModBlocks.MOON_ALUMINIUM_ORE.get());
+                        output.accept(ModBlocks.MOON_IRON_ORE);
                         output.accept(ModBlocks.MOON_COPPER_ORE.get());
                         output.accept(ModBlocks.MOON_DUNGEON_BRICKS.get());
                         output.accept(ModBlocks.TIN_BUILDING_WALL.get());
@@ -115,6 +117,9 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.MOON_ROCK_SLAB.get());
                         output.accept(ModBlocks.MOON_DUNGEON_BRICK_SLAB.get());
                         output.accept(ModBlocks.ARC_LAMP.get());
+                        output.accept(ModBlocks.IRIDIUM_ORE.get());
+                        output.accept(ModBlocks.DEEPSLATE_IRIDIUM_ORE.get());
+                        output.accept(ModBlocks.MOON_IRIDIUM_ORE.get());
                         output.accept(ModBlocks.IRIDIUM_BLOCK.get());
                         output.accept(ModBlocks.SAPPHIRE_ORE.get());
                         output.accept(ModBlocks.COAL_COMPRESSOR.get());
