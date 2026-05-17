@@ -42,10 +42,12 @@ public class SkyOverlayEvents {
                     GlStateManager.DestFactor.ZERO
             );
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            
-            Matrix4f matrix4f = new Matrix4f(event.getModelViewMatrix());
 
-            float drifterRotation = (level.getGameTime() % 240000L) / 240000.0F * 360.0F;
+            Matrix4f matrix4f = new Matrix4f(event.getModelViewMatrix());
+            
+            float partialTick = Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true);
+            float exactTime = level.getDayTime() + partialTick;
+            float drifterRotation = (exactTime % 240000.0F) / 240000.0F * 360.0F;
 
             matrix4f.rotateY((float) Math.toRadians(-45.0))
                     .rotateX((float) Math.toRadians(drifterRotation))

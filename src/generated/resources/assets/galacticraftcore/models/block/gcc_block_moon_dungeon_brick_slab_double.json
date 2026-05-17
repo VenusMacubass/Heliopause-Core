@@ -1,0 +1,6 @@
+{
+  "parent": "galacticraftcore:block/tinted_cube_all",
+  "textures": {
+    "all": "galacticraftcore:block/dungeon_bricks"
+  }
+}

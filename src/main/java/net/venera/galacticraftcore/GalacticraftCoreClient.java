@@ -26,10 +26,13 @@ import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.venera.galacticraftcore.block.ModBlocks;
+import net.venera.galacticraftcore.block.entity.ModBlockEntities;
 import net.venera.galacticraftcore.entity.ModEntities;
 import net.venera.galacticraftcore.entity.client.Tier1RocketRenderer;
 import net.venera.galacticraftcore.entity.zombie.SpaceZombieRenderer;
+import net.venera.galacticraftcore.fluid.ModFluids;
 import net.venera.galacticraftcore.item.ModItems;
+import net.venera.galacticraftcore.render.FluidTankRenderer;
 import net.venera.galacticraftcore.render.sky.MoonSkyRenderer;
 import net.venera.galacticraftcore.screen.ModMenuTypes;
 import net.venera.galacticraftcore.screen.custom.BasicSolarScreen;
@@ -54,19 +57,18 @@ public class GalacticraftCoreClient {
         GalacticraftCore.LOGGER.info("HELLO FROM CLIENT SETUP");
         GalacticraftCore.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.FLUID_TANK.get(), RenderType.translucent());
+        
         EntityRenderers.register(ModEntities.TIER_1_ROCKET.get(), Tier1RocketRenderer::new);
     }
 
     @SubscribeEvent
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
-        for (var blockObject : ModBlocks.BLOCKS.getEntries()) {
-            event.register((state, getter, pos, tintIndex) -> {
-                if (getter != null && pos != null) {
-                    FluidState fluidState = getter.getFluidState(pos);
-                    return IClientFluidTypeExtensions.of(fluidState).getTintColor(fluidState, getter, pos);
-                } else return 0xFFFFFFFF;
-            }, blockObject.get());
-        }
+        event.register((state, getter, pos, tintIndex) -> {
+            if (getter != null && pos != null) {
+                FluidState fluidState = getter.getFluidState(pos);
+                return IClientFluidTypeExtensions.of(fluidState).getTintColor(fluidState, getter, pos);
+            } else return 0xFFFFFFFF;
+        }, ModFluids.CRUDE_OIL.getFluidblock(), ModFluids.REFINED_FUEL.getFluidblock()); 
         event.register((state, level, pos, tintIndex) -> {
             long time = System.currentTimeMillis();
 
@@ -96,6 +98,12 @@ public class GalacticraftCoreClient {
                 ModBlocks.IRIDIUM_ORE.get(),
                 ModBlocks.DEEPSLATE_IRIDIUM_ORE.get(),
                 ModBlocks.MOON_IRIDIUM_ORE.get());
+
+        event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? 0xFF3B3B3B: -1, 
+                ModBlocks.MOON_DUNGEON_BRICKS.get(),
+                ModBlocks.MOON_DUNGEON_BRICK_SLAB.get(),
+                ModBlocks.MOON_DUNGEON_BRICK_STAIRS.get(),
+                ModBlocks.MOON_DUNGEON_BRICK_WALL.get());
     }
 
     @SubscribeEvent
@@ -133,12 +141,19 @@ public class GalacticraftCoreClient {
                 ModBlocks.IRIDIUM_ORE.get(),
                 ModBlocks.DEEPSLATE_IRIDIUM_ORE.get(),
                 ModBlocks.MOON_IRIDIUM_ORE.get());
+
+        event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFF3B3B3B : -1,
+                ModBlocks.MOON_DUNGEON_BRICKS.get(),
+                ModBlocks.MOON_DUNGEON_BRICK_SLAB.get(),
+                ModBlocks.MOON_DUNGEON_BRICK_STAIRS.get(),
+                ModBlocks.MOON_DUNGEON_BRICK_WALL.get());
         
     }
 
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.SPACE_ZOMBIE.get(), SpaceZombieRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.FLUID_TANK_ENTITY.get(), FluidTankRenderer::new);
     }
 
     @SubscribeEvent

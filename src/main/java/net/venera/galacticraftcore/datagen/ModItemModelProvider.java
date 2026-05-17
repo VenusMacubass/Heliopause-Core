@@ -35,6 +35,10 @@ public class ModItemModelProvider extends ItemModelProvider {
         trimMaterials.put(TrimMaterials.AMETHYST, 1.0F);
     }
 
+    ResourceLocation dungeonBrickTex = modLoc("block/dungeon_bricks");
+    ResourceLocation buildingBlockTex = modLoc("block/gcc_block_tin_building_block");
+    ResourceLocation moonRockTex = modLoc("block/gcc_block_moon_rock");
+
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, GalacticraftCore.MOD_ID, existingFileHelper);
     }
@@ -63,7 +67,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.RAW_ALUMINIUM.get());
         basicItem(ModItems.RAW_TIN.get());
         basicItem(ModItems.RAW_SILICON.get());
-        basicItem(ModItems.LUNAR_SAPPHIRE.get());
         
         basicItem(ModItems.COMPRESSED_BRONZE.get());
         basicItem(ModItems.COMPRESSED_COPPER.get());
@@ -73,9 +76,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         
         basicItem(ModItems.SMALL_BATTERY.get());
 
-        wallItem(ModBlocks.TIN_BUILDING_WALL, ModBlocks.TIN_BUILDING_BLOCK);
-        wallItem(ModBlocks.MOON_ROCK_WALL, ModBlocks.MOON_ROCK);
-        wallItem(ModBlocks.MOON_DUNGEON_BRICK_WALL, ModBlocks.MOON_DUNGEON_BRICKS);
+       wallItem(ModBlocks.TIN_BUILDING_WALL, buildingBlockTex);
+       wallItem(ModBlocks.MOON_ROCK_WALL, moonRockTex);
+       wallItem(ModBlocks.MOON_DUNGEON_BRICK_WALL, dungeonBrickTex);
         
 
         handheldItem(ModItems.STEEL_SWORD.get());
@@ -94,7 +97,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     }
 
     private void trimmedArmorItem(DeferredItem<ArmorItem> itemDeferredItem) {
-        final String MOD_ID = GalacticraftCore.MOD_ID; // Change this to your mod id
+        final String MOD_ID = GalacticraftCore.MOD_ID; 
 
         if(itemDeferredItem.get() instanceof ArmorItem armorItem) {
             trimMaterials.forEach((trimMaterial, value) -> {
@@ -136,8 +139,15 @@ public class ModItemModelProvider extends ItemModelProvider {
         }
     }
 
-    public void wallItem(DeferredBlock<?> block, DeferredBlock<?> baseBlock){
-        this.withExistingParent(block.getId().getPath(), mcLoc("block/wall_inventory"))
-                .texture("wall", ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "block/" + baseBlock.getId().getPath()));
+    public void wallItem(DeferredBlock<?> block, ResourceLocation texture) {
+        this.withExistingParent(block.getId().getPath(), modLoc("block/tinted_wall_inventory"))
+                .texture("wall", texture);
     }
+    
+//    public void wallItem(DeferredBlock<?> block, DeferredBlock<?> baseBlock){
+//        this.withExistingParent(block.getId().getPath(), mcLoc("block/wall_inventory"))
+//                .texture("wall", ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "block/" + baseBlock.getId().getPath()));
+//    }
+    
+    
 }

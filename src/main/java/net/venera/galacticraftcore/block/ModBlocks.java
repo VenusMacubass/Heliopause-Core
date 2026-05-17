@@ -78,9 +78,6 @@ public class ModBlocks {
     public static final DeferredBlock<Block> MOON_IRIDIUM_ORE = registerBlock("moon_iridium_ore",
             () -> new Block(BlockBehaviour.Properties.of().strength(8f).requiresCorrectToolForDrops()));
     
-    public static final DeferredBlock<Block> SAPPHIRE_ORE = registerBlock("gcc_block_sapphire_ore",
-            () -> new Block(BlockBehaviour.Properties.of().strength(4f).requiresCorrectToolForDrops()));
-    
     public static final DeferredBlock<Block> MOON_IRON_ORE = registerBlock("moon_iron_ore",
             ()-> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_ORE)));
     //endregion
@@ -106,15 +103,17 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.of().sound(SoundType.GRAVEL)));
     public static final DeferredBlock<Block> MOON_COBBLESTONE = registerBlock("gcc_block_moon_cobblestone",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops()));
-    public static final DeferredBlock<Block> MOON_DUNGEON_BRICKS = registerBlock("gcc_block_moon_dungeon_bricks",
+    public static final DeferredBlock<Block> MOON_DUNGEON_BRICKS = registerBlock("moon_dungeon_bricks",
             () -> new Block(BlockBehaviour.Properties.of().requiresCorrectToolForDrops()));
+    
+    
     public static final DeferredBlock<WallBlock> MOON_ROCK_WALL = registerBlock("gcc_block_moon_rock_wall",
             ()-> new WallBlock(BlockBehaviour.Properties.of().strength(4f)));
     public static final DeferredBlock<WallBlock> MOON_DUNGEON_BRICK_WALL = registerBlock("gcc_block_moon_dungeon_brick_wall",
             ()-> new WallBlock(BlockBehaviour.Properties.of().strength(4f)));
     public static final DeferredBlock<StairBlock> MOON_ROCK_STAIRS = registerBlock("gcc_block_moon_rock_stairs",
             ()-> new StairBlock(ModBlocks.MOON_ROCK.get().defaultBlockState(), BlockBehaviour.Properties.of().strength(4f)));
-    public static final DeferredBlock<StairBlock> MOON_DUNGEON_BRICK_STAIRS = registerBlock("gcc_block_moon_dungeon_brick_stairs",
+    public static final DeferredBlock<StairBlock> MOON_DUNGEON_BRICK_STAIRS = registerBlock("moon_dungeon_brick_stairs",
             ()-> new StairBlock(ModBlocks.MOON_DUNGEON_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.of().strength(4f)));
     public static final DeferredBlock<SlabBlock> MOON_ROCK_SLAB = registerBlock("gcc_block_moon_rock_slab",
             ()-> new SlabBlock(BlockBehaviour.Properties.of().strength(4f)));

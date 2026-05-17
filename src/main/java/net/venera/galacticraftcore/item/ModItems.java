@@ -97,7 +97,8 @@ public class ModItems {
     public static final DeferredItem<HoeItem> STEEL_HOE = ITEMS.register("gcc_item_steel_hoe", () -> new HoeItem(ModToolTiers.STEEL, new Item.Properties()
             .attributes(HoeItem.createAttributes(ModToolTiers.STEEL, -3f, -1f))));
     public static final DeferredItem<Item> STANDARD_WRENCH = ITEMS.register("gcc_item_standard_wrench", () -> new StandardWrench(new Item.Properties().durability(125)));
-
+    public static final DeferredItem<SwordItem> GLASS_SWORD = ITEMS.register("glass_sword", () ->
+            new SwordItem(ModToolTiers.GLASS, (new Item.Properties().attributes(SwordItem.createAttributes(ModToolTiers.GLASS, 64, 1.8f)))));
     //endregion
 
     //region Armors
@@ -115,12 +116,7 @@ public class ModItems {
                     new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(18))));
     //endregion
 
-   
-    public static final DeferredItem<Item> LUNAR_SAPPHIRE = ITEMS.register("gcc_item_lunar_sapphire",
-            () -> new Item(new Item.Properties()));
-
-    public static final DeferredItem<SwordItem> GLASS_SWORD = ITEMS.register("glass_sword", () ->
-            new SwordItem(ModToolTiers.GLASS, (new Item.Properties().attributes(SwordItem.createAttributes(ModToolTiers.GLASS, 64, 1.8f)))));
+    
 
     
 

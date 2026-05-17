@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/slab",
+  "parent": "galacticraftcore:block/tinted_slab",
   "textures": {
     "bottom": "galacticraftcore:block/gcc_block_moon_rock",
     "side": "galacticraftcore:block/gcc_block_moon_rock",

@@ -14,11 +14,10 @@
     "galacticraftcore:gcc_block_moon_copper_ore",
     "galacticraftcore:gcc_block_moon_tin_ore",
     "galacticraftcore:gcc_block_moon_cobblestone",
-    "galacticraftcore:gcc_block_moon_dungeon_bricks",
+    "galacticraftcore:moon_dungeon_bricks",
     "galacticraftcore:gcc_block_tin_building_slab",
     "galacticraftcore:gcc_block_moon_rock_slab",
     "galacticraftcore:gcc_block_moon_dungeon_brick_slab",
-    "galacticraftcore:gcc_block_iridium_block",
-    "galacticraftcore:gcc_block_sapphire_ore"
+    "galacticraftcore:gcc_block_iridium_block"
   ]
 }

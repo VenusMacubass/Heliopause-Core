@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "galacticraftcore:gcc_block_moon_dungeon_brick_stairs"
+          "name": "galacticraftcore:moon_dungeon_bricks"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "galacticraftcore:blocks/gcc_block_moon_dungeon_brick_stairs"
+  "random_sequence": "galacticraftcore:blocks/moon_dungeon_bricks"
 }

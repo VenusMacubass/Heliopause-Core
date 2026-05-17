@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "galacticraftcore:gcc_block_moon_dungeon_bricks"
+            "items": "galacticraftcore:moon_dungeon_bricks"
           }
         ]
       },

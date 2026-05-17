@@ -62,7 +62,6 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.STEEL_CHESTPLATE.get());
                         output.accept(ModItems.STEEL_LEGGINGS.get());
                         output.accept(ModItems.STEEL_BOOTS.get());
-                        output.accept(ModItems.LUNAR_SAPPHIRE.get());
                         output.accept(ModItems.GLASS_SWORD.get());
                         output.accept(ModFluids.CRUDE_OIL.getBucket());
                         output.accept(ModFluids.REFINED_FUEL.getBucket());
@@ -121,7 +120,6 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.DEEPSLATE_IRIDIUM_ORE.get());
                         output.accept(ModBlocks.MOON_IRIDIUM_ORE.get());
                         output.accept(ModBlocks.IRIDIUM_BLOCK.get());
-                        output.accept(ModBlocks.SAPPHIRE_ORE.get());
                         output.accept(ModBlocks.COAL_COMPRESSOR.get());
                         output.accept(ModBlocks.REFINERY.get());
                         output.accept(ModBlocks.LAUNCH_PAD.get());

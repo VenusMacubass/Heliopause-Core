@@ -105,9 +105,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         
         add(ModBlocks.MOON_IRON_ORE.get(),
                 block -> createMultipleOreDrops(ModBlocks.MOON_IRON_ORE.get(), Items.RAW_IRON,1,5));
-
-        add(ModBlocks.SAPPHIRE_ORE.get(),
-                block -> createOreDrop(ModBlocks.SAPPHIRE_ORE.get(), ModItems.LUNAR_SAPPHIRE.get()));
+        
 
         add(ModBlocks.TIN_BUILDING_SLAB.get(), block -> createSlabItemTable(ModBlocks.TIN_BUILDING_SLAB.get()));
         add(ModBlocks.MOON_ROCK_SLAB.get(), block -> createSlabItemTable(ModBlocks.MOON_ROCK_SLAB.get()));

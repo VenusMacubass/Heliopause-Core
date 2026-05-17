@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/stairs",
+  "parent": "galacticraftcore:block/tinted_stairs",
   "textures": {
     "bottom": "galacticraftcore:block/gcc_block_moon_rock",
     "side": "galacticraftcore:block/gcc_block_moon_rock",

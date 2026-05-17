@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/wall_inventory",
+  "parent": "galacticraftcore:block/tinted_wall_inventory",
   "textures": {
     "wall": "galacticraftcore:block/gcc_block_moon_rock"
   }

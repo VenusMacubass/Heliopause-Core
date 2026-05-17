@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/template_wall_side",
+  "parent": "galacticraftcore:block/tinted_wall_side",
   "textures": {
     "wall": "galacticraftcore:block/gcc_block_tin_building_block"
   }

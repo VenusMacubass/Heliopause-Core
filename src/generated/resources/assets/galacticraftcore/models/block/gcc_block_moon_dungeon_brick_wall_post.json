@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/template_wall_post",
+  "parent": "galacticraftcore:block/tinted_wall_post",
   "textures": {
-    "wall": "galacticraftcore:block/gcc_block_moon_dungeon_bricks"
+    "wall": "galacticraftcore:block/dungeon_bricks"
   }
 }
