@@ -49,7 +49,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "heliocore:gcc_item_radioactive_core"
+              "name": "heliocore:radioactive_core"
             }
           ]
         }

@@ -6,7 +6,7 @@
       "item": "minecraft:beef"
     },
     "C": {
-      "item": "heliocore:gcc_item_tin_canister"
+      "item": "heliocore:tin_canister"
     }
   },
   "pattern": [
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "heliocore:gcc_item_dehydrated_beef"
+    "id": "heliocore:dehydrated_beef"
   }
 }

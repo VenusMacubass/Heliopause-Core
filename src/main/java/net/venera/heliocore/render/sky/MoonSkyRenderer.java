@@ -15,7 +15,6 @@ public class MoonSkyRenderer {
 
     private static final ResourceLocation EARTH_TEXTURE = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/environment/earth_from_moon.png");
     private static final ResourceLocation SUN_TEXTURE = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/environment/sun_from_space.png");
-    // 1. The memory cache for our stars
     private static VertexBuffer starBuffer;
     
 
@@ -126,57 +125,46 @@ public class MoonSkyRenderer {
             double lengthSq = x * x + y * y + z * z;
 
             if (lengthSq < 1.0 && lengthSq > 0.01) {
-                // 1. Get the Normalized Forward Vector (Points outward from center)
                 double invLen = 1.0 / Math.sqrt(lengthSq);
                 double nx = x * invLen;
                 double ny = y * invLen;
                 double nz = z * invLen;
-
-                // Position on the 100-radius sphere
+                
                 double px = nx * 100.0;
                 double py = ny * 100.0;
                 double pz = nz * 100.0;
-
-                // 2. Calculate the Right Vector (Cross product of World Up and Forward)
+                
                 double rxVec = nz;
                 double ryVec = 0;
                 double rzVec = -nx;
-
-                // Safety check for stars exactly at the North/South poles
+                
                 if (Math.abs(ny) > 0.999) {
                     rxVec = 0;
                     ryVec = -nz;
                     rzVec = ny;
                 }
-
-                // Normalize the Right Vector
+                
                 double rLen = Math.sqrt(rxVec * rxVec + ryVec * ryVec + rzVec * rzVec);
                 rxVec /= rLen;
                 ryVec /= rLen;
                 rzVec /= rLen;
-
-                // 3. Calculate True Up Vector (Cross product of Forward and Right)
+                
                 double uxVec = ny * rzVec - nz * ryVec;
                 double uyVec = nz * rxVec - nx * rzVec;
                 double uzVec = nx * ryVec - ny * rxVec;
-
-                // Star size and rotation
+                
                 double size = 0.09 + random.nextDouble() * 0.1;
                 double randRot = random.nextDouble() * Math.PI * 2.0;
                 double sinRot = Math.sin(randRot);
                 double cosRot = Math.cos(randRot);
-
-                // 4. Draw the 4 corners using the tangent vectors
+                
                 for (int j = 0; j < 4; ++j) {
-                    // Base 2D coordinates for the quad
                     double vx = ((j & 2) - 1) * size;
                     double vy = (((j + 1) & 2) - 1) * size;
-
-                    // Apply the random 2D spin
+                    
                     double rotX = vx * cosRot - vy * sinRot;
                     double rotY = vy * cosRot + vx * sinRot;
-
-                    // Map the 2D quad onto the 3D spherical tangent plane!
+                    
                     double finalX = px + (rotX * rxVec) + (rotY * uxVec);
                     double finalY = py + (rotX * ryVec) + (rotY * uyVec);
                     double finalZ = pz + (rotX * rzVec) + (rotY * uzVec);

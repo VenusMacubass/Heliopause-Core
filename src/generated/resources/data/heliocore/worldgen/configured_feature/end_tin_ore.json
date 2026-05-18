@@ -6,7 +6,7 @@
     "targets": [
       {
         "state": {
-          "Name": "heliocore:gcc_block_tin_ore"
+          "Name": "heliocore:tin_ore"
         },
         "target": {
           "block": "minecraft:end_stone",

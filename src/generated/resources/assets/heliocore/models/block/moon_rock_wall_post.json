@@ -1,0 +1,6 @@
+{
+  "parent": "heliocore:block/tinted_wall_post",
+  "textures": {
+    "wall": "heliocore:block/moon_rock"
+  }
+}

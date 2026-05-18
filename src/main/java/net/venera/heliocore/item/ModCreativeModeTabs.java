@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 public class ModCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TAB = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, HeliopauseCore.MOD_ID);
 
-    public static final Supplier<CreativeModeTab> GALACTICRAFT_CORE_ITEMS = CREATIVE_MODE_TAB.register("galacticraftcore_items",
+    public static final Supplier<CreativeModeTab> HELIOPAUSE_CORE_ITEMS = CREATIVE_MODE_TAB.register("heliocore_items",
             () -> CreativeModeTab.builder()
                     .icon(() -> new ItemStack(ModItems.RADIOACTIVE_CORE.get()))
                     .title(Component.translatable("creativetab.galacticraftcore_items"))
@@ -38,7 +38,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.DEHYDRATED_CHICKEN.get());
                         output.accept(ModItems.DEHYDRATED_BEEF.get());
                         output.accept(ModItems.CHEESE_SLICE.get());
-                        output.accept(ModItems.CHEESEBURGER.get());
+                        output.accept(ModItems.HAMBURGER.get());
                         output.accept(ModItems.RADIOACTIVE_CORE.get());
                         output.accept(ModItems.RAW_ALUMINIUM.get());
                         output.accept(ModItems.RAW_TIN.get());
@@ -73,11 +73,11 @@ public class ModCreativeModeTabs {
                     .build()
     );
 
-    public static final Supplier<CreativeModeTab> GALACTICRAFT_CORE_BLOCKS = CREATIVE_MODE_TAB.register("galacticraftcore_blocks",
+    public static final Supplier<CreativeModeTab> HELIOPAUSE_CORE_BLOCKS = CREATIVE_MODE_TAB.register("heliocore_blocks",
             () -> CreativeModeTab.builder()
                     .icon(() -> new ItemStack(ModBlocks.RADIOACTIVE_BLOCK.get()))
-                    .title(Component.translatable("creativetab.galacticraftcore_blocks"))
-                    .withTabsBefore(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "galacticraftcore_items"))
+                    .title(Component.translatable("creativetab.heliocore_blocks"))
+                    .withTabsBefore(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "heliocore_items"))
                     .displayItems((parameters, output) -> {
                         output.accept(ModBlocks.ALUMINIUM_ORE.get());
                         output.accept(ModBlocks.DEEPSLATE_ALUMINIUM_ORE.get());
@@ -85,7 +85,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.RADIOACTIVE_BLOCK.get());
                         output.accept(ModBlocks.CHEESE_BLOCK.get());
                         output.accept(ModBlocks.PIZZA_BLOCK.get());
-                        output.accept(ModBlocks.MOON_TURF.get());
+                        output.accept(ModBlocks.MOON_REGOLITH.get());
                         output.accept(ModBlocks.MOON_DIRT.get());
                         output.accept(ModBlocks.MOON_ROCK.get());
                         output.accept(ModBlocks.TIN_BUILDING_BLOCK.get());

@@ -71,8 +71,7 @@ public abstract class BaseMachineBlock<T extends BaseMachineEntity> extends Base
             if (!level.isClientSide) {
                 GridManager.get(level).onMachineBroken(level, pos); // Trigger broken
             }
-
-            // ... (keep your existing drops logic here) ...
+            
             if (level.getBlockEntity(pos) instanceof BaseMachineEntity blockEntity) {
                 blockEntity.drops();
                 level.updateNeighbourForOutputSignal(pos, this);

@@ -40,11 +40,8 @@ public class FluidTankRenderer implements BlockEntityRenderer<FluidTankEntity> {
         float yMax = 0.999f;
 
         float fillPercentage = entity.getFluidAmount() / (float) FluidTankEntity.FLUID_TANK_CAPACITY;
-
-        // The fluid starts at the new floor (yMin) and rises towards the ceiling (yMax)
         float fluidTop = yMin + (fillPercentage * (yMax - yMin));
-
-        // 4. PREVENT TEXTURE STRETCHING (UV Interpolation)
+        
         float u0 = sprite.getU0();
         float u1 = sprite.getU1();
         float v0 = sprite.getV0();
@@ -55,39 +52,37 @@ public class FluidTankRenderer implements BlockEntityRenderer<FluidTankEntity> {
         VertexConsumer builder = bufferSource.getBuffer(RenderType.translucent());
         Matrix4f pose = poseStack.last().pose();
 
-        // 5. Draw 6 Faces (using xzMin/xzMax for sides, and yMin/fluidTop for heights)
-
-        // NORTH FACE (-Z)
+        //NORTH FACE (-Z)
         builder.addVertex(pose, xzMax, yMin, xzMin).setColor(r, g, b, a).setUv(u0, v1).setLight(packedLight).setNormal(0, 0, -1);
         builder.addVertex(pose, xzMin, yMin, xzMin).setColor(r, g, b, a).setUv(u1, v1).setLight(packedLight).setNormal(0, 0, -1);
         builder.addVertex(pose, xzMin, fluidTop, xzMin).setColor(r, g, b, a).setUv(u1, vTop).setLight(packedLight).setNormal(0, 0, -1);
         builder.addVertex(pose, xzMax, fluidTop, xzMin).setColor(r, g, b, a).setUv(u0, vTop).setLight(packedLight).setNormal(0, 0, -1);
 
-        // SOUTH FACE (+Z)
+        //SOUTH FACE (+Z)
         builder.addVertex(pose, xzMin, yMin, xzMax).setColor(r, g, b, a).setUv(u0, v1).setLight(packedLight).setNormal(0, 0, 1);
         builder.addVertex(pose, xzMax, yMin, xzMax).setColor(r, g, b, a).setUv(u1, v1).setLight(packedLight).setNormal(0, 0, 1);
         builder.addVertex(pose, xzMax, fluidTop, xzMax).setColor(r, g, b, a).setUv(u1, vTop).setLight(packedLight).setNormal(0, 0, 1);
         builder.addVertex(pose, xzMin, fluidTop, xzMax).setColor(r, g, b, a).setUv(u0, vTop).setLight(packedLight).setNormal(0, 0, 1);
 
-        // WEST FACE (-X)
+        //WEST FACE (-X)
         builder.addVertex(pose, xzMin, yMin, xzMin).setColor(r, g, b, a).setUv(u0, v1).setLight(packedLight).setNormal(-1, 0, 0);
         builder.addVertex(pose, xzMin, yMin, xzMax).setColor(r, g, b, a).setUv(u1, v1).setLight(packedLight).setNormal(-1, 0, 0);
         builder.addVertex(pose, xzMin, fluidTop, xzMax).setColor(r, g, b, a).setUv(u1, vTop).setLight(packedLight).setNormal(-1, 0, 0);
         builder.addVertex(pose, xzMin, fluidTop, xzMin).setColor(r, g, b, a).setUv(u0, vTop).setLight(packedLight).setNormal(-1, 0, 0);
 
-        // EAST FACE (+X)
+        //EAST FACE (+X)
         builder.addVertex(pose, xzMax, yMin, xzMax).setColor(r, g, b, a).setUv(u0, v1).setLight(packedLight).setNormal(1, 0, 0);
         builder.addVertex(pose, xzMax, yMin, xzMin).setColor(r, g, b, a).setUv(u1, v1).setLight(packedLight).setNormal(1, 0, 0);
         builder.addVertex(pose, xzMax, fluidTop, xzMin).setColor(r, g, b, a).setUv(u1, vTop).setLight(packedLight).setNormal(1, 0, 0);
         builder.addVertex(pose, xzMax, fluidTop, xzMax).setColor(r, g, b, a).setUv(u0, vTop).setLight(packedLight).setNormal(1, 0, 0);
 
-        // TOP FACE (+Y)
+        //TOP FACE (+Y)
         builder.addVertex(pose, xzMin, fluidTop, xzMax).setColor(r, g, b, a).setUv(u0, v1).setLight(packedLight).setNormal(0, 1, 0);
         builder.addVertex(pose, xzMax, fluidTop, xzMax).setColor(r, g, b, a).setUv(u1, v1).setLight(packedLight).setNormal(0, 1, 0);
         builder.addVertex(pose, xzMax, fluidTop, xzMin).setColor(r, g, b, a).setUv(u1, v0).setLight(packedLight).setNormal(0, 1, 0);
         builder.addVertex(pose, xzMin, fluidTop, xzMin).setColor(r, g, b, a).setUv(u0, v0).setLight(packedLight).setNormal(0, 1, 0);
 
-        // BOTTOM FACE (-Y)
+        //BOTTOM FACE (-Y)
         builder.addVertex(pose, xzMin, yMin, xzMin).setColor(r, g, b, a).setUv(u0, v0).setLight(packedLight).setNormal(0, -1, 0);
         builder.addVertex(pose, xzMax, yMin, xzMin).setColor(r, g, b, a).setUv(u1, v0).setLight(packedLight).setNormal(0, -1, 0);
         builder.addVertex(pose, xzMax, yMin, xzMax).setColor(r, g, b, a).setUv(u1, v1).setLight(packedLight).setNormal(0, -1, 0);

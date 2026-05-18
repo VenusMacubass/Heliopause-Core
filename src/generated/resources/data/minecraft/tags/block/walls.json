@@ -1,7 +1,7 @@
 {
   "values": [
-    "heliocore:gcc_block_tin_building_wall",
-    "heliocore:gcc_block_moon_rock_wall",
-    "heliocore:gcc_block_moon_dungeon_brick_wall"
+    "heliocore:tin_building_wall",
+    "heliocore:moon_rock_wall",
+    "heliocore:moon_dungeon_brick_wall"
   ]
 }

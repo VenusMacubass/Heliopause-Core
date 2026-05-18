@@ -39,7 +39,6 @@ import org.joml.Matrix4f;
 import java.awt.*;
 
 
-//@Mod(value = GalacticraftCore.MOD_ID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = HeliopauseCore.MOD_ID, value = Dist.CLIENT)
 public class HeliopauseCoreClient {
     public HeliopauseCoreClient(ModContainer container) {

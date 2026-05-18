@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "heliocore:gcc_item_compressed_tin"
+            "items": "heliocore:compressed_tin"
           }
         ]
       },

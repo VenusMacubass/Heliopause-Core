@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "heliocore:block/moon_dungeon_brick_slab"
+    },
+    "type=double": {
+      "model": "heliocore:block/moon_dungeon_brick_slab_double"
+    },
+    "type=top": {
+      "model": "heliocore:block/moon_dungeon_brick_slab_top"
+    }
+  }
+}

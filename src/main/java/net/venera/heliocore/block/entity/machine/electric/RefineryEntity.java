@@ -167,7 +167,7 @@ public class RefineryEntity extends BaseElectricMachineEntity {
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("container.galacticraftcore.refinery");
+        return Component.translatable("container.heliocore.refinery");
     }
 
     @Override

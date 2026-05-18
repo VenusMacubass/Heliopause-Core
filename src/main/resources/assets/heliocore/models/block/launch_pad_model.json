@@ -3,8 +3,8 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/thin_block",
 	"textures": {
-		"particle": "heliocore:block/gcc_launch_pad",
-		"west": "heliocore:block/gcc_launch_pad"
+		"particle": "heliocore:block/launch_pad",
+		"west": "heliocore:block/launch_pad"
 	},
 	"elements": [
 		{

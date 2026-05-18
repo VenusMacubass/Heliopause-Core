@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "heliocore:gcc_block_silicon_block"
+            "items": "heliocore:silicon_block"
           }
         ]
       },

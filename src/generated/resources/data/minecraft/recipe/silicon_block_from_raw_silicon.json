@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "S": {
-      "item": "heliocore:gcc_item_raw_silicon"
+      "item": "heliocore:raw_silicon"
     }
   },
   "pattern": [
@@ -13,6 +13,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "heliocore:gcc_block_silicon_block"
+    "id": "heliocore:silicon_block"
   }
 }

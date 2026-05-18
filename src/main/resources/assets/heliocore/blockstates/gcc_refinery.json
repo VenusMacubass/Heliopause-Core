@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north": { "model": "heliocore:block/gcc_refinery" },
-    "facing=east":  { "model": "heliocore:block/gcc_refinery", "y": 90 },
-    "facing=west":  { "model": "heliocore:block/gcc_refinery", "y": 270 },
-    "facing=south": { "model": "heliocore:block/gcc_refinery", "y": 180 }
-  }
-}

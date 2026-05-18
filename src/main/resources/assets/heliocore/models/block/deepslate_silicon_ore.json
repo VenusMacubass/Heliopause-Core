@@ -2,6 +2,6 @@
   "parent": "heliocore:block/tinted_ore_template",
   "textures": {
     "base": "minecraft:block/deepslate",
-    "overlay": "heliocore:block/gcc_block_silicon_ore"
+    "overlay": "heliocore:block/silicon_ore"
   }
 }

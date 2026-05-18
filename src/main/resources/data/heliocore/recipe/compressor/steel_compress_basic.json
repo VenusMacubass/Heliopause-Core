@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "I": {
-      "item": "heliocore:gcc_item_compressed_iron"
+      "item": "heliocore:compressed_iron"
     },
     "C": {
       "item": "minecraft:coal"
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "heliocore:gcc_item_compressed_steel"
+    "id": "heliocore:compressed_steel"
   }
 }

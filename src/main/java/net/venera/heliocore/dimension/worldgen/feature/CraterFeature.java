@@ -57,7 +57,7 @@ public class CraterFeature extends Feature<CraterConfig> {
                 BlockPos rockPos = new BlockPos(worldX, actualFloorY - 2, worldZ);
                 
                 if (!level.isStateAtPosition(turfPos, state -> state.getBlock() == Blocks.BEDROCK)) {
-                    level.setBlock(turfPos, ModBlocks.MOON_TURF.get().defaultBlockState(), 2);
+                    level.setBlock(turfPos, ModBlocks.MOON_REGOLITH.get().defaultBlockState(), 2);
                     level.setBlock(dirtPos, ModBlocks.MOON_DIRT.get().defaultBlockState(), 2);
                     level.setBlock(rockPos, ModBlocks.MOON_ROCK.get().defaultBlockState(), 2);
                     placedAny = true;

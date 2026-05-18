@@ -1,9 +1,9 @@
-// 1.21.1	2026-05-18T14:57:49.9967875	Tags for minecraft:item mod id heliocore
-0f18cc4d91223a24c7b99d893f4be48ef70e06b7 data/heliocore/tags/item/canister.json
+// 1.21.1	2026-05-18T16:09:04.4972461	Tags for minecraft:item mod id heliocore
+e0bfc26d31f2a836e943fe7930590f71e8a3e74c data/heliocore/tags/item/canister.json
 6db9722aa3e98cc50f72ac4c0a991f901f7309c6 data/heliocore/tags/item/compressible_ingots.json
-14b89ff20627d4e4f730f0358b9a1078a6642fad data/minecraft/tags/item/axes.json
-8e1366a2c9825a706091d6e32f94b77d53fc369e data/minecraft/tags/item/hoes.json
-f2459043198f76864c6cd53e7b45846ccee69372 data/minecraft/tags/item/pickaxes.json
-378676578954d0fe2afb86ad9979a0604ef93f83 data/minecraft/tags/item/shovels.json
-fb163fc34267366baffe906300526971f35ce5a9 data/minecraft/tags/item/swords.json
-cd2ff39e2fbd4eb698ade50cb6f9c38fb5d421f7 data/minecraft/tags/item/trimmable_armor.json
+af79c9c489a78edac75a3387f25c4a1234d24420 data/minecraft/tags/item/axes.json
+eadf612e9df9ecf7e01f5542ffd0cb673bb233a9 data/minecraft/tags/item/hoes.json
+e5f462893a4978290ef49dbdfcb5cfcff431f332 data/minecraft/tags/item/pickaxes.json
+781aa11fe969de6f1686ba9be809fe5e61e5fd0a data/minecraft/tags/item/shovels.json
+163b4589f886ad9beae8cfcc12844b87dfc3a3ff data/minecraft/tags/item/swords.json
+e921f095548cea74411740f827d6d2202d906774 data/minecraft/tags/item/trimmable_armor.json

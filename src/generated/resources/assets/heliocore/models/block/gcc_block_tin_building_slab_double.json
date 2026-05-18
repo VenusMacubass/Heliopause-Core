@@ -1,6 +1,0 @@
-{
-  "parent": "heliocore:block/tinted_cube_all",
-  "textures": {
-    "all": "heliocore:block/gcc_block_tin_building_block"
-  }
-}

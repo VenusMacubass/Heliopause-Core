@@ -1,7 +1,0 @@
-{
-  "parent": "heliocore:block/tinted_ore_template",
-  "textures": {
-    "base": "minecraft:block/stone",
-    "overlay": "heliocore:block/gcc_block_silicon_ore"
-  }
-}

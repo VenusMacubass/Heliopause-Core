@@ -15,7 +15,7 @@ import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEnt
 import java.util.*;
 
 public class GridManager extends SavedData {
-    private static final String DATA_NAME = "galacticraft_energy_grids";
+    private static final String DATA_NAME = "heliopause_energy_grids";
 
     private final Map<Integer, EnergyGrid> activeGrids = new HashMap<>();
     private final Map<BlockPos, EnergyGrid> positionToGrid = new HashMap<>();

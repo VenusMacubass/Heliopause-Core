@@ -1,6 +1,6 @@
 {
   "values": [
-    "heliocore:gcc_block_moon_rock",
-    "heliocore:gcc_block_moon_turf"
+    "heliocore:moon_rock",
+    "heliocore:moon_regolith"
   ]
 }

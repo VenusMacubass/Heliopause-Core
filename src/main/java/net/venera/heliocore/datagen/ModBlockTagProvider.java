@@ -74,7 +74,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         
         tag(ModTags.Blocks.MOON_STONE_REPLACEABLES)
                 .add(ModBlocks.MOON_ROCK.get())
-                .add(ModBlocks.MOON_TURF.get());
+                .add(ModBlocks.MOON_REGOLITH.get());
         
     }
 }

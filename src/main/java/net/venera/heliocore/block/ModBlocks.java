@@ -28,33 +28,33 @@ public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(HeliopauseCore.MOD_ID);
 
     //region Metals & Ores
-    public static final DeferredBlock<Block> RAW_TIN_BLOCK = registerBlock("gcc_block_raw_tin_block",
+    public static final DeferredBlock<Block> RAW_TIN_BLOCK = registerBlock("raw_tin_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops()));
-    public static final DeferredBlock<Block> TIN_ORE = registerBlock("gcc_block_tin_ore",
+    public static final DeferredBlock<Block> TIN_ORE = registerBlock("tin_ore",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops()));
     public static final DeferredBlock<Block> DEEPSLATE_TIN_ORE = registerBlock("deepslate_tin_ore",
             () -> new Block(BlockBehaviour.Properties.of().strength(8f).requiresCorrectToolForDrops()));
-    public static final DeferredBlock<Block> TIN_BLOCK = registerBlock("gcc_block_tin_block",
+    public static final DeferredBlock<Block> TIN_BLOCK = registerBlock("tin_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops()));
-    public static final DeferredBlock<Block> MOON_COPPER_ORE = registerBlock("gcc_block_moon_copper_ore",
+    public static final DeferredBlock<Block> MOON_COPPER_ORE = registerBlock("moon_copper_ore",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops()));
-    public static final DeferredBlock<Block> MOON_TIN_ORE = registerBlock("gcc_block_moon_tin_ore",
+    public static final DeferredBlock<Block> MOON_TIN_ORE = registerBlock("moon_tin_ore",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops()));
     
     
-    public static final DeferredBlock<Block> RAW_ALUMINIUM_BLOCK = registerBlock("gcc_block_raw_aluminium_block",
+    public static final DeferredBlock<Block> RAW_ALUMINIUM_BLOCK = registerBlock("raw_aluminium_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops()));
-    public static final DeferredBlock<Block> ALUMINIUM_ORE = registerBlock("gcc_block_aluminium_ore",
+    public static final DeferredBlock<Block> ALUMINIUM_ORE = registerBlock("aluminium_ore",
             () -> new Block(BlockBehaviour.Properties.of().strength(3f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
     public static final DeferredBlock<Block> MOON_ALUMINIUM_ORE = registerBlock("moon_aluminium_ore",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(ModBlocks.ALUMINIUM_ORE.get())));
     public static final DeferredBlock<Block> DEEPSLATE_ALUMINIUM_ORE = registerBlock("deepslate_aluminium_ore",
             () -> new Block(BlockBehaviour.Properties.of().strength(3f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
-    public static final DeferredBlock<Block> ALUMINIUM_BLOCK = registerBlock("gcc_block_aluminium_block",
+    public static final DeferredBlock<Block> ALUMINIUM_BLOCK = registerBlock("aluminium_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
     
-    public static final DeferredBlock<Block> SILICON_ORE = registerBlock("gcc_block_silicon_ore",
+    public static final DeferredBlock<Block> SILICON_ORE = registerBlock("silicon_ore",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops()));
 
     public static final DeferredBlock<Block> MOON_SILICON_ORE = registerBlock("moon_silicon_ore",
@@ -63,10 +63,10 @@ public class ModBlocks {
     public static final DeferredBlock<Block> DEEPSLATE_SILICON_ORE = registerBlock("deepslate_silicon_ore",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops()));
 
-    public static final DeferredBlock<Block> SILICON_BLOCK = registerBlock("gcc_block_silicon_block",
+    public static final DeferredBlock<Block> SILICON_BLOCK = registerBlock("silicon_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops()));
 
-    public static final DeferredBlock<Block> IRIDIUM_BLOCK = registerBlock("gcc_block_iridium_block",
+    public static final DeferredBlock<Block> IRIDIUM_BLOCK = registerBlock("iridium_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(8f).requiresCorrectToolForDrops()));
 
     public static final DeferredBlock<Block> IRIDIUM_ORE = registerBlock("iridium_ore",
@@ -83,9 +83,9 @@ public class ModBlocks {
     //endregion
     
     //region Machines
-    public static final DeferredBlock<Block> COAL_COMPRESSOR = registerBlock("gcc_coal_compressor",
+    public static final DeferredBlock<Block> COAL_COMPRESSOR = registerBlock("coal_compressor",
             () -> new CoalCompressorBlock(BlockBehaviour.Properties.of().strength(2f).sound(SoundType.METAL)));
-    public static final DeferredBlock<Block> REFINERY = registerBlock("gcc_refinery",
+    public static final DeferredBlock<Block> REFINERY = registerBlock("refinery",
             () -> new RefineryBlock(BlockBehaviour.Properties.of().strength(2f).sound(SoundType.HEAVY_CORE)));
     public static final DeferredBlock<Block> ENERGY_STORAGE_UNIT = registerBlock("energy_storage_unit",
             () -> new EnergyStorageBlock(BlockBehaviour.Properties.of().strength(2f), ModBlockEntities.ENERGY_STORAGE_ENTITY));
@@ -95,54 +95,54 @@ public class ModBlocks {
     //endregion
     
     //region Moon
-    public static final DeferredBlock<Block> MOON_TURF = registerBlock("gcc_block_moon_turf",
+    public static final DeferredBlock<Block> MOON_REGOLITH = registerBlock("moon_regolith",
             () -> new Block(BlockBehaviour.Properties.of()));
-    public static final DeferredBlock<Block> MOON_DIRT = registerBlock("gcc_block_moon_dirt",
+    public static final DeferredBlock<Block> MOON_DIRT = registerBlock("moon_dirt",
             () -> new Block(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().sound(SoundType.GRAVEL)));
-    public static final DeferredBlock<Block> MOON_ROCK = registerBlock("gcc_block_moon_rock",
+    public static final DeferredBlock<Block> MOON_ROCK = registerBlock("moon_rock",
             () -> new Block(BlockBehaviour.Properties.of().sound(SoundType.GRAVEL)));
-    public static final DeferredBlock<Block> MOON_COBBLESTONE = registerBlock("gcc_block_moon_cobblestone",
+    public static final DeferredBlock<Block> MOON_COBBLESTONE = registerBlock("moon_cobblestone",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops()));
     public static final DeferredBlock<Block> MOON_DUNGEON_BRICKS = registerBlock("moon_dungeon_bricks",
             () -> new Block(BlockBehaviour.Properties.of().requiresCorrectToolForDrops()));
     
     
-    public static final DeferredBlock<WallBlock> MOON_ROCK_WALL = registerBlock("gcc_block_moon_rock_wall",
+    public static final DeferredBlock<WallBlock> MOON_ROCK_WALL = registerBlock("moon_rock_wall",
             ()-> new WallBlock(BlockBehaviour.Properties.of().strength(4f)));
-    public static final DeferredBlock<WallBlock> MOON_DUNGEON_BRICK_WALL = registerBlock("gcc_block_moon_dungeon_brick_wall",
+    public static final DeferredBlock<WallBlock> MOON_DUNGEON_BRICK_WALL = registerBlock("moon_dungeon_brick_wall",
             ()-> new WallBlock(BlockBehaviour.Properties.of().strength(4f)));
-    public static final DeferredBlock<StairBlock> MOON_ROCK_STAIRS = registerBlock("gcc_block_moon_rock_stairs",
+    public static final DeferredBlock<StairBlock> MOON_ROCK_STAIRS = registerBlock("moon_rock_stairs",
             ()-> new StairBlock(ModBlocks.MOON_ROCK.get().defaultBlockState(), BlockBehaviour.Properties.of().strength(4f)));
     public static final DeferredBlock<StairBlock> MOON_DUNGEON_BRICK_STAIRS = registerBlock("moon_dungeon_brick_stairs",
             ()-> new StairBlock(ModBlocks.MOON_DUNGEON_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.of().strength(4f)));
-    public static final DeferredBlock<SlabBlock> MOON_ROCK_SLAB = registerBlock("gcc_block_moon_rock_slab",
+    public static final DeferredBlock<SlabBlock> MOON_ROCK_SLAB = registerBlock("moon_rock_slab",
             ()-> new SlabBlock(BlockBehaviour.Properties.of().strength(4f)));
-    public static final DeferredBlock<SlabBlock> MOON_DUNGEON_BRICK_SLAB = registerBlock("gcc_block_moon_dungeon_brick_slab",
+    public static final DeferredBlock<SlabBlock> MOON_DUNGEON_BRICK_SLAB = registerBlock("moon_dungeon_brick_slab",
             ()-> new SlabBlock(BlockBehaviour.Properties.of().strength(4f)));
     //endregion
     
     public static final DeferredBlock<Block> RADIOACTIVE_BLOCK = registerBlock("radioactive_block",
             () -> new RadioactiveBlock(BlockBehaviour.Properties.of().strength(8f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
     
-    public static final DeferredBlock<Block> TIN_BUILDING_BLOCK = registerBlock("gcc_block_tin_building_block",
+    public static final DeferredBlock<Block> TIN_BUILDING_BLOCK = registerBlock("tin_building_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).sound(SoundType.METAL)));
 
-    public static final DeferredBlock<WallBlock> TIN_BUILDING_WALL = registerBlock("gcc_block_tin_building_wall",
+    public static final DeferredBlock<WallBlock> TIN_BUILDING_WALL = registerBlock("tin_building_wall",
             ()-> new WallBlock(BlockBehaviour.Properties.of().strength(4f)));
 
-    public static final DeferredBlock<StairBlock> TIN_BUILDING_STAIRS = registerBlock("gcc_block_tin_building_stairs",
+    public static final DeferredBlock<StairBlock> TIN_BUILDING_STAIRS = registerBlock("tin_building_stairs",
             ()-> new StairBlock(ModBlocks.TIN_BUILDING_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.of().strength(4f)));
 
-    public static final DeferredBlock<SlabBlock> TIN_BUILDING_SLAB = registerBlock("gcc_block_tin_building_slab",
+    public static final DeferredBlock<SlabBlock> TIN_BUILDING_SLAB = registerBlock("tin_building_slab",
             ()-> new SlabBlock(BlockBehaviour.Properties.of().strength(5f)));
 
-    public static final DeferredBlock<Block> ARC_LAMP = registerBlock("gcc_block_arc_lamp",
+    public static final DeferredBlock<Block> ARC_LAMP = registerBlock("arc_lamp",
             () -> new ArcLamp(BlockBehaviour.Properties.of().lightLevel(state -> state.getValue(ArcLamp.CLICKED) ? 15:0).noOcclusion().strength(2f)));
 
-    public static final DeferredBlock<Block> CHEESE_BLOCK = registerBlock("gcc_block_cheese_block",
+    public static final DeferredBlock<Block> CHEESE_BLOCK = registerBlock("cheese_block",
             () -> new CheeseBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE)));
 
-    public static final DeferredBlock<Block> LAUNCH_PAD = registerBlock("gcc_launch_pad",
+    public static final DeferredBlock<Block> LAUNCH_PAD = registerBlock("launch_pad",
             () -> new LaunchPadBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.REPEATER).strength(2f)));
 
     public static final DeferredBlock<Block> FLUID_TANK = registerBlock("fluid_tank",

@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "heliocore:item/gcc_item_cheese_block"
-  }
-}

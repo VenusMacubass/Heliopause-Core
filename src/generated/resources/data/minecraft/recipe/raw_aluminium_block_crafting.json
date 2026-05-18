@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "R": {
-      "item": "heliocore:gcc_item_raw_aluminium"
+      "item": "heliocore:raw_aluminium"
     }
   },
   "pattern": [
@@ -13,6 +13,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "heliocore:gcc_block_raw_aluminium_block"
+    "id": "heliocore:raw_aluminium_block"
   }
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "heliocore:block/tinted_cube_all",
+  "textures": {
+    "all": "heliocore:block/raw_tin_block",
+    "particle": "heliocore:block/raw_tin_block"
+  }
+}

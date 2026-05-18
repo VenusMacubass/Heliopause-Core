@@ -1,8 +1,0 @@
-{
-  "parent": "heliocore:block/tinted_slab",
-  "textures": {
-    "bottom": "heliocore:block/gcc_block_moon_rock",
-    "side": "heliocore:block/gcc_block_moon_rock",
-    "top": "heliocore:block/gcc_block_moon_rock"
-  }
-}

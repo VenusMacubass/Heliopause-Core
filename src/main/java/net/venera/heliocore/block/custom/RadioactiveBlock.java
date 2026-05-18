@@ -46,13 +46,13 @@ public class RadioactiveBlock extends Block {
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
             super.onPlace(state, level, pos, oldState, isMoving);
             if (!level.isClientSide) {
-                ((ServerLevel) level).scheduleTick(pos, this, 20);
+                level.scheduleTick(pos, this, 20);
             }
     }
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("tooltip.galacticraftcore.gcc_block_radioactive_block"));
+        tooltipComponents.add(Component.translatable("tooltip.heliocore.radioactive_block"));
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 }

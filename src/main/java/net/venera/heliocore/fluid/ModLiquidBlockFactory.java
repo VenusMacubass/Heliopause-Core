@@ -163,7 +163,7 @@ public class ModLiquidBlockFactory {
         fluidblock = ModBlocks.BLOCKS.register(name, () -> new LiquidBlockBlock(
 					Block.Properties.of().mapColor(mapColor).pushReaction(PushReaction.DESTROY).liquid().noCollission().strength(100.0F).replaceable().randomTicks().noLootTable().lightLevel(state -> luminosity), source, blockSupplier));
 
-		bucket = ModItems.ITEMS.register("gcc_item_" + name + "_bucket", () -> new LiquidBucketItem(new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1), source));
+		bucket = ModItems.ITEMS.register(name + "_bucket", () -> new LiquidBucketItem(new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1), source));
 	}
 
 	public static class Builder {

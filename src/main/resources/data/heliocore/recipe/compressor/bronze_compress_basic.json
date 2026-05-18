@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "C": {
-      "item": "heliocore:gcc_item_compressed_copper"
+      "item": "heliocore:compressed_copper"
     },
     "T": {
-      "item": "heliocore:gcc_item_compressed_tin"
+      "item": "heliocore:compressed_tin"
     }
   },
   "pattern": [
@@ -14,6 +14,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "heliocore:gcc_item_compressed_bronze"
+    "id": "heliocore:compressed_bronze"
   }
 }

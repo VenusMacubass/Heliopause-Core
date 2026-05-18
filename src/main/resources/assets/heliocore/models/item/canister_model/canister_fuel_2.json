@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "heliocore:item/canister/gcc_fuel_canister_2"
+    "layer0": "heliocore:item/canister/fuel_canister_2"
   }
 }

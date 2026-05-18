@@ -34,8 +34,8 @@ public class ModItemModelProvider extends ItemModelProvider {
     }
 
     ResourceLocation dungeonBrickTex = modLoc("block/dungeon_bricks");
-    ResourceLocation buildingBlockTex = modLoc("block/gcc_block_tin_building_block");
-    ResourceLocation moonRockTex = modLoc("block/gcc_block_moon_rock");
+    ResourceLocation buildingBlockTex = modLoc("block/tin_building_block");
+    ResourceLocation moonRockTex = modLoc("block/moon_rock");
 
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, HeliopauseCore.MOD_ID, existingFileHelper);
@@ -54,7 +54,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.DEHYDRATED_CHICKEN.get());
         basicItem(ModItems.DEHYDRATED_COD.get());
         basicItem(ModItems.CHEESE_SLICE.get());
-        basicItem(ModItems.CHEESEBURGER.get());
+        basicItem(ModItems.HAMBURGER.get());
 
         basicItem(ModFluids.CRUDE_OIL.getBucket());
         basicItem(ModFluids.REFINED_FUEL.getBucket());
@@ -141,11 +141,4 @@ public class ModItemModelProvider extends ItemModelProvider {
         this.withExistingParent(block.getId().getPath(), modLoc("block/tinted_wall_inventory"))
                 .texture("wall", texture);
     }
-    
-//    public void wallItem(DeferredBlock<?> block, DeferredBlock<?> baseBlock){
-//        this.withExistingParent(block.getId().getPath(), mcLoc("block/wall_inventory"))
-//                .texture("wall", ResourceLocation.fromNamespaceAndPath(GalacticraftCore.MOD_ID, "block/" + baseBlock.getId().getPath()));
-//    }
-    
-    
 }

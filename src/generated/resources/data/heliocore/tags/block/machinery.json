@@ -1,7 +1,7 @@
 {
   "values": [
-    "heliocore:gcc_coal_compressor",
-    "heliocore:gcc_refinery",
+    "heliocore:coal_compressor",
+    "heliocore:refinery",
     "heliocore:energy_storage_unit",
     "heliocore:basic_solar_block"
   ]

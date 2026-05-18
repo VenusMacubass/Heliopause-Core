@@ -6,7 +6,7 @@
       "item": "minecraft:stone"
     },
     "T": {
-      "item": "heliocore:gcc_item_compressed_tin"
+      "item": "heliocore:compressed_tin"
     }
   },
   "pattern": [
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "heliocore:gcc_block_tin_building_block"
+    "id": "heliocore:tin_building_block"
   }
 }

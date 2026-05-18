@@ -6,7 +6,7 @@
     "targets": [
       {
         "state": {
-          "Name": "heliocore:gcc_block_moon_tin_ore"
+          "Name": "heliocore:moon_tin_ore"
         },
         "target": {
           "predicate_type": "minecraft:tag_match",

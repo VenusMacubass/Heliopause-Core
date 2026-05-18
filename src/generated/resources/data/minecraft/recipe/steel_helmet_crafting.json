@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "S": {
-      "item": "heliocore:gcc_item_compressed_steel"
+      "item": "heliocore:compressed_steel"
     }
   },
   "pattern": [
@@ -12,6 +12,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "heliocore:gcc_item_steel_helmet"
+    "id": "heliocore:steel_helmet"
   }
 }

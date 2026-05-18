@@ -1,6 +1,0 @@
-{
-  "parent":"heliocore:block/launch_pad_model",
-  "textures": {
-    "layer0": "heliocore:block/gcc_launch_pad"
-  }
-}

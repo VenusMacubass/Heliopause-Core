@@ -29,7 +29,7 @@ public record CanisterData(@Nullable ResourceLocation fluidId, int amount) {
                             buf.writeBoolean(true);
                             buf.writeResourceLocation(data.fluidId());
                         }
-                        buf.writeVarInt(data.amount()); //write amount as varint
+                        buf.writeVarInt(data.amount()); //write amount as variant
                     },
                     
                     buf -> { // decoder: read data back from buffer

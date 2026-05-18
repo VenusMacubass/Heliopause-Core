@@ -72,9 +72,9 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
                     "Energy: " + currentEnergy + " / " + maxEnergy + " FE"), x, y);
         }
 
-        if(isMouseOver(x, y, sunX, sunY, sunArea, sunArea)){
+        if(isMouseOver(x, y, sunX, sunY, sunArea, sunArea) && menu.data.get(4) > 0) {
             guiGraphics.renderTooltip(font, Component.literal(
-                            "Sun is visible."),x,y);
+                    "Sun is visible."),x,y);
         }
     }
 

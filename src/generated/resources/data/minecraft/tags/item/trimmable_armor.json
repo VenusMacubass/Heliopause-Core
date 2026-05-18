@@ -1,8 +1,8 @@
 {
   "values": [
-    "heliocore:gcc_item_steel_helmet",
-    "heliocore:gcc_item_steel_chestplate",
-    "heliocore:gcc_item_steel_leggings",
-    "heliocore:gcc_item_steel_boots"
+    "heliocore:steel_helmet",
+    "heliocore:steel_chestplate",
+    "heliocore:steel_leggings",
+    "heliocore:steel_boots"
   ]
 }

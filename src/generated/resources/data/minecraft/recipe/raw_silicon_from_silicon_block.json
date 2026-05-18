@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "heliocore:gcc_block_silicon_block"
+      "item": "heliocore:silicon_block"
     }
   ],
   "result": {
     "count": 9,
-    "id": "heliocore:gcc_item_raw_silicon"
+    "id": "heliocore:raw_silicon"
   }
 }

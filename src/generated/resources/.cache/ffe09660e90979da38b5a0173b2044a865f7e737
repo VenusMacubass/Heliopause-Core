@@ -1,11 +1,11 @@
-// 1.21.1	2026-05-18T14:57:49.9886341	Tags for minecraft:block mod id heliocore
+// 1.21.1	2026-05-18T16:09:04.4886602	Tags for minecraft:block mod id heliocore
 4bdfaa8683cef3fe3c678ecbd48b25091d141649 data/heliocore/tags/block/incorrect_for_steel_tool.json
-82cd1b9ecc99ebfb2abd8c4e9c365c85f2baae76 data/heliocore/tags/block/machinery.json
-8333d48f602a331142a73ecd0790b5940437244d data/heliocore/tags/block/moon_stone_replaceables.json
+895bf4be18ef6ea3d78dbe84749898d0cfa069e8 data/heliocore/tags/block/machinery.json
+f38bce80e1e6dab905444a9cc547d6cc74a4edb1 data/heliocore/tags/block/moon_stone_replaceables.json
 32b13946c4cd1f944b029659ccce5fcb2adad4ff data/heliocore/tags/block/needs_steel_tools.json
-143c437c6c0d9320e392ba7c91fe2e07d4166ab6 data/minecraft/tags/block/mineable/pickaxe.json
-10bdc9badd160cfb893e9b37587853cb319e1b9e data/minecraft/tags/block/mineable/shovel.json
+56fde0303e9d93d8bb8a1d58ca8cb1479609b7f0 data/minecraft/tags/block/mineable/pickaxe.json
+17a611661c51cb3629a693880a93f4f9e3d0074a data/minecraft/tags/block/mineable/shovel.json
 8282fbf38887abc9700f2cfa706fd00df0031a3f data/minecraft/tags/block/needs_diamond_tool.json
-32d259f0e50d2f422b52385374e72d1bf34df802 data/minecraft/tags/block/needs_iron_tool.json
-4f7a6d1f2951f325444c272f0b3c9b4de52807f1 data/minecraft/tags/block/needs_stone_tool.json
-0d7be9ec40243a692aab7305de9fda6cd80da639 data/minecraft/tags/block/walls.json
+a25459ea4f30deaea5f87877dc4c7f0948d3f532 data/minecraft/tags/block/needs_iron_tool.json
+b24546a15f25d9d0d7282b29fd1c1630020f6bdb data/minecraft/tags/block/needs_stone_tool.json
+1c81ee58214935be873441c459e4a9ea65489054 data/minecraft/tags/block/walls.json

@@ -1,0 +1,6 @@
+{
+  "parent":"heliocore:block/launch_pad_model",
+  "textures": {
+    "layer0": "heliocore:block/launch_pad"
+  }
+}

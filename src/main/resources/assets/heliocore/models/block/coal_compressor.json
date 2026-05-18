@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "heliocore:block/machine/machine",
+        "down": "heliocore:block/machine/machine_bottom",
+        "up": "heliocore:block/machine/machine",
+        "north": "heliocore:block/machine/coal_compressor",
+        "east": "heliocore:block/machine/machine_side",
+        "south": "heliocore:block/machine/machine_side",
+        "west": "heliocore:block/machine/machine_side"
+    }
+}

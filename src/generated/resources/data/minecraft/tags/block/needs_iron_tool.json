@@ -1,7 +1,7 @@
 {
   "values": [
-    "heliocore:gcc_block_aluminium_ore",
-    "heliocore:gcc_block_aluminium_block",
-    "heliocore:gcc_block_silicon_ore"
+    "heliocore:aluminium_ore",
+    "heliocore:aluminium_block",
+    "heliocore:silicon_ore"
   ]
 }

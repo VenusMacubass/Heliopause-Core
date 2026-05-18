@@ -2,8 +2,8 @@
 	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"particle": "heliocore:block/gcc_launch_pad",
-		"west": "heliocore:block/gcc_launch_pad"
+		"particle": "heliocore:block/launch_pad",
+		"west": "heliocore:block/launch_pad"
 	},
 	"elements": [
 		{

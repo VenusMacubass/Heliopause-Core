@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "T": {
-      "item": "heliocore:gcc_block_tin_building_block"
+      "item": "heliocore:tin_building_block"
     }
   },
   "pattern": [
@@ -12,6 +12,6 @@
   ],
   "result": {
     "count": 6,
-    "id": "heliocore:gcc_block_tin_building_wall"
+    "id": "heliocore:tin_building_wall"
   }
 }

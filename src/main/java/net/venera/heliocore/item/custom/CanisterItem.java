@@ -69,7 +69,7 @@ public class CanisterItem extends Item {
     public Component getName(ItemStack stack) {
         var data = getCanisterData(stack);
         if (data != null && data.amount() > 0 && data.fluidId() != null) {
-            return Component.translatable("item.galacticraftcore.canister.filled",
+            return Component.translatable("item.heliocore.canister.filled",
                     super.getName(stack),
                     Component.translatable("fluid.heliocore." + data.fluidId().getPath()),
                     (int) ((data.amount() / (float) MAX_CAPACITY) * 100f));

@@ -1,6 +1,6 @@
 {
   "values": [
-    "heliocore:gcc_item_copper_canister",
-    "heliocore:gcc_item_tin_canister"
+    "heliocore:copper_canister",
+    "heliocore:tin_canister"
   ]
 }

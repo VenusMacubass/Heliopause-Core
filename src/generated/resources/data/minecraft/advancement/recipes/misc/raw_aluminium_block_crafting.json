@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "heliocore:gcc_item_raw_aluminium"
+            "items": "heliocore:raw_aluminium"
           }
         ]
       },

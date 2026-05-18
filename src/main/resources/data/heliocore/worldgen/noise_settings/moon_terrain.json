@@ -1,7 +1,7 @@
 {
   "aquifers_enabled": false,
   "default_block": {
-    "Name": "heliocore:gcc_block_moon_rock"
+    "Name": "heliocore:moon_rock"
   },
   "default_fluid": {
     "Name": "minecraft:air",
@@ -428,7 +428,7 @@
                 "then_run": {
                   "type": "minecraft:block",
                   "result_state": {
-                    "Name": "heliocore:gcc_block_moon_turf",
+                    "Name": "heliocore:moon_regolith",
                     "Properties": { "snowy": "false" }
                   }
                 }
@@ -436,7 +436,7 @@
               {
                 "type": "minecraft:block",
                 "result_state": {
-                  "Name": "heliocore:gcc_block_moon_dirt"
+                  "Name": "heliocore:moon_dirt"
                 }
               }
             ]
@@ -448,13 +448,13 @@
         "if_true": {
           "type": "minecraft:vertical_gradient",
           "false_at_and_above": { "absolute": 8 },
-          "random_name": "heliocore:gcc_block_moon_rock",
+          "random_name": "heliocore:moon_rock",
           "true_at_and_below": { "absolute": 0 }
         },
         "then_run": {
           "type": "minecraft:block",
           "result_state": {
-            "Name": "heliocore:gcc_block_moon_rock",
+            "Name": "heliocore:moon_rock",
             "Properties": { "axis": "y" }
           }
         }

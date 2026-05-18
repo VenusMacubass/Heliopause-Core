@@ -1,9 +1,9 @@
 {
   "parent": "block/cube",
   "textures": {
-    "particle": "heliocore:block/machine/gcc_machine",
+    "particle": "heliocore:block/machine/machine",
     "down": "heliocore:block/machine/machine_bottom",
-    "up": "heliocore:block/machine/gcc_machine",
+    "up": "heliocore:block/machine/machine",
     "north": "heliocore:block/machine/energy_storage_unit/energy_storage_unit_11",
     "east": "heliocore:block/machine/machine_energy_output",
     "south": "heliocore:block/machine/energy_storage_unit/energy_storage_unit_11",

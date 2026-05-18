@@ -216,7 +216,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_tin_canister", has(ModItems.TIN_CANISTER.get()))
                 .save(recipeOutput, "dehydrated_beef_crafting");
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.CHEESEBURGER.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.HAMBURGER.get())
                 .pattern(" B ")
                 .pattern("CP ")
                 .pattern(" B ")

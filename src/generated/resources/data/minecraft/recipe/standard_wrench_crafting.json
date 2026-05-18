@@ -3,10 +3,10 @@
   "category": "equipment",
   "key": {
     "C": {
-      "item": "heliocore:gcc_item_compressed_bronze"
+      "item": "heliocore:compressed_bronze"
     },
     "S": {
-      "item": "heliocore:gcc_item_compressed_steel"
+      "item": "heliocore:compressed_steel"
     }
   },
   "pattern": [
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "heliocore:gcc_item_standard_wrench"
+    "id": "heliocore:standard_wrench"
   }
 }

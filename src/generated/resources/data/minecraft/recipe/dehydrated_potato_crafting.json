@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "C": {
-      "item": "heliocore:gcc_item_tin_canister"
+      "item": "heliocore:tin_canister"
     },
     "P": {
       "item": "minecraft:potato"
@@ -15,6 +15,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "heliocore:gcc_item_dehydrated_potato"
+    "id": "heliocore:dehydrated_potato"
   }
 }

@@ -1,0 +1,17 @@
+{
+  "parent": "heliocore:block/tin_building_stairs",
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        135,
+        0
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    }
+  }
+}
