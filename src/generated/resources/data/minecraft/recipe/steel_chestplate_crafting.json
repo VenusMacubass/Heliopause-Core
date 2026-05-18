@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "S": {
-      "item": "galacticraftcore:gcc_item_compressed_steel"
+      "item": "heliocore:gcc_item_compressed_steel"
     }
   },
   "pattern": [
@@ -13,6 +13,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "galacticraftcore:gcc_item_steel_chestplate"
+    "id": "heliocore:gcc_item_steel_chestplate"
   }
 }

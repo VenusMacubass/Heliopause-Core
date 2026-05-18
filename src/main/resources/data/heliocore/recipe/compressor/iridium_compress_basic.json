@@ -1,0 +1,16 @@
+{
+  "type": "heliocore:coal_compressor",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "heliocore:iridium_ingot"
+    }
+  },
+  "pattern": [
+    "A"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:gcc_item_compressed_iridium"
+  }
+}

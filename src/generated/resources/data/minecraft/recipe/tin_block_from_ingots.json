@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "T": {
-      "item": "galacticraftcore:tin_ingot"
+      "item": "heliocore:tin_ingot"
     }
   },
   "pattern": [
@@ -13,6 +13,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "galacticraftcore:gcc_block_tin_block"
+    "id": "heliocore:gcc_block_tin_block"
   }
 }

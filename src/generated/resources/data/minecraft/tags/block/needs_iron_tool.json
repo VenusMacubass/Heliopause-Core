@@ -1,7 +1,7 @@
 {
   "values": [
-    "galacticraftcore:gcc_block_aluminium_ore",
-    "galacticraftcore:gcc_block_aluminium_block",
-    "galacticraftcore:gcc_block_silicon_ore"
+    "heliocore:gcc_block_aluminium_ore",
+    "heliocore:gcc_block_aluminium_block",
+    "heliocore:gcc_block_silicon_ore"
   ]
 }

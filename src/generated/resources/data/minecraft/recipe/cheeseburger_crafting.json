@@ -6,7 +6,7 @@
       "item": "minecraft:bread"
     },
     "C": {
-      "item": "galacticraftcore:gcc_item_cheese_slice"
+      "item": "heliocore:gcc_item_cheese_slice"
     },
     "P": {
       "item": "minecraft:cooked_beef"
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "galacticraftcore:gcc_item_cheeseburger"
+    "id": "heliocore:gcc_item_cheeseburger"
   }
 }

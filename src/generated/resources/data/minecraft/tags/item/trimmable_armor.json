@@ -1,8 +1,8 @@
 {
   "values": [
-    "galacticraftcore:gcc_item_steel_helmet",
-    "galacticraftcore:gcc_item_steel_chestplate",
-    "galacticraftcore:gcc_item_steel_leggings",
-    "galacticraftcore:gcc_item_steel_boots"
+    "heliocore:gcc_item_steel_helmet",
+    "heliocore:gcc_item_steel_chestplate",
+    "heliocore:gcc_item_steel_leggings",
+    "heliocore:gcc_item_steel_boots"
   ]
 }

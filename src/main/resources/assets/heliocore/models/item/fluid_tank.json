@@ -1,0 +1,7 @@
+{
+  "parent":"heliocore:block/fluid_tank_ace",
+  "textures": {
+    "layer0": "heliocore:block/fluid_tank",
+    "layer1": "heliocore:block/fluid_tank_base"
+  }
+}

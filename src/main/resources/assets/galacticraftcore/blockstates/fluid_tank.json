@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "configuration=0": {"model": "galacticraftcore:block/fluid_tank_ace"},
-    "configuration=1": {"model": "galacticraftcore:block/fluid_tank_bottom"},
-    "configuration=2": {"model": "galacticraftcore:block/fluid_tank_top"},
-    "configuration=3": {"model": "galacticraftcore:block/fluid_tank_vers"}
-  }
-}

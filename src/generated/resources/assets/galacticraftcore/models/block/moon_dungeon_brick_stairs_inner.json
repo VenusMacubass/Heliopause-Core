@@ -1,8 +1,0 @@
-{
-  "parent": "galacticraftcore:block/tinted_stairs_inner",
-  "textures": {
-    "bottom": "galacticraftcore:block/dungeon_bricks",
-    "side": "galacticraftcore:block/dungeon_bricks",
-    "top": "galacticraftcore:block/dungeon_bricks"
-  }
-}

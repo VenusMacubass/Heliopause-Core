@@ -1,8 +1,0 @@
-{
-  "parent": "galacticraftcore:block/tinted_stairs",
-  "textures": {
-    "bottom": "galacticraftcore:block/gcc_block_tin_building_block",
-    "side": "galacticraftcore:block/gcc_block_tin_building_block",
-    "top": "galacticraftcore:block/gcc_block_tin_building_block"
-  }
-}

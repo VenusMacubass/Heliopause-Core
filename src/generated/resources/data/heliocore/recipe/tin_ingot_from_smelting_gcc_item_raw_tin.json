@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 400,
+  "experience": 0.5,
+  "group": "tin_ingot",
+  "ingredient": {
+    "item": "heliocore:gcc_item_raw_tin"
+  },
+  "result": {
+    "count": 1,
+    "id": "heliocore:tin_ingot"
+  }
+}

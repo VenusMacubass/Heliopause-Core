@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "heliocore:block/radioactive_block"
+    }
+  }
+}

@@ -1,9 +1,0 @@
-{
-  "type": "neoforge:add_features",
-  "biomes": [
-    "galacticraftcore:lunar_maria",
-    "galacticraftcore:lunar_highlands"
-  ],
-  "features": "galacticraftcore:moon_tin_ore_placed",
-  "step": "underground_ores"
-}

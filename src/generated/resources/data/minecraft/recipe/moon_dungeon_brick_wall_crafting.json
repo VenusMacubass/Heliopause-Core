@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "L": {
-      "item": "galacticraftcore:moon_dungeon_bricks"
+      "item": "heliocore:moon_dungeon_bricks"
     }
   },
   "pattern": [
@@ -12,6 +12,6 @@
   ],
   "result": {
     "count": 6,
-    "id": "galacticraftcore:gcc_block_moon_dungeon_brick_wall"
+    "id": "heliocore:gcc_block_moon_dungeon_brick_wall"
   }
 }

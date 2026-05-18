@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "heliocore:block/machine/gcc_machine",
+    "down": "heliocore:block/machine/machine_bottom",
+    "up": "heliocore:block/machine/machine_solar_top",
+    "north": "heliocore:block/machine/machine_energy_output",
+    "east": "heliocore:block/machine/energy_storage_unit/energy_storage_unit_14",
+    "south": "heliocore:block/machine/machine_basic_solar_panel",
+    "west": "heliocore:block/machine/energy_storage_unit/energy_storage_unit_14"
+  }
+}

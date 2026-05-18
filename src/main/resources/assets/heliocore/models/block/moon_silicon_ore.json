@@ -1,0 +1,7 @@
+{
+  "parent": "heliocore:block/tinted_ore_template",
+  "textures": {
+    "base": "heliocore:block/gcc_block_moon_rock",
+    "overlay": "heliocore:block/gcc_block_silicon_ore"
+  }
+}

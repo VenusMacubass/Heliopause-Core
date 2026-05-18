@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "L": {
-      "item": "galacticraftcore:moon_dungeon_bricks"
+      "item": "heliocore:moon_dungeon_bricks"
     }
   },
   "pattern": [
@@ -13,6 +13,6 @@
   ],
   "result": {
     "count": 4,
-    "id": "galacticraftcore:moon_dungeon_brick_stairs"
+    "id": "heliocore:moon_dungeon_brick_stairs"
   }
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "heliocore:item/gcc_item_steel_shovel"
+  }
+}

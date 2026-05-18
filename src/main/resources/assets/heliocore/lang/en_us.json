@@ -1,0 +1,142 @@
+{
+  "tooltip.heliocore.gcc_block_radioactive_block": "This will burn your ass, stay away.",
+  "tooltip.heliocore.gcc_item_standard_wrench.shift_down": "How the tables turn...",
+  "tooltip.heliocore.gcc_item_standard_wrench": "Press shift for more info...",
+  "tooltip.heliocore.gcc_item_dehydrated_apple": "Dried apples for long space missions.",
+
+
+
+  "creativetab.galacticraftcore_items": "Galacticraft Items",
+  "creativetab.galacticraftcore_blocks": "Galacticraft Blocks",
+
+
+
+  "item.heliocore.iridium_ingot": "Iridium Ingot",
+  "item.heliocore.aluminium_ingot": "Aluminium Ingot",
+  "item.heliocore.gcc_item_standard_wrench": "Standard Wrench",
+  "item.heliocore.gcc_item_radioactive_core": "Radioactive Core",
+  "item.heliocore.gcc_item_copper_canister": "Copper Canister",
+  "item.heliocore.gcc_item_tin_canister": "Tin Canister",
+  "item.heliocore.gcc_item_dehydrated_apple": "Dehydrated Apple",
+  "item.heliocore.gcc_item_dehydrated_carrot": "Dehydrated Carrot",
+  "item.heliocore.gcc_item_dehydrated_potato": "Dehydrated Potato",
+  "item.heliocore.gcc_item_dehydrated_melon": "Dehydrated Melon",
+  "item.heliocore.gcc_item_dehydrated_beef": "Dehydrated Beef",
+  "item.heliocore.gcc_item_cheeseburger": "Cheeseburger",
+  "item.heliocore.gcc_item_cheese_slice": "Cheese Slice",
+  "item.heliocore.gcc_item_beef_patty": "Beef Patty",
+  "item.heliocore.gcc_item_beef_patty_raw": "Raw Beef Patty",
+  "item.heliocore.gcc_item_burger_bun": "Burger Bun",
+
+  "item.heliocore.gcc_item_raw_aluminium": "Raw Aluminium",
+  "item.heliocore.gcc_item_raw_tin": "Raw Tin",
+  "item.heliocore.gcc_item_raw_silicon": "Raw Silicon",
+  "item.heliocore.tin_ingot": "Tin Ingot",
+  "item.heliocore.gcc_item_raw_iridium": "Raw Iridium",
+  "item.heliocore.gcc_item_lunar_sapphire": "Lunar Sapphire",
+
+  "item.heliocore.gcc_item_compressed_aluminium": "Compressed Aluminium",
+  "item.heliocore.gcc_item_compressed_bronze": "Compressed Bronze",
+  "item.heliocore.gcc_item_compressed_copper": "Compressed Copper",
+  "item.heliocore.gcc_item_compressed_iridium": "Compressed Iridium",
+  "item.heliocore.gcc_item_compressed_iron": "Compressed Iron",
+  "item.heliocore.gcc_item_compressed_steel": "Compressed Steel",
+  "item.heliocore.gcc_item_compressed_tin": "Compressed Tin",
+  "item.heliocore.gcc_item_heavy_duty_plate": "Heavy Duty Plate",
+
+  "item.heliocore.gcc_item_sensor_lens": "Sensor Lens",
+  "item.heliocore.small_battery": "Small Battery",
+
+  "item.heliocore.glass_sword": "Glass Sword",
+  "item.heliocore.gcc_item_steel_sword": "Steel Sword",
+  "item.heliocore.gcc_item_steel_axe": "Steel Axe",
+  "item.heliocore.gcc_item_steel_pickaxe": "Steel Pickaxe",
+  "item.heliocore.gcc_item_steel_shovel": "Steel Shovel",
+  "item.heliocore.gcc_item_steel_hoe": "Steel Hoe",
+  "item.heliocore.gcc_item_steel_helmet": "Steel Helmet",
+  "item.heliocore.gcc_item_steel_chestplate": "Steel Chestplate",
+  "item.heliocore.gcc_item_steel_leggings": "Steel Leggings",
+  "item.heliocore.gcc_item_steel_boots": "Steel Boots",
+  "item.heliocore.gcc_item_crude_oil_bucket": "Crude Oil Bucket",
+  "item.heliocore.gcc_item_refined_fuel_bucket": "Refined Fuel Bucket",
+  
+  "item.heliocore.gcc_canister": "Fluid Canister",
+  "item.heliocore.canister": "Canister",
+  "item.heliocore.canister.filled": "%s (%d %%%s)",
+  
+  "fluid.heliocore.crude_oil": "Crude Oil",
+  "fluid.heliocore.refined_fuel": "Refined Fuel",
+
+
+
+
+
+  "block.heliocore.gcc_block_aluminium_ore": "Aluminium Ore",
+  "block.heliocore.gcc_block_aluminium_block": "Block of Aluminium",
+  "block.heliocore.gcc_block_radioactive_block": "Radioactive Block",
+  "block.heliocore.gcc_block_iridium_block": "Block of Iridium",
+  "block.heliocore.gcc_block_sapphire_ore": "Sapphire Ore",
+  "block.heliocore.gcc_block_cheese_block": "Cheese Block",
+  
+
+  "block.heliocore.gcc_block_moon_turf": "Moon Turf",
+  "block.heliocore.gcc_block_moon_dirt": "Moon Dirt",
+  "block.heliocore.gcc_block_moon_rock": "Moon Rock",
+
+  "block.heliocore.gcc_block_tin_building_block": "Tin Building Block",
+  "block.heliocore.gcc_block_tin_block": "Block of Tin",
+  "block.heliocore.gcc_block_tin_ore": "Tin Ore",
+  "block.heliocore.gcc_block_raw_tin_block": "Block of Raw Tin",
+  "block.heliocore.gcc_block_raw_aluminium_block": "Block of Raw Aluminium",
+  "block.heliocore.gcc_block_silicon_ore": "Silicon Ore",
+  "block.heliocore.gcc_block_silicon_block": "Block of Silicon",
+
+  "block.heliocore.gcc_block_moon_copper_ore": "Moon Copper Ore",
+  "block.heliocore.gcc_block_moon_tin_ore": "Moon Tin Ore",
+  "block.heliocore.gcc_block_moon_cobblestone": "Moon Cobblestone",
+  "block.heliocore.gcc_block_moon_dungeon_bricks": "Moon Dungeon Bricks",
+  "block.heliocore.gcc_block_mars_dungeon_bricks": "Mars Dungeon Bricks",
+  "block.heliocore.gcc_block_mars_rock": "Mars Rock",
+  "block.heliocore.gcc_block_mars_cobblestone": "Mars Cobblestone",
+
+  "block.heliocore.gcc_block_tin_building_wall": "Tin Building Wall",
+  "block.heliocore.gcc_block_moon_rock_wall": "Moon Rock Wall",
+  "block.heliocore.gcc_block_moon_dungeon_brick_wall": "Moon Dungeon Brick Wall",
+  "block.heliocore.gcc_block_tin_building_stairs": "Tin Building Stairs",
+  "block.heliocore.gcc_block_moon_rock_stairs": "Moon Rock Stairs",
+  "block.heliocore.gcc_block_moon_dungeon_brick_stairs": "Moon Dungeon Brick Stairs",
+  "block.heliocore.gcc_block_tin_building_slab": "Tin Building Slab",
+  "block.heliocore.gcc_block_moon_rock_slab": "Moon Rock Slab",
+  "block.heliocore.gcc_block_moon_dungeon_brick_slab": "Moon Dungeon Brick Slab",
+  "block.heliocore.gcc_block_mars_cobblestone_wall": "Mars Cobblestone Wall",
+  "block.heliocore.gcc_block_mars_dungeon_brick_wall": "Mars Dungeon Brick Wall",
+  "block.heliocore.gcc_block_mars_cobblestone_slab": "Mars Cobblestone Slab",
+  "block.heliocore.gcc_block_mars_dungeon_brick_slab": "Mars Dungeon Brick Slab",
+  
+  "block.heliocore.gcc_block_arc_lamp": "Arc Lamp",
+  "block.heliocore.prismatic_glass": "Prismatic Glass",
+  "block.heliocore.gcc_launch_pad": "Launch Pad",
+  "block.heliocore.fluid_tank": "Fluid Tank",
+  "block.heliocore.copper_wire": "Copper Wire",
+  "block.heliocore.rocket_bot": "Tier 1 Rocket",
+  "block.heliocore.copper_wire_block": "Copper Wire Block",
+
+  "block.heliocore.gcc_coal_compressor": "Coal Powered Compressor",
+  "block.heliocore.energy_storage_unit": "Energy Storage Unit",
+  "block.heliocore.gcc_refinery": "Oil Refinery",
+  "block.heliocore.basic_solar_block": "Basic Solar Panel",
+
+
+  "block.heliocore.coal_compressor_menu_name": "Coal Powered Compressor",
+  "block.minecraft.coal_compressor": "Coal Compressor",
+  "block.heliocore.refinery_menu_name": "Refinery",
+  "container.heliocore.refinery": "Lol lol",
+
+
+
+
+
+
+
+  "death.attack.radiation_damage": "%1$s succumbed to radiation poisoning."
+}

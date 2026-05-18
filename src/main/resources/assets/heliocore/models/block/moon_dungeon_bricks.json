@@ -1,0 +1,7 @@
+{
+  "parent": "heliocore:block/tinted_cube_all",
+  "textures": {
+    "all": "heliocore:block/dungeon_bricks",
+    "particle": "heliocore:block/dungeon_bricks"
+  }
+}

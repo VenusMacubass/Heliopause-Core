@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "heliocore:block/copper_wire_block"
+    }
+  }
+}

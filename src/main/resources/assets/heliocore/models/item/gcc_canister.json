@@ -1,0 +1,21 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "heliocore:item/canister_empty"
+  },
+  "overrides": [
+    {"predicate": {"heliocore:fluid_type": 0}, "model": "heliocore:item/canister_model/canister_empty"},
+    {"predicate": {"heliocore:fluid_type": 1, "heliocore:fill_level": 0.16}, "model": "heliocore:item/canister_model/canister_oil_1"},
+    {"predicate": {"heliocore:fluid_type": 1, "heliocore:fill_level": 0.33}, "model": "heliocore:item/canister_model/canister_oil_2"},
+    {"predicate": {"heliocore:fluid_type": 1, "heliocore:fill_level": 0.5}, "model": "heliocore:item/canister_model/canister_oil_3"},
+    {"predicate": {"heliocore:fluid_type": 1, "heliocore:fill_level": 0.66}, "model": "heliocore:item/canister_model/canister_oil_4"},
+    {"predicate": {"heliocore:fluid_type": 1, "heliocore:fill_level": 0.83}, "model": "heliocore:item/canister_model/canister_oil_5"},
+    {"predicate": {"heliocore:fluid_type": 1, "heliocore:fill_level": 1.0}, "model": "heliocore:item/canister_model/canister_oil_full"},
+    {"predicate": {"heliocore:fluid_type": 2, "heliocore:fill_level": 0.16}, "model": "heliocore:item/canister_model/canister_fuel_1"},
+    {"predicate": {"heliocore:fluid_type": 2, "heliocore:fill_level": 0.33}, "model": "heliocore:item/canister_model/canister_fuel_2"},
+    {"predicate": {"heliocore:fluid_type": 2, "heliocore:fill_level": 0.5}, "model": "heliocore:item/canister_model/canister_fuel_3"},
+    {"predicate": {"heliocore:fluid_type": 2, "heliocore:fill_level": 0.66}, "model": "heliocore:item/canister_model/canister_fuel_4"},
+    {"predicate": {"heliocore:fluid_type": 2, "heliocore:fill_level": 0.83}, "model": "heliocore:item/canister_model/canister_fuel_5"},
+    {"predicate": {"heliocore:fluid_type": 2, "heliocore:fill_level": 1.0}, "model": "heliocore:item/canister_model/canister_fuel_full"}
+  ]
+}

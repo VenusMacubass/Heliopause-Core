@@ -1,0 +1,8 @@
+{
+  "parent": "heliocore:block/tinted_stairs",
+  "textures": {
+    "bottom": "heliocore:block/dungeon_bricks",
+    "side": "heliocore:block/dungeon_bricks",
+    "top": "heliocore:block/dungeon_bricks"
+  }
+}

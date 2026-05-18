@@ -1,7 +1,7 @@
 {
   "values": [
-    "galacticraftcore:gcc_block_tin_building_wall",
-    "galacticraftcore:gcc_block_moon_rock_wall",
-    "galacticraftcore:gcc_block_moon_dungeon_brick_wall"
+    "heliocore:gcc_block_tin_building_wall",
+    "heliocore:gcc_block_moon_rock_wall",
+    "heliocore:gcc_block_moon_dungeon_brick_wall"
   ]
 }

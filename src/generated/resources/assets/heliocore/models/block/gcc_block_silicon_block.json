@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "heliocore:block/gcc_block_silicon_block"
+  }
+}

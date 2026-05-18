@@ -1,0 +1,19 @@
+{
+  "type": "heliocore:coal_compressor",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "heliocore:gcc_item_compressed_copper"
+    },
+    "T": {
+      "item": "heliocore:gcc_item_compressed_tin"
+    }
+  },
+  "pattern": [
+    "CT"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:gcc_item_compressed_bronze"
+  }
+}

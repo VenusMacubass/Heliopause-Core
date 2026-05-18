@@ -1,8 +1,0 @@
-{
-  "remove": [
-    "#galacticraftcore:needs_steel_tools"
-  ],
-  "values": [
-    "#minecraft:incorrect_for_iron_tool"
-  ]
-}

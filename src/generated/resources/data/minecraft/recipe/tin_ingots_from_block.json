@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "galacticraftcore:gcc_block_tin_block"
+      "item": "heliocore:gcc_block_tin_block"
     }
   ],
   "result": {
     "count": 9,
-    "id": "galacticraftcore:tin_ingot"
+    "id": "heliocore:tin_ingot"
   }
 }

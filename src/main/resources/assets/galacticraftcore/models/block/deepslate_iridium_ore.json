@@ -1,7 +1,0 @@
-{
-  "parent": "galacticraftcore:block/tinted_ore_template",
-  "textures": {
-    "base": "minecraft:block/deepslate",
-    "overlay": "galacticraftcore:block/iridium_ore"
-  }
-}

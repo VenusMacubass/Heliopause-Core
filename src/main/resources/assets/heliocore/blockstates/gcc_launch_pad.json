@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "is_center=false": {
+      "model": "heliocore:block/launch_pad_model"
+    },
+    "is_center=true": {
+      "model": "heliocore:block/launch_pad_center_model"
+    }
+  }
+}

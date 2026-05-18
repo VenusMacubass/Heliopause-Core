@@ -1,6 +1,0 @@
-{
-  "parent": "galacticraftcore:block/tinted_wall_side",
-  "textures": {
-    "wall": "galacticraftcore:block/dungeon_bricks"
-  }
-}

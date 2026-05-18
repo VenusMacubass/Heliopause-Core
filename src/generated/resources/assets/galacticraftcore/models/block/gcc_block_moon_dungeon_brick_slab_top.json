@@ -1,8 +1,0 @@
-{
-  "parent": "galacticraftcore:block/tinted_slab_top",
-  "textures": {
-    "bottom": "galacticraftcore:block/dungeon_bricks",
-    "side": "galacticraftcore:block/dungeon_bricks",
-    "top": "galacticraftcore:block/dungeon_bricks"
-  }
-}

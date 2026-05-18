@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "heliocore:lunar_highlands",
+  "features": "heliocore:highlands_crater_placed",
+  "step": "surface_structures"
+}

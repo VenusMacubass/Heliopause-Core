@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "galacticraftcore:iridium_ingot"
+            "items": "heliocore:iridium_ingot"
           }
         ]
       },

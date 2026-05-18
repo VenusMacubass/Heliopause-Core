@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "galacticraftcore:gcc_block_moon_rock"
+            "items": "heliocore:gcc_block_moon_rock"
           }
         ]
       },

@@ -1,0 +1,17 @@
+{
+  "type": "heliocore:coal_compressor",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "heliocore:aluminium_ingot"
+    }
+  },
+  "pattern": [
+    "A  ",
+    "A  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:gcc_item_compressed_aluminium"
+  }
+}

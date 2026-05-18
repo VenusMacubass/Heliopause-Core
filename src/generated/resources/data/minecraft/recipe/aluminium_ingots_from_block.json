@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "galacticraftcore:gcc_block_aluminium_block"
+      "item": "heliocore:gcc_block_aluminium_block"
     }
   ],
   "result": {
     "count": 9,
-    "id": "galacticraftcore:aluminium_ingot"
+    "id": "heliocore:aluminium_ingot"
   }
 }

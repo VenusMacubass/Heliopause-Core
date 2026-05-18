@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 400,
+  "experience": 1.8,
+  "group": "iridium_ingot",
+  "ingredient": {
+    "item": "heliocore:iridium_ore"
+  },
+  "result": {
+    "count": 1,
+    "id": "heliocore:iridium_ingot"
+  }
+}

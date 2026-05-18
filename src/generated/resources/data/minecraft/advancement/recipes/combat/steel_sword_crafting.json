@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "galacticraftcore:gcc_item_compressed_steel"
+            "items": "heliocore:gcc_item_compressed_steel"
           }
         ]
       },

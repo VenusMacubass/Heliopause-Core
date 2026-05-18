@@ -1,0 +1,6 @@
+{
+  "parent":"heliocore:block/arclamp/arclamp_off_north_model",
+  "textures": {
+    "layer0": "heliocore:block/arc_lamp_off"
+  }
+}

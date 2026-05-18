@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "T": {
-      "item": "galacticraftcore:gcc_block_tin_building_block"
+      "item": "heliocore:gcc_block_tin_building_block"
     }
   },
   "pattern": [
@@ -12,6 +12,6 @@
   ],
   "result": {
     "count": 6,
-    "id": "galacticraftcore:gcc_block_tin_building_wall"
+    "id": "heliocore:gcc_block_tin_building_wall"
   }
 }

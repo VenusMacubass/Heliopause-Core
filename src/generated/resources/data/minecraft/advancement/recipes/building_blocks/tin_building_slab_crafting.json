@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": "galacticraftcore:gcc_block_tin_building_block"
+            "items": "heliocore:gcc_block_tin_building_block"
           }
         ]
       },

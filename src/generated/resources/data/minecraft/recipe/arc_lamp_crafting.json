@@ -9,7 +9,7 @@
       "item": "minecraft:redstone_block"
     },
     "S": {
-      "item": "galacticraftcore:gcc_item_compressed_steel"
+      "item": "heliocore:gcc_item_compressed_steel"
     }
   },
   "pattern": [
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "galacticraftcore:gcc_block_arc_lamp"
+    "id": "heliocore:gcc_block_arc_lamp"
   }
 }

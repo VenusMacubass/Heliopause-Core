@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.5,
+  "group": "tin_ingot",
+  "ingredient": {
+    "item": "heliocore:gcc_block_tin_ore"
+  },
+  "result": {
+    "count": 1,
+    "id": "heliocore:tin_ingot"
+  }
+}

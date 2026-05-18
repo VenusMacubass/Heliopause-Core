@@ -1,0 +1,23 @@
+{
+  "type": "heliocore:coal_compressor",
+  "category": "misc",
+  "key": {
+    "S": {
+      "item": "heliocore:gcc_item_compressed_steel"
+    },
+    "A": {
+      "item": "heliocore:gcc_item_compressed_aluminium"
+    },
+    "B": {
+      "item": "heliocore:gcc_item_compressed_bronze"
+    }
+  },
+  "pattern": [
+    "SAB",
+    "SAB"
+  ],
+  "result": {
+    "count": 2,
+    "id": "heliocore:gcc_item_heavy_duty_plate"
+  }
+}

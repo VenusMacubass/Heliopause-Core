@@ -3,10 +3,10 @@
   "category": "equipment",
   "key": {
     "C": {
-      "item": "galacticraftcore:gcc_item_compressed_bronze"
+      "item": "heliocore:gcc_item_compressed_bronze"
     },
     "S": {
-      "item": "galacticraftcore:gcc_item_compressed_steel"
+      "item": "heliocore:gcc_item_compressed_steel"
     }
   },
   "pattern": [
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "galacticraftcore:gcc_item_standard_wrench"
+    "id": "heliocore:gcc_item_standard_wrench"
   }
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "heliocore:block/tinted_wall_side",
+  "textures": {
+    "wall": "heliocore:block/gcc_block_tin_building_block"
+  }
+}

@@ -1,6 +1,0 @@
-{
-  "parent":"galacticraftcore:block/arclamp/arclamp_off_north_model",
-  "textures": {
-    "layer0": "galacticraftcore:block/arc_lamp_off"
-  }
-}

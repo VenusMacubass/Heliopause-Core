@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "L": {
-      "item": "galacticraftcore:gcc_block_moon_rock"
+      "item": "heliocore:gcc_block_moon_rock"
     }
   },
   "pattern": [
@@ -12,6 +12,6 @@
   ],
   "result": {
     "count": 6,
-    "id": "galacticraftcore:gcc_block_moon_rock_wall"
+    "id": "heliocore:gcc_block_moon_rock_wall"
   }
 }

@@ -1,0 +1,17 @@
+{
+  "type": "heliocore:coal_compressor",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "pattern": [
+    "C  ",
+    "C  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:gcc_item_compressed_copper"
+  }
+}

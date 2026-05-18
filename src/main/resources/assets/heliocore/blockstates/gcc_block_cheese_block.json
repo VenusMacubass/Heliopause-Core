@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "slices=0": { "model": "heliocore:block/cheese/cheese_0th_model" },
+    "slices=1": { "model": "heliocore:block/cheese/cheese_1st_model" },
+    "slices=2": { "model": "heliocore:block/cheese/cheese_2nd_model" },
+    "slices=3": { "model": "heliocore:block/cheese/cheese_3rd_model" },
+    "slices=4": { "model": "heliocore:block/cheese/cheese_4th_model" },
+    "slices=5": { "model": "heliocore:block/cheese/cheese_5th_model" },
+    "slices=6": { "model": "heliocore:block/cheese/cheese_6th_model" }
+  }
+}

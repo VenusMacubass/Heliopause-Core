@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-    "id": "galacticraftcore:moon_poi",
+    "id": "heliocore:moon_poi",
     "required": false
   }]
 }

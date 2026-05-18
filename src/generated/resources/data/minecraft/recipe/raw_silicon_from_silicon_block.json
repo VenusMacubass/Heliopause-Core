@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "galacticraftcore:gcc_block_silicon_block"
+      "item": "heliocore:gcc_block_silicon_block"
     }
   ],
   "result": {
     "count": 9,
-    "id": "galacticraftcore:gcc_item_raw_silicon"
+    "id": "heliocore:gcc_item_raw_silicon"
   }
 }

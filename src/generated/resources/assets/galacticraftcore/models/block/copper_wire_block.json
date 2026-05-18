@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "galacticraftcore:block/copper_wire_block"
-  }
-}

@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "C": {
-      "item": "galacticraftcore:gcc_item_compressed_steel"
+      "item": "heliocore:gcc_item_compressed_steel"
     },
     "S": {
       "item": "minecraft:stick"
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "galacticraftcore:gcc_item_steel_sword"
+    "id": "heliocore:gcc_item_steel_sword"
   }
 }
