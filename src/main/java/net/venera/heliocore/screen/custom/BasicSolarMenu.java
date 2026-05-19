@@ -35,7 +35,7 @@ public class BasicSolarMenu extends AbstractContainerMenu {
         addPlayerInventory(inventory);
         addPlayerHotbar(inventory);
 
-        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 0, 152, 83) {
+        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 0, 152, 29) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return  stack.getItem() instanceof BatteryItem;
@@ -95,14 +95,14 @@ public class BasicSolarMenu extends AbstractContainerMenu {
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 119 + i * 18));
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 51 + i * 18));
             }
         }
     }
 
     private void addPlayerHotbar(Inventory playerInventory) {
         for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 177));
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 109));
         }
     }
     
