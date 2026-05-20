@@ -12,7 +12,7 @@ import net.venera.heliocore.HeliopauseCore;
 public class EnergyStorageUnitScreen extends AbstractContainerScreen<EnergyStorageUnitMenu> {
     private static final ResourceLocation GUI_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/energy_storage_unit/energy_storage_unit.png");
-
+  
     public EnergyStorageUnitScreen(EnergyStorageUnitMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
     }
@@ -24,20 +24,18 @@ public class EnergyStorageUnitScreen extends AbstractContainerScreen<EnergyStora
         RenderSystem.setShaderTexture(0, GUI_TEXTURE);
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
-        guiGraphics.blit(GUI_TEXTURE, x, y, 0, 0, 175, 165);
+        guiGraphics.blit(GUI_TEXTURE, x, y, 0, 0, 175, 132);
 
-        int currentEnergy = menu.data.get(0);
-        int capacity = menu.data.get(1);
-        int chargeLength = 0;
-        if (capacity > 0 && currentEnergy > 0) {
-            if (currentEnergy >= capacity) {
-                chargeLength = 72;
-            } else {
-                chargeLength = Math.round(((float) currentEnergy / capacity) * 72);
-            }
+        int chargeLength = menu.getEnergyScaled(54);
+        if (chargeLength > 0) {
+            int startX = x + 61;
+            int startY = y + 24;
+            int endX = startX + chargeLength;
+            int endY = startY + 7;
+
+            //(FF: opacity, FF being opaque), rest is rgb
+            guiGraphics.fill(startX, startY, endX, endY, 0xFFFFE400);
         }
-        //guiGraphics.blit(SOURCE_GUI, whereToDrawX, whereToDrawY, textureX, textureY, textureW, textureH);
-        guiGraphics.blit(GUI_TEXTURE, x + 87, y + 52, 176, 0, chargeLength, 3);
     }
 
     @Override
@@ -45,10 +43,10 @@ public class EnergyStorageUnitScreen extends AbstractContainerScreen<EnergyStora
         super.renderTooltip(guiGraphics, x, y);
         int imageX = (width - imageWidth) / 2;
         int imageY = (height - imageHeight) / 2;
-        int energyX = imageX + 86;
-        int energyY = imageY + 51;
-        int energyWidth = 73;
-        int energyHeight = 4;
+        int energyX = imageX + 61;
+        int energyY = imageY + 24;
+        int energyWidth = 54;
+        int energyHeight = 7;
 
         if (isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)) {
             guiGraphics.renderTooltip(font,
@@ -58,6 +56,12 @@ public class EnergyStorageUnitScreen extends AbstractContainerScreen<EnergyStora
         }
     }
 
+    @Override
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        guiGraphics.drawString(this.font, this.title, 7, 4, 0x404040, false);
+        guiGraphics.drawString(this.font, this.playerInventoryTitle, 7, 40, 0x404040, false);
+    }
+    
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);

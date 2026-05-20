@@ -34,14 +34,14 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
         guiGraphics.blit(BASIC_SOLAR_SCREEN_GUI, x, y, 0, 0, 176, 133); //Gui
-        guiGraphics.blit(SUN_ICON_INACTIVE, x+15, y+30, 0, 0, 8, 8 , 8, 8); //Sun Icon (Inactive)
+        guiGraphics.blit(SUN_ICON_INACTIVE, x+15, y+22, 0, 0, 8, 8 , 8, 8); //Sun Icon (Inactive)
 
         if(menu.data.get(0) > 0){ 
             //guiGraphics.blit(SOURCE_GUI, whereToDrawX, whereToDrawY, textureX, textureY, textureW, textureH, imageW, imageH);
-            guiGraphics.blit(ENERGY_ACTIVITY_ICON, x+35, y+22, 0, 0, 9, 13 , 9, 13); //Lightning Icon
+            guiGraphics.blit(ENERGY_ACTIVITY_ICON, x+35, y+24, 0, 0, 9, 13 , 9, 13); //Lightning Icon
         }
         if(menu.data.get(4) > 0) {
-            guiGraphics.blit(SUN_ICON_ACTIVE, x+15, y+30, 0, 0, 8, 8); //Sun Icon  
+            guiGraphics.blit(SUN_ICON_ACTIVE, x+15, y+22, 0, 0, 8, 8, 8, 8); //Sun Icon  
             
         }
         
@@ -49,7 +49,7 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
         
         if (chargeLength > 0) {
             int startX = x + 36;
-            int startY = y + 38;
+            int startY = y + 15;
             int endX = startX + chargeLength;
             int endY = startY + 7;
             
@@ -65,11 +65,11 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
         int imageY = (height - imageHeight) / 2;
 
         int energyX = imageX + 36;
-        int energyY = imageY + 38;
+        int energyY = imageY + 15;
         int energyWidth = 54;
         int energyHeight = 7;
         int sunX = imageX + 15;
-        int sunY = imageY + 30;
+        int sunY = imageY + 22;
         int sunArea = 16;
         
         if(isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)){ 
@@ -99,7 +99,7 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         guiGraphics.drawString(this.font, this.title, 7, 4, 0x404040, false);
-
+        guiGraphics.drawString(this.font, this.playerInventoryTitle, 7, 40, 0x404040, false);
     }
 
     @Override

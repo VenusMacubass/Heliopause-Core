@@ -31,8 +31,8 @@ public class CoalCompressorMenu extends AbstractContainerMenu {
         addPlayerInventory(inventory);
         addPlayerHotbar(inventory);
 
-        final int GRID_START_X = 19;
-        final int GRID_START_Y = 18;
+        final int GRID_START_X = 9;
+        final int GRID_START_Y = 17;
         final int SLOT_SPACING = 18;
 
 // Create the 3x3 grid (slots 0-8)
@@ -45,7 +45,7 @@ public class CoalCompressorMenu extends AbstractContainerMenu {
             }
         }
         // FUEL SLOT with restriction (Step 3)
-        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 9, 55, 75) {
+        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 9, 66, 53) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return stack.getBurnTime(null) > 0; // Only accept fuel items
@@ -53,7 +53,7 @@ public class CoalCompressorMenu extends AbstractContainerMenu {
         });
 
         // OUTPUT SLOT with restriction (Step 4)
-        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 10, 138, 38) {
+        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 10, 129, 35) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return false; // Prevent inserting into output slot
@@ -118,14 +118,14 @@ public class CoalCompressorMenu extends AbstractContainerMenu {
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 110 + i * 18));
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
             }
         }
     }
 
     private void addPlayerHotbar(Inventory playerInventory) {
         for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 168));
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
     }
     public int getArrowScaled(int pixels) {
