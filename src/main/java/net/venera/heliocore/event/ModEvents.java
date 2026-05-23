@@ -27,6 +27,8 @@ import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.entity.ModBlockEntities;
 import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
@@ -34,6 +36,7 @@ import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 import net.venera.heliocore.item.ModItems;
 import net.venera.heliocore.item.custom.CanisterItem;
+import net.venera.heliocore.util.SolarPanelHelper;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -175,6 +178,18 @@ public class ModEvents {
                 itemEntity.setDeltaMovement(movement.x, movement.y + 0.03D, movement.z);
             }
         }
+    }
+    //-------------------------------------------------
+    //Solar Panel Helper
+    @SubscribeEvent
+    public static void registerNetworking(final RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar(HeliopauseCore.MOD_ID);
+
+        registrar.playToServer(
+                SolarPanelHelper.TYPE,
+                SolarPanelHelper.STREAM_CODEC,
+                SolarPanelHelper::handle
+        );
     }
     //-------------------------------------------------
 }

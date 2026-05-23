@@ -2,15 +2,19 @@ package net.venera.heliocore.screen.custom;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.entity.player.Inventory;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.venera.heliocore.HeliopauseCore;
-
+import net.venera.heliocore.util.SolarPanelHelper;
 public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
+    private Button toggleButton;
+    
     private static final ResourceLocation BASIC_SOLAR_SCREEN_GUI = 
             ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID,"textures/gui/solar_panel/solar_gui.png");
     private static final ResourceLocation ENERGY_ACTIVITY_ICON = 
@@ -24,6 +28,24 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
 
     public BasicSolarScreen(BasicSolarMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
+        
+        this.toggleButton = this.addRenderableWidget(Button.builder(
+                        Component.literal(menu.data.get(5) > 0 ? "Disable" : "Enable"),
+                        button -> {
+                            PacketDistributor.sendToServer(
+                                    new SolarPanelHelper(menu.blockEntity.getBlockPos())
+                            );
+                        })
+                .bounds(x + 107, y + 28, 40, 18)
+                .build()
+        );
     }
 
     @Override
@@ -89,6 +111,12 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
                         "Sun is not visible."), x, y);
             }
         }
+    }
+
+    @Override
+    protected void containerTick() {
+        super.containerTick();
+        this.toggleButton.setMessage(Component.literal(menu.data.get(5) > 0 ? "Disable" : "Enable"));
     }
 
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {

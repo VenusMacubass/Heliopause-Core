@@ -16,10 +16,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.custom.*;
 import net.venera.heliocore.block.custom.machine.CoalCompressorBlock;
-import net.venera.heliocore.block.custom.machine.electric.EnergyStorageBlock;
-import net.venera.heliocore.block.custom.machine.electric.RefineryBlock;
-import net.venera.heliocore.block.custom.machine.electric.SolarPanelBlock;
-import net.venera.heliocore.block.custom.machine.electric.WireBlock;
+import net.venera.heliocore.block.custom.machine.electric.*;
 import net.venera.heliocore.block.entity.ModBlockEntities;
 import net.venera.heliocore.item.ModItems;
 import java.util.function.Supplier;
@@ -91,7 +88,8 @@ public class ModBlocks {
             () -> new EnergyStorageBlock(BlockBehaviour.Properties.of().strength(2f), ModBlockEntities.ENERGY_STORAGE_ENTITY));
     public static final DeferredBlock<Block> BASIC_SOLAR_BLOCK = registerBlock("basic_solar_block",
             () -> new SolarPanelBlock(BlockBehaviour.Properties.of().strength(2f), ModBlockEntities.BASIC_SOLAR_PANEL_ENTITY));
-    
+    public static final DeferredBlock<Block> CARGO_MANAGER_BLOCK = registerBlock("cargo_manager_block",
+            () -> new CargoManagerBlock(BlockBehaviour.Properties.of().strength(2f), ModBlockEntities.CARGO_MANAGER_ENTITY));
     //endregion
     
     //region Moon
@@ -150,6 +148,9 @@ public class ModBlocks {
     
     public static final DeferredBlock<Block> COPPER_WIRE = registerBlock("copper_wire",
             () -> new WireBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).sound(SoundType.COPPER)));
+
+    public static final DeferredBlock<Block> FLUID_PIPE = registerBlock("fluid_pipe",
+            () -> new FluidPipeBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).sound(SoundType.GLASS)));
     
     public static final DeferredBlock<Block> T1_ROCKET_BOT = registerBlock("rocket_bot",
             () -> new Tier1RocketBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).noLootTable().sound(SoundType.METAL)));

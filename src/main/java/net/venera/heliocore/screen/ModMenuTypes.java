@@ -9,10 +9,7 @@ import net.neoforged.neoforge.network.IContainerFactory;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.heliocore.HeliopauseCore;
-import net.venera.heliocore.screen.custom.BasicSolarMenu;
-import net.venera.heliocore.screen.custom.CoalCompressorMenu;
-import net.venera.heliocore.screen.custom.EnergyStorageUnitMenu;
-import net.venera.heliocore.screen.custom.RefineryMenu;
+import net.venera.heliocore.screen.custom.*;
 
 public class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, HeliopauseCore.MOD_ID);
@@ -28,6 +25,9 @@ public class ModMenuTypes {
     
     public static final DeferredHolder<MenuType<?>, MenuType<BasicSolarMenu>> BASIC_SOLAR_MENU =
             registerMenuType("basic_solar_menu", BasicSolarMenu::new);
+
+    public static final DeferredHolder<MenuType<?>, MenuType<RocketMenu>> ROCKET_MENU =
+            registerMenuType("rocket_menu", RocketMenu::new);
 
     private static <T extends AbstractContainerMenu>DeferredHolder<MenuType<?>, MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENU_TYPES.register(name, () -> IMenuTypeExtension.create(factory));

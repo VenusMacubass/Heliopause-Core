@@ -21,7 +21,8 @@ public class SolarPanelEntity extends BaseElectricMachineEntity{
     private final int OUTPUT_SLOT = 0;
     private final int tierTransferRate;
     private final int generationRate; 
-    private boolean isActive;
+    public boolean isActive = false;
+    public boolean isEnabled = true;
     
     public SolarPanelEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int capacity, int transferRate, int generationRate) {
         super(type, pos, state, 1, capacity, transferRate, transferRate);
@@ -40,18 +41,20 @@ public class SolarPanelEntity extends BaseElectricMachineEntity{
                     case 2 -> tierTransferRate; 
                     case 3 -> generationRate;
                     case 4 -> isActive ? 1 : 0;
+                    case 5 -> isEnabled ? 1 : 0;
                     default -> 0;
                 };
             }
             @Override
             public void set(int i, int value) {}
             @Override
-            public int getCount() { return 5; }
+            public int getCount() { return 6; }
         };
     }
     
     public void tick(Level level, BlockPos pos, BlockState state){
         if(level.isClientSide) return;
+        if(!isEnabled) return;
         processOutputBattery();
         if(level.getGameTime() % 2 == 0){
         generateEnergy(level, pos);
@@ -147,11 +150,13 @@ public class SolarPanelEntity extends BaseElectricMachineEntity{
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.putBoolean("isActive", isActive);
+        tag.putBoolean("isEnabled", isEnabled);
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         isActive = tag.getBoolean("isActive");
+        isEnabled = tag.getBoolean("isEnabled");
     }
 }

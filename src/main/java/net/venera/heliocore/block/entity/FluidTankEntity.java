@@ -1,6 +1,7 @@
 package net.venera.heliocore.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -17,12 +18,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.fluids.IFluidTank;
 import net.venera.heliocore.data.component.CanisterData;
+import net.venera.heliocore.fluid.IFluidMachine;
 import net.venera.heliocore.fluid.ModFluids;
 import net.venera.heliocore.item.custom.CanisterItem;
 
 
-public class FluidTankEntity extends BlockEntity {
+public class FluidTankEntity extends BlockEntity implements IFluidMachine {
     private int fluidAmount = 0;
     private Fluid currentFluid = Fluids.EMPTY;
     private final int BUCKET_CAPACITY = 1000;
@@ -147,11 +150,52 @@ public class FluidTankEntity extends BlockEntity {
         return container;
     }
 
+    @Override
+    public IFluidMachine.PortType getFluidPortType(Direction face) {
+        return IFluidMachine.PortType.CONTAINER; 
+    }
+
+    @Override
+    public int insertFluid(String incomingFluidType, int amount, boolean simulate) {
+        if (getTankSpace() <= 0) return 0;
+
+        Fluid incomingFluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(incomingFluidType));
+
+        // The Bouncer Logic
+        if (this.currentFluid.isSame(Fluids.EMPTY)) {
+            if (!simulate) this.currentFluid = incomingFluid;
+        } else if (!this.currentFluid.isSame(incomingFluid)) {
+            return 0; // Reject wrong fluid
+        }
+
+        int amountToFill = Math.min(getTankSpace(), amount);
+        if (!simulate) {
+            this.fluidAmount += amountToFill;
+            syncToClient();
+        }
+        return amountToFill;
+    }
+
+    @Override
+    public int extractFluid(String fluidType, int amount, boolean simulate) {
+        if (this.currentFluid.isSame(Fluids.EMPTY)) return 0;
+
+        Fluid requestedFluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(fluidType));
+        if (!this.currentFluid.isSame(requestedFluid)) return 0; // Reject wrong fluid
+
+        int amountToDrain = Math.min(this.fluidAmount, amount);
+        if (!simulate) {
+            this.fluidAmount -= amountToDrain;
+            if (this.fluidAmount <= 0) this.currentFluid = Fluids.EMPTY;
+            syncToClient();
+        }
+        return amountToDrain;
+    }
+
     public Fluid getCurrentFluid() {
         return currentFluid;
     }
-
-    // Tells the server to send this NBT data to the client
+    
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag tag = new CompoundTag();
@@ -181,6 +225,13 @@ public class FluidTankEntity extends BlockEntity {
         setChanged();
         if(level != null){level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);}
         return itemStack;
+    }
+
+    private void syncToClient() {
+        setChanged(); // Tells the server to save to the hard drive
+        if (level != null) {
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+        }
     }
 
     @Override

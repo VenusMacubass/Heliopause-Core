@@ -1,4 +1,4 @@
-package net.venera.heliocore.block.custom.machine.electric;
+package net.venera.heliocore.block.custom;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -6,25 +6,25 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.PipeBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.venera.heliocore.block.entity.FluidTankEntity;
 import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
-import net.venera.heliocore.data.energy.GridManager;
+import net.venera.heliocore.block.entity.machine.electric.RefineryEntity;
+import net.venera.heliocore.fluid.IFluidMachine;
 import org.jetbrains.annotations.Nullable;
+
 import java.util.Map;
 
-public class WireBlock extends PipeBlock {
+public class FluidPipeBlock extends PipeBlock{
 
     public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
     public static final BooleanProperty EAST = BlockStateProperties.EAST;
@@ -41,8 +41,8 @@ public class WireBlock extends PipeBlock {
             Direction.UP, UP,
             Direction.DOWN, DOWN
     );
-    
-    public WireBlock(Properties properties) {
+
+    public FluidPipeBlock(BlockBehaviour.Properties properties) {
         super(0.125f, properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(NORTH, false).setValue(EAST, false)
@@ -60,7 +60,7 @@ public class WireBlock extends PipeBlock {
         BlockPos blockPos = context.getClickedPos();
         Level level = context.getLevel();
         BlockState state = this.defaultBlockState();
-        
+
         for (Direction direction : Direction.values()) {
             BooleanProperty property = PROPERTY_BY_DIRECTION.get(direction);
             boolean isConnected = connectsTo(level, blockPos, direction);
@@ -69,37 +69,35 @@ public class WireBlock extends PipeBlock {
         return state;
     }
 
-    private boolean connectsTo(LevelAccessor level, BlockPos wirePos, Direction wireFacing) {
-        BlockPos neighborPos = wirePos.relative(wireFacing);
+    private boolean connectsTo(LevelAccessor level, BlockPos pipePos, Direction pipeFacing) {
+        BlockPos neighborPos = pipePos.relative(pipeFacing);
         BlockState neighborState = level.getBlockState(neighborPos);
-        
-        if (neighborState.getBlock() instanceof WireBlock) {
+
+        if (neighborState.getBlock() instanceof FluidPipeBlock) {
             return true;
         }
-        
-        BlockEntity be = level.getBlockEntity(neighborPos);
-        if (be instanceof BaseElectricMachineEntity machine) {
-            Direction faceTouchingWire = wireFacing.getOpposite();
-            
-            return machine.isValidPort(faceTouchingWire);
-        }
 
+        BlockEntity be = level.getBlockEntity(neighborPos);
+        if (be instanceof IFluidMachine machine) {
+            Direction faceTouchingPipe = pipeFacing.getOpposite();
+            return machine.getFluidPortType(faceTouchingPipe) != IFluidMachine.PortType.NONE;
+        }
         return false;
     }
 
     @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @org.jetbrains.annotations.Nullable LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
         if (!level.isClientSide) {
-            GridManager.get(level).onWirePlaced(level, pos);
+            //GridManager.get(level).onPipePlaced(level, pos);
         }
     }
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())) {
-            if (!level.isClientSide) {  
-                GridManager.get(level).onWireBroken(level, pos);
+            if (!level.isClientSide) {
+                //GridManager.get(level).onPipeBroken(level, pos);
             }
             super.onRemove(state, level, pos, newState, isMoving);
         }
@@ -116,26 +114,4 @@ public class WireBlock extends PipeBlock {
         BooleanProperty property = PROPERTY_BY_DIRECTION.get(direction);
         return state.setValue(property, connectsTo(level, currentPos, direction));
     }
-//
-//    private static final VoxelShape CENTER_SHAPE = Block.box(6, 6, 6, 10, 10, 10); //Center 
-//    private static final VoxelShape NORTH_SHAPE = Block.box(6, 6, 0, 10, 10, 6);   //North Arm
-//    private static final VoxelShape SOUTH_SHAPE = Block.box(6, 6, 10, 10, 10, 16); //South Arm
-//    private static final VoxelShape EAST_SHAPE = Block.box(10, 6, 6, 16, 10, 10);  //East Arm
-//    private static final VoxelShape WEST_SHAPE = Block.box(0, 6, 6, 6, 10, 10);    //West Arm
-//    private static final VoxelShape UP_SHAPE = Block.box(6, 10, 6, 10, 16, 10);    //Up Arm
-//    private static final VoxelShape DOWN_SHAPE = Block.box(6, 0, 6, 10, 6, 10);    //Down Arm
-//
-//    @Override
-//    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-//        VoxelShape shape = CENTER_SHAPE;
-//
-//        if (state.getValue(NORTH)) shape = Shapes.or(shape, NORTH_SHAPE);
-//        if (state.getValue(SOUTH)) shape = Shapes.or(shape, SOUTH_SHAPE);
-//        if (state.getValue(EAST)) shape = Shapes.or(shape, EAST_SHAPE);
-//        if (state.getValue(WEST)) shape = Shapes.or(shape, WEST_SHAPE);
-//        if (state.getValue(UP)) shape = Shapes.or(shape, UP_SHAPE);
-//        if (state.getValue(DOWN)) shape = Shapes.or(shape, DOWN_SHAPE);
-//
-//        return shape;
-//    }
 }

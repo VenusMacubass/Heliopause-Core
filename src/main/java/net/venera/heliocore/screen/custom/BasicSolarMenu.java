@@ -19,7 +19,7 @@ public class BasicSolarMenu extends AbstractContainerMenu {
     public final ContainerData data;
 
     public BasicSolarMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(5));
+        this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(6));
     }
 
     public BasicSolarMenu(int containerId, Inventory  inventory, BlockEntity blockEntity, ContainerData data) {

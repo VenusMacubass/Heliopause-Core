@@ -1,26 +1,29 @@
 package net.venera.heliocore.entity.rideable;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.*;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.venera.heliocore.block.ModBlocks;
 import net.venera.heliocore.dimension.ModDimensions;
+import net.venera.heliocore.screen.custom.RocketMenu;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
 public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
+    public final ItemStackHandler inventory = new ItemStackHandler(28);
     public Tier1RocketEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
     }
@@ -36,7 +39,6 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
     @Override
     public void tick() {
         super.tick();
-
         double targetAltitude = 1500.0;
         if (!this.level().isClientSide() && this.getY() >= targetAltitude) {
                 if (this.level() instanceof ServerLevel serverLevel && this.level().dimension() == Level.OVERWORLD) {
@@ -107,8 +109,20 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
         }
     }
 
+
+
     @Override
     public InteractionResult interact(Player player, InteractionHand hand) {
+        if (player.isSecondaryUseActive()) {
+            if (!this.level().isClientSide() && player instanceof ServerPlayer serverPlayer) {
+                serverPlayer.openMenu(new SimpleMenuProvider(
+                        (id, playerInv, p) -> new RocketMenu(id, playerInv, this),
+                        Component.literal("Rocket Cargo Inventory")
+                ), buf -> buf.writeInt(this.getId()));
+
+            }
+            return InteractionResult.sidedSuccess(this.level().isClientSide());
+        }
         if (!this.level().isClientSide() && !this.entityData.get(IS_LAUNCHED)) {
             player.startRiding(this);
             return InteractionResult.SUCCESS;
@@ -122,6 +136,11 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
             return false;
         }
         if (!this.level().isClientSide() && !this.isRemoved()) {
+            SimpleContainer inv = new SimpleContainer(inventory.getSlots());
+            for(int i = 0; i < inventory.getSlots(); i++){
+                inv.setItem(i, inventory.getStackInSlot(i));
+            }
+            Containers.dropContents(this.level(), this, inv);
             this.spawnAtLocation(ModBlocks.T1_ROCKET_BOT.get());
             this.discard();
             return true;
@@ -181,12 +200,18 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compoundTag) {
-
-    }
-
-    @Override
     protected void addAdditionalSaveData(CompoundTag compoundTag) {
-
+        compoundTag.put("RocketInventory", this.inventory.serializeNBT(this.registryAccess()));
+        compoundTag.putBoolean("IsLaunched", this.entityData.get(IS_LAUNCHED));
+    }
+    
+    @Override
+    protected void readAdditionalSaveData(CompoundTag compoundTag) {
+        if (compoundTag.contains("RocketInventory")) {
+            this.inventory.deserializeNBT(this.registryAccess(), compoundTag.getCompound("RocketInventory"));
+        }
+        if (compoundTag.contains("IsLaunched")) {
+            this.entityData.set(IS_LAUNCHED, compoundTag.getBoolean("IsLaunched"));
+        }
     }
 }

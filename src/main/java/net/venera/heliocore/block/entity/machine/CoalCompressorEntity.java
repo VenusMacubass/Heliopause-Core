@@ -15,8 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingInput;
-import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -46,6 +45,7 @@ public class CoalCompressorEntity extends BaseMachineEntity{
     public int burnTime = 0;
     public int maxBurnTime;
     public boolean isActive = false;
+    public boolean compressing = false;
     public CoalCompressorEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.COAL_COMPRESSOR_ENTITY.get(), pos, blockState, 11);
 
@@ -61,6 +61,8 @@ public class CoalCompressorEntity extends BaseMachineEntity{
                     case 1 -> CoalCompressorEntity.this.maxProgress;
                     case 2 -> CoalCompressorEntity.this.burnTime;
                     case 3 -> CoalCompressorEntity.this.maxBurnTime;
+                    case 4 -> CoalCompressorEntity.this.isActive ? 1 : 0;     
+                    case 5 -> CoalCompressorEntity.this.compressing ? 1 : 0;
                     default -> 0;
                 };
             }
@@ -77,50 +79,64 @@ public class CoalCompressorEntity extends BaseMachineEntity{
 
             @Override
             public int getCount() {
-                return 4;
+                return 6;
             }
+            
+            
         };
     }
 
     public void tick(Level level, BlockPos pos, BlockState state, CoalCompressorEntity entity) {
         if (level.isClientSide()) return;
-        CoalCompressorRecipe recipe = getMatchingRecipe();
+
+        // Check which recipe is active
+        RecipeHolder<CoalCompressorRecipe> compRecipe = getCompressorRecipe();
+        RecipeHolder<net.minecraft.world.item.crafting.BlastingRecipe> blastRecipe = getBlastingRecipe();
+
+        // Set the active recipe (Prioritize Compressor recipes)
+        net.minecraft.world.item.crafting.Recipe<?> activeRecipe = null;
+        if (compRecipe != null) activeRecipe = compRecipe.value();
+        else if (blastRecipe != null) activeRecipe = blastRecipe.value();
+
         boolean dirty = false;
-        
-        if (burnTime > 0) { //Consume burn time
+
+        if (burnTime > 0) {
             burnTime--;
             dirty = true;
         }
-        
-        if (burnTime > 0 && canCraft()) { //If burning and can craft, progress
+
+        if (burnTime > 0 && activeRecipe != null && canCraft(activeRecipe)) {
             progress++;
             isActive = true;
+
+            // Set the state! If it's your custom recipe, compressing = true. 
+            // If it's a blasting recipe, this returns false.
+            compressing = (activeRecipe instanceof CoalCompressorRecipe);
+
             dirty = true;
 
             if (progress >= maxProgress) {
-                if (recipe != null) {
-                    craftItem(recipe);
-                    progress = 0;
-                    dirty = true;
-                }
+                craftItem(activeRecipe);
+                progress = 0;
+                dirty = true;
             }
-        } else {//Not burning or can't craft
-            if (isActive) {
+        } else {
+            if (isActive || compressing) {
                 isActive = false;
+                compressing = false;
                 dirty = true;
             }
-            
-            if (burnTime <= 0 && progress > 0 && getFuelStack().getCount() <= 0) { // Rapid decay ONLY when we have no fuel but had progress
-                progress = Math.max(0, progress - 2); // Controlled decay
+
+            if (burnTime <= 0 && progress > 0 && getFuelStack().getCount() <= 0) {
+                progress = Math.max(0, progress - 2);
                 dirty = true;
             }
-            else if (progress > 0 && getMatchingRecipe() == null) { // Reset completely if recipe inputs are gone
+            else if (progress > 0 && activeRecipe == null) {
                 progress = 0;
                 dirty = true;
             }
 
-            
-            if (burnTime <= 0 && canCraft()) { //Try to start crafting if the furnace have fuel
+            if (burnTime <= 0 && activeRecipe != null && canCraft(activeRecipe)) {
                 burnFuel();
                 dirty = true;
             }
@@ -128,16 +144,12 @@ public class CoalCompressorEntity extends BaseMachineEntity{
         if (dirty) setChanged();
     }
 
-    private boolean canCraft(){
-        if (level == null) return false;
-        if (isActive) return false;
+    private boolean canCraft(Recipe<?> recipe) {
+        if (level == null || recipe == null) return false;
 
-        CoalCompressorRecipe recipe = getMatchingRecipe();
-        if (recipe == null) return false;
-        
-        if (burnTime <= 0 && getFuelStack().getBurnTime(null) <= 0) return false; //Check fuel - only if furnace is out of burn time
-        
-        ItemStack output = getOutputStack(); //Check output
+        if (burnTime <= 0 && getFuelStack().getBurnTime(null) <= 0) return false;
+
+        ItemStack output = getOutputStack();
         ItemStack result = recipe.getResultItem(level.registryAccess());
 
         if (!output.isEmpty()) {
@@ -166,15 +178,26 @@ public class CoalCompressorEntity extends BaseMachineEntity{
         }
     }
 
-    private void craftItem(CoalCompressorRecipe recipe) {
+    private void craftItem(net.minecraft.world.item.crafting.Recipe<?> recipe) {
         ItemStack result = recipe.getResultItem(level.registryAccess()).copy();
-        
-        for (int i : INPUT_SLOTS) { //Consume each input stack by 1 if not empty
-            ItemStack stack = inventory.getStackInSlot(i);
-            if (!stack.isEmpty()) stack.shrink(1);
+
+        if (recipe instanceof CoalCompressorRecipe) {
+            // It's a compressor recipe: shrink all valid inputs in the 3x3 grid
+            for (int i : INPUT_SLOTS) {
+                ItemStack stack = inventory.getStackInSlot(i);
+                if (!stack.isEmpty()) stack.shrink(1);
+            }
+        } else {
+            // It's a blasting recipe: find the ONE valid item and shrink it
+            for (int i : INPUT_SLOTS) {
+                ItemStack stack = inventory.getStackInSlot(i);
+                if (!stack.isEmpty()) {
+                    stack.shrink(1);
+                    break;
+                }
+            }
         }
-        
-        ItemStack output = inventory.getStackInSlot(OUTPUT_SLOT); //Output result
+        ItemStack output = inventory.getStackInSlot(OUTPUT_SLOT);
         if (output.isEmpty()) {
             inventory.setStackInSlot(OUTPUT_SLOT, result);
         } else {
@@ -183,26 +206,39 @@ public class CoalCompressorEntity extends BaseMachineEntity{
         }
     }
 
-    private CoalCompressorRecipe getMatchingRecipe() {
+    private RecipeHolder<CoalCompressorRecipe> getCompressorRecipe() {
         if (level == null) return null;
-        
-        NonNullList<ItemStack> craftingGrid = NonNullList.withSize(9, ItemStack.EMPTY); //Create a CraftingInput from our input slots
+
+        NonNullList<ItemStack> craftingGrid = NonNullList.withSize(9, ItemStack.EMPTY);
         for (int i = 0; i < INPUT_SLOTS.length; i++) {
             craftingGrid.set(i, inventory.getStackInSlot(INPUT_SLOTS[i]));
         }
 
         CraftingInput input = CraftingInput.of(3, 3, craftingGrid);
         
-        List<RecipeHolder<CoalCompressorRecipe>> recipeHolders = level.getRecipeManager() //Get all recipes and find the first match
-                .getAllRecipesFor(ModRecipes.COAL_COMPRESSOR_TYPE.get());
+        return level.getRecipeManager().getRecipeFor(ModRecipes.COAL_COMPRESSOR_TYPE.get(), input, level).orElse(null);
+    }
 
-        for (RecipeHolder<CoalCompressorRecipe> holder : recipeHolders) {
-            CoalCompressorRecipe recipe = holder.value();
-            if (recipe.matches(input, level)) {
-                return recipe;
+    private RecipeHolder<net.minecraft.world.item.crafting.BlastingRecipe> getBlastingRecipe() {
+        if (level == null) return null;
+
+        ItemStack inputItem = ItemStack.EMPTY;
+        int count = 0;
+
+        // Count how many items are in the 3x3 grid
+        for (int i : INPUT_SLOTS) {
+            ItemStack stack = inventory.getStackInSlot(i);
+            if (!stack.isEmpty()) {
+                inputItem = stack;
+                count++;
             }
         }
-        return null;
+        // Blasting recipes require exactly ONE input stack. Abort if grid is cluttered.
+        if (count != 1) return null;
+
+        SingleRecipeInput input = new SingleRecipeInput(inputItem);
+
+        return level.getRecipeManager().getRecipeFor(RecipeType.BLASTING, input, level).orElse(null);
     }
 
     private ItemStack getFuelStack() {
@@ -264,6 +300,7 @@ public class CoalCompressorEntity extends BaseMachineEntity{
         tag.putInt("MaxProgress", maxProgress);
         tag.putInt("BurnTime", burnTime);
         tag.putInt("MaxBurnTime", maxBurnTime);
+        tag.putBoolean("Compressing", compressing);
     }
 
     @Override
@@ -274,5 +311,6 @@ public class CoalCompressorEntity extends BaseMachineEntity{
         maxProgress = tag.getInt("MaxProgress");
         burnTime = tag.getInt("BurnTime");
         maxBurnTime = tag.getInt("MaxBurnTime");
+        compressing = tag.getBoolean("Compressing");
     }
 }

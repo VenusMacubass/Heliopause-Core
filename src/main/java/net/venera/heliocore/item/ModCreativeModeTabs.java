@@ -21,7 +21,7 @@ public class ModCreativeModeTabs {
     public static final Supplier<CreativeModeTab> HELIOPAUSE_CORE_ITEMS = CREATIVE_MODE_TAB.register("heliocore_items",
             () -> CreativeModeTab.builder()
                     .icon(() -> new ItemStack(ModItems.RADIOACTIVE_CORE.get()))
-                    .title(Component.translatable("creativetab.galacticraftcore_items"))
+                    .title(Component.translatable("creativetab.heliocore_items"))
                     .displayItems((parameters, output) -> {
                         output.accept(ModItems.IRIDIUM_INGOT.get());
                         output.accept(ModItems.TIN_INGOT.get());
@@ -125,6 +125,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.ENERGY_STORAGE_UNIT.get());
                         output.accept(ModBlocks.BASIC_SOLAR_BLOCK.get());
                         output.accept(ModBlocks.COPPER_WIRE.get());
+                        output.accept(ModBlocks.FLUID_PIPE.get());
                         output.accept(ModBlocks.T1_ROCKET_BOT.get());
                         output.accept(ModBlocks.PRISMATIC_GLASS.get());
                         output.accept(ModBlocks.COPPER_WIRE_BLOCK.get());

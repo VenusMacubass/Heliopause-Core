@@ -18,7 +18,7 @@ public class CoalCompressorMenu extends AbstractContainerMenu {
     public final ContainerData data;
 
     public CoalCompressorMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
+        this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(6));
     }
 
     public CoalCompressorMenu(int containerId, Inventory  inventory, BlockEntity blockEntity, ContainerData data) {
@@ -128,6 +128,15 @@ public class CoalCompressorMenu extends AbstractContainerMenu {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
     }
+    
+    public boolean getCompression(){
+        return this.data.get(5) == 1;
+    }
+    
+    public boolean getActivation(){
+        return this.data.get(4) == 1;
+    }
+    
     public int getArrowScaled(int pixels) {
         int progress = this.data.get(0);
         int maxProgress = this.data.get(1);

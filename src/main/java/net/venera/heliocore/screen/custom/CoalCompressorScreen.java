@@ -31,11 +31,15 @@ public class CoalCompressorScreen extends AbstractContainerScreen<CoalCompressor
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
         guiGraphics.blit(COAL_COMPRESSOR_GUI, x, y, 0, 0, 175, 165);
-        int progressWidth = menu.getArrowScaled(33);
+        int progressWidth = menu.getArrowScaled(34);
         if (progressWidth > 0){
             //guiGraphics.blit(SOURCE_GUI, whereToDrawX, whereToDrawY, textureX, textureY, textureW, textureH);
             guiGraphics.blit(PROGRESS_ARROW, x + 85, y + 35, 0, 0, progressWidth, 15, 33, 15);
             //guiGraphics.blit(COAL_COMPRESSOR_GUI, x + 101, y + 29, 176, 0, (progressWidth > 23 ? progressWidth - 23 : 0), 13);
+        }
+        
+        if(menu.getActivation() && menu.getCompression()){
+            guiGraphics.blit(COMPRESSING, x + 91, y + 26, 0, 0, 15, 13, 15, 13);
         }
 
         int fireHeight = menu.getFireIconScaled(13);

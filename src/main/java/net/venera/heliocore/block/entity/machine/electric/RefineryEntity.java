@@ -1,6 +1,7 @@
 package net.venera.heliocore.block.entity.machine.electric;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -11,16 +12,24 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.EnergyStorage;
+import net.venera.heliocore.HeliopauseCore;
+import net.venera.heliocore.block.custom.FluidPipeBlock;
+import net.venera.heliocore.block.custom.machine.BaseMachineBlock;
 import net.venera.heliocore.data.component.CanisterData;
+import net.venera.heliocore.fluid.IFluidMachine;
 import net.venera.heliocore.fluid.ModFluids;
 import net.venera.heliocore.item.custom.CanisterItem;
 import net.venera.heliocore.screen.custom.RefineryMenu;
+import net.venera.heliocore.util.PipeNetworkHelper;
 import org.jetbrains.annotations.Nullable;
 
-public class RefineryEntity extends BaseElectricMachineEntity {
+import java.util.Set;
+
+public class RefineryEntity extends BaseElectricMachineEntity implements IFluidMachine{
     private final int INPUT_SLOT = 0;
     private final int OUTPUT_SLOT = 1;
     private final int BATTERY_SLOT = 2;
@@ -31,6 +40,7 @@ public class RefineryEntity extends BaseElectricMachineEntity {
     private int fuelAmount = 0;
     private int maxCapacity = 6000;
     public boolean isActive = false;
+    private final int MAX_FLOW_RATE = 10;
 
     public RefineryEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState,
                           int energyCapacity, int transferRate, int energyUsage, int conversionRate) {
@@ -86,6 +96,15 @@ public class RefineryEntity extends BaseElectricMachineEntity {
                 dirty = true;
             }
         }
+
+        if (this.fuelAmount > 0) {
+            pumpFluidOut(level, pos);
+            dirty = true;
+        }
+        if (this.oilAmount < this.maxCapacity) {
+            pullFluidIn(level, pos);
+            dirty = true;
+        }
         if (dirty) setChanged();
         BaseElectricMachineEntity.tick(level, pos, state, this);
     }
@@ -134,6 +153,94 @@ public class RefineryEntity extends BaseElectricMachineEntity {
             }
         }
         return false;
+    }
+
+    private void pumpFluidOut(Level level, BlockPos pos) {
+        Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
+        Direction outputFace = machineFacing.getCounterClockWise();
+
+        BlockPos pipePos = pos.relative(outputFace);
+        if (!(level.getBlockState(pipePos).getBlock() instanceof FluidPipeBlock)) return;
+
+        Set<BlockEntity> connectedMachines = PipeNetworkHelper.findConnectedInventories(level, pipePos, pos);
+        int fluidToPush = Math.min(this.fuelAmount, MAX_FLOW_RATE);
+
+        for (BlockEntity entity : connectedMachines) {
+            if (entity == this) continue;
+
+            if (entity instanceof IFluidMachine targetMachine) {
+                int accepted = targetMachine.insertFluid("heliocore:refined_fuel", fluidToPush, false);
+                if (accepted > 0) {
+                    this.fuelAmount -= accepted;
+                    fluidToPush -= accepted;
+                    if (fluidToPush <= 0) break;
+                }
+            }
+        }
+    }
+
+    private void pullFluidIn(Level level, BlockPos pos) {
+        if (this.oilAmount >= this.maxCapacity) return;
+
+        Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
+        Direction inputFace = machineFacing.getClockWise();
+        
+        BlockPos pipePos = pos.relative(inputFace);
+        if (!(level.getBlockState(pipePos).getBlock() instanceof FluidPipeBlock)) return;
+        
+        Set<BlockEntity> connectedMachines = PipeNetworkHelper.findConnectedInventories(level, pipePos, pos);
+        
+        int spaceAvailable = this.maxCapacity - this.oilAmount;
+        int fluidToPull = Math.min(spaceAvailable, MAX_FLOW_RATE);
+
+        for (BlockEntity entity : connectedMachines) {
+            if (entity == this) continue;
+
+            if (entity instanceof IFluidMachine targetMachine) {
+                int availableToExtract = targetMachine.extractFluid("heliocore:crude_oil", fluidToPull, true);
+
+                if (availableToExtract > 0) {
+                    int actuallyExtracted = targetMachine.extractFluid("heliocore:crude_oil", availableToExtract, false);
+                    
+                    this.oilAmount += actuallyExtracted;
+
+                    fluidToPull -= actuallyExtracted;
+                    if (fluidToPull <= 0) break;
+                }
+            }
+        }
+    }
+
+    @Override
+    public PortType getFluidPortType(Direction globalFace) {
+        Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
+        if (globalFace == machineFacing.getClockWise()) {
+            return PortType.OUTPUT;
+        }
+        
+        if (globalFace == machineFacing.getCounterClockWise()) {
+            return PortType.INPUT;
+        }
+
+        // If the pipe checks UP, DOWN, FRONT, or BACK, it falls through to here automatically!
+        return PortType.NONE;
+    }
+
+    @Override
+    public int insertFluid(String fluidType, int amount, boolean simulate) {
+        if (!fluidType.equals("heliocore:crude_oil")) return 0;
+        int space = maxCapacity - oilAmount;
+        int filled = Math.min(space, amount);
+        if (!simulate) oilAmount += filled;
+        return filled;
+    }
+
+    @Override
+    public int extractFluid(String fluidType, int amount, boolean simulate) {
+        if (!fluidType.equals("heliocore:refined_fuel")) return 0;
+        int drained = Math.min(fuelAmount, amount);
+        if (!simulate) fuelAmount -= drained;
+        return drained;
     }
 
     private boolean canRefine(){

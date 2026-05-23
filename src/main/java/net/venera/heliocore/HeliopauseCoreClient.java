@@ -30,10 +30,7 @@ import net.venera.heliocore.item.ModItems;
 import net.venera.heliocore.render.FluidTankRenderer;
 import net.venera.heliocore.render.sky.MoonSkyRenderer;
 import net.venera.heliocore.screen.ModMenuTypes;
-import net.venera.heliocore.screen.custom.BasicSolarScreen;
-import net.venera.heliocore.screen.custom.CoalCompressorScreen;
-import net.venera.heliocore.screen.custom.EnergyStorageUnitScreen;
-import net.venera.heliocore.screen.custom.RefineryScreen;
+import net.venera.heliocore.screen.custom.*;
 import org.joml.Matrix4f;
 
 import java.awt.*;
@@ -51,7 +48,7 @@ public class HeliopauseCoreClient {
         HeliopauseCore.LOGGER.info("HELLO FROM CLIENT SETUP");
         HeliopauseCore.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.FLUID_TANK.get(), RenderType.translucent());
-        
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.FLUID_PIPE.get(), RenderType.translucent());
         EntityRenderers.register(ModEntities.TIER_1_ROCKET.get(), Tier1RocketRenderer::new);
     }
 
@@ -156,6 +153,7 @@ public class HeliopauseCoreClient {
         event.register(ModMenuTypes.REFINERY_MENU.get(), RefineryScreen::new);
         event.register(ModMenuTypes.ENERGY_STORAGE_UNIT_MENU.get(), EnergyStorageUnitScreen::new);
         event.register(ModMenuTypes.BASIC_SOLAR_MENU.get(), BasicSolarScreen::new);
+        event.register(ModMenuTypes.ROCKET_MENU.get(), RocketScreen::new);
     }
 
     @SubscribeEvent

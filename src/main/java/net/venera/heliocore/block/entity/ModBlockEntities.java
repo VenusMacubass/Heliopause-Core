@@ -8,6 +8,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.ModBlocks;
 import net.venera.heliocore.block.entity.machine.CoalCompressorEntity;
+import net.venera.heliocore.block.entity.machine.electric.CargoManagerEntity;
 import net.venera.heliocore.block.entity.machine.electric.EnergyStorageEntity;
 import net.venera.heliocore.block.entity.machine.electric.RefineryEntity;
 import net.venera.heliocore.block.entity.machine.electric.SolarPanelEntity;
@@ -51,6 +52,12 @@ public class ModBlockEntities {
                     new SolarPanelEntity(ModBlockEntities.BASIC_SOLAR_PANEL_ENTITY.get(), blockPos, blockState, 
                             12000, 10, 12), 
                     ModBlocks.BASIC_SOLAR_BLOCK.get()).build(null));
+    //----------------- Manager Entities ---------------------//
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CargoManagerEntity>> CARGO_MANAGER_ENTITY = BLOCK_ENTITIES.register("cargo_manager_entity",
+            ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
+                    new CargoManagerEntity(ModBlockEntities.CARGO_MANAGER_ENTITY.get(), blockPos, blockState,
+                            12000, 10),
+                    ModBlocks.CARGO_MANAGER_BLOCK.get()).build(null));
 
 
     public static void register(IEventBus eventBus){
