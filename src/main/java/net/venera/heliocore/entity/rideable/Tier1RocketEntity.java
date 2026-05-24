@@ -18,6 +18,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.venera.heliocore.block.ModBlocks;
 import net.venera.heliocore.dimension.ModDimensions;
 import net.venera.heliocore.screen.custom.RocketMenu;
+import org.checkerframework.common.returnsreceiver.qual.This;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -29,13 +30,13 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
     }
 
     private static final EntityDataAccessor<Boolean> IS_LAUNCHED = SynchedEntityData.defineId(Tier1RocketEntity.class, EntityDataSerializers.BOOLEAN);
-
-    public void igniteEngine() {
-        if (!this.entityData.get(IS_LAUNCHED)) {
-            this.entityData.set(IS_LAUNCHED, true);
-        }
-    }
-
+    private static final EntityDataAccessor<Integer> FUEL_AMOUNT = SynchedEntityData.defineId(Tier1RocketEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> ENERGY_AMOUNT = SynchedEntityData.defineId(Tier1RocketEntity.class, EntityDataSerializers.INT);
+    public final int MAX_FUEL = 1000; 
+    public final int MAX_ENERGY = 5000;
+    public final int ENERGY_USAGE = 2;
+    public final int FUEL_USAGE = 1;
+    
     @Override
     public void tick() {
         super.tick();
@@ -84,14 +85,18 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
                 
         }
         if (this.entityData.get(IS_LAUNCHED)) {
-            Vec3 currentVelocity = this.getDeltaMovement();
+            if (this.getFuelAmount() > 0 && this.getEnergyAmount() > 0) {
+                this.setFuelAmount(this.getFuelAmount() - FUEL_USAGE);
+                this.setEnergyAmount(this.getEnergyAmount() - ENERGY_USAGE);
 
-            double acceleration = 0.05;
-            double maxSpeed = 5.0;
-
-            double newYVelocity = Math.min(currentVelocity.y() + acceleration, maxSpeed);
-
-            this.setDeltaMovement(new Vec3(currentVelocity.x(), newYVelocity, currentVelocity.z()));
+                Vec3 currentVelocity = this.getDeltaMovement();
+                double acceleration = 0.05;
+                double maxSpeed = 5.0;
+                double newYVelocity = Math.min(currentVelocity.y() + acceleration, maxSpeed);
+                this.setDeltaMovement(new Vec3(currentVelocity.x(), newYVelocity, currentVelocity.z()));
+            } else {
+                this.entityData.set(IS_LAUNCHED, false);
+            }
 
             this.move(MoverType.SELF, this.getDeltaMovement());
         }
@@ -109,7 +114,11 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
         }
     }
 
-
+    public void igniteEngine() {
+        if (!this.entityData.get(IS_LAUNCHED) && this.getEnergyAmount() > 0 && this.getFuelAmount() > 0 ) {
+            this.entityData.set(IS_LAUNCHED, true);
+        }
+    }
 
     @Override
     public InteractionResult interact(Player player, InteractionHand hand) {
@@ -197,12 +206,50 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         builder.define(IS_LAUNCHED, false);
+        builder.define(FUEL_AMOUNT, 0);
+        builder.define(ENERGY_AMOUNT, 0);
     }
 
+    public int getFuelAmount() {
+        return this.entityData.get(FUEL_AMOUNT);
+    }
+
+    public void setFuelAmount(int amount) {
+        this.entityData.set(FUEL_AMOUNT, Math.max(0, Math.min(amount, MAX_FUEL)));
+    }
+
+    public int getEnergyAmount() {
+        return this.entityData.get(ENERGY_AMOUNT);
+    }
+
+    public void setEnergyAmount(int amount) {
+        this.entityData.set(ENERGY_AMOUNT, Math.max(0, Math.min(amount, MAX_ENERGY)));
+    }
+    
+    public int chargeEnergy(int amount, boolean simulate) {
+        int space = MAX_ENERGY - this.getEnergyAmount();
+        int accepted = Math.min(space, amount);
+        if (!simulate && accepted > 0) {
+            this.setEnergyAmount(this.getEnergyAmount() + accepted);
+        }
+        return accepted;
+    }
+    
+    public int fillFuel(int amount, boolean simulate) {
+        int space = MAX_FUEL - this.getFuelAmount();
+        int filled = Math.min(space, amount);
+        if (!simulate && filled > 0) {
+            this.setFuelAmount(this.getFuelAmount() + filled);
+        }
+        return filled;
+    }
+    
     @Override
     protected void addAdditionalSaveData(CompoundTag compoundTag) {
         compoundTag.put("RocketInventory", this.inventory.serializeNBT(this.registryAccess()));
         compoundTag.putBoolean("IsLaunched", this.entityData.get(IS_LAUNCHED));
+        compoundTag.putInt("EnergyAmount", this.getEnergyAmount());
+        compoundTag.putInt("FuelAmount", this.getFuelAmount());
     }
     
     @Override
@@ -212,6 +259,12 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
         }
         if (compoundTag.contains("IsLaunched")) {
             this.entityData.set(IS_LAUNCHED, compoundTag.getBoolean("IsLaunched"));
+        }
+        if (compoundTag.contains("EnergyAmount")) {
+            this.setEnergyAmount(compoundTag.getInt("EnergyAmount"));
+        }
+        if (compoundTag.contains("FuelAmount")) {
+            this.setFuelAmount(compoundTag.getInt("FuelAmount")); 
         }
     }
 }

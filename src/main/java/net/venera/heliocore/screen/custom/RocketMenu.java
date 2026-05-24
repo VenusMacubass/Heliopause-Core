@@ -29,7 +29,7 @@ public class RocketMenu extends AbstractContainerMenu{
                 this.addSlot(new SlotItemHandler(this.rocket.inventory, slotIndex++, 8 + col * 18, 64 + row * 18));
             }
         }
-        this.addSlot(new SlotItemHandler(this.rocket.inventory, 0, 130, 42) {
+        this.addSlot(new SlotItemHandler(this.rocket.inventory, 27, 130, 42) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return  stack.getItem() instanceof BatteryItem;
@@ -54,5 +54,18 @@ public class RocketMenu extends AbstractContainerMenu{
         }
         
         return this.rocket.isAlive() && player.distanceToSqr(this.rocket) < 64.0D;
+    }
+
+    public int getFuelScaled(int pixels) {
+        if (this.rocket == null) return 0;
+
+        int currentFuel = this.rocket.getFuelAmount();
+        int maxFuel = this.rocket.MAX_FUEL;
+
+        if (currentFuel <= 0) {
+            return 0;
+        }
+
+        return (currentFuel * pixels) / maxFuel;
     }
 }

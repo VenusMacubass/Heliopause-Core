@@ -29,6 +29,12 @@ public class ModMenuTypes {
     public static final DeferredHolder<MenuType<?>, MenuType<RocketMenu>> ROCKET_MENU =
             registerMenuType("rocket_menu", RocketMenu::new);
 
+    public static final DeferredHolder<MenuType<?>, MenuType<CargoManagerMenu>> CARGO_MANAGER_MENU =
+            registerMenuType("cargo_manager_menu", CargoManagerMenu::new);
+
+    public static final DeferredHolder<MenuType<?>, MenuType<FuelManagerMenu>> FUEL_MANAGER_MENU =
+            registerMenuType("fuel_manager_menu", FuelManagerMenu::new);
+
     private static <T extends AbstractContainerMenu>DeferredHolder<MenuType<?>, MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENU_TYPES.register(name, () -> IMenuTypeExtension.create(factory));
     }

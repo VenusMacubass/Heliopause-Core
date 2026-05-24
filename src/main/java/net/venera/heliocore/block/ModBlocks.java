@@ -90,6 +90,8 @@ public class ModBlocks {
             () -> new SolarPanelBlock(BlockBehaviour.Properties.of().strength(2f), ModBlockEntities.BASIC_SOLAR_PANEL_ENTITY));
     public static final DeferredBlock<Block> CARGO_MANAGER_BLOCK = registerBlock("cargo_manager_block",
             () -> new CargoManagerBlock(BlockBehaviour.Properties.of().strength(2f), ModBlockEntities.CARGO_MANAGER_ENTITY));
+    public static final DeferredBlock<Block> FUEL_MANAGER_BLOCK = registerBlock("fuel_manager_block",
+            () -> new FuelManagerBlock(BlockBehaviour.Properties.of().strength(2f), ModBlockEntities.FUEL_MANAGER_ENTITY));
     //endregion
     
     //region Moon

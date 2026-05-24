@@ -12,21 +12,16 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.util.MachineButtonHelper;
 
-public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
-    private Button toggleButton;
-    
-    private static final ResourceLocation BASIC_SOLAR_SCREEN_GUI = 
-            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID,"textures/gui/solar_panel/solar_gui.png");
-    private static final ResourceLocation ENERGY_ACTIVITY_ICON = 
-            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID,"textures/gui/energy_activity_icon.png");
-    private static final ResourceLocation SUN_ICON_INACTIVE = 
-            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID,"textures/gui/solar_inactivity.png");
-    private static final ResourceLocation SUN_ICON_ACTIVE =
-            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID,"textures/gui/solar_activity.png");
-    
-            
+public class FuelManagerScreen extends AbstractContainerScreen<FuelManagerMenu> {
+    private Button inputEnableButton;
+    private Button outputEnableButton;
 
-    public BasicSolarScreen(BasicSolarMenu menu, Inventory playerInventory, Component title) {
+    private static final ResourceLocation FUEL_MANAGER_GUI =
+            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/fuel_manager/fuel_manager_gui.png");
+    private static final ResourceLocation FUEL_GUI = 
+            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID,"textures/gui/fuel_gui.png");
+
+    public FuelManagerScreen(FuelManagerMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
     }
 
@@ -35,15 +30,26 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
         super.init();
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
-        
-        this.toggleButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.data.get(5) > 0 ? "Disable" : "Enable"),
+
+        this.inputEnableButton = this.addRenderableWidget(Button.builder(
+                        Component.literal(menu.data.get(4) > 0 ? "Stop Loading" : "Load Fuel"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
                             );
                         })
-                .bounds(x + 107, y + 28, 40, 18)
+                .bounds(x + 73, y + 5, 36, 15)
+                .build()
+        );
+
+        this.outputEnableButton = this.addRenderableWidget(Button.builder(
+                        Component.literal(menu.data.get(5) > 0 ? "Stop Charging" : "Charge"),
+                        button -> {
+                            PacketDistributor.sendToServer(
+                                    new MachineButtonHelper(menu.blockEntity.getBlockPos(), 1)
+                            );
+                        })
+                .bounds(x + 73, y + 22, 36, 15)
                 .build()
         );
     }
@@ -52,30 +58,35 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
     protected void renderBg(GuiGraphics guiGraphics, float v, int i, int i1) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, BASIC_SOLAR_SCREEN_GUI);
+        RenderSystem.setShaderTexture(0, FUEL_MANAGER_GUI);
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
-        guiGraphics.blit(BASIC_SOLAR_SCREEN_GUI, x, y, 0, 0, 176, 133); //Gui
-        guiGraphics.blit(SUN_ICON_INACTIVE, x+15, y+22, 0, 0, 8, 8 , 8, 8); //Sun Icon (Inactive)
+        guiGraphics.blit(FUEL_MANAGER_GUI, x, y, 0, 0, 176, 174); //Gui
 
-        if(menu.data.get(0) > 0){ 
-            //guiGraphics.blit(SOURCE_GUI, whereToDrawX, whereToDrawY, textureX, textureY, textureW, textureH, imageW, imageH);
-            guiGraphics.blit(ENERGY_ACTIVITY_ICON, x+35, y+24, 0, 0, 9, 13 , 9, 13); //Lightning Icon
+        int scaledHeight = menu.getFuelScaled(41);
+
+        if (scaledHeight > 0) {
+            int emptySpace = 41 - scaledHeight;
+
+            guiGraphics.blit(
+                    FUEL_GUI,
+                    x + 152,                  // X stays the same
+                    y + 6 + emptySpace,     // Push the render start down by the empty space
+                    0,                      // Texture U stays the same
+                    emptySpace,         // Push the texture read start down to match
+                    16,                  // Width stays the same
+                    scaledHeight               // Only draw the remaining scaled height!
+            );
         }
-        if(menu.data.get(4) > 0) {
-            guiGraphics.blit(SUN_ICON_ACTIVE, x+15, y+22, 0, 0, 8, 8, 8, 8); //Sun Icon  
-            
-        }
-        
+
         int chargeLength = menu.getEnergyScaled(54);
-        
+
         if (chargeLength > 0) {
-            int startX = x + 36;
-            int startY = y + 15;
+            int startX = x + 74;
+            int startY = y + 40;
             int endX = startX + chargeLength;
             int endY = startY + 7;
-            
-            //(FF: opacity, FF being opaque), rest is rgb
+
             guiGraphics.fill(startX, startY, endX, endY, 0xFFFFE400);
         }
     }
@@ -86,43 +97,32 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
         int imageX = (width - imageWidth) / 2;
         int imageY = (height - imageHeight) / 2;
 
-        int energyX = imageX + 36;
-        int energyY = imageY + 15;
+        int energyX = imageX + 74;
+        int energyY = imageY + 40;
         int energyWidth = 54;
         int energyHeight = 7;
-        int sunX = imageX + 15;
-        int sunY = imageY + 22;
-        int sunArea = 16;
-        
-        if(isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)){ 
+
+
+        if (isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)) {
             int currentEnergy = menu.data.get(0);
             int maxEnergy = menu.data.get(1);
-            
-            guiGraphics.renderTooltip(font, Component.literal( 
-                    "Energy: " + currentEnergy + " / " + maxEnergy + " FE"), x, y);
-        }
 
-        if(isMouseOver(x, y, sunX, sunY, sunArea, sunArea)) {
-            if(menu.data.get(4) > 0) {
-                guiGraphics.renderTooltip(font, Component.literal(
-                        "Sun is visible."), x, y);
-            } else {
-                guiGraphics.renderTooltip(font, Component.literal(
-                        "Sun is not visible."), x, y);
-            }
+            guiGraphics.renderTooltip(font, Component.literal(
+                    "Energy: " + currentEnergy + " / " + maxEnergy + " FE"), x, y);
         }
     }
 
     @Override
     protected void containerTick() {
         super.containerTick();
-        this.toggleButton.setMessage(Component.literal(menu.data.get(5) > 0 ? "Disable" : "Enable"));
+        this.inputEnableButton.setMessage(Component.literal(menu.data.get(4) > 0 ? "Stop Loading" : "Load Fuel"));
+        this.outputEnableButton.setMessage(Component.literal(menu.data.get(5) > 0 ? "Stop Charging" : "Charge"));
     }
 
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {
         return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
     }
-    
+
 
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {

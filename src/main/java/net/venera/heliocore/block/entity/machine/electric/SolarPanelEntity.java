@@ -1,6 +1,7 @@
 package net.venera.heliocore.block.entity.machine.electric;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -15,9 +16,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.venera.heliocore.block.custom.machine.electric.SolarPanelBlock;
 import net.venera.heliocore.item.custom.BatteryItem;
 import net.venera.heliocore.screen.custom.BasicSolarMenu;
+import net.venera.heliocore.util.MachineConfigHelper;
 import org.jetbrains.annotations.Nullable;
 
-public class SolarPanelEntity extends BaseElectricMachineEntity{
+public class SolarPanelEntity extends BaseElectricMachineEntity implements MachineConfigHelper.IToggleableMachine {
     private final int OUTPUT_SLOT = 0;
     private final int tierTransferRate;
     private final int generationRate; 
@@ -144,6 +146,12 @@ public class SolarPanelEntity extends BaseElectricMachineEntity{
     @Override
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
         return new BasicSolarMenu(i, inventory, this, this.data);
+    }
+
+    @Override
+    public void toggleEnabled(int buttonId) {
+        this.isEnabled = !this.isEnabled;
+        this.setChanged();
     }
 
     @Override

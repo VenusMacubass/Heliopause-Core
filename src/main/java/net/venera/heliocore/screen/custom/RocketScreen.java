@@ -11,6 +11,7 @@ import net.venera.heliocore.HeliopauseCore;
 
 public class RocketScreen  extends AbstractContainerScreen<RocketMenu> {
     private static final ResourceLocation ROCKET_GUI = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID,"textures/gui/tier1_rocket/tier1_rocket.png");
+    private static final ResourceLocation FUEL_GUI = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID,"textures/gui/fuel_gui.png");
     
     public RocketScreen(RocketMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -24,6 +25,22 @@ public class RocketScreen  extends AbstractContainerScreen<RocketMenu> {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
         guiGraphics.blit(ROCKET_GUI, x, y, 0, 0, 175, 123); //Gui
+        
+        int scaledHeight = menu.getFuelScaled(41);
+
+        if (scaledHeight > 0) {
+            int emptySpace = 41 - scaledHeight;
+
+            guiGraphics.blit(
+                    FUEL_GUI,
+                    x + 152,                  // X stays the same
+                    y + 17 + emptySpace,     // Push the render start down by the empty space
+                    0,                      // Texture U stays the same
+                    emptySpace,         // Push the texture read start down to match
+                    16,                  // Width stays the same
+                    scaledHeight               // Only draw the remaining scaled height!
+            );
+        }
     }
     
     @Override

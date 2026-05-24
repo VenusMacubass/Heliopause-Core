@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
@@ -19,11 +20,13 @@ import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.venera.heliocore.block.ModBlocks;
 import net.venera.heliocore.block.entity.ModBlockEntities;
 import net.venera.heliocore.entity.ModEntities;
 import net.venera.heliocore.entity.client.Tier1RocketRenderer;
+import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 import net.venera.heliocore.entity.zombie.SpaceZombieRenderer;
 import net.venera.heliocore.fluid.ModFluids;
 import net.venera.heliocore.item.ModItems;
@@ -154,6 +157,21 @@ public class HeliopauseCoreClient {
         event.register(ModMenuTypes.ENERGY_STORAGE_UNIT_MENU.get(), EnergyStorageUnitScreen::new);
         event.register(ModMenuTypes.BASIC_SOLAR_MENU.get(), BasicSolarScreen::new);
         event.register(ModMenuTypes.ROCKET_MENU.get(), RocketScreen::new);
+        event.register(ModMenuTypes.CARGO_MANAGER_MENU.get(), CargoManagerScreen::new);
+        event.register(ModMenuTypes.FUEL_MANAGER_MENU.get(), FuelManagerScreen::new);
+    }
+
+    @SubscribeEvent
+    public static void onRenderGuiLayer(RenderGuiLayerEvent.Pre event) {
+        // Target the specific GUI layer responsible for the jump charge bar
+        if (event.getName().equals(VanillaGuiLayers.JUMP_METER)) {
+
+            Player player = Minecraft.getInstance().player;
+            
+            if (player != null && player.getVehicle() instanceof Tier1RocketEntity) {
+                event.setCanceled(true);
+            }
+        }
     }
 
     @SubscribeEvent

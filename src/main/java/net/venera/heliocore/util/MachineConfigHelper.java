@@ -53,4 +53,8 @@ public class MachineConfigHelper {
 
         return worldSide; 
     }
+
+    public interface IToggleableMachine {
+        void toggleEnabled(int buttonId);
+    } 
 }

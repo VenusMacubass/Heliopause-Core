@@ -36,7 +36,7 @@ import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 import net.venera.heliocore.item.ModItems;
 import net.venera.heliocore.item.custom.CanisterItem;
-import net.venera.heliocore.util.SolarPanelHelper;
+import net.venera.heliocore.util.MachineButtonHelper;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -184,11 +184,10 @@ public class ModEvents {
     @SubscribeEvent
     public static void registerNetworking(final RegisterPayloadHandlersEvent event) {
         final PayloadRegistrar registrar = event.registrar(HeliopauseCore.MOD_ID);
-
         registrar.playToServer(
-                SolarPanelHelper.TYPE,
-                SolarPanelHelper.STREAM_CODEC,
-                SolarPanelHelper::handle
+                MachineButtonHelper.TYPE,
+                MachineButtonHelper.STREAM_CODEC,
+                MachineButtonHelper::handle
         );
     }
     //-------------------------------------------------
