@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.venera.heliocore.block.entity.machine.BaseMachineEntity;
+import net.venera.heliocore.data.energy.GridManager;
 import net.venera.heliocore.item.custom.BatteryItem;
 import net.venera.heliocore.util.MachineConfigHelper;
 
@@ -21,6 +22,8 @@ public abstract class BaseElectricMachineEntity extends BaseMachineEntity {
     public BaseElectricMachineEntity(BlockEntityType<?> type, BlockPos pos, BlockState state,
                                      int slotCount, int capacity, int transferRate, int usagePerTick) {
         super(type, pos, state, slotCount);
+        
+        
         
         this.energyStorage = new EnergyStorage(capacity, transferRate, usagePerTick, 0) {
             @Override
@@ -52,8 +55,15 @@ public abstract class BaseElectricMachineEntity extends BaseMachineEntity {
     public EnergyStorage getEnergyStorage() {
         return this.energyStorage;
     }
-    
 
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (this.level != null && !this.level.isClientSide()) {
+            GridManager.get(this.level).onMachinePlaced(this.level, this.getBlockPos());
+        }
+    }
+    
     //--- SHARED HELPER METHODS ---//
     protected boolean processBatterySlot(int slotIndex) { 
         ItemStack batteryStack = inventory.getStackInSlot(slotIndex);

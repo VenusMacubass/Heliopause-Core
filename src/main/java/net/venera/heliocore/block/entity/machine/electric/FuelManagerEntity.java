@@ -9,6 +9,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -18,8 +20,11 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.venera.heliocore.block.custom.FluidPipeBlock;
 import net.venera.heliocore.block.custom.LaunchPadBlock;
 import net.venera.heliocore.block.custom.machine.BaseMachineBlock;
+import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 import net.venera.heliocore.fluid.IFluidMachine;
+import net.venera.heliocore.fluid.ModFluids;
+import net.venera.heliocore.item.custom.CanisterItem;
 import net.venera.heliocore.screen.custom.FuelManagerMenu;
 import net.venera.heliocore.util.MachineConfigHelper;
 import net.venera.heliocore.util.PipeNetworkHelper;
@@ -28,13 +33,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Set;
 
 public class FuelManagerEntity extends BaseElectricMachineEntity implements IFluidMachine, MachineConfigHelper.IToggleableMachine {
-    private final int FUEL_SLOT = 0;
-    private final int BATTERY_SLOT = 1;
+    private final int BATTERY_SLOT = 0;
+    private final int FUEL_SLOT = 1;
+    private final int BUCKET_CAPACITY = 1000;
     private int fuelAmount = 0;
     private final int maxFuel = 6000;
     private final int tierTransferRate;
-    private int ENERGY_USAGE = 2;
-    private int FUEL_LOAD_RATE = 1;
+    private int ENERGY_USAGE = 5;
+    private int FUEL_LOAD_RATE = 2;
     public boolean isActive;
     public boolean isFueling = false;
     public boolean isCharging = false;
@@ -71,8 +77,46 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
     
 
     public void tick(Level level, BlockPos pos, BlockState state){
+        if (level.isClientSide()) return;
+        boolean dirty = false;
 
+        if (processBatterySlot(BATTERY_SLOT)) dirty = true;
+        if (processManualFuel()) dirty = true;
+        if (this.fuelAmount < this.maxFuel) {
+            if (pullFluidIn(level, pos)) {
+                dirty = true; 
+            }
+        }
 
+        // 2. Find Rocket and Push
+        Tier1RocketEntity rocket = findValidRocket(level, pos);
+        boolean isCurrentlyWorking = false;
+
+        if (rocket != null) {
+            if (isFueling && this.fuelAmount > 0) {
+                int acceptedFuel = rocket.fillFuel(Math.min(this.fuelAmount, 5), false);
+                if (acceptedFuel > 0) {
+                    this.fuelAmount -= acceptedFuel;
+                    isCurrentlyWorking = true;
+                }
+            }
+
+            // Push Energy
+            if (isCharging && this.energyStorage.getEnergyStored() > 0) {
+                int acceptedEnergy = rocket.chargeEnergy(Math.min(this.energyStorage.getEnergyStored(), 50), false);
+                if (acceptedEnergy > 0) {
+                    this.energyStorage.extractEnergy(acceptedEnergy, false);
+                    isCurrentlyWorking = true;
+                }
+            }
+        }
+
+        this.isActive = isCurrentlyWorking;
+
+        // 3. Save to hard drive if anything changed!
+        if (dirty || isCurrentlyWorking) {
+            setChanged();
+        }
 
         BaseElectricMachineEntity.tick(level, pos, state, this);
     }
@@ -98,19 +142,44 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
         return null;
     }
 
-    private void pullFluidIn(Level level, BlockPos pos) {
-        if (this.fuelAmount >= this.maxFuel) return;
+    private boolean processManualFuel() {
+        ItemStack fuelStack = inventory.getStackInSlot(FUEL_SLOT);
+
+        if(fuelStack.getItem() == ModFluids.REFINED_FUEL.getBucket() && fuelAmount <= maxFuel - BUCKET_CAPACITY) {
+            fuelAmount += BUCKET_CAPACITY;
+            inventory.setStackInSlot(FUEL_SLOT, new ItemStack(Items.BUCKET));
+            return true;
+        } else if(fuelStack.getItem() instanceof CanisterItem canister){
+            CanisterData data = canister.getCanisterData(fuelStack);
+            if(data.isRefinedFuel()) {
+                int spaceAvailable = maxFuel - fuelAmount;
+                int amountToDrain = Math.min(data.amount(), spaceAvailable);
+
+                if(amountToDrain > 0) {
+                    int actuallyDrained = canister.drain(fuelStack, amountToDrain);
+                    fuelAmount += actuallyDrained;
+                    return actuallyDrained > 0;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean pullFluidIn(Level level, BlockPos pos) {
+        if (this.fuelAmount >= this.maxFuel) return false;
 
         Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
         Direction inputFace = machineFacing.getClockWise();
 
         BlockPos pipePos = pos.relative(inputFace);
-        if (!(level.getBlockState(pipePos).getBlock() instanceof FluidPipeBlock)) return;
+        if (!(level.getBlockState(pipePos).getBlock() instanceof FluidPipeBlock)) return false;
 
         Set<BlockEntity> connectedMachines = PipeNetworkHelper.findConnectedInventories(level, pipePos, pos);
 
         int spaceAvailable = this.maxFuel - this.fuelAmount;
         int fluidToPull = Math.min(spaceAvailable, FUEL_LOAD_RATE);
+
+        boolean actuallyPulledSomething = false; // Add a tracker
 
         for (BlockEntity entity : connectedMachines) {
             if (entity == this) continue;
@@ -120,28 +189,46 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
 
                 if (availableToExtract > 0) {
                     int actuallyExtracted = targetMachine.extractFluid("heliocore:refined_fuel", availableToExtract, false);
-
                     this.fuelAmount += actuallyExtracted;
-
                     fluidToPull -= actuallyExtracted;
+
+                    actuallyPulledSomething = true; // We successfully moved fluid!
+
                     if (fluidToPull <= 0) break;
                 }
             }
         }
+        return actuallyPulledSomething;
+    }
+    
+    public boolean canActivate(){
+        return fuelAmount > 0 && energyStorage.getEnergyStored() >= ENERGY_USAGE;
+    }
+
+    @Override
+    public PortType getFluidPortType(Direction globalFace) {
+        Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
+        if (globalFace == machineFacing.getClockWise()) {
+            return PortType.INPUT;
+        }
+        return PortType.NONE;
     }
 
     private boolean hasEnergy(){
         return energyStorage.getEnergyStored() >= ENERGY_USAGE;
     }
-    
-    @Override
-    public PortType getFluidPortType(Direction face) {
-        return null;
-    }
 
     @Override
     public int insertFluid(String fluidType, int amount, boolean simulate) {
-        return 0;
+        if (!fluidType.equals("heliocore:refined_fuel")) return 0;
+
+        int spaceAvailable = this.maxFuel - this.fuelAmount;
+        int accepted = Math.min(spaceAvailable, amount);
+
+        if (!simulate && accepted > 0) {
+            this.fuelAmount += accepted;
+        }
+        return accepted;
     }
 
     @Override
@@ -175,6 +262,7 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
         tag.putBoolean("isActive", isActive);
         tag.putBoolean("isFueling", isFueling);
         tag.putBoolean("isCharging", isCharging);
+        tag.putInt("FuelAmount", fuelAmount);
     }
 
     @Override
@@ -183,5 +271,8 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
         isActive = tag.getBoolean("isActive");
         isFueling = tag.getBoolean("isFueling");
         isCharging = tag.getBoolean("isCharging");
+        if (tag.contains("FuelAmount")) {
+            fuelAmount = tag.getInt("FuelAmount"); // Load the fuel!
+        }
     }
 }

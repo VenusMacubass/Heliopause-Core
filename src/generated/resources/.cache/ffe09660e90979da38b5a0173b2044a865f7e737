@@ -1,7 +1,7 @@
-// 1.21.1	2026-05-18T16:09:04.4886602	Tags for minecraft:block mod id heliocore
+// 1.21.1	2026-05-25T14:44:11.2752647	Tags for minecraft:block mod id heliocore
 4bdfaa8683cef3fe3c678ecbd48b25091d141649 data/heliocore/tags/block/incorrect_for_steel_tool.json
 895bf4be18ef6ea3d78dbe84749898d0cfa069e8 data/heliocore/tags/block/machinery.json
-f38bce80e1e6dab905444a9cc547d6cc74a4edb1 data/heliocore/tags/block/moon_stone_replaceables.json
+0c3bcda7a5670f797daa12895af6d4b22aa4efe1 data/heliocore/tags/block/moon_stone_replaceables.json
 32b13946c4cd1f944b029659ccce5fcb2adad4ff data/heliocore/tags/block/needs_steel_tools.json
 56fde0303e9d93d8bb8a1d58ca8cb1479609b7f0 data/minecraft/tags/block/mineable/pickaxe.json
 17a611661c51cb3629a693880a93f4f9e3d0074a data/minecraft/tags/block/mineable/shovel.json

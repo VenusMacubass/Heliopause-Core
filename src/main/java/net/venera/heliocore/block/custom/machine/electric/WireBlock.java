@@ -116,26 +116,4 @@ public class WireBlock extends PipeBlock {
         BooleanProperty property = PROPERTY_BY_DIRECTION.get(direction);
         return state.setValue(property, connectsTo(level, currentPos, direction));
     }
-//
-//    private static final VoxelShape CENTER_SHAPE = Block.box(6, 6, 6, 10, 10, 10); //Center 
-//    private static final VoxelShape NORTH_SHAPE = Block.box(6, 6, 0, 10, 10, 6);   //North Arm
-//    private static final VoxelShape SOUTH_SHAPE = Block.box(6, 6, 10, 10, 10, 16); //South Arm
-//    private static final VoxelShape EAST_SHAPE = Block.box(10, 6, 6, 16, 10, 10);  //East Arm
-//    private static final VoxelShape WEST_SHAPE = Block.box(0, 6, 6, 6, 10, 10);    //West Arm
-//    private static final VoxelShape UP_SHAPE = Block.box(6, 10, 6, 10, 16, 10);    //Up Arm
-//    private static final VoxelShape DOWN_SHAPE = Block.box(6, 0, 6, 10, 6, 10);    //Down Arm
-//
-//    @Override
-//    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-//        VoxelShape shape = CENTER_SHAPE;
-//
-//        if (state.getValue(NORTH)) shape = Shapes.or(shape, NORTH_SHAPE);
-//        if (state.getValue(SOUTH)) shape = Shapes.or(shape, SOUTH_SHAPE);
-//        if (state.getValue(EAST)) shape = Shapes.or(shape, EAST_SHAPE);
-//        if (state.getValue(WEST)) shape = Shapes.or(shape, WEST_SHAPE);
-//        if (state.getValue(UP)) shape = Shapes.or(shape, UP_SHAPE);
-//        if (state.getValue(DOWN)) shape = Shapes.or(shape, DOWN_SHAPE);
-//
-//        return shape;
-//    }
 }

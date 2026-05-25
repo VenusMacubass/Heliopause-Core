@@ -73,8 +73,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.BASIC_SOLAR_BLOCK.get());
         
         tag(ModTags.Blocks.MOON_STONE_REPLACEABLES)
-                .add(ModBlocks.MOON_ROCK.get())
-                .add(ModBlocks.MOON_REGOLITH.get());
+                .add(ModBlocks.MOON_ROCK.get());
         
     }
 }

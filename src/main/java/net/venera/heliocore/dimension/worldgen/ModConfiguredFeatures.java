@@ -22,46 +22,103 @@ import net.venera.heliocore.util.ModTags;
 import java.util.List;
 
 public class ModConfiguredFeatures { //What to place
+    
+    //region Resource Keys
     public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_TIN_ORE_KEY = registerKey("overworld_tin_ore");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> NETHER_TIN_ORE_KEY = registerKey("nether_tin_ore");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> END_TIN_ORE_KEY = registerKey("end_tin_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_ALUMINIUM_ORE_KEY = registerKey("overworld_aluminium_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_SILICON_ORE_KEY = registerKey("overworld_silicon_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_IRIDIUM_ORE_KEY = registerKey("overworld_iridium_ore");
+    
+    //public static final ResourceKey<ConfiguredFeature<?, ?>> END_TIN_ORE_KEY = registerKey("end_tin_ore");
+    
     public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_TIN_ORE_KEY = registerKey("moon_tin_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_ALUMINIUM_ORE_KEY = registerKey("moon_aluminium_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_SILICON_ORE_KEY = registerKey("moon_silicon_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_IRIDIUM_ORE_KEY = registerKey("moon_iridium_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_IRON_ORE_KEY = registerKey("moon_iron_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_COPPER_ORE_KEY = registerKey("moon_copper_ore");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> MARIA_CRATER_KEY = registerKey("maria_crater");
     public static final ResourceKey<ConfiguredFeature<?, ?>> HIGHLANDS_CRATER_KEY = registerKey("highlands_crater");
-    
+    //endregion
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context){
 
         RuleTest stoneReplaceables = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
-        RuleTest netherrackReplaceables = new BlockMatchTest(Blocks.NETHERRACK);
-        RuleTest endReplaceables = new BlockMatchTest(Blocks.END_STONE);
+        RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
+//        RuleTest netherrackReplaceables = new BlockMatchTest(Blocks.NETHERRACK);
+//        RuleTest endReplaceables = new BlockMatchTest(Blocks.END_STONE);
         RuleTest moonReplaceables = new TagMatchTest(ModTags.Blocks.MOON_STONE_REPLACEABLES);
 
         List<OreConfiguration.TargetBlockState> overworldTinOres = List.of(
-                OreConfiguration.target(stoneReplaceables, ModBlocks.TIN_ORE.get().defaultBlockState()));
+                OreConfiguration.target(stoneReplaceables, ModBlocks.TIN_ORE.get().defaultBlockState()),
+                OreConfiguration.target(deepslateReplaceables, ModBlocks.DEEPSLATE_TIN_ORE.get().defaultBlockState()));
+        
+        List<OreConfiguration.TargetBlockState> overworldAluminiumOres = List.of(
+                OreConfiguration.target(stoneReplaceables, ModBlocks.ALUMINIUM_ORE.get().defaultBlockState()),
+                OreConfiguration.target(deepslateReplaceables, ModBlocks.DEEPSLATE_ALUMINIUM_ORE.get().defaultBlockState())); 
+        
+        List<OreConfiguration.TargetBlockState> overworldSiliconOres = List.of(
+                OreConfiguration.target(stoneReplaceables, ModBlocks.SILICON_ORE.get().defaultBlockState()),
+                OreConfiguration.target(deepslateReplaceables, ModBlocks.DEEPSLATE_SILICON_ORE.get().defaultBlockState()));
+        
+        List<OreConfiguration.TargetBlockState> overworldIridiumOres = List.of(
+                OreConfiguration.target(stoneReplaceables, ModBlocks.IRIDIUM_ORE.get().defaultBlockState()),
+                OreConfiguration.target(deepslateReplaceables, ModBlocks.DEEPSLATE_IRIDIUM_ORE.get().defaultBlockState()));
 
-        List<OreConfiguration.TargetBlockState> netherTinOres = List.of(
-                OreConfiguration.target(netherrackReplaceables, ModBlocks.TIN_ORE.get().defaultBlockState()));
-
-        List<OreConfiguration.TargetBlockState> endTinOres = List.of(
-                OreConfiguration.target(endReplaceables, ModBlocks.TIN_ORE.get().defaultBlockState()));
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        List<OreConfiguration.TargetBlockState> endTinOres = List.of(
+//                OreConfiguration.target(endReplaceables, ModBlocks.TIN_ORE.get().defaultBlockState()));
 
         List<OreConfiguration.TargetBlockState> moonTinOres = List.of(
                 OreConfiguration.target(moonReplaceables, ModBlocks.MOON_TIN_ORE.get().defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> moonIronOres = List.of(
+                OreConfiguration.target(moonReplaceables, ModBlocks.MOON_IRON_ORE.get().defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> moonCopperOres = List.of(
+                OreConfiguration.target(moonReplaceables, ModBlocks.MOON_COPPER_ORE.get().defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> moonAluminiumOres = List.of(
+                OreConfiguration.target(moonReplaceables, ModBlocks.MOON_ALUMINIUM_ORE.get().defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> moonSiliconOres = List.of(
+                OreConfiguration.target(moonReplaceables, ModBlocks.MOON_SILICON_ORE.get().defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> moonIridiumOres = List.of(
+                OreConfiguration.target(moonReplaceables, ModBlocks.MOON_IRIDIUM_ORE.get().defaultBlockState()));
         
-        register(context, OVERWORLD_TIN_ORE_KEY, Feature.ORE, new OreConfiguration(overworldTinOres, 12));
-        register(context, NETHER_TIN_ORE_KEY, Feature.ORE, new OreConfiguration(netherTinOres, 12));
-        register(context, END_TIN_ORE_KEY, Feature.ORE, new OreConfiguration(endTinOres, 12));
-        register(context, MOON_TIN_ORE_KEY, Feature.ORE, new OreConfiguration(moonTinOres, 12));
-
+        //region Registry
+        register(context, OVERWORLD_TIN_ORE_KEY, Feature.ORE, new OreConfiguration(overworldTinOres, 10));
+        register(context, OVERWORLD_ALUMINIUM_ORE_KEY, Feature.ORE, new OreConfiguration(overworldAluminiumOres, 10));
+        register(context, OVERWORLD_SILICON_ORE_KEY, Feature.ORE, new OreConfiguration(overworldSiliconOres, 2));
+        register(context, OVERWORLD_IRIDIUM_ORE_KEY, Feature.ORE, new OreConfiguration(overworldIridiumOres, 2));
+        
+        
+        register(context, MOON_TIN_ORE_KEY, Feature.ORE, new OreConfiguration(moonTinOres, 10));
+        register(context, MOON_IRON_ORE_KEY, Feature.ORE, new OreConfiguration(moonIronOres, 7)); // Slightly smaller than Earth Iron
+        register(context, MOON_COPPER_ORE_KEY, Feature.ORE, new OreConfiguration(moonCopperOres, 9)); // Standard copper vein size
+        register(context, MOON_ALUMINIUM_ORE_KEY, Feature.ORE, new OreConfiguration(moonAluminiumOres, 8)); // Abundant veins
+        register(context, MOON_SILICON_ORE_KEY, Feature.ORE, new OreConfiguration(moonSiliconOres, 4)); // Small veins
+        register(context, MOON_IRIDIUM_ORE_KEY, Feature.ORE, new OreConfiguration(moonIridiumOres, 3)); // Slightly larger than Earth Iridium
+        
+        
+        //endregion
+        
         context.register(MARIA_CRATER_KEY, new ConfiguredFeature<>(
                 ModFeatures.CRATER_FEATURE.get(),
-                new CraterConfig(5, 25, 5.0) 
+                new CraterConfig(5, 20, 5.0) 
         ));
 
         context.register(HIGHLANDS_CRATER_KEY, new ConfiguredFeature<>(
                 ModFeatures.CRATER_FEATURE.get(),
-                new CraterConfig(3, 15, 2.0) 
+                new CraterConfig(3, 12, 2.0) 
         ));
     }
     

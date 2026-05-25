@@ -56,15 +56,20 @@ public class RocketMenu extends AbstractContainerMenu{
         return this.rocket.isAlive() && player.distanceToSqr(this.rocket) < 64.0D;
     }
 
+    public int getEnergyScaled(int pixels) {
+        if (this.rocket == null) return 0;
+        int currentEnergy = this.rocket.getEnergyAmount();
+        int maxEnergy = this.rocket.MAX_ENERGY;
+        if (maxEnergy == 0 || currentEnergy <= 0) return 0;
+
+        return (currentEnergy * pixels) / maxEnergy;
+    }
+
     public int getFuelScaled(int pixels) {
         if (this.rocket == null) return 0;
-
         int currentFuel = this.rocket.getFuelAmount();
         int maxFuel = this.rocket.MAX_FUEL;
-
-        if (currentFuel <= 0) {
-            return 0;
-        }
+        if (maxFuel == 0 || currentFuel <= 0) return 0;
 
         return (currentFuel * pixels) / maxFuel;
     }

@@ -18,8 +18,7 @@ public class RadiationHandler {
     private static final double EARTH_BG_RAD = 0.27;
     private static final double NETHER_BG_RAD = 0.23;
     private static final double END_BG_RAD = 0.48;
-    private static final double MOON_DAY_BG_RAD = 54;
-    private static final double MOON_NIGHT_BG_RAD = 46;
+    private static final double MOON_BG_RAD = 54;
 
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
@@ -36,31 +35,20 @@ public class RadiationHandler {
         }
         if(aliveEntity instanceof Player player){
             radiationData.setRadiation(0);
-        //GalacticraftCore.LOGGER.info(player.getName() + " radiation level: " + player.getData(ModAttachments.RADIATION_DATA).getRadiation());
+        
         }
     }
 
     private static void radiationChange(Entity entity, RadiationData radiationData) {
         double radLevel = radiationData.getRadiation();
         var dim = entity.level().dimension();
-        double difficulty;
-        switch (entity.level().getDifficulty()) {
-            case PEACEFUL:
-                difficulty = 0f;
-                break;
-            case EASY:
-                difficulty = 0.007f;
-                break;
-            case NORMAL:
-                difficulty = 0.01f;
-                break;
-            case HARD:
-                difficulty = 0.013f;
-                break;
-            default:
-                difficulty = 0f;
-                break;
-        }
+        double difficulty = switch (entity.level().getDifficulty()) {
+            case PEACEFUL -> 0f;
+            case EASY -> 0.007f;
+            case NORMAL -> 0.01f;
+            case HARD -> 0.013f;
+            default -> 0f;
+        };
         if (dim.equals(Level.OVERWORLD)) {
             radiationData.changeRadiation(Math.abs(EARTH_BG_RAD - Math.min(radLevel, 100)) * difficulty, EARTH_BG_RAD > radLevel);
         } else if (dim.equals(Level.NETHER)) {
@@ -69,7 +57,7 @@ public class RadiationHandler {
             radiationData.changeRadiation(Math.abs(END_BG_RAD - Math.min(radLevel, 100)) * difficulty,  END_BG_RAD > radLevel);
         }
         else if (dim.equals(ModDimensions.MOON_LEVEL_KEY)) {
-            radiationData.changeRadiation(Math.abs(MOON_DAY_BG_RAD - Math.min(radLevel, 100)) * difficulty,  MOON_DAY_BG_RAD > radLevel);
+            radiationData.changeRadiation(Math.abs(MOON_BG_RAD - Math.min(radLevel, 100)) * difficulty,  MOON_BG_RAD > radLevel);
         } else {
             throw new IllegalStateException("Unexpected value: " + dim);
         }

@@ -2,11 +2,11 @@
   "type": "minecraft:ore",
   "config": {
     "discard_chance_on_air_exposure": 0.0,
-    "size": 10,
+    "size": 2,
     "targets": [
       {
         "state": {
-          "Name": "heliocore:tin_ore"
+          "Name": "heliocore:silicon_ore"
         },
         "target": {
           "predicate_type": "minecraft:tag_match",
@@ -15,7 +15,7 @@
       },
       {
         "state": {
-          "Name": "heliocore:deepslate_tin_ore"
+          "Name": "heliocore:deepslate_silicon_ore"
         },
         "target": {
           "predicate_type": "minecraft:tag_match",

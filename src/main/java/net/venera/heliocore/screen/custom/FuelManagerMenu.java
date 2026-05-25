@@ -36,7 +36,7 @@ public class FuelManagerMenu extends AbstractContainerMenu {
         addPlayerInventory(inventory);
         addPlayerHotbar(inventory);
 
-        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 1, 132, 31) {
+        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 0, 132, 31) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return  stack.getItem() instanceof BatteryItem;

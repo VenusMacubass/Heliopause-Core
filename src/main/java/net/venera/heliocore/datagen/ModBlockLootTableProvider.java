@@ -51,6 +51,8 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.FLUID_TANK.get());
         dropSelf(ModBlocks.ENERGY_STORAGE_UNIT.get());
         dropSelf(ModBlocks.BASIC_SOLAR_BLOCK.get());
+        dropSelf(ModBlocks.CARGO_MANAGER_BLOCK.get());
+        dropSelf(ModBlocks.FUEL_MANAGER_BLOCK.get());
         dropSelf(ModBlocks.COPPER_WIRE.get());
         dropSelf(ModBlocks.FLUID_PIPE.get());
 

@@ -6,7 +6,7 @@
     "targets": [
       {
         "state": {
-          "Name": "heliocore:tin_ore"
+          "Name": "heliocore:aluminium_ore"
         },
         "target": {
           "predicate_type": "minecraft:tag_match",
@@ -15,7 +15,7 @@
       },
       {
         "state": {
-          "Name": "heliocore:deepslate_tin_ore"
+          "Name": "heliocore:deepslate_aluminium_ore"
         },
         "target": {
           "predicate_type": "minecraft:tag_match",

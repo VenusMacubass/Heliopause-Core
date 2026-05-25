@@ -3,6 +3,7 @@ package net.venera.heliocore.util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.*;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
@@ -14,11 +15,13 @@ public class ModTags {
     public static class Items{
         public static final TagKey<Item> CANISTER = createTag("canister");
         public static final TagKey<Item> COMPRESSIBLE_INGOTS = createTag("compressible_ingots");
-
+        public static final TagKey<Item> OXYGEN_GEAR = TagKey.create(Registries.ITEM, 
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "oxygen_gear"));
 
         private static TagKey<Item> createTag(String name){
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, name));
         }
+        
     }
 
     public static class Blocks{
@@ -53,5 +56,11 @@ public class ModTags {
         private static TagKey<Fluid> createTag(String name){
             return FluidTags.create(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, name));
         }
+    }
+    
+    public static class Entities{
+        public static final TagKey<EntityType<?>> DOES_NOT_BREATHE = TagKey.create(Registries.ENTITY_TYPE, 
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "entity/does_not_breathe"));
+        
     }
 }

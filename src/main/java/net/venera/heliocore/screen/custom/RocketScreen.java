@@ -25,27 +25,81 @@ public class RocketScreen  extends AbstractContainerScreen<RocketMenu> {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
         guiGraphics.blit(ROCKET_GUI, x, y, 0, 0, 175, 123); //Gui
+
+        int chargeLength = menu.getEnergyScaled(54);
+        if (chargeLength > 0) {
+            int startX = x + 72;
+            int startY = y + 51;
+            int endX = startX + chargeLength;
+            int endY = startY + 7;
+
+            //(FF: opacity, FF being opaque), rest is rgb
+            guiGraphics.fill(startX, startY, endX, endY, 0xFFFFE400);
+        }
         
         int scaledHeight = menu.getFuelScaled(41);
-
         if (scaledHeight > 0) {
             int emptySpace = 41 - scaledHeight;
 
             guiGraphics.blit(
                     FUEL_GUI,
-                    x + 152,                  // X stays the same
-                    y + 17 + emptySpace,     // Push the render start down by the empty space
-                    0,                      // Texture U stays the same
-                    emptySpace,         // Push the texture read start down to match
-                    16,                  // Width stays the same
-                    scaledHeight               // Only draw the remaining scaled height!
+                    x + 152,                // Screen X
+                    y + 17 + emptySpace,     // Screen Y (Pushed down)
+                    0,                      // Texture U (Starts at 0 on the file)
+                    emptySpace,             // Texture V (Pushed down)
+                    16,                     // Render Width
+                    scaledHeight,           // Render Height
+                    16,                     // THE FIX: Actual width of the PNG file
+                    41                      // THE FIX: Actual height of the PNG file
             );
         }
+    }
+
+    @Override
+    protected void renderTooltip(GuiGraphics guiGraphics, int x, int y) {
+        super.renderTooltip(guiGraphics, x, y);
+        int imageX = (width - imageWidth) / 2;
+        int imageY = (height - imageHeight) / 2;
+
+        int energyX = imageX + 72;
+        int energyY = imageY + 51;
+        int energyWidth = 54;
+        int energyHeight = 7;
+        int fuelX = imageX + 152;
+        int fuelY = imageY + 17;
+        int fuelWidth = 16;
+        int fuelHeight = 41;
+
+        if (isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)) {
+            int currentEnergy = menu.rocket.getEnergyAmount();
+            int maxEnergy = menu.rocket.MAX_ENERGY;
+
+            guiGraphics.renderTooltip(font, Component.literal(
+                    "Energy: " + currentEnergy + " / " + maxEnergy + " FE"), x, y);
+        }
+        if (isMouseOver(x, y, fuelX, fuelY, fuelWidth, fuelHeight)) {
+            int currentFuel = menu.rocket.getFuelAmount();
+            int maxFuel = menu.rocket.MAX_FUEL;
+
+            guiGraphics.renderTooltip(font, Component.literal(
+                    "Fuel: " + currentFuel + " / " + maxFuel + " mL"), x, y);
+        }
+
+    }
+
+    private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {
+        return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
     }
     
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         guiGraphics.drawString(this.font, this.title, 7, 4, 0x404040, false);
         guiGraphics.drawString(this.font, this.playerInventoryTitle, 7, 53, 0x404040, false);
+    }
+
+    @Override
+    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+        this.renderTooltip(pGuiGraphics, pMouseX, pMouseY);
     }
 }

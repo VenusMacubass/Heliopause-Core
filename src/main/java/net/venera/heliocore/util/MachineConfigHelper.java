@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 public class MachineConfigHelper {
     public static final Map<Supplier<? extends BlockEntityType<?>>, Map<Direction, Boolean>> IO_CONFIG = new HashMap<>();
 
-    static { //Defines "Model Side" -> Input (True) / Output (False)
+    static { 
         IO_CONFIG.put(ModBlockEntities.REFINERY_ENTITY, Map.of(
                 Direction.UP, true
         ));
@@ -22,6 +22,14 @@ public class MachineConfigHelper {
         
         IO_CONFIG.put(ModBlockEntities.BASIC_SOLAR_PANEL_ENTITY, Map.of(
                 Direction.NORTH, false
+        ));
+        
+        IO_CONFIG.put(ModBlockEntities.CARGO_MANAGER_ENTITY, Map.of(
+                Direction.NORTH, true
+        ));
+        
+        IO_CONFIG.put(ModBlockEntities.FUEL_MANAGER_ENTITY, Map.of(
+                Direction.NORTH, true
         ));
     }
     
@@ -39,7 +47,7 @@ public class MachineConfigHelper {
             return worldSide;
         }
         
-        if (machineFacing == Direction.NORTH) return worldSide; //Already at default facing value.
+        if (machineFacing == Direction.NORTH) return worldSide; 
 
         if (machineFacing == Direction.SOUTH) return worldSide.getOpposite();
         

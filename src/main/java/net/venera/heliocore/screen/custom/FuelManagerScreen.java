@@ -32,7 +32,7 @@ public class FuelManagerScreen extends AbstractContainerScreen<FuelManagerMenu> 
         int y = (height - imageHeight) / 2;
 
         this.inputEnableButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.data.get(4) > 0 ? "Stop Loading" : "Load Fuel"),
+                        Component.literal(menu.data.get(6) > 0 ? "Stop Loading" : "Load Fuel"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
@@ -43,7 +43,7 @@ public class FuelManagerScreen extends AbstractContainerScreen<FuelManagerMenu> 
         );
 
         this.outputEnableButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.data.get(5) > 0 ? "Stop Charging" : "Charge"),
+                        Component.literal(menu.data.get(7) > 0 ? "Stop Charging" : "Charge"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 1)
@@ -70,12 +70,14 @@ public class FuelManagerScreen extends AbstractContainerScreen<FuelManagerMenu> 
 
             guiGraphics.blit(
                     FUEL_GUI,
-                    x + 152,                  // X stays the same
-                    y + 6 + emptySpace,     // Push the render start down by the empty space
-                    0,                      // Texture U stays the same
-                    emptySpace,         // Push the texture read start down to match
-                    16,                  // Width stays the same
-                    scaledHeight               // Only draw the remaining scaled height!
+                    x + 152,                // Screen X
+                    y + 6 + emptySpace,     // Screen Y (Pushed down)
+                    0,                      // Texture U (Starts at 0 on the file)
+                    emptySpace,             // Texture V (Pushed down)
+                    16,                     // Render Width
+                    scaledHeight,           // Render Height
+                    16,                     // THE FIX: Actual width of the PNG file
+                    41                      // THE FIX: Actual height of the PNG file
             );
         }
 
@@ -101,8 +103,11 @@ public class FuelManagerScreen extends AbstractContainerScreen<FuelManagerMenu> 
         int energyY = imageY + 40;
         int energyWidth = 54;
         int energyHeight = 7;
-
-
+        int fuelX = imageX + 152;
+        int fuelY = imageY + 6;
+        int fuelWidth = 16;
+        int fuelHeight = 41;
+        
         if (isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)) {
             int currentEnergy = menu.data.get(0);
             int maxEnergy = menu.data.get(1);
@@ -110,13 +115,21 @@ public class FuelManagerScreen extends AbstractContainerScreen<FuelManagerMenu> 
             guiGraphics.renderTooltip(font, Component.literal(
                     "Energy: " + currentEnergy + " / " + maxEnergy + " FE"), x, y);
         }
+        if (isMouseOver(x, y, fuelX, fuelY, fuelWidth, fuelHeight)) {
+            int currentFuel = menu.data.get(2);
+            int maxFuel = menu.data.get(3);
+
+            guiGraphics.renderTooltip(font, Component.literal(
+                    "Fuel: " + currentFuel + " / " + maxFuel + " mL"), x, y);
+        }
+        
     }
 
     @Override
     protected void containerTick() {
         super.containerTick();
-        this.inputEnableButton.setMessage(Component.literal(menu.data.get(4) > 0 ? "Stop Loading" : "Load Fuel"));
-        this.outputEnableButton.setMessage(Component.literal(menu.data.get(5) > 0 ? "Stop Charging" : "Charge"));
+        this.inputEnableButton.setMessage(Component.literal(menu.data.get(6) > 0 ? "Stop Loading" : "Load Fuel"));
+        this.outputEnableButton.setMessage(Component.literal(menu.data.get(7) > 0 ? "Stop Charging" : "Charge"));
     }
 
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {
