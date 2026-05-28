@@ -29,6 +29,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.STANDARD_WRENCH.get());
                         output.accept(ModItems.COPPER_CANISTER.get());
                         output.accept(ModItems.TIN_CANISTER.get());
+                        output.accept(ModItems.OXYGEN_MASK.get());
                         output.accept(ModItems.DEHYDRATED_APPLE.get());
                         output.accept(ModItems.DEHYDRATED_RABBIT.get());
                         output.accept(ModItems.DEHYDRATED_POTATO.get());
@@ -120,6 +121,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.IRIDIUM_BLOCK.get());
                         output.accept(ModBlocks.COAL_COMPRESSOR.get());
                         output.accept(ModBlocks.REFINERY.get());
+                        output.accept(ModBlocks.CARGO_MANAGER_BLOCK.get());
+                        output.accept(ModBlocks.FUEL_MANAGER_BLOCK.get());
                         output.accept(ModBlocks.LAUNCH_PAD.get());
                         output.accept(ModBlocks.FLUID_TANK.get());
                         output.accept(ModBlocks.ENERGY_STORAGE_UNIT.get());

@@ -115,7 +115,8 @@ public class ModItems {
                     new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(18))));
     //endregion
 
-    
+    public static final DeferredItem<ArmorItem> OXYGEN_MASK = ITEMS.register("oxygen_mask", () -> 
+            new ArmorItem(ModArmorMaterials.SPACE_GEAR_MATERIAL, ArmorItem.Type.HELMET, new  Item.Properties()));
 
     
 

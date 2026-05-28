@@ -3,7 +3,10 @@ package net.venera.heliocore.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -14,10 +17,16 @@ import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 public class ModItemTagProvider extends ItemTagsProvider {
-
     public ModItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags, @Nullable ExistingFileHelper existingFileHelper) {
         super(output, lookupProvider, blockTags, HeliopauseCore.MOD_ID, existingFileHelper);
     }
+    
+//    private static final TagKey<Item> CURIOS_BACK = ItemTags.create(
+//            ResourceLocation.fromNamespaceAndPath("curios", "back")
+//    );
+    private static final TagKey<Item> CURIOS_OXYGEN_MASK = ItemTags.create(
+            ResourceLocation.fromNamespaceAndPath("curios", "oxygen_mask")
+    );
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
@@ -43,6 +52,12 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .add(ModItems.ALUMINIUM_INGOT.get())
                 .add(Items.IRON_INGOT)
                 .add(ModItems.IRIDIUM_INGOT.get());
-
+        
+        
+//        tag(CURIOS_BACK)
+//                .add(Items.ELYTRA);
+        
+        tag(CURIOS_OXYGEN_MASK)
+                .add(ModItems.OXYGEN_MASK.get());
     }
 }

@@ -137,5 +137,11 @@
 
 
 
-  "death.attack.radiation_damage": "%1$s succumbed to radiation poisoning."
+  "death.attack.radiation_damage": "%1$s succumbed to radiation poisoning.",
+
+
+
+
+  "curios.identifier.oxygen_mask": "Oxygen Mask",
+  "curios.identifier.elytra": "Elytra"
 }

@@ -1,0 +1,41 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "heliocore:block/fluid_tank",
+		"particle": "heliocore:block/fluid_tank"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 0, 7]},
+			"faces": {
+				"north": {"uv": [2, 0, 14, 16], "texture": "#0"},
+				"east": {"uv": [2, 0, 14, 16], "texture": "#0"},
+				"south": {"uv": [2, 0, 14, 16], "texture": "#0"},
+				"west": {"uv": [2, 0, 14, 16], "texture": "#0"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"down": {"uv": [1, 0, 15, 16], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"scale": [0.3, 0.3, 0.3]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [90, 0, 0],
+			"translation": [-6, -2, 15.75],
+			"scale": [0.3, 0.3, 0.3]
+		},
+		"firstperson_righthand": {
+			"translation": [0, 0, 2.75],
+			"scale": [0.3, 0.3, 0.3]
+		},
+		"firstperson_lefthand": {
+			"translation": [0, 0, 2.75],
+			"scale": [0.3, 0.3, 0.3]
+		}
+	}
+}
