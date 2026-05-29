@@ -1,0 +1,22 @@
+{
+  "values": [
+    "#minecraft:undead",
+    "#minecraft:arthropod",
+    "#minecraft:raiders",
+    "#minecraft:aquatic",
+    "#minecraft:frog_food",
+    "minecraft:creeper",
+    "minecraft:enderman",
+    "minecraft:ghast",
+    "minecraft:blaze",
+    "minecraft:guardian",
+    "minecraft:elder_guardian",
+    "minecraft:pig",
+    "minecraft:cow",
+    "minecraft:sheep",
+    "minecraft:chicken",
+    "minecraft:horse",
+    "minecraft:villager",
+    "minecraft:wandering_trader"
+  ]
+}

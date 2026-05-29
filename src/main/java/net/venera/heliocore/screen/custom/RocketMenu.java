@@ -9,8 +9,8 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
-import net.venera.heliocore.item.custom.BatteryItem;
-import net.venera.heliocore.screen.ModMenuTypes;
+import net.venera.heliocore.item.hpc_custom.BatteryItem;
+import net.venera.heliocore.screen.HpCMenuTypes;
 
 public class RocketMenu extends AbstractContainerMenu{
     public final Tier1RocketEntity rocket;
@@ -20,7 +20,7 @@ public class RocketMenu extends AbstractContainerMenu{
     }
     // 2. The Server Constructor
     public RocketMenu(int containerId, Inventory inventory, Tier1RocketEntity rocket) {
-        super(ModMenuTypes.ROCKET_MENU.get(), containerId);
+        super(HpCMenuTypes.ROCKET_MENU.get(), containerId);
         this.rocket = rocket;
         IItemHandler handler = (this.rocket != null) ? this.rocket.inventory : new ItemStackHandler(28);
         int slotIndex = 0;

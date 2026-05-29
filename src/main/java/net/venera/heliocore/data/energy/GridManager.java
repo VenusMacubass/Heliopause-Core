@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.saveddata.SavedData;
-import net.venera.heliocore.block.custom.machine.electric.WireBlock;
+import net.venera.heliocore.block.hpc_custom.machine.electric.WireBlock;
 import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
 
 import java.util.*;
@@ -70,7 +70,7 @@ public class GridManager extends SavedData {
         SavedData.Factory<GridManager> factory = new SavedData.Factory<>(
                 GridManager::new,  // Fallback: creates a new one if the file doesn't exist
                 GridManager::load, // Loader: reads from NBT if the file DOES exist
-                null               // DataFixTypes (null is perfectly fine for custom mod data)
+                null               // DataFixTypes (null is perfectly fine for hpc_custom mod data)
         );
 
         // Access the world's data storage folder and grab our specific file

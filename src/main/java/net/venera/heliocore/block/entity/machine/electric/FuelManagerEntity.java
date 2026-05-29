@@ -16,15 +16,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.venera.heliocore.block.custom.FluidPipeBlock;
-import net.venera.heliocore.block.custom.LaunchPadBlock;
-import net.venera.heliocore.block.custom.machine.BaseMachineBlock;
+import net.venera.heliocore.block.hpc_custom.FluidPipeBlock;
+import net.venera.heliocore.block.hpc_custom.LaunchPadBlock;
+import net.venera.heliocore.block.hpc_custom.machine.BaseMachineBlock;
 import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 import net.venera.heliocore.fluid.IFluidMachine;
-import net.venera.heliocore.fluid.ModFluids;
-import net.venera.heliocore.item.custom.CanisterItem;
+import net.venera.heliocore.fluid.HpCFluids;
+import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import net.venera.heliocore.screen.custom.FuelManagerMenu;
 import net.venera.heliocore.util.MachineConfigHelper;
 import net.venera.heliocore.util.PipeNetworkHelper;
@@ -145,7 +144,7 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
     private boolean processManualFuel() {
         ItemStack fuelStack = inventory.getStackInSlot(FUEL_SLOT);
 
-        if(fuelStack.getItem() == ModFluids.REFINED_FUEL.getBucket() && fuelAmount <= maxFuel - BUCKET_CAPACITY) {
+        if(fuelStack.getItem() == HpCFluids.REFINED_FUEL.getBucket() && fuelAmount <= maxFuel - BUCKET_CAPACITY) {
             fuelAmount += BUCKET_CAPACITY;
             inventory.setStackInSlot(FUEL_SLOT, new ItemStack(Items.BUCKET));
             return true;

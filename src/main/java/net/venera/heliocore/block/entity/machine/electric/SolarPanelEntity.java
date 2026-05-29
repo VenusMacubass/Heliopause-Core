@@ -1,7 +1,6 @@
 package net.venera.heliocore.block.entity.machine.electric;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -13,8 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.venera.heliocore.block.custom.machine.electric.SolarPanelBlock;
-import net.venera.heliocore.item.custom.BatteryItem;
+import net.venera.heliocore.block.hpc_custom.machine.electric.SolarPanelBlock;
+import net.venera.heliocore.item.hpc_custom.BatteryItem;
 import net.venera.heliocore.screen.custom.BasicSolarMenu;
 import net.venera.heliocore.util.MachineConfigHelper;
 import org.jetbrains.annotations.Nullable;

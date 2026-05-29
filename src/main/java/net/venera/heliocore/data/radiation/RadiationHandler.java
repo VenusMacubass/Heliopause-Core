@@ -10,8 +10,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.venera.heliocore.HeliopauseCore;
-import net.venera.heliocore.data.ModAttachments;
-import net.venera.heliocore.dimension.ModDimensions;
+import net.venera.heliocore.data.HpCAttachments;
+import net.venera.heliocore.dimension.HpCDimensions;
 
 @EventBusSubscriber(modid = HeliopauseCore.MOD_ID)
 public class RadiationHandler {
@@ -24,8 +24,8 @@ public class RadiationHandler {
     public static void onEntityTick(EntityTickEvent.Post event) {
         if(!(event.getEntity() instanceof LivingEntity aliveEntity)){return;}
         if (aliveEntity.level().isClientSide || aliveEntity.tickCount % 20 != 0) {return;}
-        if (!aliveEntity.hasData(ModAttachments.RADIATION_DATA)) {return;}
-        RadiationData radiationData = aliveEntity.getData(ModAttachments.RADIATION_DATA);
+        if (!aliveEntity.hasData(HpCAttachments.RADIATION_DATA)) {return;}
+        RadiationData radiationData = aliveEntity.getData(HpCAttachments.RADIATION_DATA);
 
 
         radiationChange(aliveEntity, radiationData);
@@ -56,7 +56,7 @@ public class RadiationHandler {
         } else if (dim.equals(Level.END)) {
             radiationData.changeRadiation(Math.abs(END_BG_RAD - Math.min(radLevel, 100)) * difficulty,  END_BG_RAD > radLevel);
         }
-        else if (dim.equals(ModDimensions.MOON_LEVEL_KEY)) {
+        else if (dim.equals(HpCDimensions.MOON_LEVEL_KEY)) {
             radiationData.changeRadiation(Math.abs(MOON_BG_RAD - Math.min(radLevel, 100)) * difficulty,  MOON_BG_RAD > radLevel);
         } else {
             throw new IllegalStateException("Unexpected value: " + dim);

@@ -5,7 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.venera.heliocore.block.custom.machine.electric.WireBlock;
+import net.venera.heliocore.block.hpc_custom.machine.electric.WireBlock;
 import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
 import java.util.HashSet;
 import java.util.LinkedList;

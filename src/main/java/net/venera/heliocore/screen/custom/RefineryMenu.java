@@ -10,12 +10,12 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
-import net.venera.heliocore.block.ModBlocks;
+import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.machine.electric.RefineryEntity;
-import net.venera.heliocore.fluid.ModFluids;
-import net.venera.heliocore.item.ModItems;
-import net.venera.heliocore.item.custom.BatteryItem;
-import net.venera.heliocore.screen.ModMenuTypes;
+import net.venera.heliocore.fluid.HpCFluids;
+import net.venera.heliocore.item.HpCItems;
+import net.venera.heliocore.item.hpc_custom.BatteryItem;
+import net.venera.heliocore.screen.HpCMenuTypes;
 
 public class RefineryMenu extends AbstractContainerMenu {
     public final RefineryEntity blockEntity;
@@ -27,7 +27,7 @@ public class RefineryMenu extends AbstractContainerMenu {
     }
 
     public RefineryMenu(int containerId, Inventory  inventory, BlockEntity blockEntity) {
-        super(ModMenuTypes.REFINERY_MENU.get(), containerId);
+        super(HpCMenuTypes.REFINERY_MENU.get(), containerId);
         this.blockEntity = ((RefineryEntity)blockEntity);
         this.level = inventory.player.level();
         this.data = this.blockEntity.data;
@@ -39,7 +39,7 @@ public class RefineryMenu extends AbstractContainerMenu {
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 0, 7, 7) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.getItem() == ModFluids.CRUDE_OIL.getBucket() || stack.getItem() == Items.BUCKET || stack.getItem() == ModItems.CANISTER.get();
+                return stack.getItem() == HpCFluids.CRUDE_OIL.getBucket() || stack.getItem() == Items.BUCKET || stack.getItem() == HpCItems.CANISTER.get();
             }
 
             @Override
@@ -51,7 +51,7 @@ public class RefineryMenu extends AbstractContainerMenu {
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 1, 153, 7) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.getItem() == Items.BUCKET || stack.getItem() == ModItems.CANISTER.get();
+                return stack.getItem() == Items.BUCKET || stack.getItem() == HpCItems.CANISTER.get();
             }
             @Override
             public int getMaxStackSize(ItemStack stack) {
@@ -113,7 +113,7 @@ public class RefineryMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                player, ModBlocks.REFINERY.get());
+                player, HpCBlocks.REFINERY.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {

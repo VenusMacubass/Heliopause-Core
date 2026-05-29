@@ -2,7 +2,7 @@ package net.venera.heliocore.util;
 
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.venera.heliocore.block.entity.ModBlockEntities;
+import net.venera.heliocore.block.entity.HpCBlockEntities;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -11,24 +11,24 @@ public class MachineConfigHelper {
     public static final Map<Supplier<? extends BlockEntityType<?>>, Map<Direction, Boolean>> IO_CONFIG = new HashMap<>();
 
     static { 
-        IO_CONFIG.put(ModBlockEntities.REFINERY_ENTITY, Map.of(
+        IO_CONFIG.put(HpCBlockEntities.REFINERY_ENTITY, Map.of(
                 Direction.UP, true
         ));
         
-        IO_CONFIG.put(ModBlockEntities.ENERGY_STORAGE_ENTITY, Map.of(
+        IO_CONFIG.put(HpCBlockEntities.ENERGY_STORAGE_ENTITY, Map.of(
                 Direction.WEST, true,
                 Direction.EAST, false
         ));
         
-        IO_CONFIG.put(ModBlockEntities.BASIC_SOLAR_PANEL_ENTITY, Map.of(
+        IO_CONFIG.put(HpCBlockEntities.BASIC_SOLAR_PANEL_ENTITY, Map.of(
                 Direction.NORTH, false
         ));
         
-        IO_CONFIG.put(ModBlockEntities.CARGO_MANAGER_ENTITY, Map.of(
+        IO_CONFIG.put(HpCBlockEntities.CARGO_MANAGER_ENTITY, Map.of(
                 Direction.NORTH, true
         ));
         
-        IO_CONFIG.put(ModBlockEntities.FUEL_MANAGER_ENTITY, Map.of(
+        IO_CONFIG.put(HpCBlockEntities.FUEL_MANAGER_ENTITY, Map.of(
                 Direction.NORTH, true
         ));
     }

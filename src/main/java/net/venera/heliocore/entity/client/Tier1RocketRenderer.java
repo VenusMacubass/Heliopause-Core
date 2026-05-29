@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
-import net.venera.heliocore.block.ModBlocks;
+import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 
 public class Tier1RocketRenderer extends EntityRenderer<Tier1RocketEntity> {
@@ -41,15 +41,15 @@ public class Tier1RocketRenderer extends EntityRenderer<Tier1RocketEntity> {
         BlockRenderDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
 
         // 1. Draw the Bottom Block
-        dispatcher.renderSingleBlock(ModBlocks.T1_ROCKET_BOT.get().defaultBlockState(), poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY);
+        dispatcher.renderSingleBlock(HpCBlocks.T1_ROCKET_BOT.get().defaultBlockState(), poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY);
 
         // 2. Move up 1 block and draw the Middle Block
         poseStack.translate(0, 1, 0);
-        dispatcher.renderSingleBlock(ModBlocks.T1_ROCKET_MID.get().defaultBlockState(), poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY);
+        dispatcher.renderSingleBlock(HpCBlocks.T1_ROCKET_MID.get().defaultBlockState(), poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY);
 
         // 3. Move up 1 block and draw the Top Block
         poseStack.translate(0, 1, 0);
-        dispatcher.renderSingleBlock(ModBlocks.T1_ROCKET_TOP.get().defaultBlockState(), poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY);
+        dispatcher.renderSingleBlock(HpCBlocks.T1_ROCKET_TOP.get().defaultBlockState(), poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY);
 
         poseStack.popPose();
     }

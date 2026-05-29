@@ -15,12 +15,12 @@ public class SpaceZombieRenderer extends MobRenderer<SpaceZombieEntity, ZombieMo
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/entity/space_zombie.png");
 
     public SpaceZombieRenderer(EntityRendererProvider.Context context) {
-        // Uses vanilla ZombieModel - no custom model needed!
+        // Uses vanilla ZombieModel - no hpc_custom model needed!
         super(context, new ZombieModel<>(context.bakeLayer(ModelLayers.ZOMBIE)), 0.5F);
     }
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(SpaceZombieEntity entity) {
-        return TEXTURE; // Your custom texture
+        return TEXTURE; // Your hpc_custom texture
     }
 }

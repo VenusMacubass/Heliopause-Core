@@ -18,11 +18,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.fluids.IFluidTank;
 import net.venera.heliocore.data.component.CanisterData;
+import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.fluid.IFluidMachine;
-import net.venera.heliocore.fluid.ModFluids;
-import net.venera.heliocore.item.custom.CanisterItem;
+import net.venera.heliocore.item.hpc_custom.CanisterItem;
 
 
 public class FluidTankEntity extends BlockEntity implements IFluidMachine {
@@ -33,7 +32,7 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
     public final ContainerData data;
 
     public FluidTankEntity(BlockPos pos, BlockState blockState) {
-        super(ModBlockEntities.FLUID_TANK_ENTITY.get(), pos, blockState);
+        super(HpCBlockEntities.FLUID_TANK_ENTITY.get(), pos, blockState);
         data = new ContainerData() {
             @Override
             public int get(int i) {
@@ -68,10 +67,10 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
             ItemStack filled;
             if (currentFluid.isSame(Fluids.WATER)) {
                 filled = new ItemStack(Items.WATER_BUCKET);
-            } else if (currentFluid.isSame(ModFluids.CRUDE_OIL.getSource())) {
-                filled = new ItemStack(ModFluids.CRUDE_OIL.getBucket());
-            } else if (currentFluid.isSame(ModFluids.REFINED_FUEL.getSource())) {
-                filled = new ItemStack(ModFluids.REFINED_FUEL.getBucket());
+            } else if (currentFluid.isSame(HpCFluids.CRUDE_OIL.getSource())) {
+                filled = new ItemStack(HpCFluids.CRUDE_OIL.getBucket());
+            } else if (currentFluid.isSame(HpCFluids.REFINED_FUEL.getSource())) {
+                filled = new ItemStack(HpCFluids.REFINED_FUEL.getBucket());
             } else {
                 return container; // unsupported fluid for buckets
             }
@@ -80,12 +79,12 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
             return returnHelper(filled);
         }
         
-        if (container.is(Items.WATER_BUCKET) || container.is(ModFluids.CRUDE_OIL.getBucket()) || container.is(ModFluids.REFINED_FUEL.getBucket())) {
+        if (container.is(Items.WATER_BUCKET) || container.is(HpCFluids.CRUDE_OIL.getBucket()) || container.is(HpCFluids.REFINED_FUEL.getBucket())) {
             
             Fluid bucketFluid = Fluids.EMPTY;
             if (container.is(Items.WATER_BUCKET)) bucketFluid = Fluids.WATER;
-            else if (container.is(ModFluids.CRUDE_OIL.getBucket())) bucketFluid = ModFluids.CRUDE_OIL.getSource();
-            else if (container.is(ModFluids.REFINED_FUEL.getBucket())) bucketFluid = ModFluids.REFINED_FUEL.getSource();
+            else if (container.is(HpCFluids.CRUDE_OIL.getBucket())) bucketFluid = HpCFluids.CRUDE_OIL.getSource();
+            else if (container.is(HpCFluids.REFINED_FUEL.getBucket())) bucketFluid = HpCFluids.REFINED_FUEL.getSource();
             
             if (getTankSpace() < BUCKET_CAPACITY) return container;
             
@@ -120,8 +119,8 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
 
            
                 if (currentFluid.isSame(Fluids.EMPTY)) {
-                    if (data.isCrudeOil()) currentFluid = ModFluids.CRUDE_OIL.getSource();
-                    else if (data.isRefinedFuel()) currentFluid = ModFluids.REFINED_FUEL.getSource();
+                    if (data.isCrudeOil()) currentFluid = HpCFluids.CRUDE_OIL.getSource();
+                    else if (data.isRefinedFuel()) currentFluid = HpCFluids.REFINED_FUEL.getSource();
                 }
 
                 canisterItem.drain(container, transfer);
@@ -134,13 +133,13 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
 
             int transfer = Math.min(fluidAmount, data.getSpace());
 
-            if (currentFluid.isSame(ModFluids.CRUDE_OIL.getSource()) && (data.getSpace() > 0 && (data.isCrudeOil() || data.isEmpty()))) {
+            if (currentFluid.isSame(HpCFluids.CRUDE_OIL.getSource()) && (data.getSpace() > 0 && (data.isCrudeOil() || data.isEmpty()))) {
                 fluidAmount -= transfer;
                 canisterItem.fill(container, CanisterData.CRUDE_OIL, transfer);
                 return returnHelper(container);
             }
 
-            if (currentFluid.isSame(ModFluids.REFINED_FUEL.getSource()) && (data.getSpace() > 0 && (data.isCrudeOil() || data.isEmpty()))) {
+            if (currentFluid.isSame(HpCFluids.REFINED_FUEL.getSource()) && (data.getSpace() > 0 && (data.isCrudeOil() || data.isEmpty()))) {
                 fluidAmount -= transfer;
                 canisterItem.fill(container, CanisterData.REFINED_FUEL, transfer);
                 return returnHelper(container);

@@ -11,10 +11,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
-import net.venera.heliocore.block.ModBlocks;
+import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.machine.electric.EnergyStorageEntity;
-import net.venera.heliocore.item.custom.BatteryItem;
-import net.venera.heliocore.screen.ModMenuTypes;
+import net.venera.heliocore.item.hpc_custom.BatteryItem;
+import net.venera.heliocore.screen.HpCMenuTypes;
 
 public class EnergyStorageUnitMenu extends AbstractContainerMenu {
     public final EnergyStorageEntity blockEntity;
@@ -26,7 +26,7 @@ public class EnergyStorageUnitMenu extends AbstractContainerMenu {
     }
 
     public EnergyStorageUnitMenu(int containerId, Inventory  inventory, BlockEntity blockEntity) {
-        super(ModMenuTypes.ENERGY_STORAGE_UNIT_MENU.get(), containerId);
+        super(HpCMenuTypes.ENERGY_STORAGE_UNIT_MENU.get(), containerId);
         this.blockEntity = ((EnergyStorageEntity)blockEntity);
         this.level = inventory.player.level();
         this.data = this.blockEntity.data;
@@ -101,7 +101,7 @@ public class EnergyStorageUnitMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, ModBlocks.ENERGY_STORAGE_UNIT.get());
+        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, HpCBlocks.ENERGY_STORAGE_UNIT.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {

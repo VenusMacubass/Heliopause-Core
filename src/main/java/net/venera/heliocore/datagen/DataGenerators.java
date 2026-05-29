@@ -28,19 +28,20 @@ public class DataGenerators {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         generator.addProvider(event.includeServer(), new LootTableProvider(packOutput, Collections.emptySet(),
-                List.of(new LootTableProvider.SubProviderEntry(ModBlockLootTableProvider::new, LootContextParamSets.BLOCK)), lookupProvider));
-        BlockTagsProvider blockTagsProvider = new ModBlockTagProvider(packOutput, lookupProvider, existingFileHelper);
+                List.of(new LootTableProvider.SubProviderEntry(HpCBlockLootTableProvider::new, LootContextParamSets.BLOCK)), lookupProvider));
+        BlockTagsProvider blockTagsProvider = new HpCBlockTagProvider(packOutput, lookupProvider, existingFileHelper);
         generator.addProvider(event.includeServer(), blockTagsProvider);
-        FluidTagsProvider fluidTagsProvider = new ModFluidTagsProvider(packOutput, lookupProvider, existingFileHelper);
+        FluidTagsProvider fluidTagsProvider = new HpCFluidTagsProvider(packOutput, lookupProvider, existingFileHelper);
         generator.addProvider(event.includeServer(), fluidTagsProvider);
-        generator.addProvider(event.includeServer(), new ModItemTagProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper));
-        generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput, lookupProvider));
-        generator.addProvider(event.includeServer(), new ModDataMapProvider(packOutput, lookupProvider));
-        generator.addProvider(event.includeClient(), new ModBlockStateProvider(packOutput, existingFileHelper));
-        generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, existingFileHelper));
-        generator.addProvider(event.includeServer(), new ModDatapackProvider(packOutput, lookupProvider));
-        generator.addProvider(event.includeServer(), new ModBiomeTagProvider(packOutput, lookupProvider, existingFileHelper));
-        generator.addProvider(event.includeServer(), new HPCCuriosDataProvider(packOutput, existingFileHelper, lookupProvider));
+        generator.addProvider(event.includeServer(), new HpCItemTagProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper));
+        generator.addProvider(event.includeServer(), new HpCMobTagProvider(packOutput, lookupProvider, existingFileHelper));
+        generator.addProvider(event.includeServer(), new HpCRecipeProvider(packOutput, lookupProvider));
+        generator.addProvider(event.includeServer(), new HpCDataMapProvider(packOutput, lookupProvider));
+        generator.addProvider(event.includeClient(), new HpCBlockStateProvider(packOutput, existingFileHelper));
+        generator.addProvider(event.includeClient(), new HpCItemModelProvider(packOutput, existingFileHelper));
+        generator.addProvider(event.includeServer(), new HpCDatapackProvider(packOutput, lookupProvider));
+        generator.addProvider(event.includeServer(), new HpCBiomeTagProvider(packOutput, lookupProvider, existingFileHelper));
+        generator.addProvider(event.includeServer(), new HpCCuriosDataProvider(packOutput, existingFileHelper, lookupProvider));
 
     }
 }

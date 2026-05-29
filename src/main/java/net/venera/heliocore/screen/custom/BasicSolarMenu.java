@@ -8,10 +8,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
-import net.venera.heliocore.block.ModBlocks;
+import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.machine.electric.SolarPanelEntity;
-import net.venera.heliocore.item.custom.BatteryItem;
-import net.venera.heliocore.screen.ModMenuTypes;
+import net.venera.heliocore.item.hpc_custom.BatteryItem;
+import net.venera.heliocore.screen.HpCMenuTypes;
 
 public class BasicSolarMenu extends AbstractContainerMenu {
     public final SolarPanelEntity blockEntity;
@@ -23,7 +23,7 @@ public class BasicSolarMenu extends AbstractContainerMenu {
     }
 
     public BasicSolarMenu(int containerId, Inventory  inventory, BlockEntity blockEntity, ContainerData data) {
-        super(ModMenuTypes.BASIC_SOLAR_MENU.get(), containerId);
+        super(HpCMenuTypes.BASIC_SOLAR_MENU.get(), containerId);
 
         checkContainerSize(inventory, 5);
         this.blockEntity = ((SolarPanelEntity)blockEntity);
@@ -89,7 +89,7 @@ public class BasicSolarMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                player, ModBlocks.BASIC_SOLAR_BLOCK.get());
+                player, HpCBlocks.BASIC_SOLAR_BLOCK.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {

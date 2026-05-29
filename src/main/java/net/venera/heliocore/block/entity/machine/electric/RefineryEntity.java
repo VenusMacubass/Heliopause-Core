@@ -16,13 +16,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.EnergyStorage;
-import net.venera.heliocore.HeliopauseCore;
-import net.venera.heliocore.block.custom.FluidPipeBlock;
-import net.venera.heliocore.block.custom.machine.BaseMachineBlock;
+import net.venera.heliocore.block.hpc_custom.FluidPipeBlock;
+import net.venera.heliocore.block.hpc_custom.machine.BaseMachineBlock;
 import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.fluid.IFluidMachine;
-import net.venera.heliocore.fluid.ModFluids;
-import net.venera.heliocore.item.custom.CanisterItem;
+import net.venera.heliocore.fluid.HpCFluids;
+import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import net.venera.heliocore.screen.custom.RefineryMenu;
 import net.venera.heliocore.util.PipeNetworkHelper;
 import org.jetbrains.annotations.Nullable;
@@ -112,7 +111,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     private boolean processInputs() {
         ItemStack inputStack = inventory.getStackInSlot(INPUT_SLOT);
 
-        if(inputStack.getItem() == ModFluids.CRUDE_OIL.getBucket() && oilAmount <= maxCapacity - BUCKET_CAPACITY) {
+        if(inputStack.getItem() == HpCFluids.CRUDE_OIL.getBucket() && oilAmount <= maxCapacity - BUCKET_CAPACITY) {
             oilAmount += BUCKET_CAPACITY;
             inventory.setStackInSlot(INPUT_SLOT, new ItemStack(Items.BUCKET));
             return true;
@@ -138,7 +137,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
 
         if(outputStack.getItem() == Items.BUCKET && fuelAmount >= BUCKET_CAPACITY) {
             fuelAmount -= BUCKET_CAPACITY;
-            inventory.setStackInSlot(OUTPUT_SLOT, new ItemStack(ModFluids.REFINED_FUEL.getBucket()));
+            inventory.setStackInSlot(OUTPUT_SLOT, new ItemStack(HpCFluids.REFINED_FUEL.getBucket()));
             return true;
         } else if(outputStack.getItem() instanceof CanisterItem canister){
             CanisterData data = canister.getCanisterData(outputStack);

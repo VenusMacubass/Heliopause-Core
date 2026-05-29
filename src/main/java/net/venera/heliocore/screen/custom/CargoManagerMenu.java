@@ -8,10 +8,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
-import net.venera.heliocore.block.ModBlocks;
+import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.machine.electric.CargoManagerEntity;
-import net.venera.heliocore.item.custom.BatteryItem;
-import net.venera.heliocore.screen.ModMenuTypes;
+import net.venera.heliocore.item.hpc_custom.BatteryItem;
+import net.venera.heliocore.screen.HpCMenuTypes;
 
 public class CargoManagerMenu extends AbstractContainerMenu {
     public final CargoManagerEntity blockEntity;
@@ -23,7 +23,7 @@ public class CargoManagerMenu extends AbstractContainerMenu {
     }
 
     public CargoManagerMenu(int containerId, Inventory  inventory, BlockEntity blockEntity, ContainerData data) {
-        super(ModMenuTypes.CARGO_MANAGER_MENU.get(), containerId);
+        super(HpCMenuTypes.CARGO_MANAGER_MENU.get(), containerId);
 
         checkContainerSize(inventory, 5);
         this.blockEntity = ((CargoManagerEntity)blockEntity);
@@ -102,7 +102,7 @@ public class CargoManagerMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                player, ModBlocks.CARGO_MANAGER_BLOCK.get());
+                player, HpCBlocks.CARGO_MANAGER_BLOCK.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {

@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.venera.heliocore.block.entity.machine.BaseMachineEntity;
 import net.venera.heliocore.data.energy.GridManager;
-import net.venera.heliocore.item.custom.BatteryItem;
+import net.venera.heliocore.item.hpc_custom.BatteryItem;
 import net.venera.heliocore.util.MachineConfigHelper;
 
 public abstract class BaseElectricMachineEntity extends BaseMachineEntity {

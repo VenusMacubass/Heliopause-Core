@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
-import net.venera.heliocore.block.custom.LaunchPadBlock;
+import net.venera.heliocore.block.hpc_custom.LaunchPadBlock;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 import net.venera.heliocore.screen.custom.CargoManagerMenu;
 import net.venera.heliocore.util.MachineConfigHelper;

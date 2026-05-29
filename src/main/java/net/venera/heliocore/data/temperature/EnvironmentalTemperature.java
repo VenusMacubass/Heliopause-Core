@@ -4,7 +4,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.venera.heliocore.dimension.biome.ModBiomes;
+import net.venera.heliocore.dimension.biome.HpCBiomes;
 
 public class EnvironmentalTemperature {
     public static double getEnvironmentalTemperature(Level level, Holder<Biome> biome) {
@@ -17,7 +17,7 @@ public class EnvironmentalTemperature {
         } else if (biome.is(BiomeTags.IS_TAIGA) || biome.is(BiomeTags.HAS_IGLOO)) {
             dayTemp = 5.0;
             nightTemp = -15.0;
-        }else if (biome.is(ModBiomes.LUNAR_HIGHLANDS) || biome.is(ModBiomes.LUNAR_MARIA)){
+        }else if (biome.is(HpCBiomes.LUNAR_HIGHLANDS) || biome.is(HpCBiomes.LUNAR_MARIA)){
             dayTemp = 120;
             nightTemp = -171;
         }

@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.venera.heliocore.block.custom.FluidPipeBlock;
+import net.venera.heliocore.block.hpc_custom.FluidPipeBlock;
 import net.venera.heliocore.fluid.IFluidMachine;
 import java.util.HashSet;
 import java.util.LinkedList;

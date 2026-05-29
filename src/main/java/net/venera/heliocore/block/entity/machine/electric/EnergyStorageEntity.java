@@ -11,8 +11,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.venera.heliocore.block.custom.machine.electric.EnergyStorageBlock;
-import net.venera.heliocore.item.custom.BatteryItem;
+import net.venera.heliocore.block.hpc_custom.machine.electric.EnergyStorageBlock;
+import net.venera.heliocore.item.hpc_custom.BatteryItem;
 import net.venera.heliocore.screen.custom.EnergyStorageUnitMenu;
 import javax.annotation.Nullable;
 

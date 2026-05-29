@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.venera.heliocore.block.ModBlocks;
+import net.venera.heliocore.block.HpCBlocks;
 
 public class CraterFeature extends Feature<CraterConfig> {
     public CraterFeature(Codec<CraterConfig> codec) {
@@ -57,16 +57,16 @@ public class CraterFeature extends Feature<CraterConfig> {
                 BlockPos rockPos = new BlockPos(worldX, actualFloorY - 2, worldZ);
                 
                 if (!level.isStateAtPosition(turfPos, state -> state.getBlock() == Blocks.BEDROCK)) {
-                    level.setBlock(turfPos, ModBlocks.MOON_REGOLITH.get().defaultBlockState(), 2);
-                    level.setBlock(dirtPos, ModBlocks.MOON_DIRT.get().defaultBlockState(), 2);
-                    level.setBlock(rockPos, ModBlocks.MOON_ROCK.get().defaultBlockState(), 2);
+                    level.setBlock(turfPos, HpCBlocks.MOON_REGOLITH.get().defaultBlockState(), 2);
+                    level.setBlock(dirtPos, HpCBlocks.MOON_DIRT.get().defaultBlockState(), 2);
+                    level.setBlock(rockPos, HpCBlocks.MOON_ROCK.get().defaultBlockState(), 2);
                     placedAny = true;
                 }
                 
                 for (int y = actualFloorY - 3; y >= actualFloorY - 5; y--) {
                     BlockPos cavePos = new BlockPos(worldX, y, worldZ);
                     if (level.isEmptyBlock(cavePos)) {
-                        level.setBlock(cavePos, ModBlocks.MOON_ROCK.get().defaultBlockState(), 2);
+                        level.setBlock(cavePos, HpCBlocks.MOON_ROCK.get().defaultBlockState(), 2);
                     }
                 }
                 

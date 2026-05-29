@@ -8,9 +8,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
-import net.venera.heliocore.block.ModBlocks;
+import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.machine.CoalCompressorEntity;
-import net.venera.heliocore.screen.ModMenuTypes;
+import net.venera.heliocore.screen.HpCMenuTypes;
 
 public class CoalCompressorMenu extends AbstractContainerMenu {
     public final CoalCompressorEntity blockEntity;
@@ -22,7 +22,7 @@ public class CoalCompressorMenu extends AbstractContainerMenu {
     }
 
     public CoalCompressorMenu(int containerId, Inventory  inventory, BlockEntity blockEntity, ContainerData data) {
-        super(ModMenuTypes.COAL_COMPRESSOR_MENU.get(), containerId);
+        super(HpCMenuTypes.COAL_COMPRESSOR_MENU.get(), containerId);
         this.blockEntity = ((CoalCompressorEntity)blockEntity);
         this.level = inventory.player.level();
         this.data = data;
@@ -112,7 +112,7 @@ public class CoalCompressorMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                player, ModBlocks.COAL_COMPRESSOR.get());
+                player, HpCBlocks.COAL_COMPRESSOR.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {

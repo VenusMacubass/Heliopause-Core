@@ -15,10 +15,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import net.venera.heliocore.block.ModBlocks;
-import net.venera.heliocore.dimension.ModDimensions;
+import net.venera.heliocore.block.HpCBlocks;
+import net.venera.heliocore.dimension.HpCDimensions;
 import net.venera.heliocore.screen.custom.RocketMenu;
-import org.checkerframework.common.returnsreceiver.qual.This;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -43,7 +42,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
         double targetAltitude = 1500.0;
         if (!this.level().isClientSide() && this.getY() >= targetAltitude) {
                 if (this.level() instanceof ServerLevel serverLevel && this.level().dimension() == Level.OVERWORLD) {
-                    ServerLevel moonDimension = serverLevel.getServer().getLevel(ModDimensions.MOON_LEVEL_KEY);
+                    ServerLevel moonDimension = serverLevel.getServer().getLevel(HpCDimensions.MOON_LEVEL_KEY);
                     if (moonDimension != null) {
                         Entity passenger = this.getFirstPassenger();
                         if(passenger == null){this.discard(); return;}
@@ -64,7 +63,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
                         }
                     }
                 }
-                else if(this.level() instanceof ServerLevel serverLevel && this.level().dimension() == ModDimensions.MOON_LEVEL_KEY) {
+                else if(this.level() instanceof ServerLevel serverLevel && this.level().dimension() == HpCDimensions.MOON_LEVEL_KEY) {
                     Entity passenger = this.getFirstPassenger();
                     if(passenger == null){this.discard(); return;}
                     if(passenger instanceof LivingEntity entity) {
@@ -150,7 +149,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
                 inv.setItem(i, inventory.getStackInSlot(i));
             }
             Containers.dropContents(this.level(), this, inv);
-            this.spawnAtLocation(ModBlocks.T1_ROCKET_BOT.get());
+            this.spawnAtLocation(HpCBlocks.T1_ROCKET_BOT.get());
             this.discard();
             return true;
         }

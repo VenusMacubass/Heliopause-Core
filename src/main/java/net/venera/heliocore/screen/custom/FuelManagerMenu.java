@@ -8,12 +8,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
-import net.venera.heliocore.block.ModBlocks;
+import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.machine.electric.FuelManagerEntity;
-import net.venera.heliocore.fluid.ModFluids;
-import net.venera.heliocore.item.custom.BatteryItem;
-import net.venera.heliocore.item.custom.CanisterItem;
-import net.venera.heliocore.screen.ModMenuTypes;
+import net.venera.heliocore.fluid.HpCFluids;
+import net.venera.heliocore.item.hpc_custom.BatteryItem;
+import net.venera.heliocore.item.hpc_custom.CanisterItem;
+import net.venera.heliocore.screen.HpCMenuTypes;
 
 public class FuelManagerMenu extends AbstractContainerMenu {
     public final FuelManagerEntity blockEntity;
@@ -25,7 +25,7 @@ public class FuelManagerMenu extends AbstractContainerMenu {
     }
 
     public FuelManagerMenu(int containerId, Inventory  inventory, BlockEntity blockEntity, ContainerData data) {
-        super(ModMenuTypes.FUEL_MANAGER_MENU.get(), containerId);
+        super(HpCMenuTypes.FUEL_MANAGER_MENU.get(), containerId);
 
         checkContainerSize(inventory, 5);
         this.blockEntity = ((FuelManagerEntity)blockEntity);
@@ -51,7 +51,7 @@ public class FuelManagerMenu extends AbstractContainerMenu {
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 1, 132, 6) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return  stack.getItem() == ModFluids.REFINED_FUEL.getBucket() || stack.getItem() instanceof CanisterItem;
+                return  stack.getItem() == HpCFluids.REFINED_FUEL.getBucket() || stack.getItem() instanceof CanisterItem;
             }
 
             @Override
@@ -102,7 +102,7 @@ public class FuelManagerMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                player, ModBlocks.FUEL_MANAGER_BLOCK.get());
+                player, HpCBlocks.FUEL_MANAGER_BLOCK.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {

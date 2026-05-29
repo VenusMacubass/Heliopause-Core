@@ -29,11 +29,11 @@ public class CoalCompressorRecipe implements CraftingRecipe {
     }
 
     public RecipeSerializer<?> getSerializer() {
-        return ModRecipes.COAL_COMPRESSOR_SERIALIZER.get();
+        return HpCRecipes.COAL_COMPRESSOR_SERIALIZER.get();
     }
 
     public RecipeType<?> getType() {
-        return ModRecipes.COAL_COMPRESSOR_TYPE.get();
+        return HpCRecipes.COAL_COMPRESSOR_TYPE.get();
     }
 
     public String getGroup() {

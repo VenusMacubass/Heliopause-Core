@@ -5,21 +5,21 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
-import net.venera.heliocore.block.ModBlocks;
-import net.venera.heliocore.block.entity.ModBlockEntities;
-import net.venera.heliocore.data.component.ModDataComponents;
-import net.venera.heliocore.data.ModAttachments;
+import net.venera.heliocore.block.HpCBlocks;
+import net.venera.heliocore.block.entity.HpCBlockEntities;
+import net.venera.heliocore.data.component.HpCDataComponents;
+import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.data.energy.GridManager;
 import net.venera.heliocore.data.radiation.RadiationHandler;
-import net.venera.heliocore.dimension.worldgen.feature.ModFeatures;
-import net.venera.heliocore.entity.ModEntities;
-import net.venera.heliocore.entity.villager.ModVillagers;
+import net.venera.heliocore.dimension.worldgen.feature.HpCFeatures;
+import net.venera.heliocore.entity.HpCEntities;
+import net.venera.heliocore.entity.villager.HpCVillagers;
 import net.venera.heliocore.entity.zombie.SpaceZombieEntity;
-import net.venera.heliocore.fluid.ModFluids;
-import net.venera.heliocore.item.ModCreativeModeTabs;
-import net.venera.heliocore.item.ModItems;
-import net.venera.heliocore.recipe.ModRecipes;
-import net.venera.heliocore.screen.ModMenuTypes;
+import net.venera.heliocore.fluid.HpCFluids;
+import net.venera.heliocore.item.HpCCreativeModeTabs;
+import net.venera.heliocore.item.HpCItems;
+import net.venera.heliocore.recipe.HpCRecipes;
+import net.venera.heliocore.screen.HpCMenuTypes;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -55,18 +55,18 @@ public class HeliopauseCore {
         NeoForge.EVENT_BUS.register(RadiationHandler.class);
 
 
-        ModCreativeModeTabs.register(modEventBus);
-        ModItems.register(modEventBus);
-        ModBlocks.register(modEventBus);
-        ModFluids.register(modEventBus);
-        ModDataComponents.register(modEventBus);
-        ModBlockEntities.register(modEventBus);
-        ModMenuTypes.register(modEventBus);
-        ModRecipes.register(modEventBus);
-        ModAttachments.register(modEventBus);
-        ModEntities.register(modEventBus);
-        ModVillagers.register(modEventBus);
-        ModFeatures.register(modEventBus);
+        HpCCreativeModeTabs.register(modEventBus);
+        HpCItems.register(modEventBus);
+        HpCBlocks.register(modEventBus);
+        HpCFluids.register(modEventBus);
+        HpCDataComponents.register(modEventBus);
+        HpCBlockEntities.register(modEventBus);
+        HpCMenuTypes.register(modEventBus);
+        HpCRecipes.register(modEventBus);
+        HpCAttachments.register(modEventBus);
+        HpCEntities.register(modEventBus);
+        HpCVillagers.register(modEventBus);
+        HpCFeatures.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
 
@@ -102,7 +102,7 @@ public class HeliopauseCore {
 
     @SubscribeEvent
     public void onEntityCreation(EntityAttributeCreationEvent event) {
-        event.put(ModEntities.SPACE_ZOMBIE.get(), SpaceZombieEntity.createAttributes().build());
+        event.put(HpCEntities.SPACE_ZOMBIE.get(), SpaceZombieEntity.createAttributes().build());
     }
 
     private void onServerTick(ServerTickEvent.Post event) { 

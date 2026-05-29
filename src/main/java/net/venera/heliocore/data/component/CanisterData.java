@@ -6,7 +6,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.venera.heliocore.HeliopauseCore;
-import net.venera.heliocore.item.custom.CanisterItem;
+import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import javax.annotation.Nullable;
 
 public record CanisterData(@Nullable ResourceLocation fluidId, int amount) {

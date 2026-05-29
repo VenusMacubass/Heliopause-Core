@@ -22,17 +22,17 @@ import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.fluids.FluidUtil;
-import net.venera.heliocore.block.ModBlocks;
-import net.venera.heliocore.block.entity.ModBlockEntities;
-import net.venera.heliocore.entity.ModEntities;
+import net.venera.heliocore.block.HpCBlocks;
+import net.venera.heliocore.block.entity.HpCBlockEntities;
+import net.venera.heliocore.entity.HpCEntities;
 import net.venera.heliocore.entity.client.Tier1RocketRenderer;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 import net.venera.heliocore.entity.zombie.SpaceZombieRenderer;
-import net.venera.heliocore.fluid.ModFluids;
-import net.venera.heliocore.item.ModItems;
+import net.venera.heliocore.fluid.HpCFluids;
+import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.render.FluidTankRenderer;
 import net.venera.heliocore.render.sky.MoonSkyRenderer;
-import net.venera.heliocore.screen.ModMenuTypes;
+import net.venera.heliocore.screen.HpCMenuTypes;
 import net.venera.heliocore.screen.custom.*;
 import org.joml.Matrix4f;
 
@@ -50,9 +50,9 @@ public class HeliopauseCoreClient {
         // Some client setup code
         HeliopauseCore.LOGGER.info("HELLO FROM CLIENT SETUP");
         HeliopauseCore.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.FLUID_TANK.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.FLUID_PIPE.get(), RenderType.translucent());
-        EntityRenderers.register(ModEntities.TIER_1_ROCKET.get(), Tier1RocketRenderer::new);
+        ItemBlockRenderTypes.setRenderLayer(HpCBlocks.FLUID_TANK.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(HpCBlocks.FLUID_PIPE.get(), RenderType.translucent());
+        EntityRenderers.register(HpCEntities.TIER_1_ROCKET.get(), Tier1RocketRenderer::new);
     }
 
     @SubscribeEvent
@@ -62,7 +62,7 @@ public class HeliopauseCoreClient {
                 FluidState fluidState = getter.getFluidState(pos);
                 return IClientFluidTypeExtensions.of(fluidState).getTintColor(fluidState, getter, pos);
             } else return 0xFFFFFFFF;
-        }, ModFluids.CRUDE_OIL.getFluidblock(), ModFluids.REFINED_FUEL.getFluidblock()); 
+        }, HpCFluids.CRUDE_OIL.getFluidblock(), HpCFluids.REFINED_FUEL.getFluidblock()); 
         event.register((state, level, pos, tintIndex) -> {
             long time = System.currentTimeMillis();
 
@@ -72,37 +72,37 @@ public class HeliopauseCoreClient {
             
             return Color.HSBtoRGB(hue, 1.0f, 1.0f);
 
-        }, ModBlocks.PRISMATIC_GLASS.get());
+        }, HpCBlocks.PRISMATIC_GLASS.get());
 
         event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? 0xFFB4D6ED : -1,
-                ModBlocks.DEEPSLATE_ALUMINIUM_ORE.get(), 
-                ModBlocks.ALUMINIUM_ORE.get(), 
-                ModBlocks.RAW_ALUMINIUM_BLOCK.get(), 
-                ModBlocks.ALUMINIUM_BLOCK.get(),
-                ModBlocks.MOON_ALUMINIUM_ORE.get());
+                HpCBlocks.DEEPSLATE_ALUMINIUM_ORE.get(), 
+                HpCBlocks.ALUMINIUM_ORE.get(), 
+                HpCBlocks.RAW_ALUMINIUM_BLOCK.get(), 
+                HpCBlocks.ALUMINIUM_BLOCK.get(),
+                HpCBlocks.MOON_ALUMINIUM_ORE.get());
         
         event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? 0xFFFFFAD6: -1,
-                ModBlocks.DEEPSLATE_TIN_ORE.get(), 
-                ModBlocks.TIN_ORE.get(), 
-                ModBlocks.RAW_TIN_BLOCK.get(), 
-                ModBlocks.TIN_BLOCK.get(),
-                ModBlocks.MOON_TIN_ORE.get());
+                HpCBlocks.DEEPSLATE_TIN_ORE.get(), 
+                HpCBlocks.TIN_ORE.get(), 
+                HpCBlocks.RAW_TIN_BLOCK.get(), 
+                HpCBlocks.TIN_BLOCK.get(),
+                HpCBlocks.MOON_TIN_ORE.get());
 
         event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? 0xFFD9AAF2: -1,
-                ModBlocks.IRIDIUM_ORE.get(),
-                ModBlocks.DEEPSLATE_IRIDIUM_ORE.get(),
-                ModBlocks.MOON_IRIDIUM_ORE.get());
+                HpCBlocks.IRIDIUM_ORE.get(),
+                HpCBlocks.DEEPSLATE_IRIDIUM_ORE.get(),
+                HpCBlocks.MOON_IRIDIUM_ORE.get());
 
         event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? 0xFF4B4B4B: -1, 
-                ModBlocks.MOON_DUNGEON_BRICKS.get(),
-                ModBlocks.MOON_DUNGEON_BRICK_SLAB.get(),
-                ModBlocks.MOON_DUNGEON_BRICK_STAIRS.get(),
-                ModBlocks.MOON_DUNGEON_BRICK_WALL.get());
+                HpCBlocks.MOON_DUNGEON_BRICKS.get(),
+                HpCBlocks.MOON_DUNGEON_BRICK_SLAB.get(),
+                HpCBlocks.MOON_DUNGEON_BRICK_STAIRS.get(),
+                HpCBlocks.MOON_DUNGEON_BRICK_WALL.get());
     }
 
     @SubscribeEvent
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
-        for (var itemObject : ModItems.ITEMS.getEntries()) {
+        for (var itemObject : HpCItems.ITEMS.getEntries()) {
             event.register((stack, tintIndex) -> {
                 if (tintIndex != 1) return 0xFFFFFFFF;
                 return FluidUtil.getFluidContained(stack)
@@ -111,54 +111,54 @@ public class HeliopauseCoreClient {
             }, itemObject.get());
         }
         event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFFB4D6ED : -1,
-                ModBlocks.ALUMINIUM_ORE.get(), 
-                ModBlocks.DEEPSLATE_ALUMINIUM_ORE.get(), 
-                ModItems.ALUMINIUM_INGOT.get(), 
-                ModBlocks.RAW_ALUMINIUM_BLOCK.get(), 
-                ModItems.COMPRESSED_ALUMINIUM.get(), 
-                ModBlocks.ALUMINIUM_BLOCK.get(),
-                ModBlocks.MOON_ALUMINIUM_ORE.get());
+                HpCBlocks.ALUMINIUM_ORE.get(), 
+                HpCBlocks.DEEPSLATE_ALUMINIUM_ORE.get(), 
+                HpCItems.ALUMINIUM_INGOT.get(), 
+                HpCBlocks.RAW_ALUMINIUM_BLOCK.get(), 
+                HpCItems.COMPRESSED_ALUMINIUM.get(), 
+                HpCBlocks.ALUMINIUM_BLOCK.get(),
+                HpCBlocks.MOON_ALUMINIUM_ORE.get());
         
         event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFFFFFAD6 : -1,
-                ModBlocks.TIN_ORE.get(), 
-                ModBlocks.DEEPSLATE_TIN_ORE.get(), 
-                ModItems.RAW_TIN.get(), 
-                ModItems.TIN_INGOT.get(),  
-                ModBlocks.RAW_TIN_BLOCK.get(), 
-                ModItems.COMPRESSED_TIN.get(), 
-                ModBlocks.TIN_BLOCK.get(),
-                ModBlocks.MOON_TIN_ORE.get());
+                HpCBlocks.TIN_ORE.get(), 
+                HpCBlocks.DEEPSLATE_TIN_ORE.get(), 
+                HpCItems.RAW_TIN.get(), 
+                HpCItems.TIN_INGOT.get(),  
+                HpCBlocks.RAW_TIN_BLOCK.get(), 
+                HpCItems.COMPRESSED_TIN.get(), 
+                HpCBlocks.TIN_BLOCK.get(),
+                HpCBlocks.MOON_TIN_ORE.get());
 
         event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFFD9AAF2 : -1,
-                ModItems.IRIDIUM_INGOT.get(),
-                ModItems.COMPRESSED_IRIDIUM.get(),
-                ModBlocks.IRIDIUM_ORE.get(),
-                ModBlocks.DEEPSLATE_IRIDIUM_ORE.get(),
-                ModBlocks.MOON_IRIDIUM_ORE.get());
+                HpCItems.IRIDIUM_INGOT.get(),
+                HpCItems.COMPRESSED_IRIDIUM.get(),
+                HpCBlocks.IRIDIUM_ORE.get(),
+                HpCBlocks.DEEPSLATE_IRIDIUM_ORE.get(),
+                HpCBlocks.MOON_IRIDIUM_ORE.get());
 
         event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFF4B4B4B : -1,
-                ModBlocks.MOON_DUNGEON_BRICKS.get(),
-                ModBlocks.MOON_DUNGEON_BRICK_SLAB.get(),
-                ModBlocks.MOON_DUNGEON_BRICK_STAIRS.get(),
-                ModBlocks.MOON_DUNGEON_BRICK_WALL.get());
+                HpCBlocks.MOON_DUNGEON_BRICKS.get(),
+                HpCBlocks.MOON_DUNGEON_BRICK_SLAB.get(),
+                HpCBlocks.MOON_DUNGEON_BRICK_STAIRS.get(),
+                HpCBlocks.MOON_DUNGEON_BRICK_WALL.get());
         
     }
 
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(ModEntities.SPACE_ZOMBIE.get(), SpaceZombieRenderer::new);
-        event.registerBlockEntityRenderer(ModBlockEntities.FLUID_TANK_ENTITY.get(), FluidTankRenderer::new);
+        event.registerEntityRenderer(HpCEntities.SPACE_ZOMBIE.get(), SpaceZombieRenderer::new);
+        event.registerBlockEntityRenderer(HpCBlockEntities.FLUID_TANK_ENTITY.get(), FluidTankRenderer::new);
     }
 
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {
-        event.register(ModMenuTypes.COAL_COMPRESSOR_MENU.get(), CoalCompressorScreen::new);
-        event.register(ModMenuTypes.REFINERY_MENU.get(), RefineryScreen::new);
-        event.register(ModMenuTypes.ENERGY_STORAGE_UNIT_MENU.get(), EnergyStorageUnitScreen::new);
-        event.register(ModMenuTypes.BASIC_SOLAR_MENU.get(), BasicSolarScreen::new);
-        event.register(ModMenuTypes.ROCKET_MENU.get(), RocketScreen::new);
-        event.register(ModMenuTypes.CARGO_MANAGER_MENU.get(), CargoManagerScreen::new);
-        event.register(ModMenuTypes.FUEL_MANAGER_MENU.get(), FuelManagerScreen::new);
+        event.register(HpCMenuTypes.COAL_COMPRESSOR_MENU.get(), CoalCompressorScreen::new);
+        event.register(HpCMenuTypes.REFINERY_MENU.get(), RefineryScreen::new);
+        event.register(HpCMenuTypes.ENERGY_STORAGE_UNIT_MENU.get(), EnergyStorageUnitScreen::new);
+        event.register(HpCMenuTypes.BASIC_SOLAR_MENU.get(), BasicSolarScreen::new);
+        event.register(HpCMenuTypes.ROCKET_MENU.get(), RocketScreen::new);
+        event.register(HpCMenuTypes.CARGO_MANAGER_MENU.get(), CargoManagerScreen::new);
+        event.register(HpCMenuTypes.FUEL_MANAGER_MENU.get(), FuelManagerScreen::new);
     }
 
     @SubscribeEvent

@@ -19,12 +19,11 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import net.venera.heliocore.block.entity.ModBlockEntities;
+import net.venera.heliocore.block.entity.HpCBlockEntities;
 import net.venera.heliocore.recipe.CoalCompressorRecipe;
-import net.venera.heliocore.recipe.ModRecipes;
+import net.venera.heliocore.recipe.HpCRecipes;
 import net.venera.heliocore.screen.custom.CoalCompressorMenu;
 import org.jetbrains.annotations.Nullable;
-import java.util.List;
 
 public class CoalCompressorEntity extends BaseMachineEntity{
         public final ItemStackHandler inventory = new ItemStackHandler(11) {
@@ -47,7 +46,7 @@ public class CoalCompressorEntity extends BaseMachineEntity{
     public boolean isActive = false;
     public boolean compressing = false;
     public CoalCompressorEntity(BlockPos pos, BlockState blockState) {
-        super(ModBlockEntities.COAL_COMPRESSOR_ENTITY.get(), pos, blockState, 11);
+        super(HpCBlockEntities.COAL_COMPRESSOR_ENTITY.get(), pos, blockState, 11);
 
     }
 
@@ -109,7 +108,7 @@ public class CoalCompressorEntity extends BaseMachineEntity{
             progress++;
             isActive = true;
 
-            // Set the state! If it's your custom recipe, compressing = true. 
+            // Set the state! If it's your hpc_custom recipe, compressing = true. 
             // If it's a blasting recipe, this returns false.
             compressing = (activeRecipe instanceof CoalCompressorRecipe);
 
@@ -216,7 +215,7 @@ public class CoalCompressorEntity extends BaseMachineEntity{
 
         CraftingInput input = CraftingInput.of(3, 3, craftingGrid);
         
-        return level.getRecipeManager().getRecipeFor(ModRecipes.COAL_COMPRESSOR_TYPE.get(), input, level).orElse(null);
+        return level.getRecipeManager().getRecipeFor(HpCRecipes.COAL_COMPRESSOR_TYPE.get(), input, level).orElse(null);
     }
 
     private RecipeHolder<net.minecraft.world.item.crafting.BlastingRecipe> getBlastingRecipe() {
