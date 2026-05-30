@@ -1,6 +1,7 @@
 package net.venera.heliocore.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
@@ -10,17 +11,22 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
+import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 
 public class Tier1RocketRenderer extends EntityRenderer<Tier1RocketEntity> {
+    private final Tier1RocketModel model;
+
     public Tier1RocketRenderer(EntityRendererProvider.Context context) {
         super(context);
+        this.model = new Tier1RocketModel(context.bakeLayer(Tier1RocketModel.LAYER_LOCATION));
     }
 
     @Override
-    public ResourceLocation getTextureLocation(Tier1RocketEntity tier1RocketEntity) {
-        return TextureAtlas.LOCATION_BLOCKS;
+    public ResourceLocation getTextureLocation(Tier1RocketEntity entity) {
+        // 3. Point to your newly saved 2D Texture Atlas
+        return ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/entity/tier_1_rocket.png");
     }
 
     @Override
@@ -34,22 +40,16 @@ public class Tier1RocketRenderer extends EntityRenderer<Tier1RocketEntity> {
 
         poseStack.pushPose();
 
-        // Center the blocks inside the entity's hitbox
-        poseStack.translate(-0.5, 0, -0.5);
+        // Optional: Blockbench Java models often export upside-down natively in Minecraft. 
+        // If your rocket spawns on its head, uncomment these two lines to flip it upright:
+         poseStack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(180f));
+         poseStack.translate(0, -1.5f, 0);
 
-        // Grab Minecraft's built-in block renderer
-        BlockRenderDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
+        // 4. Grab the rendering "brush" and apply your texture
+        VertexConsumer vertexConsumer = buffer.getBuffer(this.model.renderType(this.getTextureLocation(entity)));
 
-        // 1. Draw the Bottom Block
-        dispatcher.renderSingleBlock(HpCBlocks.T1_ROCKET_BOT.get().defaultBlockState(), poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY);
-
-        // 2. Move up 1 block and draw the Middle Block
-        poseStack.translate(0, 1, 0);
-        dispatcher.renderSingleBlock(HpCBlocks.T1_ROCKET_MID.get().defaultBlockState(), poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY);
-
-        // 3. Move up 1 block and draw the Top Block
-        poseStack.translate(0, 1, 0);
-        dispatcher.renderSingleBlock(HpCBlocks.T1_ROCKET_TOP.get().defaultBlockState(), poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY);
+        // 5. Draw the entire model at once! (0xFFFFFFFF is the standard 1.21 default white tint)
+        this.model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
 
         poseStack.popPose();
     }

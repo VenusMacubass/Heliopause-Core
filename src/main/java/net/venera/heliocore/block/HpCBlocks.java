@@ -154,15 +154,6 @@ public class HpCBlocks {
     public static final DeferredBlock<Block> FLUID_PIPE = registerBlock("fluid_pipe",
             () -> new FluidPipeBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).sound(SoundType.GLASS)));
     
-    public static final DeferredBlock<Block> T1_ROCKET_BOT = registerBlock("rocket_bot",
-            () -> new Tier1RocketBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).noLootTable().sound(SoundType.METAL)));
-
-    public static final DeferredBlock<Block> T1_ROCKET_MID = registerBlock("rocket_mid",
-            () -> new Tier1RocketMiddleBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).noLootTable().sound(SoundType.METAL)));
-
-    public static final DeferredBlock<Block> T1_ROCKET_TOP = registerBlock("rocket_top",
-            () -> new Tier1RocketTopBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).noLootTable().sound(SoundType.METAL)));
-    
     public static final DeferredBlock<Block> PRISMATIC_GLASS = registerBlock("prismatic_glass",
             () -> new TransparentBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).sound(SoundType.GLASS)));
     

@@ -61,6 +61,8 @@ public class HpCItemModelProvider extends ItemModelProvider {
 
         basicItem(HpCItems.RADIOACTIVE_CORE.get());
         handheldItem(HpCItems.STANDARD_WRENCH.get());
+        
+        basicItem(HpCItems.ROCKET_ITEM.get());
 
         basicItem(HpCItems.RAW_ALUMINIUM.get());
         basicItem(HpCItems.RAW_TIN.get());

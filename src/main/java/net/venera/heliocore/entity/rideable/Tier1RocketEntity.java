@@ -149,7 +149,6 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
                 inv.setItem(i, inventory.getStackInSlot(i));
             }
             Containers.dropContents(this.level(), this, inv);
-            this.spawnAtLocation(HpCBlocks.T1_ROCKET_BOT.get());
             this.discard();
             return true;
         }

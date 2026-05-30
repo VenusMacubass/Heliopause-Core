@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.phys.BlockHitResult;
 import net.venera.heliocore.entity.HpCEntities;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
+import net.venera.heliocore.item.HpCItems;
 
 import javax.annotation.Nullable;
 
@@ -82,7 +83,9 @@ public abstract class BaseRocketBlock extends Block {
             if (level.getBlockState(pos.above(2)).getBlock() instanceof BaseRocketGeneratedBlock) {
                 level.setBlock(pos.above(2), Blocks.AIR.defaultBlockState(), 35);
             }
-            super.onRemove(state, level, pos, newState, isMoving);
+            ItemStack spawnerDrop = new ItemStack(HpCItems.ROCKET_ITEM.get(), 1);
+            
+            Block.popResource(level, pos, spawnerDrop);
         }
     }
 }

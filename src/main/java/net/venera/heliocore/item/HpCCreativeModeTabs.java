@@ -30,6 +30,7 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCItems.COPPER_CANISTER.get());
                         output.accept(HpCItems.TIN_CANISTER.get());
                         output.accept(HpCItems.OXYGEN_MASK.get());
+                        output.accept(HpCItems.ROCKET_ITEM.get());
                         output.accept(HpCItems.DEHYDRATED_APPLE.get());
                         output.accept(HpCItems.DEHYDRATED_RABBIT.get());
                         output.accept(HpCItems.DEHYDRATED_POTATO.get());
@@ -129,7 +130,6 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCBlocks.BASIC_SOLAR_BLOCK.get());
                         output.accept(HpCBlocks.COPPER_WIRE.get());
                         output.accept(HpCBlocks.FLUID_PIPE.get());
-                        output.accept(HpCBlocks.T1_ROCKET_BOT.get());
                         output.accept(HpCBlocks.PRISMATIC_GLASS.get());
                         output.accept(HpCBlocks.COPPER_WIRE_BLOCK.get());
 

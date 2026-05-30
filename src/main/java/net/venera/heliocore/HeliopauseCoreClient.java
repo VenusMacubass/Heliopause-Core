@@ -25,6 +25,7 @@ import net.neoforged.neoforge.fluids.FluidUtil;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.HpCBlockEntities;
 import net.venera.heliocore.entity.HpCEntities;
+import net.venera.heliocore.entity.client.Tier1RocketModel;
 import net.venera.heliocore.entity.client.Tier1RocketRenderer;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 import net.venera.heliocore.entity.zombie.SpaceZombieRenderer;
@@ -53,6 +54,7 @@ public class HeliopauseCoreClient {
         ItemBlockRenderTypes.setRenderLayer(HpCBlocks.FLUID_TANK.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(HpCBlocks.FLUID_PIPE.get(), RenderType.translucent());
         EntityRenderers.register(HpCEntities.TIER_1_ROCKET.get(), Tier1RocketRenderer::new);
+        
     }
 
     @SubscribeEvent
@@ -199,4 +201,11 @@ public class HeliopauseCoreClient {
 
         event.register(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon"), moonEffects);
     }
+
+    @SubscribeEvent
+    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(Tier1RocketModel.LAYER_LOCATION, Tier1RocketModel::createBodyLayer);
+    }
+    
+    
 }

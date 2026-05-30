@@ -29,9 +29,7 @@ public abstract class BaseRocketGeneratedBlock extends Block {
                 if (level.getBlockState(scanPos.below()).getBlock() instanceof BaseRocketBlock) {
                     scanPos = scanPos.below();
                 }
-
-                // Now scanPos should be the bottom block position (or unchanged if not found)
-                // Remove the bottom, middle and top if they match the expected classes
+                
                 if (level.getBlockState(scanPos).getBlock() instanceof BaseRocketBlock) {
                     level.setBlock(scanPos, Blocks.AIR.defaultBlockState(), 35);
                 }

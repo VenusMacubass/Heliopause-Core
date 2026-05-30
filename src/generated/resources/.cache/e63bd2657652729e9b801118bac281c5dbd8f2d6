@@ -1,4 +1,4 @@
-// 1.21.1	2026-05-18T16:09:04.4947383	Item Models: heliocore
+// 1.21.1	2026-05-30T12:34:48.8056422	Item Models: heliocore
 62c01033a4c1f12560cd7e8e0deda9ef61f67c70 assets/heliocore/models/item/cheese_slice.json
 8cc483167b9451eb7ae0dd7530e83781ecfa22ab assets/heliocore/models/item/compressed_bronze.json
 0af2591c590f42947c6a487a09f4041de52d7575 assets/heliocore/models/item/compressed_copper.json
@@ -24,6 +24,7 @@ f161f4e5733fdfa637181ee0e9da9a60bf97c014 assets/heliocore/models/item/moon_dunge
 e701efa9efed45d7fa802d2601dd8008f4d0afae assets/heliocore/models/item/raw_silicon.json
 77f108e44371fc59e9591afe884d3a83e5234eaa assets/heliocore/models/item/raw_tin.json
 08239fdd70f66830a31e00e96ee090a3065c76be assets/heliocore/models/item/refined_fuel_bucket.json
+95d330f52bb4aa5ac5277b98a0198f24222772db assets/heliocore/models/item/rocket_item.json
 f7c018d2c2cec466ebe6e4dce2bfc7cb578d38d4 assets/heliocore/models/item/small_battery.json
 764615dfbc1175187b3fbab714232a221e4b941c assets/heliocore/models/item/standard_wrench.json
 76afda9b2d8137f2e2bf61cf3674a38974bca3c0 assets/heliocore/models/item/steel_axe.json

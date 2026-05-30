@@ -117,6 +117,9 @@ public class HpCItems {
 
     public static final DeferredItem<ArmorItem> OXYGEN_MASK = ITEMS.register("oxygen_mask", () -> 
             new ArmorItem(HpCArmorMaterials.SPACE_GEAR_MATERIAL, ArmorItem.Type.HELMET, new  Item.Properties()));
+    
+    public static final DeferredItem<Item> ROCKET_ITEM = ITEMS.register("rocket_item", () -> 
+            new RocketItem(new Item.Properties()));
 
     
 
