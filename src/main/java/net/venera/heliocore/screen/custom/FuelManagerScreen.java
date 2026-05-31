@@ -76,19 +76,17 @@ public class FuelManagerScreen extends AbstractContainerScreen<FuelManagerMenu> 
                     emptySpace,             // Texture V (Pushed down)
                     16,                     // Render Width
                     scaledHeight,           // Render Height
-                    16,                     // THE FIX: Actual width of the PNG file
-                    41                      // THE FIX: Actual height of the PNG file
+                    16,                     // Actual width of the PNG file
+                    41                      // Actual height of the PNG file
             );
         }
 
         int chargeLength = menu.getEnergyScaled(54);
-
         if (chargeLength > 0) {
             int startX = x + 74;
             int startY = y + 40;
             int endX = startX + chargeLength;
             int endY = startY + 7;
-
             guiGraphics.fill(startX, startY, endX, endY, 0xFFFFE400);
         }
     }

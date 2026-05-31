@@ -2,20 +2,47 @@ package net.venera.heliocore.screen.custom;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.venera.heliocore.HeliopauseCore;
+import net.venera.heliocore.util.MachineButtonHelper;
 
 public class RefineryScreen extends AbstractContainerScreen<RefineryMenu> {
+    private Button enabilitationButton;
+    
     private static final ResourceLocation REFINERY_GUI =
             ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/refinery/refinery_gui.png");
+    private static final ResourceLocation OIL_GUI =
+            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/oil_gui.png");
+    private static final ResourceLocation FUEL_GUI =
+            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/fuel_gui.png");
 
     public RefineryScreen(RefineryMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
     }
+
+//    @Override
+//    protected void init() {
+//        super.init();
+//        int x = (width - imageWidth) / 2;
+//        int y = (height - imageHeight) / 2;
+//
+//        this.enabilitationButton = this.addRenderableWidget(Button.builder(
+//                        Component.literal(menu.data.get(6) > 0 ? "Disable" : "Enable"),
+//                        button -> {
+//                            PacketDistributor.sendToServer(
+//                                    new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
+//                            );
+//                        })
+//                .bounds(x + 81, y + 23, 35, 18)
+//                .build()
+//        );
+//    }
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float v, int i, int i1) {
@@ -24,35 +51,27 @@ public class RefineryScreen extends AbstractContainerScreen<RefineryMenu> {
         RenderSystem.setShaderTexture(0, REFINERY_GUI);
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
-        guiGraphics.blit(REFINERY_GUI, x, y, 0, 0, 175, 167);
+        guiGraphics.blit(REFINERY_GUI, x, y, 0, 0, 175, 146);
 
-        int oilHeight = menu.getOilScaled(38);
-        if(oilHeight > 0) {
-            int renderY = y + 28 + (38 - oilHeight);
-            guiGraphics.blit(REFINERY_GUI, x + 7, renderY, 176, 38 - oilHeight, 16, oilHeight);
+        int scaledOil = menu.getOilScaled(41);
+        if (scaledOil > 0) {
+            int emptySpace = 41 - scaledOil;
+            guiGraphics.blit(OIL_GUI, x + 8, y + 13 + emptySpace, 0, emptySpace, 16, scaledOil, 16, 41);
         }
 
-        int fuelHeight = menu.getFuelScaled(38);
-        if(fuelHeight > 0) {
-            int renderY = y + 28 + (38 - fuelHeight);
-            //guiGraphics.blit(SOURCE_GUI, whereToDrawX, whereToDrawY, textureX, textureY, textureW, textureH);
-            guiGraphics.blit(REFINERY_GUI, x + 153, renderY, 192, 38 - fuelHeight, 16, fuelHeight);
+        int scaledFuel = menu.getFuelScaled(41);
+        if (scaledFuel > 0) {
+            int emptySpace = 41 - scaledFuel;
+            guiGraphics.blit(FUEL_GUI, x + 152, y + 13 + emptySpace, 0, emptySpace, 16, scaledFuel, 16, 41);
         }
 
-        int currentEnergy = menu.data.get(4);
-        int capacity = menu.data.get(5);
-        int chargeLength = 0;
-        if (capacity > 0 && currentEnergy > 0) {
-            if (currentEnergy >= capacity) {
-                chargeLength = 54;
-            } else {
-                chargeLength = Math.round(((float) currentEnergy / capacity) * 54);
-            }
-        }
-        guiGraphics.blit(REFINERY_GUI, x + 63, y + 17, 176, 38, chargeLength, 7);
-
-        if(menu.isActive()){
-            guiGraphics.blit(REFINERY_GUI, x + 49, y + 16, 208, 0, 11, 11);
+        int chargeLength = menu.getEnergyScaled(54);
+        if (chargeLength > 0) {
+            int startX = x + 61;
+            int startY = y + 13;
+            int endX = startX + chargeLength;
+            int endY = startY + 7;
+            guiGraphics.fill(startX, startY, endX, endY, 0xFFFFE400);
         }
     }
 
@@ -62,16 +81,16 @@ public class RefineryScreen extends AbstractContainerScreen<RefineryMenu> {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
-        int oilX = x + 7;  // X of the tank texture
-        int oilY = y + 28;   // Y of the top of the tank
+        int oilX = x + 8;  // X of the tank texture
+        int oilY = y + 13;   // Y of the top of the tank
         int oilWidth = 16;   // Width in pixels
-        int oilHeight = 38;   //Height in pixel
-        int fuelX = x + 153;
-        int fuelY = y + 28;
+        int oilHeight = 41;   //Height in pixel
+        int fuelX = x + 152;
+        int fuelY = y + 13;
         int fuelWidth = 16;
-        int fuelHeight = 38;
-        int energyX = x + 63;
-        int energyY = y + 17;
+        int fuelHeight = 41;
+        int energyX = x + 61;
+        int energyY = y + 13;
         int energyWidth = 54;
         int energyHeight = 7;
 
@@ -112,10 +131,8 @@ public class RefineryScreen extends AbstractContainerScreen<RefineryMenu> {
 
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        guiGraphics.drawString(this.font, this.title,
-                (imageWidth/2 - 14), 6,
-                0x404040, false);
-
+        guiGraphics.drawString(this.font, this.title, 7, 3, 0x404040, false);
+        guiGraphics.drawString(this.font, this.playerInventoryTitle, 7, 55, 0x404040, false);
     }
 
     @Override

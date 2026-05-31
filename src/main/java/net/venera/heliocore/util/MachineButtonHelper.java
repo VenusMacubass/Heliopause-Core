@@ -26,7 +26,7 @@ public record MachineButtonHelper(BlockPos pos, int buttonId) implements CustomP
     public static void handle(MachineButtonHelper payload, IPayloadContext context) {
         context.enqueueWork(() -> {
             if (context.player().level().getBlockEntity(payload.pos()) instanceof MachineConfigHelper.IToggleableMachine machine) {
-                machine.toggleEnabled(payload.buttonId()); // Pass the ID!
+                machine.toggleEnabled(payload.buttonId()); 
             }
         });
     }

@@ -36,7 +36,7 @@ public class RefineryMenu extends AbstractContainerMenu {
         addPlayerInventory(inventory);
         addPlayerHotbar(inventory);
 
-        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 0, 7, 7) {
+        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 0, 28, 13) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return stack.getItem() == HpCFluids.CRUDE_OIL.getBucket() || stack.getItem() == Items.BUCKET || stack.getItem() == HpCItems.CANISTER.get();
@@ -48,7 +48,7 @@ public class RefineryMenu extends AbstractContainerMenu {
             }
         });
 
-        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 1, 153, 7) {
+        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 1, 132, 13) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return stack.getItem() == Items.BUCKET || stack.getItem() == HpCItems.CANISTER.get();
@@ -59,7 +59,7 @@ public class RefineryMenu extends AbstractContainerMenu {
             }
         });
 
-        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 2, 38, 51) {
+        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 2, 61, 24) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return stack.getItem() instanceof BatteryItem;
@@ -119,27 +119,15 @@ public class RefineryMenu extends AbstractContainerMenu {
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 86 + i * 18));
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 65 + i * 18));
             }
         }
     }
 
     private void addPlayerHotbar(Inventory playerInventory) {
         for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 144));
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 123));
         }
-    }
-
-    public int getOilAmount() {
-        return data.get(0);
-    }
-
-    public int getFuelAmount() {
-        return data.get(1);
-    }
-
-    public int getMaxCapacity() {
-        return data.get(2);
     }
 
     public boolean isActive() {
@@ -147,12 +135,17 @@ public class RefineryMenu extends AbstractContainerMenu {
     }
 
     public int getOilScaled(int pixels) {
-        int max = getMaxCapacity();
-        return max == 0 ? 0 : getOilAmount() * pixels / max;
+        int max = data.get(2);
+        return max == 0 ? 0 : data.get(0) * pixels / max;
     }
 
     public int getFuelScaled(int pixels) {
-        int max = getMaxCapacity();
-        return max == 0 ? 0 : getFuelAmount() * pixels / max;
+        int max = data.get(2);
+        return max == 0 ? 0 : data.get(1) * pixels / max;
+    }
+    
+    public int getEnergyScaled(int pixels) {
+        int max = data.get(5);
+        return max == 0 ? 0 : data.get(4) * pixels / max;
     }
 }

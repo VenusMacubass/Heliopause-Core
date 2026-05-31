@@ -40,6 +40,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     private int maxCapacity = 6000;
     public boolean isActive = false;
     private final int MAX_FLOW_RATE = 10;
+    public boolean enabled = true;
 
     public RefineryEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState,
                           int energyCapacity, int transferRate, int energyUsage, int conversionRate) {
@@ -60,6 +61,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
                     case 3 -> isActive ? 1 : 0;
                     case 4 -> energyStorage.getEnergyStored();
                     case 5 -> energyStorage.getMaxEnergyStored();
+                    case 6 -> enabled ? 1 : 0;
                     default -> 0;
                 };
             }
@@ -70,10 +72,11 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
                     case 1 -> fuelAmount = value;
                     case 2 -> maxCapacity = value;
                     case 3 -> isActive = value == 1;
+                    case 4 -> enabled = value == 1;
                 }
             }
             @Override
-            public int getCount() { return 6; }
+            public int getCount() { return 7; }
         };
     }
 
@@ -86,7 +89,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
         if (processInputs()) dirty = true;
         if (processOutputs()) dirty = true;
 
-        if (canRefine()) {
+        if (canRefine() && enabled) {
             refine();
             dirty = true;
         } else {
