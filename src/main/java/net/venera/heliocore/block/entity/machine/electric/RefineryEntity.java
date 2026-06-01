@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.EnergyStorage;
+import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.hpc_custom.FluidPipeBlock;
 import net.venera.heliocore.block.hpc_custom.machine.BaseMachineBlock;
 import net.venera.heliocore.data.component.CanisterData;
@@ -23,12 +24,13 @@ import net.venera.heliocore.fluid.IFluidMachine;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import net.venera.heliocore.screen.custom.RefineryMenu;
+import net.venera.heliocore.util.MachineConfigHelper;
 import net.venera.heliocore.util.PipeNetworkHelper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
-public class RefineryEntity extends BaseElectricMachineEntity implements IFluidMachine{
+public class RefineryEntity extends BaseElectricMachineEntity implements IFluidMachine, MachineConfigHelper.IToggleableMachine{
     private final int INPUT_SLOT = 0;
     private final int OUTPUT_SLOT = 1;
     private final int BATTERY_SLOT = 2;
@@ -72,7 +74,6 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
                     case 1 -> fuelAmount = value;
                     case 2 -> maxCapacity = value;
                     case 3 -> isActive = value == 1;
-                    case 4 -> enabled = value == 1;
                 }
             }
             @Override
@@ -171,7 +172,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
             if (entity == this) continue;
 
             if (entity instanceof IFluidMachine targetMachine) {
-                int accepted = targetMachine.insertFluid("heliocore:refined_fuel", fluidToPush, false);
+                int accepted = targetMachine.insertFluid(HeliopauseCore.MOD_ID +":refined_fuel", fluidToPush, false);
                 if (accepted > 0) {
                     this.fuelAmount -= accepted;
                     fluidToPush -= accepted;
@@ -290,6 +291,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
         tag.putInt("OilAmount", oilAmount);
         tag.putInt("FuelAmount", fuelAmount);
         tag.putBoolean("IsActive", isActive);
+        tag.putBoolean("Enabled", enabled);
     }
 
     @Override
@@ -298,6 +300,14 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
         oilAmount = tag.getInt("OilAmount");
         fuelAmount = tag.getInt("FuelAmount");
         isActive = tag.getBoolean("IsActive");
+        enabled = tag.getBoolean("Enabled");
+    }
 
+    @Override
+    public void toggleEnabled(int buttonId) {
+        if (buttonId == 0) {
+            this.enabled = !this.enabled;
+        } 
+        this.setChanged();
     }
 }

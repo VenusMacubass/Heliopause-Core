@@ -26,23 +26,23 @@ public class RefineryScreen extends AbstractContainerScreen<RefineryMenu> {
         super(menu, playerInventory, title);
     }
 
-//    @Override
-//    protected void init() {
-//        super.init();
-//        int x = (width - imageWidth) / 2;
-//        int y = (height - imageHeight) / 2;
-//
-//        this.enabilitationButton = this.addRenderableWidget(Button.builder(
-//                        Component.literal(menu.data.get(6) > 0 ? "Disable" : "Enable"),
-//                        button -> {
-//                            PacketDistributor.sendToServer(
-//                                    new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
-//                            );
-//                        })
-//                .bounds(x + 81, y + 23, 35, 18)
-//                .build()
-//        );
-//    }
+    @Override
+    protected void init() {
+        super.init();
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
+
+        this.enabilitationButton = this.addRenderableWidget(Button.builder(
+                        Component.literal(menu.data.get(6) > 0 ? "Disable" : "Enable"),
+                        button -> {
+                            PacketDistributor.sendToServer(
+                                    new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
+                            );
+                        })
+                .bounds(x + 81, y + 23, 35, 18)
+                .build()
+        );
+    }
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float v, int i, int i1) {
@@ -123,6 +123,12 @@ public class RefineryScreen extends AbstractContainerScreen<RefineryMenu> {
                     mouseX, mouseY
             );
         }
+    }
+
+    @Override
+    protected void containerTick() {
+        super.containerTick();
+        this.enabilitationButton.setMessage(Component.literal(menu.data.get(6) > 0 ? "Disable" : "Enable"));
     }
 
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {

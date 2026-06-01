@@ -18,11 +18,14 @@
   "item.heliocore.copper_canister": "Copper Canister",
   "item.heliocore.tin_canister": "Tin Canister",
   "item.heliocore.dehydrated_apple": "Dehydrated Apple",
-  "item.heliocore.dehydrated_carrot": "Dehydrated Carrot",
+  "item.heliocore.dehydrated_rabbit": "Dehydrated Rabbit",
+  "item.heliocore.dehydrated_cod": "Dehydrated Cod",
+  "item.heliocore.dehydrated_chicken": "Dehydrated Chicken",
   "item.heliocore.dehydrated_potato": "Dehydrated Potato",
-  "item.heliocore.dehydrated_melon": "Dehydrated Melon",
+  "item.heliocore.dehydrated_berries": "Dehydrated Berries",
+  "item.heliocore.dehydrated_glow_berries": "Dehydrated Glow Berries",
   "item.heliocore.dehydrated_beef": "Dehydrated Beef",
-  "item.heliocore.cheeseburger": "Cheeseburger",
+  "item.heliocore.hamburger": "Hamburger",
   "item.heliocore.cheese_slice": "Cheese Slice",
   "item.heliocore.beef_patty": "Beef Patty",
   "item.heliocore.beef_patty_raw": "Raw Beef Patty",
@@ -44,8 +47,13 @@
   "item.heliocore.compressed_tin": "Compressed Tin",
   "item.heliocore.heavy_duty_plate": "Heavy Duty Plate",
 
-  "item.heliocore.sensor_lens": "Sensor Lens",
+  "item.heliocore.oxygen_mask": "Oxygen Mask",
+  "item.heliocore.oxygen_connectors": "Oxygen Connectors",
+  "item.heliocore.oxygen_tank": "Oxygen Tank",
+  
   "item.heliocore.small_battery": "Small Battery",
+  
+  "item.heliocore.rocket_item": "Tier 1 Rocket",
 
   "item.heliocore.glass_sword": "Glass Sword",
   "item.heliocore.steel_sword": "Steel Sword",
@@ -71,11 +79,18 @@
 
 
   "block.heliocore.aluminium_ore": "Aluminium Ore",
+  "block.heliocore.deepslate_aluminium_ore": "Deepslate Aluminium Ore",
+  "block.heliocore.moon_aluminium_ore": "Moon Aluminium Ore",
   "block.heliocore.aluminium_block": "Block of Aluminium",
   "block.heliocore.radioactive_block": "Radioactive Block",
+  "block.heliocore.iridium_ore": "Iridium Ore",
+  "block.heliocore.deepslate_iridium_ore": "Deepslate Iridium Ore",
+  "block.heliocore.moon_iridium_ore": "Moon Iridium Ore",
   "block.heliocore.iridium_block": "Block of Iridium",
   "block.heliocore.sapphire_ore": "Sapphire Ore",
   "block.heliocore.cheese_block": "Cheese Block",
+  "block.heliocore.pizza_block": "Pizza",
+  
   
 
   "block.heliocore.moon_regolith": "Moon Regolith",
@@ -85,18 +100,19 @@
   "block.heliocore.tin_building_block": "Tin Building Block",
   "block.heliocore.tin_block": "Block of Tin",
   "block.heliocore.tin_ore": "Tin Ore",
+  "block.heliocore.deepslate_tin_ore": "Deepslate Tin Ore",
   "block.heliocore.raw_tin_block": "Block of Raw Tin",
   "block.heliocore.raw_aluminium_block": "Block of Raw Aluminium",
   "block.heliocore.silicon_ore": "Silicon Ore",
+  "block.heliocore.deepslate_silicon_ore": "Deepslate Silicon Ore",
+  "block.heliocore.moon_silicon_ore": "Moon Silicon Ore",
   "block.heliocore.silicon_block": "Block of Silicon",
+  "block.heliocore.moon_iron_ore": "Moon Iron Ore",
 
   "block.heliocore.moon_copper_ore": "Moon Copper Ore",
   "block.heliocore.moon_tin_ore": "Moon Tin Ore",
   "block.heliocore.moon_cobblestone": "Moon Cobblestone",
   "block.heliocore.moon_dungeon_bricks": "Moon Dungeon Bricks",
-  "block.heliocore.mars_dungeon_bricks": "Mars Dungeon Bricks",
-  "block.heliocore.mars_rock": "Mars Rock",
-  "block.heliocore.mars_cobblestone": "Mars Cobblestone",
 
   "block.heliocore.tin_building_wall": "Tin Building Wall",
   "block.heliocore.moon_rock_wall": "Moon Rock Wall",
@@ -107,10 +123,6 @@
   "block.heliocore.tin_building_slab": "Tin Building Slab",
   "block.heliocore.moon_rock_slab": "Moon Rock Slab",
   "block.heliocore.moon_dungeon_brick_slab": "Moon Dungeon Brick Slab",
-  "block.heliocore.mars_cobblestone_wall": "Mars Cobblestone Wall",
-  "block.heliocore.mars_dungeon_brick_wall": "Mars Dungeon Brick Wall",
-  "block.heliocore.mars_cobblestone_slab": "Mars Cobblestone Slab",
-  "block.heliocore.mars_dungeon_brick_slab": "Mars Dungeon Brick Slab",
   
   "block.heliocore.arc_lamp": "Arc Lamp",
   "block.heliocore.prismatic_glass": "Prismatic Glass",
@@ -119,11 +131,14 @@
   "block.heliocore.copper_wire": "Copper Wire",
   "block.heliocore.rocket_bot": "Tier 1 Rocket",
   "block.heliocore.copper_wire_block": "Copper Wire Block",
+  "block.heliocore.fluid_pipe": "Fluid Pipe",
 
   "block.heliocore.coal_compressor": "Coal Powered Compressor",
   "block.heliocore.energy_storage_unit": "Energy Storage Unit",
   "block.heliocore.refinery": "Oil Refinery",
   "block.heliocore.basic_solar_block": "Basic Solar Panel",
+  "block.heliocore.fuel_manager_block": "Rocket Fuel and Energy Manager",
+  "block.heliocore.cargo_manager_block": "Rocket Cargo Manager",
 
 
   "block.heliocore.coal_compressor_menu_name": "Coal Powered Compressor",
@@ -141,7 +156,13 @@
 
 
 
-
-  "curios.identifier.oxygen_mask": "Oxygen Mask",
-  "curios.identifier.elytra": "Elytra"
+  "curios.identifier.gauntlets": "Gauntlets Slot",
+  "curios.identifier.oxygen_mask": "Oxygen Mask Slot",
+  "curios.identifier.oxygen_connectors": "Oxygen Connectors Slot",
+  "curios.identifier.oxygen_tank_1": "Oxygen Tank Slot",
+  "curios.identifier.oxygen_tank_2": "Oxygen Tank Slot",
+  "curios.identifier.head_gear": "Head Gear Slot",
+  "curios.identifier.body_gear": "Body Gear Slot",
+  "curios.identifier.legs_gear": "Legs Gear Slot",
+  "curios.identifier.hands_and_feet_gear": "Hands and Feet Gear Slot"
 }
