@@ -32,6 +32,9 @@ public class HpCPlacedFeatures {  //Where to place and how to place
     public static final ResourceKey<PlacedFeature> MARIA_CRATER_PLACED_KEY = registerKey("maria_crater_placed");
     public static final ResourceKey<PlacedFeature> HIGHLANDS_CRATER_PLACED_KEY = registerKey("highlands_crater_placed");
 
+    public static final ResourceKey<PlacedFeature> CRUDE_OIL_PLACED_DEFAULT = registerKey("crude_oil_default");
+    public static final ResourceKey<PlacedFeature> CRUDE_OIL_PLACED_ABUNDANT = registerKey("crude_oil_abundant");
+
     //endregion
     
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
@@ -74,6 +77,22 @@ public class HpCPlacedFeatures {  //Where to place and how to place
         // Iridium: More abundant than Earth (2 times per chunk guaranteed), sub-surface.
         register(context, MOON_IRIDIUM_ORE_PLACED_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.MOON_IRIDIUM_ORE_KEY),
                 HpCOrePlacement.commonOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.absolute(20), VerticalAnchor.absolute(120))));
+
+
+        register(context, CRUDE_OIL_PLACED_DEFAULT, configuredFeatures.getOrThrow(HpCConfiguredFeatures.CRUDE_OIL_RESERVOIR),
+                List.of(
+                        RarityFilter.onAverageOnceEvery(20),
+                        InSquarePlacement.spread(),
+                        HeightRangePlacement.uniform(VerticalAnchor.absolute(-60), VerticalAnchor.absolute(0)),
+                        BiomeFilter.biome()
+                ));
+        register(context, CRUDE_OIL_PLACED_ABUNDANT, configuredFeatures.getOrThrow(HpCConfiguredFeatures.CRUDE_OIL_RESERVOIR),
+                List.of(
+                        RarityFilter.onAverageOnceEvery(12),
+                        InSquarePlacement.spread(),
+                        HeightRangePlacement.uniform(VerticalAnchor.absolute(-60), VerticalAnchor.absolute(0)),
+                        BiomeFilter.biome()
+                ));
 
         
         

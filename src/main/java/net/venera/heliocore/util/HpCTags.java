@@ -39,6 +39,11 @@ public class HpCTags {
     }
 
     public static class Biomes {
+        public static final TagKey<Biome> HAS_ABUNDANT_OIL = TagKey.create(
+                Registries.BIOME,
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "has_abundant_oil")
+        );
+         
         public static final TagKey<Biome> LUNAR_HIGHLANDS = TagKey.create(
                 Registries.BIOME,
                 ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "lunar_highlands")

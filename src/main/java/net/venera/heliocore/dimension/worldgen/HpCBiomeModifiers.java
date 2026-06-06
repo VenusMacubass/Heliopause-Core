@@ -7,12 +7,14 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.BiomeModifiers;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.dimension.biome.HpCBiomes;
+import net.venera.heliocore.util.HpCTags;
 
 public class HpCBiomeModifiers {  //In what biome and in what stage shall I place?
     //CF -> PF ->  BM
@@ -21,8 +23,6 @@ public class HpCBiomeModifiers {  //In what biome and in what stage shall I plac
     public static final ResourceKey<BiomeModifier> ADD_SILICON_ORE = registerKey("add_silicon_ore");
     public static final ResourceKey<BiomeModifier> ADD_IRIDIUM_ORE = registerKey("add_iridium_ore");
     
-    public static final ResourceKey<BiomeModifier> ADD_NETHER_TIN_ORE = registerKey("add_nether_tin_ore");
-    public static final ResourceKey<BiomeModifier> ADD_END_TIN_ORE = registerKey("add_end_tin_ore");
     public static final ResourceKey<BiomeModifier> ADD_MOON_TIN_ORE = registerKey("add_moon_tin_ore");
     public static final ResourceKey<BiomeModifier> ADD_MOON_IRON_ORE = registerKey("add_moon_iron_ore");
     public static final ResourceKey<BiomeModifier> ADD_MOON_COPPER_ORE = registerKey("add_moon_copper_ore");
@@ -30,6 +30,9 @@ public class HpCBiomeModifiers {  //In what biome and in what stage shall I plac
     public static final ResourceKey<BiomeModifier> ADD_MOON_SILICON_ORE = registerKey("add_moon_silicon_ore");
     public static final ResourceKey<BiomeModifier> ADD_MOON_IRIDIUM_ORE = registerKey("add_moon_iridium_ore");
 
+    public static final ResourceKey<BiomeModifier> ADD_CRUDE_OIL_DEFAULT = registerKey("add_crude_oil_default");
+    public static final ResourceKey<BiomeModifier> ADD_CRUDE_OIL_ABUNDANT = registerKey("add_crude_oil_abundant");
+    
     public static final ResourceKey<BiomeModifier> ADD_MARIA_CRATERS = registerKey("add_maria_craters");
     public static final ResourceKey<BiomeModifier> ADD_HIGHLANDS_CRATERS = registerKey("add_highlands_craters");
 
@@ -95,7 +98,15 @@ public class HpCBiomeModifiers {  //In what biome and in what stage shall I plac
                 moonBiomes, HolderSet.direct(placedFeatures.getOrThrow(HpCPlacedFeatures.MOON_IRIDIUM_ORE_PLACED_KEY)), 
                 GenerationStep.Decoration.UNDERGROUND_ORES));
 
-
+        context.register(ADD_CRUDE_OIL_DEFAULT, new BiomeModifiers.AddFeaturesBiomeModifier(
+                biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
+                HolderSet.direct(placedFeatures.getOrThrow(HpCPlacedFeatures.CRUDE_OIL_PLACED_DEFAULT)),
+                GenerationStep.Decoration.UNDERGROUND_ORES));
+        
+        context.register(ADD_CRUDE_OIL_ABUNDANT, new BiomeModifiers.AddFeaturesBiomeModifier(
+                biomes.getOrThrow(HpCTags.Biomes.HAS_ABUNDANT_OIL),
+                HolderSet.direct(placedFeatures.getOrThrow(HpCPlacedFeatures.CRUDE_OIL_PLACED_ABUNDANT)),
+                GenerationStep.Decoration.FLUID_SPRINGS));
 
         context.register(ADD_MARIA_CRATERS, new BiomeModifiers.AddFeaturesBiomeModifier(
                 HolderSet.direct(biomes.getOrThrow(HpCBiomes.LUNAR_MARIA)),
