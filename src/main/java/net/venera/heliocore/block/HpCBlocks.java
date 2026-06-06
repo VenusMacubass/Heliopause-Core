@@ -156,6 +156,12 @@ public class HpCBlocks {
     
     public static final DeferredBlock<Block> PRISMATIC_GLASS = registerBlock("prismatic_glass",
             () -> new TransparentBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).sound(SoundType.GLASS)));
+
+    public static final DeferredBlock<IronBarsBlock> PRISMATIC_GLASS_PANE = registerBlock("prismatic_glass_pane",
+            () -> new IronBarsBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).sound(SoundType.GLASS)));
+
+    public static final DeferredBlock<Block> TINTED_PRISMATIC_GLASS = registerBlock("tinted_prismatic_glass",
+            () -> new TintedGlassBlock(BlockBehaviour.Properties.of().noOcclusion().strength(0.5f).sound(SoundType.GLASS)));
     
     public static final DeferredBlock<Block> COPPER_WIRE_BLOCK = registerBlock("copper_wire_block", 
             () -> new WireBlock(BlockBehaviour.Properties.of().sound(SoundType.COPPER)){

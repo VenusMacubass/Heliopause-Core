@@ -126,6 +126,8 @@
   
   "block.heliocore.arc_lamp": "Arc Lamp",
   "block.heliocore.prismatic_glass": "Prismatic Glass",
+  "block.heliocore.prismatic_glass_pane": "Prismatic Glass Pane",
+  "block.heliocore.tinted_prismatic_glass": "Tinted Prismatic Glass",
   "block.heliocore.launch_pad": "Launch Pad",
   "block.heliocore.fluid_tank": "Fluid Tank",
   "block.heliocore.copper_wire": "Copper Wire",

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "heliocore:block/tinted_prismatic_glass"
+    }
+  }
+}

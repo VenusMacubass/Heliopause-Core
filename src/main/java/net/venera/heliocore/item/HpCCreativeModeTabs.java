@@ -131,6 +131,8 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCBlocks.COPPER_WIRE.get());
                         output.accept(HpCBlocks.FLUID_PIPE.get());
                         output.accept(HpCBlocks.PRISMATIC_GLASS.get());
+                        output.accept(HpCBlocks.PRISMATIC_GLASS_PANE.get());
+                        output.accept(HpCBlocks.TINTED_PRISMATIC_GLASS.get());
                         output.accept(HpCBlocks.COPPER_WIRE_BLOCK.get());
 
                     })

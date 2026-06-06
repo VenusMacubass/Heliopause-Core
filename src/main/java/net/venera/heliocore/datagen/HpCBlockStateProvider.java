@@ -1,7 +1,9 @@
 package net.venera.heliocore.datagen;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.IronBarsBlock;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -17,6 +19,9 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     ResourceLocation dungeonBrickTex = modLoc("block/dungeon_bricks");
     ResourceLocation buildingBlockTex = modLoc("block/tin_building_block");
     ResourceLocation moonRockTex = modLoc("block/moon_rock");
+    ResourceLocation prismaticTex = modLoc("block/prismatic_glass");
+    ResourceLocation prismaticPaneTex = modLoc("block/prismatic_glass_pane_top");
+    ResourceLocation tintedPrismaticTex = modLoc("block/tinted_prismatic_glass");
 
     @Override
     protected void registerStatesAndModels() {
@@ -30,7 +35,9 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         blockWithItem(HpCBlocks.MOON_COBBLESTONE);
         blockWithItem(HpCBlocks.COPPER_WIRE_BLOCK);
 
-        
+        translucentBlock(HpCBlocks.PRISMATIC_GLASS, prismaticTex);
+        translucentPaneBlock(HpCBlocks.PRISMATIC_GLASS_PANE.get(), prismaticTex, prismaticPaneTex);
+        translucentBlock(HpCBlocks.TINTED_PRISMATIC_GLASS, tintedPrismaticTex);
 
         blockItem(HpCBlocks.TIN_BUILDING_SLAB);
         blockItem(HpCBlocks.MOON_ROCK_SLAB);
@@ -131,6 +138,28 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 .scale(0.625f)
                 .end()
                 .end();
+    }
+
+    public void translucentBlock(DeferredBlock<?> deferredBlock, ResourceLocation texture) {
+        ModelFile model = models().cubeAll(deferredBlock.getId().getPath(), texture)
+                .renderType("minecraft:translucent");
+        simpleBlockWithItem(deferredBlock.get(), model);
+    }
+
+    public void translucentPaneBlock(IronBarsBlock block, ResourceLocation pane, ResourceLocation edge) {
+        String baseName = BuiltInRegistries.BLOCK.getKey(block).getPath();
+        
+        ModelFile post = models().panePost(baseName + "_post", pane, edge).renderType("minecraft:translucent");
+        ModelFile side = models().paneSide(baseName + "_side", pane, edge).renderType("minecraft:translucent");
+        ModelFile sideAlt = models().paneSideAlt(baseName + "_side_alt", pane, edge).renderType("minecraft:translucent");
+        ModelFile noSide = models().paneNoSide(baseName + "_noside", pane).renderType("minecraft:translucent");
+        ModelFile noSideAlt = models().paneNoSideAlt(baseName + "_noside_alt", pane).renderType("minecraft:translucent");
+        
+        paneBlock(block, post, side, sideAlt, noSide, noSideAlt);
+        itemModels().getBuilder(baseName)
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", pane)
+                .renderType("minecraft:translucent"); //There's a cool bug here
     }
     //endregion
 }

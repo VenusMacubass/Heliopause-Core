@@ -23,11 +23,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "heliocore:prismatic_glass"
+          "name": "heliocore:prismatic_glass_pane"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "heliocore:blocks/prismatic_glass"
+  "random_sequence": "heliocore:blocks/prismatic_glass_pane"
 }

@@ -64,17 +64,7 @@ public class HeliopauseCoreClient {
                 FluidState fluidState = getter.getFluidState(pos);
                 return IClientFluidTypeExtensions.of(fluidState).getTintColor(fluidState, getter, pos);
             } else return 0xFFFFFFFF;
-        }, HpCFluids.CRUDE_OIL.getFluidblock(), HpCFluids.REFINED_FUEL.getFluidblock()); 
-        event.register((state, level, pos, tintIndex) -> {
-            long time = System.currentTimeMillis();
-
-            // 4000 ms
-            // Increase the number to slow it down
-            float hue = (time % 4000) / 4000.0f;
-            
-            return Color.HSBtoRGB(hue, 1.0f, 1.0f);
-
-        }, HpCBlocks.PRISMATIC_GLASS.get());
+        }, HpCFluids.CRUDE_OIL.getFluidblock(), HpCFluids.REFINED_FUEL.getFluidblock());
 
         event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? 0xFFB4D6ED : -1,
                 HpCBlocks.DEEPSLATE_ALUMINIUM_ORE.get(), 

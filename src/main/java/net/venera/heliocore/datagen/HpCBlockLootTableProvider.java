@@ -64,11 +64,14 @@ public class HpCBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(HpCBlocks.MOON_ROCK_STAIRS.get());
         dropSelf(HpCBlocks.MOON_DUNGEON_BRICK_STAIRS.get());
         dropSelf(HpCBlocks.IRIDIUM_BLOCK.get());
-        dropSelf(HpCBlocks.PRISMATIC_GLASS.get());
+        
         dropSelf(HpCBlocks.COPPER_WIRE_BLOCK.get());
 
         dropOther(HpCBlocks.MOON_ROCK.get(), HpCBlocks.MOON_COBBLESTONE.get());
-
+        
+        dropWhenSilkTouch(HpCBlocks.PRISMATIC_GLASS_PANE.get());
+        dropWhenSilkTouch(HpCBlocks.PRISMATIC_GLASS.get());
+        dropWhenSilkTouch(HpCBlocks.TINTED_PRISMATIC_GLASS.get());
 
         add(HpCBlocks.TIN_ORE.get(),
                 block -> createOreDrop(HpCBlocks.TIN_ORE.get(), HpCItems.RAW_TIN.get()));
@@ -113,7 +116,6 @@ public class HpCBlockLootTableProvider extends BlockLootSubProvider {
         add(HpCBlocks.TIN_BUILDING_SLAB.get(), block -> createSlabItemTable(HpCBlocks.TIN_BUILDING_SLAB.get()));
         add(HpCBlocks.MOON_ROCK_SLAB.get(), block -> createSlabItemTable(HpCBlocks.MOON_ROCK_SLAB.get()));
         add(HpCBlocks.MOON_DUNGEON_BRICK_SLAB.get(), block -> createSlabItemTable(HpCBlocks.MOON_DUNGEON_BRICK_SLAB.get()));
-
     }
 
     protected LootTable.Builder createMultipleOreDrops(Block block, Item item, float minDrops, float maxDrops) {
