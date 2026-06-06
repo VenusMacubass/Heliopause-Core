@@ -32,8 +32,8 @@ public class HpCPlacedFeatures {  //Where to place and how to place
     public static final ResourceKey<PlacedFeature> MARIA_CRATER_PLACED_KEY = registerKey("maria_crater_placed");
     public static final ResourceKey<PlacedFeature> HIGHLANDS_CRATER_PLACED_KEY = registerKey("highlands_crater_placed");
 
-    public static final ResourceKey<PlacedFeature> CRUDE_OIL_PLACED_DEFAULT = registerKey("crude_oil_default");
-    public static final ResourceKey<PlacedFeature> CRUDE_OIL_PLACED_ABUNDANT = registerKey("crude_oil_abundant");
+    public static final ResourceKey<PlacedFeature> CRUDE_OIL_PLACED_DEFAULT = registerKey("crude_oil_placed_default");
+    public static final ResourceKey<PlacedFeature> CRUDE_OIL_PLACED_ABUNDANT = registerKey("crude_oil_placed_abundant");
 
     //endregion
     

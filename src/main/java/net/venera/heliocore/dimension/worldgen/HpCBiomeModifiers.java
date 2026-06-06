@@ -101,12 +101,13 @@ public class HpCBiomeModifiers {  //In what biome and in what stage shall I plac
         context.register(ADD_CRUDE_OIL_DEFAULT, new BiomeModifiers.AddFeaturesBiomeModifier(
                 biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
                 HolderSet.direct(placedFeatures.getOrThrow(HpCPlacedFeatures.CRUDE_OIL_PLACED_DEFAULT)),
-                GenerationStep.Decoration.UNDERGROUND_ORES));
-        
+                GenerationStep.Decoration.LAKES
+        ));
         context.register(ADD_CRUDE_OIL_ABUNDANT, new BiomeModifiers.AddFeaturesBiomeModifier(
                 biomes.getOrThrow(HpCTags.Biomes.HAS_ABUNDANT_OIL),
                 HolderSet.direct(placedFeatures.getOrThrow(HpCPlacedFeatures.CRUDE_OIL_PLACED_ABUNDANT)),
-                GenerationStep.Decoration.FLUID_SPRINGS));
+                GenerationStep.Decoration.LAKES
+        ));
 
         context.register(ADD_MARIA_CRATERS, new BiomeModifiers.AddFeaturesBiomeModifier(
                 HolderSet.direct(biomes.getOrThrow(HpCBiomes.LUNAR_MARIA)),

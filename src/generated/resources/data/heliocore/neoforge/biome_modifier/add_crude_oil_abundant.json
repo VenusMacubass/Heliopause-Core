@@ -1,6 +1,6 @@
 {
   "type": "neoforge:add_features",
   "biomes": "#heliocore:has_abundant_oil",
-  "features": "heliocore:crude_oil_abundant",
-  "step": "fluid_springs"
+  "features": "heliocore:crude_oil_placed_abundant",
+  "step": "lakes"
 }

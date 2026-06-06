@@ -5,18 +5,12 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.levelgen.GeodeBlockSettings;
-import net.minecraft.world.level.levelgen.GeodeCrackSettings;
-import net.minecraft.world.level.levelgen.GeodeLayerSettings;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.LakeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.GeodeConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.ReplaceSphereConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
@@ -47,7 +41,7 @@ public class HpCConfiguredFeatures { //What to place
     public static final ResourceKey<ConfiguredFeature<?, ?>> MARIA_CRATER_KEY = registerKey("maria_crater");
     public static final ResourceKey<ConfiguredFeature<?, ?>> HIGHLANDS_CRATER_KEY = registerKey("highlands_crater");
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> CRUDE_OIL_RESERVOIR = registerKey("crude_oil_reservoir");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CRUDE_OIL_RESERVOIR = registerKey("crude_oil_lake");
     //endregion
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context){
 
@@ -114,11 +108,10 @@ public class HpCConfiguredFeatures { //What to place
         register(context, MOON_IRIDIUM_ORE_KEY, Feature.ORE, new OreConfiguration(moonIridiumOres, 3)); // Slightly larger than Earth Iridium
 
         context.register(CRUDE_OIL_RESERVOIR, new ConfiguredFeature<>(
-                Feature.ORE,
-                new OreConfiguration(
-                        deepslateOilTargets,
-                        18,    // VEIN SIZE: The number of blocks. 50 creates a massive, sprawling pocket!
-                        1.0f   // AIR EXPOSURE: 0.0f means it will happily burst out of the walls and spill into ravines.
+                Feature.LAKE,
+                new LakeFeature.Configuration(
+                        BlockStateProvider.simple(HpCFluids.CRUDE_OIL.getFluidblock()),
+                        BlockStateProvider.simple(Blocks.DEEPSLATE)
                 )
         ));
         
