@@ -1,7 +1,8 @@
-// 1.21.1	2026-05-30T12:34:48.8056422	Item Models: heliocore
+// 1.21.1	2026-06-10T21:01:08.4785894	Item Models: heliocore
 62c01033a4c1f12560cd7e8e0deda9ef61f67c70 assets/heliocore/models/item/cheese_slice.json
 8cc483167b9451eb7ae0dd7530e83781ecfa22ab assets/heliocore/models/item/compressed_bronze.json
 0af2591c590f42947c6a487a09f4041de52d7575 assets/heliocore/models/item/compressed_copper.json
+bfaf5cd1e163da2e52bcf07e99765b580fc27810 assets/heliocore/models/item/compressed_gas_tank.json
 73b2c6552d6dd825fbb317cbcb28a528e4c08a69 assets/heliocore/models/item/compressed_iron.json
 b4a1f66332feceb0a7fb3fcf590d59a7db262afd assets/heliocore/models/item/compressed_steel.json
 0417f489f449fcb7d1342be1657d5ce3922f1cb4 assets/heliocore/models/item/copper_canister.json

@@ -10,8 +10,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.data.component.CanisterData;
+import net.venera.heliocore.data.component.GasTankData;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
+import net.venera.heliocore.item.hpc_custom.GasTankItem;
 
 import java.util.function.Supplier;
 
@@ -68,6 +70,8 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCItems.CANISTER.get());
                         output.accept(HpCItems.CANISTER.get().setCanisterData(new ItemStack(HpCItems.CANISTER.get()), CanisterData.CRUDE_OIL, CanisterItem.MAX_CAPACITY));
                         output.accept(HpCItems.CANISTER.get().setCanisterData(new ItemStack(HpCItems.CANISTER.get()), CanisterData.REFINED_FUEL, CanisterItem.MAX_CAPACITY));
+                        output.accept(HpCItems.COMPRESSED_GAS_TANK.get());
+                        output.accept(HpCItems.COMPRESSED_GAS_TANK.get().setGasTankData(new ItemStack(HpCItems.COMPRESSED_GAS_TANK.get()), GasTankData.OXYGEN_GAS, GasTankItem.MAX_CAPACITY));
                         output.accept(HpCItems.SMALL_BATTERY.get());
                         output.accept(HpCItems.SMALL_BATTERY.get().createFullInstance());
 

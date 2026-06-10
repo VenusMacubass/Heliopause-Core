@@ -73,6 +73,10 @@
   
   "fluid.heliocore.crude_oil": "Crude Oil",
   "fluid.heliocore.refined_fuel": "Refined Fuel",
+  "fluid.heliocore.oxygen_gas": "Compressed Oxygen Gas",
+  
+  "item.heliocore.compressed_gas_tank": "Compressed Gas Tank",
+  "item.heliocore.gas_tank.filled": "%s (%d %%%s)",
 
 
 
@@ -147,11 +151,7 @@
   "block.minecraft.coal_compressor": "Coal Compressor",
   "block.heliocore.refinery_menu_name": "Refinery",
   "container.heliocore.refinery": "Oil Refinery",
-
-
-
-
-
+  
 
 
   "death.attack.radiation_damage": "%1$s succumbed to radiation poisoning.",

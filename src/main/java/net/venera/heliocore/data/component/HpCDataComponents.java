@@ -22,6 +22,9 @@ public class HpCDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<BatteryData>> BATTERY_COMPONENT = register("battery_content",
             builder -> builder.persistent(BatteryData.CODEC).networkSynchronized(BatteryData.STREAM_CODEC));
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<GasTankData>> GAS_TANK_COMPONENT = register("gas_tank_content",
+            builder -> builder.persistent(GasTankData.CODEC).networkSynchronized(GasTankData.STREAM_CODEC));
+
     private static <T>DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
         return DATA_COMPONENT_TYPES.register(name, () -> builderOperator.apply(DataComponentType.builder()).build());
     }

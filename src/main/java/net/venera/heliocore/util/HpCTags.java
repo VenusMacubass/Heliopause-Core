@@ -57,7 +57,7 @@ public class HpCTags {
 
     public static class Fluids{
         public static final TagKey<Fluid> OIL = createTag("oil");
-
+        public static final TagKey<Fluid> GASES = createTag("gases");
 
 
         private static TagKey<Fluid> createTag(String name){

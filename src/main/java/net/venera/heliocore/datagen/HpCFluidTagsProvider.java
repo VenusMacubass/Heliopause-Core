@@ -7,6 +7,7 @@ import net.minecraft.tags.FluidTags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.fluid.HpCFluids;
+import net.venera.heliocore.util.HpCTags;
 import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
@@ -20,6 +21,6 @@ public class HpCFluidTagsProvider extends FluidTagsProvider {
         super.addTags(provider);
         tag(FluidTags.LAVA).add(HpCFluids.CRUDE_OIL.getSource());
         tag(FluidTags.WATER).add(HpCFluids.REFINED_FUEL.getSource());
-
+        //tag(HpCTags.Fluids.GASES).add(HpCFluids.OXYGEN_TYPE.get());
     }
 }

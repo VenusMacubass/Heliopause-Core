@@ -58,6 +58,7 @@ public class HpCItemModelProvider extends ItemModelProvider {
 
         basicItem(HpCFluids.CRUDE_OIL.getBucket());
         basicItem(HpCFluids.REFINED_FUEL.getBucket());
+        basicItem(HpCItems.COMPRESSED_GAS_TANK.get());
 
         basicItem(HpCItems.RADIOACTIVE_CORE.get());
         handheldItem(HpCItems.STANDARD_WRENCH.get());

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "heliocore:item/compressed_gas_tank"
+  }
+}

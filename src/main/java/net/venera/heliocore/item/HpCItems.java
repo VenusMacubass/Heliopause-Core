@@ -8,6 +8,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.data.component.BatteryData;
 import net.venera.heliocore.data.component.CanisterData;
+import net.venera.heliocore.data.component.GasTankData;
 import net.venera.heliocore.data.component.HpCDataComponents;
 import net.venera.heliocore.item.hpc_custom.*;
 
@@ -82,6 +83,9 @@ public class HpCItems {
     public static final DeferredItem<Item> COMPRESSED_HD_PLATE = ITEMS.register("heavy_duty_plate", () -> new Item(new Item.Properties()));
     public static final DeferredItem<CanisterItem> CANISTER = ITEMS.register("canister", () -> new CanisterItem(new Item.Properties().component(
             HpCDataComponents.CANISTER_COMPONENT.get(), new CanisterData(null, 0)).stacksTo(1)));
+    public static final DeferredItem<GasTankItem> COMPRESSED_GAS_TANK = ITEMS.register("compressed_gas_tank", () -> new GasTankItem(new Item.Properties().component(
+            HpCDataComponents.GAS_TANK_COMPONENT.get(), new GasTankData(null, 0)).stacksTo(1)));
+    
     //endregion
 
     //region Tools
