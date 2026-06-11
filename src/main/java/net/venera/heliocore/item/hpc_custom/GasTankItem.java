@@ -82,24 +82,26 @@ public class GasTankItem extends Item {
     @Override
     public int getBarWidth(ItemStack stack) {
         GasTankData data = getGasTankData(stack);
-        if (data.getCapacity() == 0) return 0;
+        if (data == null || data.getCapacity() == 0) return 0;
         return Math.round(13.0F * ((float)data.amount() / data.getCapacity()));
     }
 
     @Override
     public int getBarColor(ItemStack stack) {
         GasTankData data = getGasTankData(stack);
-        if(data.amount() >= data.getCapacity() * 0.66f){
+        if (data == null || data.getCapacity() == 0) return Color.RED.getRGB();
+        if (data.amount() >= data.getCapacity() * 0.66f) {
             return Color.GREEN.getRGB();
-        }else if(data.amount() >= data.getCapacity() * 0.33f){
+        } else if (data.amount() >= data.getCapacity() * 0.33f) {
             return Color.YELLOW.getRGB();
-        }else{
+        } else {
             return Color.RED.getRGB();
         }
     }
 
     @Override
     public boolean isBarVisible(ItemStack stack) {
-        return getGasTankData(stack).getSpace() > 0;
+        GasTankData data = getGasTankData(stack);
+        return data != null && !data.isEmpty();
     }
 }

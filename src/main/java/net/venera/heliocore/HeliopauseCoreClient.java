@@ -18,6 +18,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
@@ -195,6 +196,34 @@ public class HeliopauseCoreClient {
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(Tier1RocketModel.LAYER_LOCATION, Tier1RocketModel::createBodyLayer);
+    }
+
+    @SubscribeEvent
+    public static void onClientExtensions(RegisterClientExtensionsEvent event) {
+        
+        event.registerFluidType(new IClientFluidTypeExtensions() {
+            private static final ResourceLocation OXYGEN_TEXTURE = ResourceLocation.fromNamespaceAndPath("minecraft", "block/white_concrete");
+
+            @Override
+            public int getTintColor() {
+                // 0x99 = 60% base opacity. 66D8FF = Airy blue color.
+                return 0x9966D8FF;
+            }
+
+            @Override
+            public ResourceLocation getStillTexture() {
+                return OXYGEN_TEXTURE;
+            }
+
+        }, HpCFluids.OXYGEN_TYPE.get()); // <-- Tie it to your registered Oxygen Type here!
+
+
+        /* Example for future gases:
+        event.registerFluidType(new IClientFluidTypeExtensions() {
+            @Override public int getTintColor() { return 0x9900FF00; } // Toxic Green
+            @Override public ResourceLocation getStillTexture() { return ResourceLocation.parse("minecraft:block/water_still"); }
+        }, HpCFluids.CHLORINE_TYPE.get());
+        */
     }
     
     

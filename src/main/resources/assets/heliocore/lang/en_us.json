@@ -145,6 +145,8 @@
   "block.heliocore.basic_solar_block": "Basic Solar Panel",
   "block.heliocore.fuel_manager_block": "Rocket Fuel and Energy Manager",
   "block.heliocore.cargo_manager_block": "Rocket Cargo Manager",
+  "block.heliocore.oxygen_generator_block": "Oxygen Generator",
+  "block.heliocore.gas_compressor_block": "Gas Compressor",
 
 
   "block.heliocore.coal_compressor_menu_name": "Coal Powered Compressor",

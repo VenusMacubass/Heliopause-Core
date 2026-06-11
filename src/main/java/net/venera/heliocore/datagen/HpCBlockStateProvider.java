@@ -1,15 +1,20 @@
 package net.venera.heliocore.datagen;
 
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.IronBarsBlock;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.level.block.*;
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
+
+import java.util.Map;
 
 public class HpCBlockStateProvider extends BlockStateProvider {
     public HpCBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -57,6 +62,27 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         tintedStairsBlock(HpCBlocks.MOON_ROCK_STAIRS,  moonRockTex);
         tintedSlabBlock(HpCBlocks.MOON_ROCK_SLAB, moonRockTex);
         tintedWallBlock(HpCBlocks.MOON_ROCK_WALL, moonRockTex);
+
+        directionalMachineBlock(HpCBlocks.OXYGEN_GENERATOR_BLOCK.get(), 
+                modLoc("block/machine/machine_side"), 
+                Map.of(
+                        //Direction.NORTH, modLoc("block/refinery_front_panel"), 
+                        Direction.UP, modLoc("block/machine/machine"),    
+                        Direction.DOWN, modLoc("block/machine/machine_bottom")
+                        //Direction.SOUTH, modLoc("block/refinery_back_pipes")   
+                        //East, West, and Down will automatically use 'machine_casing_default'
+                )
+        );
+        directionalMachineBlock(HpCBlocks.GAS_COMPRESSOR_BLOCK.get(),
+                modLoc("block/machine/machine_side"), 
+                Map.of(
+                        //Direction.NORTH, modLoc("block/refinery_front_panel"), 
+                        Direction.UP, modLoc("block/machine/machine"),
+                        Direction.DOWN, modLoc("block/machine/machine_bottom")
+                        //Direction.SOUTH, modLoc("block/refinery_back_pipes")   
+                        //East, West, and Down will automatically use 'machine_casing_default'
+                )
+        );
     }
 
     //region Helpers
@@ -73,8 +99,6 @@ public class HpCBlockStateProvider extends BlockStateProvider {
 
     public void tintedStairsBlock(DeferredBlock<?> block, ResourceLocation texture) {
         String baseName = block.getId().getPath();
-
-        // Build the 3 required models pointing to YOUR templates
         ModelFile stairs = models().withExistingParent(baseName, modLoc("block/tinted_stairs"))
                 .texture("bottom", texture)
                 .texture("top", texture)
@@ -89,29 +113,22 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 .texture("bottom", texture)
                 .texture("top", texture)
                 .texture("side", texture);
-
-        // Tell DataGen to map the block states to your hpc_custom models
-        stairsBlock((net.minecraft.world.level.block.StairBlock) block.get(), stairs, stairsInner, stairsOuter);
+        stairsBlock((StairBlock) block.get(), stairs, stairsInner, stairsOuter);
     }
 
     public void tintedSlabBlock(DeferredBlock<?> block, ResourceLocation texture) {
         String baseName = block.getId().getPath();
-
         ModelFile bottom = models().withExistingParent(baseName, modLoc("block/tinted_slab"))
                 .texture("bottom", texture)
                 .texture("top", texture)
                 .texture("side", texture);
-
         ModelFile top = models().withExistingParent(baseName + "_top", modLoc("block/tinted_slab_top"))
                 .texture("bottom", texture)
                 .texture("top", texture)
                 .texture("side", texture);
-
-        // Slabs use a standard full block for the "double" state
         ModelFile doubleSlab = models().withExistingParent(baseName + "_double", modLoc("block/tinted_cube_all"))
                 .texture("all", texture);
-
-        slabBlock((net.minecraft.world.level.block.SlabBlock) block.get(), bottom, top, doubleSlab);
+        slabBlock((SlabBlock) block.get(), bottom, top, doubleSlab);
     }
 
     public void tintedWallBlock(DeferredBlock<?> block, ResourceLocation texture) {
@@ -126,7 +143,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         ModelFile sideTall = models().withExistingParent(baseName + "_side_tall", modLoc("block/tinted_wall_side_tall"))
                 .texture("wall", texture);
 
-        wallBlock((net.minecraft.world.level.block.WallBlock) block.get(), post, side, sideTall);
+        wallBlock((WallBlock) block.get(), post, side, sideTall);
     }
 
     private void stairItem(DeferredBlock<?> deferredBlock) {
@@ -134,7 +151,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 .parent(new ModelFile.UncheckedModelFile(modLoc("block/" + deferredBlock.getId().getPath())))
                 .transforms()
                 .transform(net.minecraft.world.item.ItemDisplayContext.GUI)
-                .rotation(30, 135, 0) // Spun 90 degrees!
+                .rotation(30, 135, 0) //Turn 90 degrees
                 .scale(0.625f)
                 .end()
                 .end();
@@ -160,6 +177,30 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture("layer0", pane)
                 .renderType("minecraft:translucent"); //There's a cool bug here
+    }
+
+    public void directionalMachineBlock(Block block, ResourceLocation defaultTexture, Map<Direction, ResourceLocation> overrides) {
+        String name = BuiltInRegistries.BLOCK.getKey(block).getPath(); 
+        
+        BlockModelBuilder model = models().withExistingParent(name, "minecraft:block/cube");
+        
+        model.texture("north", overrides.getOrDefault(Direction.NORTH, defaultTexture)); // The Front
+        model.texture("south", overrides.getOrDefault(Direction.SOUTH, defaultTexture)); // The Back
+        model.texture("up", overrides.getOrDefault(Direction.UP, defaultTexture));       // The Top
+        model.texture("down", overrides.getOrDefault(Direction.DOWN, defaultTexture));   // The Bottom
+        model.texture("east", overrides.getOrDefault(Direction.EAST, defaultTexture));   // The Right Side
+        model.texture("west", overrides.getOrDefault(Direction.WEST, defaultTexture));   // The Left Side
+
+        model.texture("particle", defaultTexture);
+        itemModels().getBuilder(BuiltInRegistries.BLOCK.getKey(block).getPath())
+                .parent(new ModelFile.UncheckedModelFile(modLoc("block/" + BuiltInRegistries.BLOCK.getKey(block).getPath())))
+                .transforms()
+                .transform(ItemDisplayContext.GUI)
+                .rotation(30, 135, 0) //Turn 90 degrees
+                .scale(0.625f)
+                .end()
+                .end();
+        directionalBlock(block, model);
     }
     //endregion
 }

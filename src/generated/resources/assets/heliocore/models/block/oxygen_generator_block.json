@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "heliocore:block/machine/machine_bottom",
+    "east": "heliocore:block/machine/machine_side",
+    "north": "heliocore:block/machine/machine_side",
+    "particle": "heliocore:block/machine/machine_side",
+    "south": "heliocore:block/machine/machine_side",
+    "up": "heliocore:block/machine/machine",
+    "west": "heliocore:block/machine/machine_side"
+  }
+}

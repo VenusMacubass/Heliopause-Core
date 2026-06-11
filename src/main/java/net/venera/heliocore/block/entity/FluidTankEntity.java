@@ -19,9 +19,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.venera.heliocore.data.component.CanisterData;
+import net.venera.heliocore.data.component.GasTankData;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.fluid.IFluidMachine;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
+import net.venera.heliocore.item.hpc_custom.GasTankItem;
 
 
 public class FluidTankEntity extends BlockEntity implements IFluidMachine {
@@ -59,10 +61,9 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
     }
 
     public ItemStack handleBucket(ItemStack container, Player player){
-        
         if (container.getItem() == Items.BUCKET) { //Empty -> try to drain 1000 mB from the tank and return a filled bucket
-            if (fluidAmount < BUCKET_CAPACITY) return container;                // not enough fluid
-            if (currentFluid.isSame(Fluids.EMPTY)) return container;            // no known fluid type
+            if (fluidAmount < BUCKET_CAPACITY) return container;                //not enough fluid
+            if (currentFluid.isSame(Fluids.EMPTY)) return container;            //no known fluid type
 
             ItemStack filled;
             if (currentFluid.isSame(Fluids.WATER)) {
@@ -75,7 +76,7 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
                 return container; // unsupported fluid for buckets
             }
             
-            fluidAmount -= BUCKET_CAPACITY; //remove fluid, sync, and return the filled bucket
+            fluidAmount -= BUCKET_CAPACITY;
             return returnHelper(filled);
         }
         
@@ -91,7 +92,7 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
             if (currentFluid.isSame(Fluids.EMPTY)) {
                 currentFluid = bucketFluid;
             } else if (!currentFluid.isSame(bucketFluid)) {
-                return container; // incompatible fluid
+                return container; 
             }
             
             fluidAmount += BUCKET_CAPACITY; 
@@ -105,7 +106,7 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
         if (!(container.getItem() instanceof CanisterItem canisterItem))
             return container;
         CanisterData data = canisterItem.getCanisterData(container);
-        if (data == null) return container; // NEVER allow null to continue
+        if (data == null) return container;
 
         boolean canisterIsEmpty = data.isEmpty();
         boolean tankHasFluid = fluidAmount > 0;
@@ -149,6 +150,47 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
         return container;
     }
 
+    public ItemStack handleGasTank(ItemStack container, Player player){
+        if (!(container.getItem() instanceof GasTankItem gasTankItem))
+            return container;
+        GasTankData data = gasTankItem.getGasTankData(container);
+        if (data == null) return container;
+
+        boolean gasTankIsEmpty = data.isEmpty();
+        boolean tankHasFluid = fluidAmount > 0;
+        boolean tankHasSpace = getTankSpace() > 0;
+
+        if (!gasTankIsEmpty && tankHasSpace) {
+            int transfer = Math.min(data.amount(), getTankSpace());
+
+            if (currentFluid.isSame(Fluids.EMPTY) ||
+                    currentFluid.isSame(BuiltInRegistries.FLUID.get(data.fluidId()))) {
+                
+                if (currentFluid.isSame(Fluids.EMPTY)) {
+                    if (data.isOxygen()) currentFluid = HpCFluids.OXYGEN.get();
+                }
+
+                gasTankItem.drain(container, transfer);
+                fluidAmount += transfer;
+                return returnHelper(container);
+            }
+        }
+
+        if (tankHasFluid && data.getSpace() > 0) {
+            int transfer = Math.min(fluidAmount, data.getSpace());
+
+            if (currentFluid.isSame(HpCFluids.OXYGEN.get()) && (data.getSpace() > 0 && (data.isOxygen() || data.isEmpty()))) {
+                fluidAmount -= transfer;
+                gasTankItem.fill(container, GasTankData.OXYGEN_GAS, transfer);
+                return returnHelper(container);
+            }
+        }
+
+        return container;
+    }
+    
+    
+
     @Override
     public IFluidMachine.PortType getFluidPortType(Direction face) {
         return IFluidMachine.PortType.CONTAINER; 
@@ -159,8 +201,7 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
         if (getTankSpace() <= 0) return 0;
 
         Fluid incomingFluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(incomingFluidType));
-
-        // The Bouncer Logic
+        
         if (this.currentFluid.isSame(Fluids.EMPTY)) {
             if (!simulate) this.currentFluid = incomingFluid;
         } else if (!this.currentFluid.isSame(incomingFluid)) {
@@ -227,7 +268,7 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
     }
 
     private void syncToClient() {
-        setChanged(); // Tells the server to save to the hard drive
+        setChanged(); 
         if (level != null) {
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
         }

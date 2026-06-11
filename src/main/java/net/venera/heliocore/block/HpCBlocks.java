@@ -92,6 +92,15 @@ public class HpCBlocks {
             () -> new CargoManagerBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.CARGO_MANAGER_ENTITY));
     public static final DeferredBlock<Block> FUEL_MANAGER_BLOCK = registerBlock("fuel_manager_block",
             () -> new FuelManagerBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.FUEL_MANAGER_ENTITY));
+    
+    public static final DeferredBlock<Block> OXYGEN_GENERATOR_BLOCK = registerBlock("oxygen_generator_block",
+            () -> new OxygenGeneratorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.OXYGEN_GENERATOR_ENTITY));
+
+    public static final DeferredBlock<Block> GAS_COMPRESSOR_BLOCK = registerBlock("gas_compressor_block",
+            () -> new GasCompressorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.GAS_COMPRESSOR_ENTITY));
+    
+    
+    
     //endregion
     
     //region Moon

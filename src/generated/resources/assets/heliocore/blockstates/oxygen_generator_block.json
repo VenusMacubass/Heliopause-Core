@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "heliocore:block/oxygen_generator_block",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "heliocore:block/oxygen_generator_block",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "heliocore:block/oxygen_generator_block",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "heliocore:block/oxygen_generator_block",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "heliocore:block/oxygen_generator_block"
+    },
+    "facing=west": {
+      "model": "heliocore:block/oxygen_generator_block",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

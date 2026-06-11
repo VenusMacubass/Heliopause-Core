@@ -128,6 +128,8 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCBlocks.REFINERY.get());
                         output.accept(HpCBlocks.CARGO_MANAGER_BLOCK.get());
                         output.accept(HpCBlocks.FUEL_MANAGER_BLOCK.get());
+                        output.accept(HpCBlocks.OXYGEN_GENERATOR_BLOCK.get());
+                        output.accept(HpCBlocks.GAS_COMPRESSOR_BLOCK.get());
                         output.accept(HpCBlocks.LAUNCH_PAD.get());
                         output.accept(HpCBlocks.FLUID_TANK.get());
                         output.accept(HpCBlocks.ENERGY_STORAGE_UNIT.get());

@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.venera.heliocore.block.entity.FluidTankEntity;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
+import net.venera.heliocore.item.hpc_custom.GasTankItem;
 import org.jetbrains.annotations.Nullable;
 
 public class FluidTankBlock extends BaseEntityBlock {
@@ -45,7 +46,17 @@ public class FluidTankBlock extends BaseEntityBlock {
                     stack.shrink(1);
                     if (!player.addItem(resultItem)) player.drop(resultItem, false);
                 }
-            } else if (stack.getItem() instanceof BucketItem) {
+            } 
+            else if (stack.getItem() instanceof GasTankItem) {
+                if (player.isCreative()) {
+                    fluidTankEntity.handleGasTank(stack.copyWithCount(1), player);
+                } else {
+                    resultItem = fluidTankEntity.handleGasTank(stack.copyWithCount(1), player);
+                    stack.shrink(1);
+                    if (!player.addItem(resultItem)) player.drop(resultItem, false);
+                }
+            }
+            else if (stack.getItem() instanceof BucketItem) {
                 if (player.isCreative()) {
                     fluidTankEntity.handleBucket(stack.copyWithCount(1), player);
                 } else {
@@ -53,7 +64,8 @@ public class FluidTankBlock extends BaseEntityBlock {
                     stack.shrink(1);
                     if (!player.addItem(resultItem)) player.drop(resultItem, false);
                 }
-            }else if (stack.getItem() instanceof BlockItem blockItem) {
+            }
+            else if (stack.getItem() instanceof BlockItem blockItem) {
                 if (blockItem.getBlock() instanceof FluidTankBlock) {
                     return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
                 }

@@ -10,6 +10,7 @@ import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.machine.CoalCompressorEntity;
 import net.venera.heliocore.block.entity.machine.electric.*;
 
+import java.util.concurrent.Flow;
 import java.util.function.Supplier;
 
 public class HpCBlockEntities {
@@ -61,6 +62,21 @@ public class HpCBlockEntities {
                     new FuelManagerEntity(HpCBlockEntities.FUEL_MANAGER_ENTITY.get(), blockPos, blockState,
                                     12000, 10, 2),
                     HpCBlocks.FUEL_MANAGER_BLOCK.get()).build(null));
+    
+    //region Oxygen Machines
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<OxygenGeneratorEntity>> OXYGEN_GENERATOR_ENTITY = BLOCK_ENTITIES.register("oxygen_generator_entity",
+            ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
+                    new OxygenGeneratorEntity(HpCBlockEntities.OXYGEN_GENERATOR_ENTITY.get(), blockPos, blockState,
+                            3, 1000, 2),
+                    HpCBlocks.OXYGEN_GENERATOR_BLOCK.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GasCompressorEntity>> GAS_COMPRESSOR_ENTITY = BLOCK_ENTITIES.register("gas_compressor_entity",
+            ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
+                            new GasCompressorEntity(HpCBlockEntities.GAS_COMPRESSOR_ENTITY.get(), blockPos, blockState,
+                                    3, 1000, 2),
+                    HpCBlocks.GAS_COMPRESSOR_BLOCK.get()).build(null));
+    
+    //endregion
 
 
     public static void register(IEventBus eventBus){

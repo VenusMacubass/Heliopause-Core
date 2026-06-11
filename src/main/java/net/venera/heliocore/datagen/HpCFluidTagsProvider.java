@@ -21,6 +21,6 @@ public class HpCFluidTagsProvider extends FluidTagsProvider {
         super.addTags(provider);
         tag(FluidTags.LAVA).add(HpCFluids.CRUDE_OIL.getSource());
         tag(FluidTags.WATER).add(HpCFluids.REFINED_FUEL.getSource());
-        //tag(HpCTags.Fluids.GASES).add(HpCFluids.OXYGEN_TYPE.get());
+        tag(HpCTags.Fluids.GASES).add(HpCFluids.OXYGEN.get());
     }
 }

@@ -22,32 +22,51 @@ public class FluidTankRenderer implements BlockEntityRenderer<FluidTankEntity> {
         if (entity.getFluidAmount() <= 0 || entity.getCurrentFluid() == Fluids.EMPTY) {
             return;
         }
-        
+
         IClientFluidTypeExtensions fluidExt = IClientFluidTypeExtensions.of(entity.getCurrentFluid());
-        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(fluidExt.getStillTexture());
+
+        // 1. TEXTURE CRASH FIX: Safely fallback to water if the gas has no texture
+        net.minecraft.resources.ResourceLocation textureLoc = fluidExt.getStillTexture();
+        if (textureLoc == null) {
+            textureLoc = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("minecraft", "block/water_still");
+        }
+        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(textureLoc);
+
         int tintColor = fluidExt.getTintColor(entity.getCurrentFluid().defaultFluidState(), entity.getLevel(), entity.getBlockPos());
-        
+
         float a = ((tintColor >> 24) & 0xFF) / 255f;
         float r = ((tintColor >> 16) & 0xFF) / 255f;
         float g = ((tintColor >> 8) & 0xFF) / 255f;
         float b = (tintColor & 0xFF) / 255f;
         if (a == 0.0f) a = 1.0f;
-        
+
         float xzMin = 2.0f / 16.0f;
         float xzMax = 14.0f / 16.0f;
-        
         float yMin = 0.001f;
         float yMax = 0.999f;
 
         float fillPercentage = entity.getFluidAmount() / (float) FluidTankEntity.FLUID_TANK_CAPACITY;
-        float fluidTop = yMin + (fillPercentage * (yMax - yMin));
-        
+        boolean isGas = entity.getCurrentFluid().getFluidType().getDensity() < 0;
+
+        float fluidTop;
+        float vTop;
+
+        // 2. GAS VS LIQUID RENDER LOGIC
+        if (isGas) {
+            // Gas: Fills the entire cube, opacity scales from 0% to 60% based on fullness
+            fluidTop = yMax;
+            vTop = sprite.getV0(); // Use the full texture
+            a = a * (0.6f * fillPercentage);
+        } else {
+            // Liquid: Scales height from bottom to top, opacity remains solid
+            fluidTop = yMin + (fillPercentage * (yMax - yMin));
+            vTop = sprite.getV1() - ((sprite.getV1() - sprite.getV0()) * fillPercentage);
+        }
+
         float u0 = sprite.getU0();
         float u1 = sprite.getU1();
         float v0 = sprite.getV0();
         float v1 = sprite.getV1();
-
-        float vTop = v1 - ((v1 - v0) * fillPercentage);
 
         VertexConsumer builder = bufferSource.getBuffer(RenderType.translucent());
         Matrix4f pose = poseStack.last().pose();
