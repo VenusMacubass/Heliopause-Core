@@ -12,10 +12,14 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.EnergyStorage;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.hpc_custom.FluidPipeBlock;
 import net.venera.heliocore.block.hpc_custom.machine.BaseMachineBlock;
@@ -36,13 +40,39 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     private final int BATTERY_SLOT = 2;
     private final int BUCKET_CAPACITY = 1000;
     private int CONVERSION_RATE = 1;
-    private int ENERGY_USAGE = 2;
-    private int oilAmount = 0;
-    private int fuelAmount = 0;
+    private int ENERGY_USAGE = 2; 
     private int maxCapacity = 6000;
     public boolean isActive = false;
     private final int MAX_FLOW_RATE = 10;
     public boolean enabled = true;
+    public final FluidTank oilTank = new FluidTank(maxCapacity) {
+        @Override
+        protected void onContentsChanged() {
+            setChanged();
+            if (level != null) {
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+            }
+        }
+         @Override
+         public boolean isFluidValid(FluidStack stack) {
+             return stack.getFluid().isSame(HpCFluids.CRUDE_OIL.getSource()); 
+         }
+    
+    };
+
+    public final FluidTank fuelTank = new FluidTank(maxCapacity) {
+        @Override
+        protected void onContentsChanged() {
+            setChanged();
+            if (level != null) {
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+            }
+        }
+        @Override
+        public boolean isFluidValid(FluidStack stack) {
+            return stack.getFluid().isSame(HpCFluids.REFINED_FUEL.getSource());
+        }
+    };
 
     public RefineryEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState,
                           int energyCapacity, int transferRate, int energyUsage, int conversionRate) {
@@ -57,8 +87,8 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
             @Override
             public int get(int i) {
                 return switch (i) {
-                    case 0 -> oilAmount;
-                    case 1 -> fuelAmount;
+                    case 0 -> oilTank.getFluidAmount();
+                    case 1 -> fuelTank.getFluidAmount();
                     case 2 -> maxCapacity;
                     case 3 -> isActive ? 1 : 0;
                     case 4 -> energyStorage.getEnergyStored();
@@ -70,8 +100,8 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
             @Override
             public void set(int i, int value) {
                 switch (i) {
-                    case 0 -> oilAmount = value;
-                    case 1 -> fuelAmount = value;
+                    case 0 -> oilTank.setFluid(new FluidStack(HpCFluids.CRUDE_OIL.getSource(), value));
+                    case 1 -> fuelTank.setFluid(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), value));
                     case 2 -> maxCapacity = value;
                     case 3 -> isActive = value == 1;
                 }
@@ -100,11 +130,11 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
             }
         }
 
-        if (this.fuelAmount > 0) {
+        if (fuelTank.getFluidAmount() > 0) {
             pumpFluidOut(level, pos);
             dirty = true;
         }
-        if (this.oilAmount < this.maxCapacity) {
+        if (oilTank.getFluidAmount() < this.maxCapacity) {
             pullFluidIn(level, pos);
             dirty = true;
         }
@@ -114,21 +144,21 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
 
     private boolean processInputs() {
         ItemStack inputStack = inventory.getStackInSlot(INPUT_SLOT);
-
-        if(inputStack.getItem() == HpCFluids.CRUDE_OIL.getBucket() && oilAmount <= maxCapacity - BUCKET_CAPACITY) {
-            oilAmount += BUCKET_CAPACITY;
+        int receivedOilBucket = oilTank.fill(new FluidStack(HpCFluids.CRUDE_OIL.getSource(), BUCKET_CAPACITY), IFluidHandler.FluidAction.SIMULATE);
+        if(inputStack.getItem() == HpCFluids.CRUDE_OIL.getBucket() && receivedOilBucket >= BUCKET_CAPACITY) {
+            oilTank.fill(new FluidStack(HpCFluids.CRUDE_OIL.getSource(), BUCKET_CAPACITY), IFluidHandler.FluidAction.EXECUTE);
             inventory.setStackInSlot(INPUT_SLOT, new ItemStack(Items.BUCKET));
             return true;
-        } else if(inputStack.getItem() instanceof CanisterItem canister){
+        } 
+        else if(inputStack.getItem() instanceof CanisterItem canister){
             CanisterData data = canister.getCanisterData(inputStack);
             
-            if(data.isCrudeOil()) { //Only accept canisters that have crude oil
-                int spaceAvailable = maxCapacity - oilAmount;
-                int amountToDrain = Math.min(data.amount(), spaceAvailable);
-
-                if(amountToDrain > 0) {
-                    int actuallyDrained = canister.drain(inputStack, amountToDrain);
-                    oilAmount += actuallyDrained;
+            if(data.isCrudeOil()) {
+                int receivedOilCanister = oilTank.fill(new FluidStack(HpCFluids.CRUDE_OIL.getSource(), data.amount()), IFluidHandler.FluidAction.SIMULATE);
+                
+                if(receivedOilCanister > 0) {
+                    oilTank.fill(new FluidStack(HpCFluids.CRUDE_OIL.getSource(), receivedOilCanister), IFluidHandler.FluidAction.EXECUTE);
+                    int actuallyDrained = canister.drain(inputStack, receivedOilCanister);
                     return actuallyDrained > 0;
                 }
             }
@@ -138,19 +168,19 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
 
     private boolean processOutputs() {
         ItemStack outputStack = inventory.getStackInSlot(OUTPUT_SLOT);
-
-        if(outputStack.getItem() == Items.BUCKET && fuelAmount >= BUCKET_CAPACITY) {
-            fuelAmount -= BUCKET_CAPACITY;
+        FluidStack fuelBucket = fuelTank.drain(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), BUCKET_CAPACITY), IFluidHandler.FluidAction.SIMULATE);
+        if(outputStack.getItem() == Items.BUCKET && fuelBucket.getAmount() >= BUCKET_CAPACITY) {
+            fuelTank.drain(fuelBucket, IFluidHandler.FluidAction.EXECUTE);
             inventory.setStackInSlot(OUTPUT_SLOT, new ItemStack(HpCFluids.REFINED_FUEL.getBucket()));
             return true;
-        } else if(outputStack.getItem() instanceof CanisterItem canister){
+        } 
+        else if(outputStack.getItem() instanceof CanisterItem canister){
             CanisterData data = canister.getCanisterData(outputStack);
-            
-            if(data.isEmpty() || data.isRefinedFuel()) { //Accept empty canisters or canisters with refined fuel
-                int amountToFill = Math.min(fuelAmount, data.getSpace());
-                if(amountToFill > 0) {
-                    int actuallyFilled = canister.fill(outputStack, CanisterData.REFINED_FUEL, amountToFill);
-                    fuelAmount -= actuallyFilled;
+            FluidStack fuelCanister = fuelTank.drain(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), data.getSpace()), IFluidHandler.FluidAction.SIMULATE);
+            if(data.isEmpty() || data.isRefinedFuel()) {
+                if(fuelCanister.getAmount() > 0) {
+                    int actuallyFilled = canister.fill(outputStack, CanisterData.REFINED_FUEL, fuelCanister.getAmount());
+                    fuelTank.drain(fuelCanister, IFluidHandler.FluidAction.EXECUTE);
                     return actuallyFilled > 0;
                 }
             }
@@ -160,21 +190,21 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
 
     private void pumpFluidOut(Level level, BlockPos pos) {
         Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
-        Direction outputFace = machineFacing.getCounterClockWise();
+        Direction outputFace = machineFacing.getCounterClockWise(); 
 
         BlockPos pipePos = pos.relative(outputFace);
         if (!(level.getBlockState(pipePos).getBlock() instanceof FluidPipeBlock)) return;
 
         Set<BlockEntity> connectedMachines = PipeNetworkHelper.findConnectedInventories(level, pipePos, pos);
-        int fluidToPush = Math.min(this.fuelAmount, MAX_FLOW_RATE);
+        int fluidToPush = Math.min(fuelTank.getFluidAmount(), MAX_FLOW_RATE);
 
         for (BlockEntity entity : connectedMachines) {
             if (entity == this) continue;
 
             if (entity instanceof IFluidMachine targetMachine) {
-                int accepted = targetMachine.insertFluid(HeliopauseCore.MOD_ID +":refined_fuel", fluidToPush, false);
+                int accepted = targetMachine.insertFluid("heliocore:refined_fuel", fluidToPush, false);
                 if (accepted > 0) {
-                    this.fuelAmount -= accepted;
+                    fuelTank.drain(accepted, IFluidHandler.FluidAction.EXECUTE);
                     fluidToPush -= accepted;
                     if (fluidToPush <= 0) break;
                 }
@@ -183,35 +213,38 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     }
 
     private void pullFluidIn(Level level, BlockPos pos) {
-        if (this.oilAmount >= this.maxCapacity) return;
+        if (oilTank.getFluidAmount() >= this.maxCapacity) return;
 
         Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
-        Direction inputFace = machineFacing.getClockWise();
-        
+        Direction inputFace = machineFacing.getClockWise(); 
+
         BlockPos pipePos = pos.relative(inputFace);
         if (!(level.getBlockState(pipePos).getBlock() instanceof FluidPipeBlock)) return;
-        
+
         Set<BlockEntity> connectedMachines = PipeNetworkHelper.findConnectedInventories(level, pipePos, pos);
-        
-        int spaceAvailable = this.maxCapacity - this.oilAmount;
+
+        int spaceAvailable = this.maxCapacity - oilTank.getFluidAmount();
         int fluidToPull = Math.min(spaceAvailable, MAX_FLOW_RATE);
 
         for (BlockEntity entity : connectedMachines) {
             if (entity == this) continue;
 
             if (entity instanceof IFluidMachine targetMachine) {
-                int availableToExtract = targetMachine.extractFluid("heliocore:crude_oil", fluidToPull, true);
+                int availableToExtract = targetMachine.extractFluid(HeliopauseCore.MOD_ID + ":crude_oil", fluidToPull, true);
 
                 if (availableToExtract > 0) {
-                    int actuallyExtracted = targetMachine.extractFluid("heliocore:crude_oil", availableToExtract, false);
-                    
-                    this.oilAmount += actuallyExtracted;
+                    int actuallyExtracted = targetMachine.extractFluid(HeliopauseCore.MOD_ID + ":crude_oil", availableToExtract, false);
+                    oilTank.fill(new FluidStack(HpCFluids.CRUDE_OIL.getSource(), actuallyExtracted), IFluidHandler.FluidAction.EXECUTE);
 
                     fluidToPull -= actuallyExtracted;
                     if (fluidToPull <= 0) break;
                 }
             }
         }
+    }
+
+    private boolean canRefine(){
+        return oilTank.getFluidAmount() > 0 && fuelTank.getSpace() > 0 && energyStorage.getEnergyStored() >= ENERGY_USAGE;
     }
 
     @Override
@@ -224,49 +257,49 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
         if (globalFace == machineFacing.getCounterClockWise()) {
             return PortType.INPUT;
         }
-
-        // If the pipe checks UP, DOWN, FRONT, or BACK, it falls through to here automatically!
+        
         return PortType.NONE;
     }
 
     @Override
     public int insertFluid(String fluidType, int amount, boolean simulate) {
-        if (!fluidType.equals("heliocore:crude_oil")) return 0;
-        int space = maxCapacity - oilAmount;
-        int filled = Math.min(space, amount);
-        if (!simulate) oilAmount += filled;
-        return filled;
+        if (!fluidType.equals(HeliopauseCore.MOD_ID + ":crude_oil")) return 0;
+        
+        IFluidHandler.FluidAction action = simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE;
+        
+        return oilTank.fill(new FluidStack(HpCFluids.CRUDE_OIL.getSource(), amount), action);
     }
 
     @Override
     public int extractFluid(String fluidType, int amount, boolean simulate) {
-        if (!fluidType.equals("heliocore:refined_fuel")) return 0;
-        int drained = Math.min(fuelAmount, amount);
-        if (!simulate) fuelAmount -= drained;
-        return drained;
-    }
+        if (!fluidType.equals(HeliopauseCore.MOD_ID + ":refined_fuel")) return 0;
 
-    private boolean canRefine(){
-        return oilAmount > 0 && fuelAmount < maxCapacity && energyStorage.getEnergyStored() >= ENERGY_USAGE;
+        IFluidHandler.FluidAction action = simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE;
+
+        return fuelTank.drain(amount, action).getAmount();
     }
 
     private void refine(){
         isActive = true;
+        
+        int oilAvailable = oilTank.getFluidAmount();
+        int fuelSpace = maxCapacity - fuelTank.getFluidAmount();
 
-        int conversionAmount = Math.min(this.CONVERSION_RATE, oilAmount);
-        conversionAmount = Math.min(conversionAmount, maxCapacity - fuelAmount);
+        int conversionAmount = Math.min(this.CONVERSION_RATE, oilAvailable);
+        conversionAmount = Math.min(conversionAmount, fuelSpace);
+        
+        oilTank.drain(conversionAmount, IFluidHandler.FluidAction.EXECUTE);
+        fuelTank.fill(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), conversionAmount), IFluidHandler.FluidAction.EXECUTE);
 
-        oilAmount -= conversionAmount;
-        fuelAmount += conversionAmount;
         this.energyStorage.extractEnergy(this.ENERGY_USAGE, false);
     }
 
     public int getOilAmount() {
-        return oilAmount;
+        return oilTank.getFluidAmount();
     }
 
     public int getFuelAmount() {
-        return fuelAmount;
+        return fuelTank.getFluidAmount();
     }
 
     public int getMaxCapacity() {
@@ -274,6 +307,8 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     }
 
     public EnergyStorage getEnergyStorage() {return energyStorage;}
+    public FluidTank getOilTank() {return oilTank;}
+    public FluidTank getFuelTank() {return fuelTank;}
 
     @Override
     public Component getDisplayName() {
@@ -288,8 +323,9 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.putInt("OilAmount", oilAmount);
-        tag.putInt("FuelAmount", fuelAmount);
+        tag.put("OilTank", oilTank.writeToNBT(registries, new CompoundTag()));
+        tag.put("FuelTank", fuelTank.writeToNBT(registries, new CompoundTag()));
+
         tag.putBoolean("IsActive", isActive);
         tag.putBoolean("Enabled", enabled);
     }
@@ -297,8 +333,9 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        oilAmount = tag.getInt("OilAmount");
-        fuelAmount = tag.getInt("FuelAmount");
+        if (tag.contains("OilTank")) oilTank.readFromNBT(registries, tag.getCompound("OilTank"));
+        if (tag.contains("FuelTank")) fuelTank.readFromNBT(registries, tag.getCompound("FuelTank"));
+
         isActive = tag.getBoolean("IsActive");
         enabled = tag.getBoolean("Enabled");
     }

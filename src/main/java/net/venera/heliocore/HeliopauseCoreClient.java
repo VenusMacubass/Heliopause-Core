@@ -1,12 +1,14 @@
 package net.venera.heliocore;
 
 import net.minecraft.client.Camera;
+import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.material.FluidState;
@@ -22,9 +24,11 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
+import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.HpCBlockEntities;
+import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.entity.HpCEntities;
 import net.venera.heliocore.entity.client.Tier1RocketModel;
 import net.venera.heliocore.entity.client.Tier1RocketRenderer;
@@ -32,6 +36,7 @@ import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 import net.venera.heliocore.entity.zombie.SpaceZombieRenderer;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.item.HpCItems;
+import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import net.venera.heliocore.render.FluidTankRenderer;
 import net.venera.heliocore.render.sky.MoonSkyRenderer;
 import net.venera.heliocore.screen.HpCMenuTypes;
@@ -224,6 +229,39 @@ public class HeliopauseCoreClient {
             @Override public ResourceLocation getStillTexture() { return ResourceLocation.parse("minecraft:block/water_still"); }
         }, HpCFluids.CHLORINE_TYPE.get());
         */
+    }
+
+    @SubscribeEvent
+    public static void onModelEvent(ModelEvent.RegisterAdditional event) {
+        ItemProperties.register(HpCItems.CANISTER.get(),
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "fluid_type"),
+                (stack, level, entity, seed) -> {
+                    CanisterData data = ((CanisterItem) stack.getItem()).getCanisterData(stack);
+                    if (data == null || data.isEmpty()) return 0f;
+                    return data.isCrudeOil() ? 1f : 2f;
+                });
+
+        ItemProperties.register(HpCItems.CANISTER.get(),
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "fill_level"),
+                (stack, level, entity, seed) -> {
+                    CanisterData data = ((CanisterItem) stack.getItem()).getCanisterData(stack);
+                    if (data == null || data.isEmpty()) return 0f;
+                    return data.amount() / (float) CanisterItem.MAX_CAPACITY;
+                });
+    }
+    
+    @SubscribeEvent
+    public static void onPlayerMountRocket(EntityMountEvent event) {
+        if (event.getLevel().isClientSide()) {
+            if (event.getEntityMounting() instanceof Player player && player == Minecraft.getInstance().player) {
+                if (event.isMounting() && event.getEntityBeingMounted() instanceof Tier1RocketEntity) {
+                    Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
+                }
+                else if (!event.isMounting() && event.getEntityBeingMounted() instanceof Tier1RocketEntity) {
+                    Minecraft.getInstance().options.setCameraType(CameraType.FIRST_PERSON);
+                }
+            }
+        }
     }
     
     

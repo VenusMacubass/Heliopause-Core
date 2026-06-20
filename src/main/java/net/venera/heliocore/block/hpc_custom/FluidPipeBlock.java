@@ -16,13 +16,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.venera.heliocore.block.hpc_custom.machine.electric.RefineryBlock;
 import net.venera.heliocore.fluid.IFluidMachine;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
 public class FluidPipeBlock extends PipeBlock{
-
+    public static final MapCodec<FluidPipeBlock> CODEC = simpleCodec(FluidPipeBlock::new); 
+    
     public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
     public static final BooleanProperty EAST = BlockStateProperties.EAST;
     public static final BooleanProperty SOUTH = BlockStateProperties.SOUTH;
@@ -86,7 +88,6 @@ public class FluidPipeBlock extends PipeBlock{
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
         if (!level.isClientSide) {
-            //GridManager.get(level).onPipePlaced(level, pos);
         }
     }
 
@@ -94,7 +95,6 @@ public class FluidPipeBlock extends PipeBlock{
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())) {
             if (!level.isClientSide) {
-                //GridManager.get(level).onPipeBroken(level, pos);
             }
             super.onRemove(state, level, pos, newState, isMoving);
         }
@@ -103,7 +103,7 @@ public class FluidPipeBlock extends PipeBlock{
 
     @Override
     protected MapCodec<? extends PipeBlock> codec() {
-        return null;
+        return CODEC;
     }
 
     @Override

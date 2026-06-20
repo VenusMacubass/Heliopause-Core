@@ -18,6 +18,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.data.component.GasTankData;
 import net.venera.heliocore.fluid.HpCFluids;
@@ -27,10 +30,22 @@ import net.venera.heliocore.item.hpc_custom.GasTankItem;
 
 
 public class FluidTankEntity extends BlockEntity implements IFluidMachine {
-    private int fluidAmount = 0;
-    private Fluid currentFluid = Fluids.EMPTY;
     private final int BUCKET_CAPACITY = 1000;
     public static final int FLUID_TANK_CAPACITY = 8000;
+    public final FluidTank fluidTank = new FluidTank(FLUID_TANK_CAPACITY){
+        @Override
+        protected void onContentsChanged() {
+            setChanged();
+            if (level != null) {
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+            }
+        }
+        @Override
+        public boolean isFluidValid(FluidStack stack) {
+            return this.isEmpty() || stack.getFluid().isSame(this.getFluid().getFluid());
+        }
+    };
+    
     public final ContainerData data;
 
     public FluidTankEntity(BlockPos pos, BlockState blockState) {
@@ -39,7 +54,7 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
             @Override
             public int get(int i) {
                 return switch (i) {
-                    case 0 -> fluidAmount;
+                    case 0 -> fluidTank.getFluidAmount();
                     case 1 -> FLUID_TANK_CAPACITY;
                     default -> 0;
                 };
@@ -48,7 +63,7 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
             @Override
             public void set(int i, int value) {
                 switch (i) {
-                    case 0 -> fluidAmount = value;
+                    case 0 -> fluidTank.setFluid(new FluidStack(fluidTank.getFluid().getFluid(), value));
                 }
             }
 
@@ -61,42 +76,39 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
     }
 
     public ItemStack handleBucket(ItemStack container, Player player){
-        if (container.getItem() == Items.BUCKET) { //Empty -> try to drain 1000 mB from the tank and return a filled bucket
-            if (fluidAmount < BUCKET_CAPACITY) return container;                //not enough fluid
-            if (currentFluid.isSame(Fluids.EMPTY)) return container;            //no known fluid type
+        if (container.getItem() == Items.BUCKET) { 
+            if (fluidTank.getFluidAmount() < BUCKET_CAPACITY) return container;                
+            if (fluidTank.getFluid().getFluid().isSame(Fluids.EMPTY)) return container;           
 
             ItemStack filled;
-            if (currentFluid.isSame(Fluids.WATER)) {
+            if (fluidTank.getFluid().getFluid().isSame(Fluids.WATER)) {
                 filled = new ItemStack(Items.WATER_BUCKET);
-            } else if (currentFluid.isSame(HpCFluids.CRUDE_OIL.getSource())) {
+            } else if (fluidTank.getFluid().getFluid().isSame(HpCFluids.CRUDE_OIL.getSource())) {
                 filled = new ItemStack(HpCFluids.CRUDE_OIL.getBucket());
-            } else if (currentFluid.isSame(HpCFluids.REFINED_FUEL.getSource())) {
+            } else if (fluidTank.getFluid().getFluid().isSame(HpCFluids.REFINED_FUEL.getSource())) {
                 filled = new ItemStack(HpCFluids.REFINED_FUEL.getBucket());
             } else {
-                return container; // unsupported fluid for buckets
+                return container; 
             }
             
-            fluidAmount -= BUCKET_CAPACITY;
-            return returnHelper(filled);
+            fluidTank.drain(BUCKET_CAPACITY, IFluidHandler.FluidAction.EXECUTE);
+            return filled;
         }
-        
+
         if (container.is(Items.WATER_BUCKET) || container.is(HpCFluids.CRUDE_OIL.getBucket()) || container.is(HpCFluids.REFINED_FUEL.getBucket())) {
-            
             Fluid bucketFluid = Fluids.EMPTY;
             if (container.is(Items.WATER_BUCKET)) bucketFluid = Fluids.WATER;
             else if (container.is(HpCFluids.CRUDE_OIL.getBucket())) bucketFluid = HpCFluids.CRUDE_OIL.getSource();
             else if (container.is(HpCFluids.REFINED_FUEL.getBucket())) bucketFluid = HpCFluids.REFINED_FUEL.getSource();
             
-            if (getTankSpace() < BUCKET_CAPACITY) return container;
+            FluidStack incoming = new FluidStack(bucketFluid, BUCKET_CAPACITY);
+            int accepted = fluidTank.fill(incoming, IFluidHandler.FluidAction.SIMULATE);
             
-            if (currentFluid.isSame(Fluids.EMPTY)) {
-                currentFluid = bucketFluid;
-            } else if (!currentFluid.isSame(bucketFluid)) {
-                return container; 
+            if (accepted == BUCKET_CAPACITY) {
+                fluidTank.fill(incoming, IFluidHandler.FluidAction.EXECUTE);
+                return new ItemStack(Items.BUCKET);
             }
-            
-            fluidAmount += BUCKET_CAPACITY; 
-            return returnHelper(new ItemStack(Items.BUCKET));
+            return container; 
         }
         
         return container;
@@ -109,44 +121,37 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
         if (data == null) return container;
 
         boolean canisterIsEmpty = data.isEmpty();
-        boolean tankHasFluid = fluidAmount > 0;
-        boolean tankHasSpace = getTankSpace() > 0;
-        
+        boolean tankHasFluid = fluidTank.getFluidAmount() > 0;
+        boolean tankHasSpace = fluidTank.getSpace() > 0;
+
         if (!canisterIsEmpty && tankHasSpace) {
-            int transfer = Math.min(data.amount(), getTankSpace());
-            
-            if (currentFluid.isSame(Fluids.EMPTY) ||
-                    currentFluid.isSame(BuiltInRegistries.FLUID.get(data.fluidId()))) {
+            Fluid incomingFluid = BuiltInRegistries.FLUID.get(data.fluidId());
+            FluidStack incomingStack = new FluidStack(incomingFluid, data.amount());
+                
+            int transfer = fluidTank.fill(incomingStack, IFluidHandler.FluidAction.SIMULATE);
 
-           
-                if (currentFluid.isSame(Fluids.EMPTY)) {
-                    if (data.isCrudeOil()) currentFluid = HpCFluids.CRUDE_OIL.getSource();
-                    else if (data.isRefinedFuel()) currentFluid = HpCFluids.REFINED_FUEL.getSource();
-                }
-
+            if (transfer > 0) {
                 canisterItem.drain(container, transfer);
-                fluidAmount += transfer;
-                return returnHelper(container);
+                fluidTank.fill(new FluidStack(incomingFluid, transfer), IFluidHandler.FluidAction.EXECUTE);
+                return container;
             }
         }
        
         if (tankHasFluid && data.getSpace() > 0) {
+            FluidStack transfer = fluidTank.drain(new FluidStack(fluidTank.getFluid().getFluid(), data.getSpace()), IFluidHandler.FluidAction.SIMULATE);
 
-            int transfer = Math.min(fluidAmount, data.getSpace());
-
-            if (currentFluid.isSame(HpCFluids.CRUDE_OIL.getSource()) && (data.getSpace() > 0 && (data.isCrudeOil() || data.isEmpty()))) {
-                fluidAmount -= transfer;
-                canisterItem.fill(container, CanisterData.CRUDE_OIL, transfer);
-                return returnHelper(container);
+            if (fluidTank.getFluid().getFluid().isSame(HpCFluids.CRUDE_OIL.getSource()) && (data.getSpace() > 0 && (data.isCrudeOil() || data.isEmpty()))) {
+                fluidTank.drain(transfer, IFluidHandler.FluidAction.EXECUTE);
+                canisterItem.fill(container, CanisterData.CRUDE_OIL, transfer.getAmount());
+                return container;
             }
 
-            if (currentFluid.isSame(HpCFluids.REFINED_FUEL.getSource()) && (data.getSpace() > 0 && (data.isCrudeOil() || data.isEmpty()))) {
-                fluidAmount -= transfer;
-                canisterItem.fill(container, CanisterData.REFINED_FUEL, transfer);
-                return returnHelper(container);
+            if (fluidTank.getFluid().getFluid().isSame(HpCFluids.REFINED_FUEL.getSource()) && (data.getSpace() > 0 && (data.isCrudeOil() || data.isEmpty()))) {
+                fluidTank.drain(transfer, IFluidHandler.FluidAction.EXECUTE);
+                canisterItem.fill(container, CanisterData.REFINED_FUEL, transfer.getAmount());
+                return container;
             }
         }
-
         return container;
     }
 
@@ -157,40 +162,35 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
         if (data == null) return container;
 
         boolean gasTankIsEmpty = data.isEmpty();
-        boolean tankHasFluid = fluidAmount > 0;
+        boolean tankHasFluid = fluidTank.getFluidAmount()> 0;
         boolean tankHasSpace = getTankSpace() > 0;
 
         if (!gasTankIsEmpty && tankHasSpace) {
-            int transfer = Math.min(data.amount(), getTankSpace());
+            Fluid incomingFluid = BuiltInRegistries.FLUID.get(data.fluidId());
+            FluidStack incomingStack = new FluidStack(incomingFluid, data.amount());
 
-            if (currentFluid.isSame(Fluids.EMPTY) ||
-                    currentFluid.isSame(BuiltInRegistries.FLUID.get(data.fluidId()))) {
-                
-                if (currentFluid.isSame(Fluids.EMPTY)) {
-                    if (data.isOxygen()) currentFluid = HpCFluids.OXYGEN.get();
-                }
+            int transfer = fluidTank.fill(incomingStack, IFluidHandler.FluidAction.SIMULATE);
 
+            if (transfer > 0) {
                 gasTankItem.drain(container, transfer);
-                fluidAmount += transfer;
-                return returnHelper(container);
+                fluidTank.fill(new FluidStack(incomingFluid, transfer), IFluidHandler.FluidAction.EXECUTE);
+                return container;
             }
         }
 
         if (tankHasFluid && data.getSpace() > 0) {
-            int transfer = Math.min(fluidAmount, data.getSpace());
+            FluidStack transfer = fluidTank.drain(new FluidStack(fluidTank.getFluid().getFluid(), fluidTank.getFluidAmount()), IFluidHandler.FluidAction.SIMULATE);
 
-            if (currentFluid.isSame(HpCFluids.OXYGEN.get()) && (data.getSpace() > 0 && (data.isOxygen() || data.isEmpty()))) {
-                fluidAmount -= transfer;
-                gasTankItem.fill(container, GasTankData.OXYGEN_GAS, transfer);
-                return returnHelper(container);
+            if (fluidTank.getFluid().getFluid().isSame(HpCFluids.OXYGEN.get()) && (data.getSpace() > 0 && (data.isOxygen() || data.isEmpty()))) {
+                fluidTank.drain(new FluidStack(fluidTank.getFluid().getFluid(), fluidTank.getFluidAmount()), IFluidHandler.FluidAction.EXECUTE);
+                gasTankItem.fill(container, GasTankData.OXYGEN_GAS, transfer.getAmount());
+                return container;
             }
         }
 
         return container;
     }
     
-    
-
     @Override
     public IFluidMachine.PortType getFluidPortType(Direction face) {
         return IFluidMachine.PortType.CONTAINER; 
@@ -198,42 +198,22 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
 
     @Override
     public int insertFluid(String incomingFluidType, int amount, boolean simulate) {
-        if (getTankSpace() <= 0) return 0;
-
         Fluid incomingFluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(incomingFluidType));
-        
-        if (this.currentFluid.isSame(Fluids.EMPTY)) {
-            if (!simulate) this.currentFluid = incomingFluid;
-        } else if (!this.currentFluid.isSame(incomingFluid)) {
-            return 0; // Reject wrong fluid
-        }
-
-        int amountToFill = Math.min(getTankSpace(), amount);
-        if (!simulate) {
-            this.fluidAmount += amountToFill;
-            syncToClient();
-        }
-        return amountToFill;
+        if (incomingFluid == Fluids.EMPTY) return 0;
+        IFluidHandler.FluidAction action = simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE;
+        return fluidTank.fill(new FluidStack(incomingFluid, amount), action);
     }
 
     @Override
     public int extractFluid(String fluidType, int amount, boolean simulate) {
-        if (this.currentFluid.isSame(Fluids.EMPTY)) return 0;
-
         Fluid requestedFluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(fluidType));
-        if (!this.currentFluid.isSame(requestedFluid)) return 0; // Reject wrong fluid
-
-        int amountToDrain = Math.min(this.fluidAmount, amount);
-        if (!simulate) {
-            this.fluidAmount -= amountToDrain;
-            if (this.fluidAmount <= 0) this.currentFluid = Fluids.EMPTY;
-            syncToClient();
-        }
-        return amountToDrain;
+        if (!fluidTank.getFluid().getFluid().isSame(requestedFluid)) return 0;
+        IFluidHandler.FluidAction action = simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE;
+        return fluidTank.drain(amount, action).getAmount();
     }
 
     public Fluid getCurrentFluid() {
-        return currentFluid;
+        return fluidTank.getFluid().getFluid();
     }
     
     @Override
@@ -242,55 +222,29 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
         saveAdditional(tag, registries);
         return tag;
     }
-
-    // Packages the data into a network packet
+    
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
     
     public int getTankSpace(){
-        return FLUID_TANK_CAPACITY - fluidAmount;
+        return fluidTank.getSpace();
     }
 
     public int getFluidAmount() {
-        return fluidAmount;
-    }
-
-    private ItemStack returnHelper(ItemStack itemStack){
-        if (fluidAmount <= 0) {
-            fluidAmount = 0;
-            currentFluid = Fluids.EMPTY;
-        }
-        setChanged();
-        if(level != null){level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);}
-        return itemStack;
-    }
-
-    private void syncToClient() {
-        setChanged(); 
-        if (level != null) {
-            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
-        }
+        return fluidTank.getFluidAmount();
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.putInt("FluidAmount", fluidAmount);
-        if (currentFluid != null && currentFluid != Fluids.EMPTY) {
-            tag.putString("FluidType", BuiltInRegistries.FLUID.getKey(currentFluid).toString());
-        }
+        tag.put("FluidTank", fluidTank.writeToNBT(registries, new CompoundTag()));
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        fluidAmount = tag.getInt("FluidAmount");
-        if (tag.contains("FluidType")) {
-            currentFluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(tag.getString("FluidType")));
-        } else {
-            currentFluid = Fluids.EMPTY;
-        }
+        if (tag.contains("FluidTank")) fluidTank.readFromNBT(registries, tag.getCompound("FluidTank"));
     }
 }

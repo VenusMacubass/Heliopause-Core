@@ -73,8 +73,6 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
         };
     }
     
-    
-
     public void tick(Level level, BlockPos pos, BlockState state){
         if (level.isClientSide()) return;
         boolean dirty = false;
@@ -111,8 +109,7 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
         }
 
         this.isActive = isCurrentlyWorking;
-
-        // 3. Save to hard drive if anything changed!
+        
         if (dirty || isCurrentlyWorking) {
             setChanged();
         }

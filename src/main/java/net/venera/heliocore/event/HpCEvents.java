@@ -59,25 +59,6 @@ public class HpCEvents {
     }
 
     @SubscribeEvent
-    public static void onModelEvent(ModelEvent.RegisterAdditional event) {
-        ItemProperties.register(HpCItems.CANISTER.get(),
-                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "fluid_type"),
-                (stack, level, entity, seed) -> {
-                    CanisterData data = ((CanisterItem) stack.getItem()).getCanisterData(stack);
-                    if (data == null || data.isEmpty()) return 0f;
-                    return data.isCrudeOil() ? 1f : 2f;
-                });
-
-        ItemProperties.register(HpCItems.CANISTER.get(),
-                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "fill_level"),
-                (stack, level, entity, seed) -> {
-                    CanisterData data = ((CanisterItem) stack.getItem()).getCanisterData(stack);
-                    if (data == null || data.isEmpty()) return 0f;
-                    return data.amount() / (float) CanisterItem.MAX_CAPACITY;
-                });
-    }
-
-    @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         registerElectric(event, HpCBlockEntities.ENERGY_STORAGE_ENTITY.get());
         registerElectric(event, HpCBlockEntities.REFINERY_ENTITY.get());
@@ -108,20 +89,6 @@ public class HpCEvents {
                     return null;
                 }
         );
-    }
-
-    @SubscribeEvent
-    public static void onPlayerMountRocket(EntityMountEvent event) {
-        if (event.getLevel().isClientSide()) {
-            if (event.getEntityMounting() instanceof Player player && player == Minecraft.getInstance().player) {
-                if (event.isMounting() && event.getEntityBeingMounted() instanceof Tier1RocketEntity) {
-                    Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
-                }
-                else if (!event.isMounting() && event.getEntityBeingMounted() instanceof Tier1RocketEntity) {
-                    Minecraft.getInstance().options.setCameraType(CameraType.FIRST_PERSON);
-                }
-            }
-        }
     }
     
     //region Atmospherics

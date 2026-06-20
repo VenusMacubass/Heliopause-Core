@@ -16,37 +16,29 @@ public class PipeNetworkHelper {
         Set<BlockPos> visitedPositions = new HashSet<>();
         Set<BlockEntity> foundInventories = new HashSet<>();
         Queue<BlockPos> queue = new LinkedList<>();
-
-        // Start the search at the first pipe
+        
         queue.add(startPipePos);
         visitedPositions.add(startPipePos);
-
-        // Ensure we don't accidentally crawl back into the source machine
         visitedPositions.add(sourceMachinePos);
 
         while (!queue.isEmpty()) {
             BlockPos currentPos = queue.poll();
-
-            // Look in all 6 directions from the current pipe
+            
             for (Direction dir : Direction.values()) {
                 BlockPos neighborPos = currentPos.relative(dir);
-
-                // If we already looked at this block, skip it
+                
                 if (visitedPositions.contains(neighborPos)) continue;
-
-                // 1. Is it a Pipe?
+                
                 if (level.getBlockState(neighborPos).getBlock() instanceof FluidPipeBlock) {
                     visitedPositions.add(neighborPos);
-                    queue.add(neighborPos); // Add it to the queue to search from it later!
+                    queue.add(neighborPos); 
                 }
-
-                // 2. Is it a Fluid Machine / Tank?
+                
                 else {
                     BlockEntity be = level.getBlockEntity(neighborPos);
                     if (be instanceof IFluidMachine) {
-                        foundInventories.add(be); // Add it to our results!
-                        visitedPositions.add(neighborPos); // Mark visited so we don't add it twice
-                        // Notice we DO NOT add machines to the queue, because pipes don't pass through them!
+                        foundInventories.add(be); 
+                        visitedPositions.add(neighborPos);
                     }
                 }
             }

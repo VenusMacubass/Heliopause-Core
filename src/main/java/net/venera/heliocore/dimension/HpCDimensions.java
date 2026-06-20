@@ -84,7 +84,7 @@ public class HpCDimensions {
                 false,                // hasCeiling
                 false,                // ultraWarm
                 false,                // natural
-                1.0,                  // coordinateScale
+                4.0,                  // coordinateScale
                 true,                 // bedWorks
                 true,                 // respawnAnchorWorks
                 -64,                  // minY

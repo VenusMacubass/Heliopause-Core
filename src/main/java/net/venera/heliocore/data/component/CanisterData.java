@@ -2,9 +2,11 @@ package net.venera.heliocore.data.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.material.Fluid;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import javax.annotation.Nullable;
@@ -56,5 +58,10 @@ public record CanisterData(@Nullable ResourceLocation fluidId, int amount) {
 
     public int getSpace() {
         return CanisterItem.MAX_CAPACITY - amount;
+    }
+
+    public Fluid getFluid() {
+        if (fluidId == null) return null;
+        return BuiltInRegistries.FLUID.get(fluidId);
     }
 }
