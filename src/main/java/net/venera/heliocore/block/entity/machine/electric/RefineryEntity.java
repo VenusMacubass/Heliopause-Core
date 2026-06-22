@@ -41,7 +41,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     private final int BUCKET_CAPACITY = 1000;
     private int CONVERSION_RATE = 1;
     private int ENERGY_USAGE = 2; 
-    private int maxCapacity = 6000;
+    private final int maxCapacity = 6000;
     public boolean isActive = false;
     private final int MAX_FLOW_RATE = 10;
     public boolean enabled = true;
@@ -102,7 +102,6 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
                 switch (i) {
                     case 0 -> oilTank.setFluid(new FluidStack(HpCFluids.CRUDE_OIL.getSource(), value));
                     case 1 -> fuelTank.setFluid(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), value));
-                    case 2 -> maxCapacity = value;
                     case 3 -> isActive = value == 1;
                 }
             }
@@ -202,7 +201,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
             if (entity == this) continue;
 
             if (entity instanceof IFluidMachine targetMachine) {
-                int accepted = targetMachine.insertFluid("heliocore:refined_fuel", fluidToPush, false);
+                int accepted = targetMachine.insertFluid(HeliopauseCore.MOD_ID + ":refined_fuel", fluidToPush, false);
                 if (accepted > 0) {
                     fuelTank.drain(accepted, IFluidHandler.FluidAction.EXECUTE);
                     fluidToPush -= accepted;
@@ -321,6 +320,14 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     }
 
     @Override
+    public void toggleEnabled(int buttonId) {
+        if (buttonId == 0) {
+            this.enabled = !this.enabled;
+        }
+        this.setChanged();
+    }
+    
+    @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.put("OilTank", oilTank.writeToNBT(registries, new CompoundTag()));
@@ -338,13 +345,5 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
 
         isActive = tag.getBoolean("IsActive");
         enabled = tag.getBoolean("Enabled");
-    }
-
-    @Override
-    public void toggleEnabled(int buttonId) {
-        if (buttonId == 0) {
-            this.enabled = !this.enabled;
-        } 
-        this.setChanged();
     }
 }

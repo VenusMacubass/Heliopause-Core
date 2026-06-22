@@ -6,8 +6,10 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -180,10 +182,10 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     }
 
     public void directionalMachineBlock(Block block, ResourceLocation defaultTexture, Map<Direction, ResourceLocation> overrides) {
-        String name = BuiltInRegistries.BLOCK.getKey(block).getPath(); 
-        
+        String name = BuiltInRegistries.BLOCK.getKey(block).getPath();
+
         BlockModelBuilder model = models().withExistingParent(name, "minecraft:block/cube");
-        
+
         model.texture("north", overrides.getOrDefault(Direction.NORTH, defaultTexture)); // The Front
         model.texture("south", overrides.getOrDefault(Direction.SOUTH, defaultTexture)); // The Back
         model.texture("up", overrides.getOrDefault(Direction.UP, defaultTexture));       // The Top
@@ -192,15 +194,36 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         model.texture("west", overrides.getOrDefault(Direction.WEST, defaultTexture));   // The Left Side
 
         model.texture("particle", defaultTexture);
-        itemModels().getBuilder(BuiltInRegistries.BLOCK.getKey(block).getPath())
-                .parent(new ModelFile.UncheckedModelFile(modLoc("block/" + BuiltInRegistries.BLOCK.getKey(block).getPath())))
+
+        itemModels().getBuilder(name)
+                .parent(new ModelFile.UncheckedModelFile(modLoc("block/" + name)))
                 .transforms()
                 .transform(ItemDisplayContext.GUI)
                 .rotation(30, 135, 0) //Turn 90 degrees
                 .scale(0.625f)
                 .end()
                 .end();
-        directionalBlock(block, model);
+        
+        getVariantBuilder(block).forAllStates(state -> {
+            Direction dir = state.getValue(BlockStateProperties.FACING);
+            int x = 0;
+            int y = 0;
+
+            switch (dir) {
+                case NORTH -> y = 0;
+                case EAST -> y = 90;
+                case SOUTH -> y = 180;
+                case WEST -> y = 270;
+                case UP -> x = 270; // Tips the North face up to the sky
+                case DOWN -> x = 90;  // Tips the North face down to the floor
+            }
+
+            return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .rotationX(x)
+                    .rotationY(y)
+                    .build();
+        });
     }
     //endregion
 }

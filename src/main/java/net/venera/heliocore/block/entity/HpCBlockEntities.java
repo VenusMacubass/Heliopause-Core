@@ -67,13 +67,13 @@ public class HpCBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<OxygenGeneratorEntity>> OXYGEN_GENERATOR_ENTITY = BLOCK_ENTITIES.register("oxygen_generator_entity",
             ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
                     new OxygenGeneratorEntity(HpCBlockEntities.OXYGEN_GENERATOR_ENTITY.get(), blockPos, blockState,
-                            3, 1000, 2),
+                            12000, 2),
                     HpCBlocks.OXYGEN_GENERATOR_BLOCK.get()).build(null));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GasCompressorEntity>> GAS_COMPRESSOR_ENTITY = BLOCK_ENTITIES.register("gas_compressor_entity",
             ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
                             new GasCompressorEntity(HpCBlockEntities.GAS_COMPRESSOR_ENTITY.get(), blockPos, blockState,
-                                    3, 1000, 2),
+                                    10000, 100, 2, 1),
                     HpCBlocks.GAS_COMPRESSOR_BLOCK.get()).build(null));
     
     //endregion

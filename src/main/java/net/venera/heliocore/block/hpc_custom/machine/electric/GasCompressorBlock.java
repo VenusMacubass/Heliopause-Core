@@ -36,16 +36,9 @@ public class GasCompressorBlock extends BaseMachineBlock<GasCompressorEntity> {
         return CODEC;
     }
 
+    @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        Direction clickedFace = context.getClickedFace();
-        if (clickedFace.getAxis() == Direction.Axis.Y) {
-            return this.defaultBlockState().setValue(FACING, clickedFace);
-        }
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-    }
-    @Override
-    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
         if(level.isClientSide()) return null;
 
         return createTickerHelper(blockEntityType, this.blockEntityType.get(),

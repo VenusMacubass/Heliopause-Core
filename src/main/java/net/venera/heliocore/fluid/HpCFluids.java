@@ -34,6 +34,8 @@ public class HpCFluids {
     public static final DeferredHolder<Fluid, Fluid> OXYGEN = FLUIDS.register("oxygen_gas",
             () -> new HpCGases(OXYGEN_TYPE));
             
+    public static HpCLiquidBlockFactory LIQUID_OXYGEN = new HpCLiquidBlockFactory.Builder("oxygen_liquid", () -> Blocks.WATER, 0xFF0C38C7)
+            .modifyFogColor(fogColor(Color.CYAN)).setViscosity(800).motionScale(0.07D).mapColor(MapColor.COLOR_CYAN).build();
 
 
     public static final Supplier<BlockEntityType<LiquidBlockEntity>> LIQUID_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("liquid_tile",

@@ -65,6 +65,7 @@ public class HpCEvents {
         registerElectric(event, HpCBlockEntities.BASIC_SOLAR_PANEL_ENTITY.get());
         registerElectric(event, HpCBlockEntities.CARGO_MANAGER_ENTITY.get());
         registerElectric(event, HpCBlockEntities.FUEL_MANAGER_ENTITY.get());
+        registerElectric(event, HpCBlockEntities.OXYGEN_GENERATOR_ENTITY.get());
     }
     
     private static void registerElectric(RegisterCapabilitiesEvent event, BlockEntityType<? extends BaseElectricMachineEntity> type) {
@@ -72,20 +73,15 @@ public class HpCEvents {
                 Capabilities.EnergyStorage.BLOCK,
                 type,
                 (machine, side) -> {
-                    //Internal Access (e.g. GUI or the machine itself) -> ALWAYS ALLOW
                     if (side == null) {
                         return machine.getEnergyStorage();
                     }
-                    //Input Side -> ALLOW connection
                     if (machine.isInputSide(side)) {
                         return machine.getEnergyStorage();
                     }
-                    //Output Side -> ALLOW connection
                     if (machine.isOutputSide(side)) {
                         return machine.getEnergyStorage();
                     }
-                    //Otherwise -> DENY connection (Return null)
-                    //This tells the wire/pipe: "I have no energy capability on this side."
                     return null;
                 }
         );

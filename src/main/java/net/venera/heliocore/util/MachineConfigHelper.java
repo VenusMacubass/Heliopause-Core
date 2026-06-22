@@ -9,7 +9,6 @@ import java.util.function.Supplier;
 
 public class MachineConfigHelper {
     public static final Map<Supplier<? extends BlockEntityType<?>>, Map<Direction, Boolean>> IO_CONFIG = new HashMap<>();
-
     static { 
         IO_CONFIG.put(HpCBlockEntities.REFINERY_ENTITY, Map.of(
                 Direction.UP, true
@@ -29,6 +28,12 @@ public class MachineConfigHelper {
         ));
         
         IO_CONFIG.put(HpCBlockEntities.FUEL_MANAGER_ENTITY, Map.of(
+                Direction.NORTH, true
+        ));
+        IO_CONFIG.put(HpCBlockEntities.OXYGEN_GENERATOR_ENTITY, Map.of(
+                Direction.NORTH, true
+        ));
+        IO_CONFIG.put(HpCBlockEntities.GAS_COMPRESSOR_ENTITY, Map.of(
                 Direction.NORTH, true
         ));
     }

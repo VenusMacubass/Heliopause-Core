@@ -68,15 +68,17 @@ public abstract class BaseMachineBlock<T extends BaseMachineEntity> extends Base
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (state.getBlock() != newState.getBlock()) {
-            if (!level.isClientSide) {
-                GridManager.get(level).onMachineBroken(level, pos); // Trigger broken
-            }
             
             if (level.getBlockEntity(pos) instanceof BaseMachineEntity blockEntity) {
                 blockEntity.drops();
                 level.updateNeighbourForOutputSignal(pos, this);
             }
+            
             super.onRemove(state, level, pos, newState, movedByPiston);
+
+            if (!level.isClientSide) {
+                GridManager.get(level).onMachineBroken(level, pos);
+            }
         }
     }
     

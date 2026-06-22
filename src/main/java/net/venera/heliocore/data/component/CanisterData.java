@@ -16,6 +16,8 @@ public record CanisterData(@Nullable ResourceLocation fluidId, int amount) {
             ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "crude_oil");
     public static final ResourceLocation REFINED_FUEL =
             ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "refined_fuel");
+    public static final ResourceLocation LIQUID_OXYGEN =
+            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "oxygen_liquid");
 
     public static final Codec<CanisterData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResourceLocation.CODEC.optionalFieldOf("fluid", null).forGetter(CanisterData::fluidId),
@@ -56,6 +58,10 @@ public record CanisterData(@Nullable ResourceLocation fluidId, int amount) {
         return fluidId != null && fluidId.equals(REFINED_FUEL);
     }
 
+    public boolean isOxygen() {
+        return fluidId != null && fluidId.equals(LIQUID_OXYGEN);
+    }
+    
     public int getSpace() {
         return CanisterItem.MAX_CAPACITY - amount;
     }

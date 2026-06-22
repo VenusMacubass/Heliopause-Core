@@ -2,50 +2,200 @@ package net.venera.heliocore.block.entity.machine.electric;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.venera.heliocore.HeliopauseCore;
+import net.venera.heliocore.block.hpc_custom.machine.BaseMachineBlock;
+import net.venera.heliocore.data.component.CanisterData;
+import net.venera.heliocore.data.component.GasTankData;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.fluid.IFluidMachine;
+import net.venera.heliocore.item.hpc_custom.BatteryItem;
+import net.venera.heliocore.item.hpc_custom.CanisterItem;
+import net.venera.heliocore.item.hpc_custom.GasTankItem;
+import net.venera.heliocore.screen.custom.BasicSolarMenu;
+import net.venera.heliocore.screen.custom.OxygenGeneratorMenu;
 import net.venera.heliocore.util.MachineConfigHelper;
 import org.jetbrains.annotations.Nullable;
 
 public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements IFluidMachine, MachineConfigHelper.IToggleableMachine {
-    public OxygenGeneratorEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int slotCount, int capacity, int transferRate) {
-        super(type, pos, state, slotCount, capacity, transferRate, 0);
+    private final int BATTERY_SLOT = 0;
+    private final int OXYGEN_GAS_SLOT = 1;
+    public final int maxCapacity = 5000;
+    private final int ENERGY_USAGE = 5;
+    private final int oxygenGenerationRate = 3;
+    private int oxygenToGenerate = 0;
+    public final FluidTank oxygenTank = new FluidTank(maxCapacity){
+        @Override
+        protected void onContentsChanged() {
+            setChanged();
+            if (level != null) {
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+            }
+        }
+        @Override
+        public boolean isFluidValid(FluidStack stack) {
+            return stack.getFluid().isSame(HpCFluids.OXYGEN.get());
+        }
+    };
+    public boolean isActive;
+    public boolean isEnabled = true;
+    
+    public OxygenGeneratorEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int capacity, int transferRate) {
+        super(type, pos, state, 2, capacity, transferRate, 2);
     }
 
     @Override
     protected ContainerData initContainerData() {
-        return null;
+        return new ContainerData() {
+            @Override
+            public int get(int i) {
+                return switch (i) {
+                    case 0 -> energyStorage.getEnergyStored();
+                    case 1 -> energyStorage.getMaxEnergyStored();
+                    case 2 -> oxygenTank.getFluidAmount();
+                    case 3 -> maxCapacity;
+                    case 5 -> isActive ? 1 : 0;
+                    case 6 -> isEnabled ? 1 : 0;
+                    default -> 0;
+                };
+            }
+            @Override
+            public void set(int i, int value) {
+                switch(i) {
+                    case 2 -> oxygenTank.setFluid(new FluidStack(HpCFluids.OXYGEN.get(), value));
+                    case 5 -> isActive = value == 1;
+                    case 6 -> isEnabled = value == 1;
+                }
+            }
+            @Override
+            public int getCount() { return 7; }
+        };
     }
 
-
     public void tick(Level level, BlockPos pos, BlockState state) {
-        
+        if (level.isClientSide()) return;
+        boolean dirty = false;
+        boolean batteryProcessed = processBatterySlot(BATTERY_SLOT);
+        boolean oxygenProcessed = processOxygenSlot(OXYGEN_GAS_SLOT);
+        if (batteryProcessed || oxygenProcessed) dirty = true;
+        if (isEnabled && level.getGameTime() % 2 == 0) {
+            if (canGenerateOxygen(pos)) {
+                if(level.getGameTime() % 40 == 0){
+                    oxygenToGenerate = generateableOxygen(level, pos);
+                }
+                generateOxygen(oxygenToGenerate);
+
+                this.energyStorage.extractEnergy(ENERGY_USAGE, false);
+                this.isActive = true;
+                dirty = true;
+            } else {
+                if (this.isActive) {
+                    this.isActive = false;
+                    dirty = true;
+                }
+            }
+        }
+
+        if (dirty) setChanged();
         BaseElectricMachineEntity.tick(level, pos, state, this);
+    }
+
+    protected boolean processOxygenSlot(int slotIndex) {
+        ItemStack oxygenStack = inventory.getStackInSlot(slotIndex);
+        if(oxygenStack.getItem() instanceof GasTankItem gasTankItem){
+            GasTankData data = gasTankItem.getGasTankData(oxygenStack);
+            if (data == null) return false;
+            FluidStack toOxygenTank = oxygenTank.drain(new FluidStack(HpCFluids.OXYGEN.get(), data.getSpace()), IFluidHandler.FluidAction.SIMULATE);
+            if(data.isEmpty() || data.isOxygen()) {
+                if(toOxygenTank.getAmount() > 0) {
+                    int actuallyFilled = gasTankItem.fill(oxygenStack, GasTankData.OXYGEN_GAS, toOxygenTank.getAmount());
+                    oxygenTank.drain(toOxygenTank, IFluidHandler.FluidAction.EXECUTE);
+                    return actuallyFilled > 0;
+                }
+            }
+        }
+        return false;
+    }
+    
+    private void generateOxygen(int oxyGen){
+        int generatedOxygen = oxygenTank.fill(new FluidStack(HpCFluids.OXYGEN.get(), oxyGen), IFluidHandler.FluidAction.SIMULATE);
+        if(generatedOxygen > 0){
+            oxygenTank.fill(new FluidStack(HpCFluids.OXYGEN.get(), oxyGen), IFluidHandler.FluidAction.EXECUTE);
+        }
+    }
+    
+    private int generateableOxygen(Level level, BlockPos pos){
+        int passiveDimensionGenValue = 0;
+        if (this.level != null) {
+            if (this.level.dimension() == Level.OVERWORLD) {
+                passiveDimensionGenValue = oxygenGenerationRate;
+            } 
+            else if (this.level.dimension() == Level.NETHER) {
+                passiveDimensionGenValue =  oxygenGenerationRate - 1;
+            } 
+            else if (this.level.dimension() == Level.END) {
+                passiveDimensionGenValue = oxygenGenerationRate;
+            }
+            ResourceLocation currentDim = this.level.dimension().location();
+            if (currentDim.getNamespace().equals(HeliopauseCore.MOD_ID) && currentDim.getPath().equals("moon")) {
+                passiveDimensionGenValue = 0;
+            }
+        }
+        BlockPos corner1 = pos.offset(-6, -6, -6);
+        BlockPos corner2 = pos.offset(6, 6, 6);
+        int leafBonus = 0;
+
+        for (BlockPos targetPos : BlockPos.betweenClosed(corner1, corner2)) {
+            if (targetPos.distSqr(pos) <= 36) { 
+
+                BlockState state = level.getBlockState(targetPos);
+                
+                if (state.is(BlockTags.LEAVES)) {
+                    leafBonus++;
+                }
+            }
+        }
+        return  passiveDimensionGenValue + leafBonus/5;
+    }
+    
+    private boolean canGenerateOxygen(BlockPos pos){
+        boolean spaceCheck = oxygenTank.getSpace() > 0;
+        boolean energyCheck = energyStorage.getEnergyStored() >= ENERGY_USAGE;
+        boolean blockedState = false;
+        BlockPos eastPos = pos.relative(Direction.EAST);
+        BlockPos westPos = pos.relative(Direction.WEST);
+        BlockState eastState = level.getBlockState(eastPos);
+        BlockState westState = level.getBlockState(westPos);
+        if(eastState.isFaceSturdy(level, eastPos, Direction.WEST) || westState.isFaceSturdy(level, eastPos, Direction.EAST)){
+            blockedState = true;
+        }
+        return spaceCheck && energyCheck && !blockedState;
     }
     
     @Override
     public Component getDisplayName() {
-        return null;
+        return Component.literal("Oxygen Extractor");
     }
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return null;
-    }
-
-    @Override
-    public PortType getFluidPortType(Direction face) {
-        return null;
+        return new OxygenGeneratorMenu(i, inventory, this, this.data);
     }
 
     @Override
@@ -55,11 +205,42 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
 
     @Override
     public int extractFluid(String fluidType, int amount, boolean simulate) {
-        return 0;
+        if (!fluidType.equals(HeliopauseCore.MOD_ID + ":oxygen")) return 0;
+
+        IFluidHandler.FluidAction action = simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE;
+        return oxygenTank.drain(amount, action).getAmount();
+    }
+    
+    @Override
+    public PortType getFluidPortType(Direction face) {
+        Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
+        if (face == machineFacing.getOpposite()) {
+            return PortType.OUTPUT;
+        }
+        return PortType.NONE;
     }
 
     @Override
     public void toggleEnabled(int buttonId) {
-        
+        if (buttonId == 0) {
+            this.isEnabled = !this.isEnabled;
+        } 
+        this.setChanged();
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        tag.putBoolean("isActive", isActive);
+        tag.putBoolean("isEnabled", isEnabled);
+        tag.put("OxygenTank", oxygenTank.writeToNBT(registries, new CompoundTag()));
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        isActive = tag.getBoolean("isActive");
+        isEnabled = tag.getBoolean("isEnabled");
+        if (tag.contains("OxygenTank")) oxygenTank.readFromNBT(registries, tag.getCompound("OxygenTank"));
     }
 }

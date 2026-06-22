@@ -70,7 +70,7 @@ public class HeliopauseCoreClient {
                 FluidState fluidState = getter.getFluidState(pos);
                 return IClientFluidTypeExtensions.of(fluidState).getTintColor(fluidState, getter, pos);
             } else return 0xFFFFFFFF;
-        }, HpCFluids.CRUDE_OIL.getFluidblock(), HpCFluids.REFINED_FUEL.getFluidblock());
+        }, HpCFluids.CRUDE_OIL.getFluidblock(), HpCFluids.REFINED_FUEL.getFluidblock(), HpCFluids.LIQUID_OXYGEN.getFluidblock());
 
         event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? 0xFFB4D6ED : -1,
                 HpCBlocks.DEEPSLATE_ALUMINIUM_ORE.get(), 
@@ -157,6 +157,8 @@ public class HeliopauseCoreClient {
         event.register(HpCMenuTypes.ROCKET_MENU.get(), RocketScreen::new);
         event.register(HpCMenuTypes.CARGO_MANAGER_MENU.get(), CargoManagerScreen::new);
         event.register(HpCMenuTypes.FUEL_MANAGER_MENU.get(), FuelManagerScreen::new);
+        event.register(HpCMenuTypes.OXYGEN_GENERATOR_MENU.get(), OxygenGeneratorScreen::new);
+        event.register(HpCMenuTypes.GAS_COMPRESSOR_MENU.get(), GasCompressorScreen::new);
     }
 
     @SubscribeEvent
