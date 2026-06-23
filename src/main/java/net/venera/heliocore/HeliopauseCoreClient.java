@@ -43,8 +43,6 @@ import net.venera.heliocore.screen.HpCMenuTypes;
 import net.venera.heliocore.screen.custom.*;
 import org.joml.Matrix4f;
 
-import java.awt.*;
-
 
 @EventBusSubscriber(modid = HeliopauseCore.MOD_ID, value = Dist.CLIENT)
 public class HeliopauseCoreClient {
