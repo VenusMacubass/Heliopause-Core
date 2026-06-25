@@ -38,8 +38,10 @@ import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.data.temperature.EnvironmentalTemperature;
 import net.venera.heliocore.dimension.HpCDimensions;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
+import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
+import net.venera.heliocore.util.LanderControlPayload;
 import net.venera.heliocore.util.MachineButtonHelper;
 import net.venera.heliocore.util.HpCTags;
 
@@ -243,4 +245,22 @@ public class HpCEvents {
         );
     }
     //endregion
+    @SubscribeEvent
+    public static void register(final RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar(HeliopauseCore.MOD_ID);
+
+        registrar.playToServer(
+                LanderControlPayload.TYPE,
+                LanderControlPayload.STREAM_CODEC,
+                (payload, context) -> {
+                    // This runs on the Server!
+                    context.enqueueWork(() -> {
+                        Player player = context.player();
+                        if (player.getVehicle() instanceof Tier1RocketLanderEntity lander) {
+                            lander.isThrusting = payload.isThrusting();
+                        }
+                    });
+                }
+        );
+    }
 }

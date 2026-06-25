@@ -29,6 +29,9 @@ public class HpCMenuTypes {
     public static final DeferredHolder<MenuType<?>, MenuType<RocketMenu>> ROCKET_MENU =
             registerMenuType("rocket_menu", RocketMenu::new);
 
+    public static final DeferredHolder<MenuType<?>, MenuType<LanderMenu>> LANDER_MENU =
+            registerMenuType("lander_menu", LanderMenu::new);
+
     public static final DeferredHolder<MenuType<?>, MenuType<CargoManagerMenu>> CARGO_MANAGER_MENU =
             registerMenuType("cargo_manager_menu", CargoManagerMenu::new);
 

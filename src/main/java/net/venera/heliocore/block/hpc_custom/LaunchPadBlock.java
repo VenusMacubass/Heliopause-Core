@@ -82,11 +82,10 @@ public class LaunchPadBlock extends Block implements EntityBlock {
                 }
             }
         }
-
-        //For isolating each platform
+        
         for (int x = -2; x <= 2; x++) {
             for (int z = -2; z <= 2; z++) {
-                if (Math.abs(x) <= 1 && Math.abs(z) <= 1) continue; // skip inner 3x3
+                if (Math.abs(x) <= 1 && Math.abs(z) <= 1) continue;
                 BlockPos outerPos = centerPos.offset(x, 0, z);
                 if (level.getBlockState(outerPos).is(this)) {
                     return false;
@@ -130,6 +129,22 @@ public class LaunchPadBlock extends Block implements EntityBlock {
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return state.getValue(IS_CENTER) ? new LaunchPlatformEntity(pos, state) : null;
+    }
+
+    @Nullable
+    public BlockPos getPlatformCenter(Level level, BlockPos clickedPos) {
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                BlockPos possibleCenter = clickedPos.offset(x, 0, z);
+                BlockState checkState = level.getBlockState(possibleCenter);
+                
+                if (checkState.is(this) && checkState.getValue(IS_CENTER)) {
+                    return possibleCenter;
+                }
+            }
+        }
+        
+        return null;
     }
 }
 

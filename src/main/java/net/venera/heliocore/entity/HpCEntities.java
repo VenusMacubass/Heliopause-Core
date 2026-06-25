@@ -8,6 +8,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
+import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
 import net.venera.heliocore.entity.zombie.SpaceZombieEntity;
 
 import java.util.function.Supplier;
@@ -25,7 +26,16 @@ public class HpCEntities {
     public static final Supplier<EntityType<Tier1RocketEntity>> TIER_1_ROCKET = ENTITY_TYPES.register("tier_1_rocket",
             () -> EntityType.Builder.of(Tier1RocketEntity::new, MobCategory.MISC)
                     .sized(1.0F, 2.5F)
+                    .updateInterval(1)
+                    .setShouldReceiveVelocityUpdates(true)
                     .build("tier_1_rocket"));
+
+    public static final Supplier<EntityType<Tier1RocketLanderEntity>> TIER_1_ROCKET_LANDER = ENTITY_TYPES.register("tier_1_rocket_lander",
+            () -> EntityType.Builder.of(Tier1RocketLanderEntity::new, MobCategory.MISC)
+                    .sized(1.0F, 2.5F)
+                    .updateInterval(1)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .build("tier_1_rocket_lander"));
                    
 
     public static void register(IEventBus eventBus) {

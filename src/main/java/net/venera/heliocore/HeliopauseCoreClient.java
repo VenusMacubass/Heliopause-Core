@@ -26,13 +26,17 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.fluids.FluidUtil;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.HpCBlockEntities;
 import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.entity.HpCEntities;
+import net.venera.heliocore.entity.client.Tier1RocketLanderModel;
+import net.venera.heliocore.entity.client.Tier1RocketLanderRenderer;
 import net.venera.heliocore.entity.client.Tier1RocketModel;
 import net.venera.heliocore.entity.client.Tier1RocketRenderer;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
+import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
 import net.venera.heliocore.entity.zombie.SpaceZombieRenderer;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.item.HpCItems;
@@ -41,6 +45,7 @@ import net.venera.heliocore.render.FluidTankRenderer;
 import net.venera.heliocore.render.sky.MoonSkyRenderer;
 import net.venera.heliocore.screen.HpCMenuTypes;
 import net.venera.heliocore.screen.custom.*;
+import net.venera.heliocore.util.LanderControlPayload;
 import org.joml.Matrix4f;
 
 
@@ -58,7 +63,7 @@ public class HeliopauseCoreClient {
         ItemBlockRenderTypes.setRenderLayer(HpCBlocks.FLUID_TANK.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(HpCBlocks.FLUID_PIPE.get(), RenderType.translucent());
         EntityRenderers.register(HpCEntities.TIER_1_ROCKET.get(), Tier1RocketRenderer::new);
-        
+        EntityRenderers.register(HpCEntities.TIER_1_ROCKET_LANDER.get(), Tier1RocketLanderRenderer::new);
     }
 
     @SubscribeEvent
@@ -153,6 +158,7 @@ public class HeliopauseCoreClient {
         event.register(HpCMenuTypes.ENERGY_STORAGE_UNIT_MENU.get(), EnergyStorageUnitScreen::new);
         event.register(HpCMenuTypes.BASIC_SOLAR_MENU.get(), BasicSolarScreen::new);
         event.register(HpCMenuTypes.ROCKET_MENU.get(), RocketScreen::new);
+        event.register(HpCMenuTypes.LANDER_MENU.get(), LanderScreen::new);
         event.register(HpCMenuTypes.CARGO_MANAGER_MENU.get(), CargoManagerScreen::new);
         event.register(HpCMenuTypes.FUEL_MANAGER_MENU.get(), FuelManagerScreen::new);
         event.register(HpCMenuTypes.OXYGEN_GENERATOR_MENU.get(), OxygenGeneratorScreen::new);
@@ -161,12 +167,10 @@ public class HeliopauseCoreClient {
 
     @SubscribeEvent
     public static void onRenderGuiLayer(RenderGuiLayerEvent.Pre event) {
-        // Target the specific GUI layer responsible for the jump charge bar
         if (event.getName().equals(VanillaGuiLayers.JUMP_METER)) {
-
             Player player = Minecraft.getInstance().player;
             
-            if (player != null && player.getVehicle() instanceof Tier1RocketEntity) {
+            if (player != null && player.getVehicle() instanceof Tier1RocketEntity || player != null && player.getVehicle() instanceof Tier1RocketLanderEntity) {
                 event.setCanceled(true);
             }
         }
@@ -200,7 +204,8 @@ public class HeliopauseCoreClient {
 
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(Tier1RocketModel.LAYER_LOCATION, Tier1RocketModel::createBodyLayer);
+        event.registerLayerDefinition(Tier1RocketModel.ROCKET_LOCATION, Tier1RocketModel::createBodyLayer);
+        event.registerLayerDefinition(Tier1RocketLanderModel.LANDER_LOCATION, Tier1RocketLanderModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -263,6 +268,24 @@ public class HeliopauseCoreClient {
             }
         }
     }
-    
+    //region Landers
+    private static boolean wasJumping = false;
+
+    @SubscribeEvent
+    public static void onClientTick(ClientTickEvent.Post event) {
+        Minecraft mc = Minecraft.getInstance();
+        Player player = mc.player;
+
+        if (player != null && player.getVehicle() instanceof Tier1RocketLanderEntity) {
+            boolean isJumping = mc.options.keyJump.isDown();
+            if (isJumping != wasJumping) {
+                PacketDistributor.sendToServer(new LanderControlPayload(isJumping));
+                wasJumping = isJumping;
+            }
+        } else {
+            wasJumping = false;
+        }
+    }
+    //endregion
     
 }

@@ -1,10 +1,14 @@
 package net.venera.heliocore.entity.rideable;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.*;
@@ -15,8 +19,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.dimension.HpCDimensions;
+import net.venera.heliocore.entity.HpCEntities;
 import net.venera.heliocore.screen.custom.RocketMenu;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,54 +41,14 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
     public final int MAX_ENERGY = 5000;
     public final int ENERGY_USAGE = 2;
     public final int FUEL_USAGE = 1;
-    
+    public static int maxFuel = 1000;
+    public static int maxEnergy = 5000;
+
     @Override
     public void tick() {
         super.tick();
         double targetAltitude = 1500.0;
-        if (!this.level().isClientSide() && this.getY() >= targetAltitude) {
-                if (this.level() instanceof ServerLevel serverLevel && this.level().dimension() == Level.OVERWORLD) {
-                    ServerLevel moonDimension = serverLevel.getServer().getLevel(HpCDimensions.MOON_LEVEL_KEY);
-                    if (moonDimension != null) {
-                        Entity passenger = this.getFirstPassenger();
-                        if(passenger == null){this.discard(); return;}
-                        if (passenger instanceof ServerPlayer player) {
-                            player.stopRiding();
-
-                            Vec3 landingPos = new Vec3(0.0, 300.0, 0.0);
-                            
-                            DimensionTransition transition = new DimensionTransition(
-                                    moonDimension,             // The destination world
-                                    landingPos,               // The exact XYZ landing coordinates
-                                    Vec3.ZERO,                // Velocity upon arrival (Zero so they don't go flying off the edge)
-                                    player.getYRot(),         // Player's camera yaw
-                                    player.getXRot(),         // Player's camera pitch
-                                    DimensionTransition.DO_NOTHING // Post-teleport action (like playing a portal sound)
-                            );
-                            player.changeDimension(transition);
-                        }
-                    }
-                }
-                else if(this.level() instanceof ServerLevel serverLevel && this.level().dimension() == HpCDimensions.MOON_LEVEL_KEY) {
-                    Entity passenger = this.getFirstPassenger();
-                    if(passenger == null){this.discard(); return;}
-                    if(passenger instanceof LivingEntity entity) {
-                        entity.stopRiding();
-                        Vec3 landingPos = new Vec3(0.0, 300.0, 0.0);
-                        DimensionTransition transition = new DimensionTransition(
-                                Objects.requireNonNull(serverLevel.getServer().getLevel(Level.OVERWORLD)), 
-                                landingPos,               
-                                Vec3.ZERO,               
-                                passenger.getYRot(),        
-                                passenger.getXRot(),        
-                                DimensionTransition.DO_NOTHING 
-                        );
-                        entity.changeDimension(transition);
-                    }
-                }
-                this.discard();
-                
-        }
+        
         if (this.entityData.get(IS_LAUNCHED)) {
             if (this.getFuelAmount() > 0 && this.getEnergyAmount() > 0) {
                 this.setFuelAmount(this.getFuelAmount() - FUEL_USAGE);
@@ -100,15 +66,29 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
             this.move(MoverType.SELF, this.getDeltaMovement());
         }
         
+        if (this.getY() >= targetAltitude) {
+            
+            if (!this.level().isClientSide() && this.level() instanceof ServerLevel serverLevel) {
+                Entity passenger = this.getFirstPassenger();
+
+                if (passenger instanceof LivingEntity) {
+                    
+                    if (serverLevel.dimension().equals(Level.OVERWORLD)) {
+                        transitionToMoon();
+                    } else if (serverLevel.dimension().equals(HpCDimensions.MOON_LEVEL_KEY)) {
+                        transitionToEarth();
+                    } else {
+                        this.discard();
+                    }
+                } else {
+                    
+                    this.level().explode(this, this.getX(), this.getY(), this.getZ(), 6.0F, Level.ExplosionInteraction.TNT);
+                    this.discard();
+                }
+            }
+        }
         if(this.entityData.get(IS_LAUNCHED) && this.getFirstPassenger() == null && this.getY() >= targetAltitude){
-            this.level().explode(
-                    this,
-                    this.getX(),
-                    this.getY(),
-                    this.getZ(),
-                    6.0F,
-                    Level.ExplosionInteraction.TNT
-            );
+            this.level().explode(this, this.getX(), this.getY(), this.getZ(), 6.0F, Level.ExplosionInteraction.TNT);
             this.discard();
         }
     }
@@ -153,6 +133,97 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
             return true;
         }
         return false;
+    }
+    public void transitionToEarth() {
+        if (!(this.level() instanceof ServerLevel currentLevel)) return;
+        ServerLevel earthLevel = currentLevel.getServer().overworld();
+
+        Entity passenger = this.getFirstPassenger();
+        if (passenger instanceof LivingEntity livingPassenger) {
+            livingPassenger.stopRiding();
+
+            double dropX = this.getX();
+            double dropY = 600.0D;
+            double dropZ = this.getZ();
+
+            // Cache data because we are about to discard the rocket!
+            int fuel = this.getFuelAmount();
+            int energy = this.getEnergyAmount();
+            CompoundTag invTag = this.inventory.serializeNBT(this.registryAccess());
+
+            DimensionTransition transition = new DimensionTransition(
+                    earthLevel,
+                    new Vec3(dropX, dropY, dropZ),
+                    Vec3.ZERO,
+                    livingPassenger.getYRot(),
+                    livingPassenger.getXRot(),
+                    
+                    (teleportedEntity) -> {
+                        Tier1RocketLanderEntity lander = new Tier1RocketLanderEntity(HpCEntities.TIER_1_ROCKET_LANDER.get(), earthLevel);
+                        lander.setPos(dropX, dropY, dropZ);
+
+                        lander.setFuelAmount(fuel);
+                        lander.setEnergyAmount(energy);
+                        lander.inventory.deserializeNBT(lander.registryAccess(), invTag);
+
+                        lander.setDeltaMovement(new Vec3(0.0D, -2.5D, 0.0D));
+                        earthLevel.addFreshEntity(lander);
+
+                        teleportedEntity.startRiding(lander, true);
+                    }
+            );
+
+            livingPassenger.changeDimension(transition);
+            this.discard();
+        }
+    }
+
+    public void transitionToMoon() {
+        if (!(this.level() instanceof ServerLevel currentLevel)) return;
+        ServerLevel moonLevel = currentLevel.getServer().getLevel(HpCDimensions.MOON_LEVEL_KEY);
+
+        if (moonLevel == null) {
+            this.discard(); 
+            return;
+        }
+
+        Entity passenger = this.getFirstPassenger();
+        if (passenger instanceof LivingEntity livingPassenger) {
+            livingPassenger.stopRiding();
+
+            double dropX = this.getX();
+            double dropY = 600.0D;
+            double dropZ = this.getZ();
+
+            int fuel = this.getFuelAmount();
+            int energy = this.getEnergyAmount();
+            CompoundTag invTag = this.inventory.serializeNBT(this.registryAccess());
+
+            DimensionTransition transition = new DimensionTransition(
+                    moonLevel,
+                    new Vec3(dropX, dropY, dropZ),
+                    Vec3.ZERO,
+                    livingPassenger.getYRot(),
+                    livingPassenger.getXRot(),
+
+                    (teleportedEntity) -> {
+                        Tier1RocketLanderEntity lander = new Tier1RocketLanderEntity(HpCEntities.TIER_1_ROCKET_LANDER.get(), moonLevel);
+                        lander.setPos(dropX, dropY, dropZ);
+
+                        lander.setFuelAmount(fuel);
+                        lander.setEnergyAmount(energy);
+                        lander.inventory.deserializeNBT(lander.registryAccess(), invTag);
+
+                        lander.setDeltaMovement(new Vec3(0.0D, -2.5D, 0.0D));
+                        moonLevel.addFreshEntity(lander);
+
+                        teleportedEntity.startRiding(lander, true);
+                    }
+            );
+
+            livingPassenger.changeDimension(transition);
+            this.discard();
+        }
     }
 
     @Override
@@ -222,6 +293,14 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
 
     public void setEnergyAmount(int amount) {
         this.entityData.set(ENERGY_AMOUNT, Math.max(0, Math.min(amount, MAX_ENERGY)));
+    }
+    public int getMaxFuelAmount() {
+        maxFuel = this.MAX_FUEL;
+        return maxFuel;
+    }
+    public int getMaxEnergyAmount() {
+        maxEnergy = this.MAX_ENERGY;
+        return maxEnergy;
     }
     
     public int chargeEnergy(int amount, boolean simulate) {

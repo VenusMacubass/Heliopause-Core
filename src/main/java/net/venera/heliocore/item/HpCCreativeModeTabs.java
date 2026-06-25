@@ -1,19 +1,23 @@
 package net.venera.heliocore.item;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.data.component.GasTankData;
+import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
+import net.venera.heliocore.item.hpc_custom.RocketItem;
 
 import java.util.function.Supplier;
 
@@ -33,6 +37,12 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCItems.TIN_CANISTER.get());
                         output.accept(HpCItems.OXYGEN_MASK.get());
                         output.accept(HpCItems.ROCKET_ITEM.get());
+                        ItemStack preloadedRocket = new ItemStack(HpCItems.ROCKET_ITEM.get());
+                        CustomData.update(DataComponents.CUSTOM_DATA, preloadedRocket, tag -> {
+                            tag.putInt("PreloadedEnergy", Tier1RocketEntity.maxEnergy); 
+                            tag.putInt("PreloadedFuel", Tier1RocketEntity.maxFuel);   
+                        });
+                        output.accept(preloadedRocket);
                         output.accept(HpCItems.DEHYDRATED_APPLE.get());
                         output.accept(HpCItems.DEHYDRATED_RABBIT.get());
                         output.accept(HpCItems.DEHYDRATED_POTATO.get());

@@ -2,17 +2,13 @@ package net.venera.heliocore.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 import net.venera.heliocore.HeliopauseCore;
-import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 
 public class Tier1RocketRenderer extends EntityRenderer<Tier1RocketEntity> {
@@ -20,7 +16,7 @@ public class Tier1RocketRenderer extends EntityRenderer<Tier1RocketEntity> {
 
     public Tier1RocketRenderer(EntityRendererProvider.Context context) {
         super(context);
-        this.model = new Tier1RocketModel(context.bakeLayer(Tier1RocketModel.LAYER_LOCATION));
+        this.model = new Tier1RocketModel(context.bakeLayer(Tier1RocketModel.ROCKET_LOCATION));
     }
 
     @Override
@@ -37,11 +33,8 @@ public class Tier1RocketRenderer extends EntityRenderer<Tier1RocketEntity> {
     @Override
     public void render(Tier1RocketEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
-
         poseStack.pushPose();
-
-        // Optional: Blockbench Java models often export upside-down natively in Minecraft. 
-        // If your rocket spawns on its head, uncomment these two lines to flip it upright:
+        
          poseStack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(180f));
          poseStack.translate(0, -1.5f, 0);
 
