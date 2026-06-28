@@ -20,8 +20,7 @@ public class BatteryItem extends Item {
         this.maxCapacity = maxCapacity;
         this.transferRate = transferRate;
     }
-
-    // Returns: The amount of energy actually accepted
+    
     public int receiveEnergy(ItemStack stack, int maxReceive, boolean simulate) {
         BatteryData current = getBatteryData(stack);
 

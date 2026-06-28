@@ -15,13 +15,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.venera.heliocore.data.component.BatteryData;
+import net.venera.heliocore.data.component.CanisterData;
+import net.venera.heliocore.fluid.HpCFluids;
+import net.venera.heliocore.item.hpc_custom.BatteryItem;
+import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import net.venera.heliocore.screen.custom.LanderMenu;
-import net.venera.heliocore.screen.custom.RocketMenu;
 
 import javax.annotation.Nullable;
 
 public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJumping {
-    public final ItemStackHandler inventory = new ItemStackHandler(28);
+    public final ItemStackHandler inventory = new ItemStackHandler(30);
     public Tier1RocketLanderEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
     }
@@ -40,8 +44,12 @@ public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJum
     public void tick() {
         previousYVelocity = this.getDeltaMovement().y;
         super.tick();
-        if (!this.level().isClientSide() && this.isThrusting) {
-            this.applyThrust();
+        if (!this.level().isClientSide()) {
+            processOutputBattery();
+            processFuelOutput();
+            if (this.isThrusting) {
+                this.applyThrust();
+            }
         }
         
         Vec3 currentMove = this.getDeltaMovement();
@@ -93,6 +101,34 @@ public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJum
             inventory.setStackInSlot(i, ItemStack.EMPTY);
         }
     }
+    
+    private void processOutputBattery(){
+        ItemStack battery = inventory.getStackInSlot(27);
+        if(battery.getItem() instanceof BatteryItem batteryItem){
+            BatteryData batteryData = batteryItem.getBatteryData(battery);
+            int transferable = Math.min(entityData.get(ENERGY_AMOUNT), batteryData.getSpace());
+            if (transferable > 0) {
+                entityData.set(ENERGY_AMOUNT, entityData.get(ENERGY_AMOUNT) - transferable);
+                batteryItem.receiveEnergy(battery, transferable, false);
+
+                inventory.setStackInSlot(27, battery);
+            }
+        }
+    }
+
+    private void processFuelOutput(){
+        ItemStack canister = inventory.getStackInSlot(28);
+        if(canister.getItem() instanceof CanisterItem canisterItem){
+            CanisterData canisterData = canisterItem.getCanisterData(canister);
+            int transferable = Math.min(entityData.get(FUEL_AMOUNT), canisterData.getSpace());
+            if (transferable > 0) {
+                entityData.set(FUEL_AMOUNT, entityData.get(FUEL_AMOUNT) - transferable);
+                canisterItem.fill(canister, HpCFluids.REFINED_FUEL.getFluidType().getId(), transferable);
+
+                inventory.setStackInSlot(28, canister);
+            }
+        }
+    }
 
     @Override
     public InteractionResult interact(Player player, InteractionHand hand) {
@@ -100,7 +136,7 @@ public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJum
             if (!this.level().isClientSide() && player instanceof ServerPlayer serverPlayer) {
                 serverPlayer.openMenu(new SimpleMenuProvider(
                         (id, playerInv, p) -> new LanderMenu(id, playerInv, this),
-                        Component.literal("Lander Cargo Inventory")
+                        Component.literal("Lander Inventory")
                 ), buf -> buf.writeInt(this.getId()));
 
             }
@@ -163,6 +199,22 @@ public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJum
             return livingPassenger;
         }
         return null;
+    }
+
+    public int dischargeEnergy(int amount, boolean simulate) {
+        int discharged = Math.max(0, amount);
+        if (!simulate && discharged > 0) {
+            this.setEnergyAmount(this.getEnergyAmount() - discharged);
+        }
+        return discharged;
+    }
+
+    public int drainFuel(int amount, boolean simulate) {
+        int drained = Math.max(0, amount);
+        if (!simulate && drained > 0) {
+            this.setFuelAmount(this.getFuelAmount() - drained);
+        }
+        return drained;
     }
     
     public int getEnergyAmount(){

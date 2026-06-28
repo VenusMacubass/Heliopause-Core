@@ -10,32 +10,34 @@ import net.minecraft.world.entity.player.Inventory;
 import net.venera.heliocore.HeliopauseCore;
 
 public class LanderScreen  extends AbstractContainerScreen<LanderMenu> {
-    private static final ResourceLocation LANDER_GUI = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID,"textures/gui/tier1_rocket/tier1_rocket.png");
+    private static final ResourceLocation LANDER_GUI = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID,"textures/gui/tier1_rocket/tier1_rocket_lander.png");
     private static final ResourceLocation FUEL_GUI = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID,"textures/gui/fuel_gui.png");
 
     public LanderScreen(LanderMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
     }
 
+    int offsetY = -25;
+    
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float v, int i, int i1) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, LANDER_GUI);
         int x = (width - imageWidth) / 2;
-        int y = (height - imageHeight) / 2;
-        guiGraphics.blit(LANDER_GUI, x, y, 0, 0, 175, 123); //Gui
+        int y = (height - imageHeight) / 2 + offsetY;
+        guiGraphics.blit(LANDER_GUI, x, y, 0, 0, 175, 209); //Gui
 
-        int chargeLength = menu.getEnergyScaled(54);
-        if (chargeLength > 0) {
-            int startX = x + 72;
-            int startY = y + 51;
-            int endX = startX + chargeLength;
-            int endY = startY + 7;
-
-            //(FF: opacity, FF being opaque), rest is rgb
-            guiGraphics.fill(startX, startY, endX, endY, 0xFFFFE400);
-        }
+//        int chargeLength = menu.getEnergyScaled(54);
+//        if (chargeLength > 0) {
+//            int startX = x + 59;
+//            int startY = y + 51;
+//            int endX = startX + chargeLength;
+//            int endY = startY + 7;
+//
+//            //(FF: opacity, FF being opaque), rest is rgb
+//            guiGraphics.fill(startX, startY, endX, endY, 0xFFFFE400);
+//        }
 
         int scaledHeight = menu.getFuelScaled(41);
         if (scaledHeight > 0) {
@@ -59,24 +61,24 @@ public class LanderScreen  extends AbstractContainerScreen<LanderMenu> {
     protected void renderTooltip(GuiGraphics guiGraphics, int x, int y) {
         super.renderTooltip(guiGraphics, x, y);
         int imageX = (width - imageWidth) / 2;
-        int imageY = (height - imageHeight) / 2;
+        int imageY = (height - imageHeight) / 2 + offsetY;
 
-        int energyX = imageX + 72;
+        int energyX = imageX + 59;
         int energyY = imageY + 51;
         int energyWidth = 54;
         int energyHeight = 7;
-        int fuelX = imageX + 152;
-        int fuelY = imageY + 17;
+        int fuelX = imageX + 152; //124/17
+        int fuelY = imageY + 15;
         int fuelWidth = 16;
         int fuelHeight = 41;
 
-        if (isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)) {
-            int currentEnergy = menu.lander.getEnergyAmount();
-            int maxEnergy = menu.lander.MAX_ENERGY;
-
-            guiGraphics.renderTooltip(font, Component.literal(
-                    "Energy: " + currentEnergy + " / " + maxEnergy + " FE"), x, y);
-        }
+//        if (isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)) {
+//            int currentEnergy = menu.lander.getEnergyAmount();
+//            int maxEnergy = menu.lander.MAX_ENERGY;
+//
+//            guiGraphics.renderTooltip(font, Component.literal(
+//                    "Energy: " + currentEnergy + " / " + maxEnergy + " FE"), x, y);
+//        }
         if (isMouseOver(x, y, fuelX, fuelY, fuelWidth, fuelHeight)) {
             int currentFuel = menu.lander.getFuelAmount();
             int maxFuel = menu.lander.MAX_FUEL;
@@ -93,8 +95,8 @@ public class LanderScreen  extends AbstractContainerScreen<LanderMenu> {
 
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        guiGraphics.drawString(this.font, this.title, 7, 4, 0x404040, false);
-        guiGraphics.drawString(this.font, this.playerInventoryTitle, 7, 53, 0x404040, false);
+        guiGraphics.drawString(this.font, this.title, 7, 52 + offsetY, 0x404040, false);
+        guiGraphics.drawString(this.font, this.playerInventoryTitle, 7, 117 + offsetY, 0x404040, false);
     }
 
     @Override

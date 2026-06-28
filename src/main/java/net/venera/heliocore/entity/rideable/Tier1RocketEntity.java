@@ -15,6 +15,7 @@ import net.minecraft.world.*;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
@@ -23,6 +24,7 @@ import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.dimension.HpCDimensions;
 import net.venera.heliocore.entity.HpCEntities;
+import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.screen.custom.RocketMenu;
 import org.jetbrains.annotations.Nullable;
 
@@ -145,8 +147,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
             double dropX = this.getX();
             double dropY = 600.0D;
             double dropZ = this.getZ();
-
-            // Cache data because we are about to discard the rocket!
+            
             int fuel = this.getFuelAmount();
             int energy = this.getEnergyAmount();
             CompoundTag invTag = this.inventory.serializeNBT(this.registryAccess());
@@ -164,8 +165,10 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
 
                         lander.setFuelAmount(fuel);
                         lander.setEnergyAmount(energy);
-                        lander.inventory.deserializeNBT(lander.registryAccess(), invTag);
-
+                        for (int i = 0; i < this.inventory.getSlots(); i++) {
+                            lander.inventory.setStackInSlot(i, this.inventory.getStackInSlot(i).copy());
+                        }
+                        lander.inventory.setStackInSlot(29, new ItemStack(HpCItems.ROCKET_ITEM.get()));
                         lander.setDeltaMovement(new Vec3(0.0D, -2.5D, 0.0D));
                         earthLevel.addFreshEntity(lander);
 
@@ -209,10 +212,12 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
                     (teleportedEntity) -> {
                         Tier1RocketLanderEntity lander = new Tier1RocketLanderEntity(HpCEntities.TIER_1_ROCKET_LANDER.get(), moonLevel);
                         lander.setPos(dropX, dropY, dropZ);
-
+                        lander.inventory.setStackInSlot(29, new ItemStack(HpCItems.ROCKET_ITEM.get()));
                         lander.setFuelAmount(fuel);
                         lander.setEnergyAmount(energy);
-                        lander.inventory.deserializeNBT(lander.registryAccess(), invTag);
+                        for (int i = 0; i < this.inventory.getSlots(); i++) {
+                            lander.inventory.setStackInSlot(i, this.inventory.getStackInSlot(i).copy());
+                        }
 
                         lander.setDeltaMovement(new Vec3(0.0D, -2.5D, 0.0D));
                         moonLevel.addFreshEntity(lander);

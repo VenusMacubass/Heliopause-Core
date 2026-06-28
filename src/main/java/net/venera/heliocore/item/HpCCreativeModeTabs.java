@@ -24,7 +24,7 @@ import java.util.function.Supplier;
 public class HpCCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TAB = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, HeliopauseCore.MOD_ID);
 
-    public static final Supplier<CreativeModeTab> HELIOPAUSE_CORE_ITEMS = CREATIVE_MODE_TAB.register("heliocore_items",
+    public static final Supplier<CreativeModeTab> HELIOPAUSE_CORE_ITEMS = CREATIVE_MODE_TAB.register(HeliopauseCore.MOD_ID + "_items",
             () -> CreativeModeTab.builder()
                     .icon(() -> new ItemStack(HpCItems.RADIOACTIVE_CORE.get()))
                     .title(Component.translatable("creativetab.heliocore_items"))
@@ -89,11 +89,11 @@ public class HpCCreativeModeTabs {
                     .build()
     );
 
-    public static final Supplier<CreativeModeTab> HELIOPAUSE_CORE_BLOCKS = CREATIVE_MODE_TAB.register("heliocore_blocks",
+    public static final Supplier<CreativeModeTab> HELIOPAUSE_CORE_BLOCKS = CREATIVE_MODE_TAB.register(HeliopauseCore.MOD_ID + "_blocks",
             () -> CreativeModeTab.builder()
                     .icon(() -> new ItemStack(HpCBlocks.RADIOACTIVE_BLOCK.get()))
                     .title(Component.translatable("creativetab.heliocore_blocks"))
-                    .withTabsBefore(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "heliocore_items"))
+                    .withTabsBefore(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, HeliopauseCore.MOD_ID + "_items"))
                     .displayItems((parameters, output) -> {
                         output.accept(HpCBlocks.ALUMINIUM_ORE.get());
                         output.accept(HpCBlocks.DEEPSLATE_ALUMINIUM_ORE.get());
