@@ -1,4 +1,5 @@
-// 1.21.1	2026-06-11T18:54:27.3357391	Tags for minecraft:fluid mod id heliocore
+// 1.21.1	2026-06-29T21:29:11.2316806	Tags for minecraft:fluid mod id heliocore
 a8f6f52eb6dbcb07d0fa9c44882509785e261e30 data/heliocore/tags/fluid/gases.json
+aaded6881ee5b182259f747b3463fd5d0be576d7 data/heliocore/tags/fluid/liquids.json
 672d048d2f50b47e93b17582816e8cc0920c6a56 data/minecraft/tags/fluid/lava.json
 94f29395500694e9b6ca101feb66d187bbd773d9 data/minecraft/tags/fluid/water.json

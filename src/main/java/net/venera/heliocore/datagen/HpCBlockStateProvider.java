@@ -29,6 +29,15 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     ResourceLocation prismaticTex = modLoc("block/prismatic_glass");
     ResourceLocation prismaticPaneTex = modLoc("block/prismatic_glass_pane_top");
     ResourceLocation tintedPrismaticTex = modLoc("block/tinted_prismatic_glass");
+    
+    ResourceLocation machineTop = modLoc("block/machine/machine");
+    ResourceLocation machineBottom = modLoc("block/machine/machine_bottom");
+    ResourceLocation machineSide = modLoc("block/machine/machine_side");
+    ResourceLocation energyInPort = modLoc("block/machine/machine_energy_input");
+    ResourceLocation energyOutPort = modLoc("block/machine/machine_energy_output");
+    ResourceLocation fluidInPort = modLoc("block/machine/machine_fluid_input");
+    ResourceLocation fluidOutPort = modLoc("block/machine/machine_fluid_output");
+    ResourceLocation airVent = modLoc("block/machine/machine_gas_vent");
 
     @Override
     protected void registerStatesAndModels() {
@@ -66,23 +75,25 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         tintedWallBlock(HpCBlocks.MOON_ROCK_WALL, moonRockTex);
 
         directionalMachineBlock(HpCBlocks.OXYGEN_GENERATOR_BLOCK.get(), 
-                modLoc("block/machine/machine_side"), 
+                machineSide, 
                 Map.of(
-                        //Direction.NORTH, modLoc("block/refinery_front_panel"), 
-                        Direction.UP, modLoc("block/machine/machine"),    
-                        Direction.DOWN, modLoc("block/machine/machine_bottom")
-                        //Direction.SOUTH, modLoc("block/refinery_back_pipes")   
-                        //East, West, and Down will automatically use 'machine_casing_default'
+                        Direction.NORTH, energyInPort, 
+                        Direction.UP, machineTop,    
+                        Direction.DOWN, machineBottom,
+                        Direction.WEST, airVent,
+                        Direction.EAST, airVent,
+                        Direction.SOUTH, fluidOutPort
                 )
         );
         directionalMachineBlock(HpCBlocks.GAS_COMPRESSOR_BLOCK.get(),
-                modLoc("block/machine/machine_side"), 
+                machineSide, 
                 Map.of(
-                        //Direction.NORTH, modLoc("block/refinery_front_panel"), 
-                        Direction.UP, modLoc("block/machine/machine"),
-                        Direction.DOWN, modLoc("block/machine/machine_bottom")
-                        //Direction.SOUTH, modLoc("block/refinery_back_pipes")   
-                        //East, West, and Down will automatically use 'machine_casing_default'
+                        Direction.NORTH, energyInPort, 
+                        Direction.UP, machineTop,
+                        Direction.DOWN, machineBottom,
+                        Direction.SOUTH, machineSide,
+                        Direction.EAST, fluidInPort,
+                        Direction.WEST, fluidOutPort
                 )
         );
     }
@@ -93,10 +104,10 @@ public class HpCBlockStateProvider extends BlockStateProvider {
 
     }
     private void blockItem(DeferredBlock<?> deferredBlock){
-        simpleBlockItem(deferredBlock.get(), new ModelFile.UncheckedModelFile("heliocore:block/" + deferredBlock.getId().getPath()));
+        simpleBlockItem(deferredBlock.get(), new ModelFile.UncheckedModelFile(HeliopauseCore.MOD_ID + ":block/" + deferredBlock.getId().getPath()));
     }
     private void blockItem(DeferredBlock<?> deferredBlock, String appendix){
-        simpleBlockItem(deferredBlock.get(), new ModelFile.UncheckedModelFile("heliocore:block/" + deferredBlock.getId().getPath() + appendix));
+        simpleBlockItem(deferredBlock.get(), new ModelFile.UncheckedModelFile(HeliopauseCore.MOD_ID + ":block/" + deferredBlock.getId().getPath() + appendix));
     }
 
     public void tintedStairsBlock(DeferredBlock<?> block, ResourceLocation texture) {

@@ -80,6 +80,7 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCItems.CANISTER.get());
                         output.accept(HpCItems.CANISTER.get().setCanisterData(new ItemStack(HpCItems.CANISTER.get()), CanisterData.CRUDE_OIL, CanisterItem.MAX_CAPACITY));
                         output.accept(HpCItems.CANISTER.get().setCanisterData(new ItemStack(HpCItems.CANISTER.get()), CanisterData.REFINED_FUEL, CanisterItem.MAX_CAPACITY));
+                        output.accept(HpCItems.CANISTER.get().setCanisterData(new ItemStack(HpCItems.CANISTER.get()), CanisterData.LIQUID_OXYGEN, CanisterItem.MAX_CAPACITY));
                         output.accept(HpCItems.COMPRESSED_GAS_TANK.get());
                         output.accept(HpCItems.COMPRESSED_GAS_TANK.get().setGasTankData(new ItemStack(HpCItems.COMPRESSED_GAS_TANK.get()), GasTankData.OXYGEN_GAS, GasTankItem.MAX_CAPACITY));
                         output.accept(HpCItems.SMALL_BATTERY.get());
