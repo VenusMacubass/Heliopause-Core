@@ -18,9 +18,9 @@ public class GasCompressorScreen extends AbstractContainerScreen<GasCompressorMe
     private static final ResourceLocation GAS_COMPRESSOR_GUI =
             ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/refinery/refinery_gui.png");
     private static final ResourceLocation GAS_GUI =
-            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/oil_gui.png");
+            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/oxygen_gui.png");
     private static final ResourceLocation LIQUID_GUI =
-            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/fuel_gui.png");
+            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/oxygen_gui.png");
 
     public GasCompressorScreen(GasCompressorMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -33,7 +33,7 @@ public class GasCompressorScreen extends AbstractContainerScreen<GasCompressorMe
         int y = (height - imageHeight) / 2;
 
         this.enabilitationButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.data.get(6) > 0 ? "Disable" : "Enable"),
+                        Component.literal(menu.data.get(8) > 0 ? "Disable" : "Enable"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
@@ -128,7 +128,7 @@ public class GasCompressorScreen extends AbstractContainerScreen<GasCompressorMe
     @Override
     protected void containerTick() {
         super.containerTick();
-        this.enabilitationButton.setMessage(Component.literal(menu.data.get(6) > 0 ? "Disable" : "Enable"));
+        this.enabilitationButton.setMessage(Component.literal(menu.data.get(8) > 0 ? "Disable" : "Enable"));
     }
 
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {

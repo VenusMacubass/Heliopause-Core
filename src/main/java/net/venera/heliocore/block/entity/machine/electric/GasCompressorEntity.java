@@ -12,7 +12,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -29,12 +28,10 @@ import net.venera.heliocore.block.hpc_custom.FluidPipeBlock;
 import net.venera.heliocore.block.hpc_custom.machine.BaseMachineBlock;
 import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.data.component.GasTankData;
-import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.fluid.IFluidMachine;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
 import net.venera.heliocore.screen.custom.GasCompressorMenu;
-import net.venera.heliocore.screen.custom.RefineryMenu;
 import net.venera.heliocore.util.MachineConfigHelper;
 import net.venera.heliocore.util.PipeNetworkHelper;
 import org.jetbrains.annotations.Nullable;
@@ -45,12 +42,14 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
     private final int INPUT_SLOT = 0;
     private final int OUTPUT_SLOT = 1;
     private final int BATTERY_SLOT = 2;
-    private int CONVERSION_RATE = 1;
-    private int ENERGY_USAGE = 2;
+    private final int CONVERSION_RATE;
+    private final int ENERGY_USAGE;
     private final int maxCapacity = 6000;
     public boolean isActive = false;
     private final int MAX_FLOW_RATE = 10;
     public boolean enabled = true;
+    private int conversionScore = 0;
+    private final int conversionThreshold = 100;
     public final FluidTank gasTank = new FluidTank(maxCapacity) {
         @Override
         protected void onContentsChanged() {
@@ -66,7 +65,7 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
 
     };
 
-    public final FluidTank liquidTank = new FluidTank(maxCapacity) {
+    public final FluidTank liquidTank = new FluidTank(maxCapacity/10) {
         @Override
         protected void onContentsChanged() {
             setChanged();
@@ -158,6 +157,38 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
         BaseElectricMachineEntity.tick(level, pos, state, this);
     }
 
+    private void compress(){
+        isActive = true;
+        
+        if (gasTank.getFluidAmount() > 0 && liquidTank.getSpace() > 0) {
+            int gasAvailable = Math.min(CONVERSION_RATE, gasTank.getFluidAmount());
+            
+            FluidStack drainedGas = gasTank.drain(gasAvailable, IFluidHandler.FluidAction.EXECUTE);
+            if (drainedGas.getAmount() > 0) {
+                this.energyStorage.extractEnergy(this.ENERGY_USAGE, false);
+                this.conversionScore += drainedGas.getAmount();
+                
+                if (this.conversionScore >= conversionThreshold) {
+                    Fluid inputGas = drainedGas.getFluid();
+                    ResourceLocation gasId = BuiltInRegistries.FLUID.getKey(inputGas);
+                    
+                    String liquidName = gasId.getPath().replace("_gas", "_liquid");
+                    ResourceLocation liquidId = ResourceLocation.fromNamespaceAndPath(gasId.getNamespace(), liquidName);
+                    Fluid outputLiquid = BuiltInRegistries.FLUID.get(liquidId);
+
+                    if (outputLiquid != null && outputLiquid != net.minecraft.world.level.material.Fluids.EMPTY) {
+                        int liquidToGenerate = this.conversionScore / conversionThreshold;
+                        int acceptedLiquid = liquidTank.fill(new FluidStack(outputLiquid, liquidToGenerate), IFluidHandler.FluidAction.EXECUTE);
+                        
+                        if (acceptedLiquid > 0) {
+                            this.conversionScore -= (acceptedLiquid * conversionThreshold);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private boolean processInputs() {
         ItemStack inputStack = inventory.getStackInSlot(INPUT_SLOT);
 
@@ -212,12 +243,16 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
 
         for (BlockEntity entity : connectedMachines) {
             if (entity == this) continue;
-
+            
+            if (fluidToPush <= 0) break;
             if (entity instanceof IFluidMachine targetMachine) {
                 ResourceLocation liquidId = BuiltInRegistries.FLUID.getKey(liquidTank.getFluid().getFluid());
                 String fluidTypeString = liquidId.toString();
-
                 int accepted = targetMachine.insertFluid(fluidTypeString, fluidToPush, false);
+                if (accepted > 0) {
+                    liquidTank.drain(accepted, IFluidHandler.FluidAction.EXECUTE);
+                    fluidToPush -= accepted;
+                }
             }
         }
     }
@@ -240,17 +275,44 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
             if (entity == this) continue;
 
             if (entity instanceof IFluidMachine targetMachine) {
-                int availableToExtract = targetMachine.extractFluid(HeliopauseCore.MOD_ID + ":oxygen_gas", fluidToPull, true);
+                if (targetMachine.getFluidPortType(inputFace.getOpposite()) == PortType.OUTPUT) {
+                    continue;
+                }
 
-                if (availableToExtract > 0) {
-                    int actuallyExtracted = targetMachine.extractFluid(HeliopauseCore.MOD_ID + ":oxygen_gas", availableToExtract, false);
-                    Fluid incomingFluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(HeliopauseCore.MOD_ID + ":oxygen_gas"));
-                    if (incomingFluid != null) {
-                        gasTank.fill(new FluidStack(incomingFluid, actuallyExtracted), IFluidHandler.FluidAction.EXECUTE);
+                // 2. DETERMINE THE TARGET FLUID
+                String fluidToAskFor = null;
+
+                if (!gasTank.isEmpty()) {
+                    // We already have gas, so we MUST strictly ask for this exact gas
+                    fluidToAskFor = BuiltInRegistries.FLUID.getKey(gasTank.getFluid().getFluid()).toString();
+                } else {
+                    // We are empty! Use our new interface method to peek at what the passive tank has
+                    String peekedFluid = targetMachine.peekFluid(inputFace.getOpposite());
+
+                    if (peekedFluid != null) {
+                        // Check if the peeked fluid is a valid gas (density < 0) before we try to pull it
+                        Fluid resolvedFluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(peekedFluid));
+                        if (resolvedFluid != null && resolvedFluid.getFluidType().getDensity() < 0) {
+                            fluidToAskFor = peekedFluid;
+                        }
                     }
+                }
 
-                    fluidToPull -= actuallyExtracted;
-                    if (fluidToPull <= 0) break;
+                // 3. EXECUTE THE PULL
+                if (fluidToAskFor != null) {
+                    int availableToExtract = targetMachine.extractFluid(fluidToAskFor, fluidToPull, true);
+
+                    if (availableToExtract > 0) {
+                        int actuallyExtracted = targetMachine.extractFluid(fluidToAskFor, availableToExtract, false);
+                        Fluid incomingFluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(fluidToAskFor));
+
+                        if (incomingFluid != null) {
+                            gasTank.fill(new FluidStack(incomingFluid, actuallyExtracted), IFluidHandler.FluidAction.EXECUTE);
+                        }
+
+                        fluidToPull -= actuallyExtracted;
+                        if (fluidToPull <= 0) break;
+                    }
                 }
             }
         }
@@ -272,6 +334,18 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
         }
 
         return PortType.NONE;
+    }
+
+    @Override
+    public @Nullable String peekFluid(Direction face) {
+        PortType port = getFluidPortType(face);
+        if(port == PortType.OUTPUT){
+            return BuiltInRegistries.FLUID.getKey(liquidTank.getFluid().getFluid()).toString();
+        }
+        if(port == PortType.INPUT){
+            return BuiltInRegistries.FLUID.getKey(gasTank.getFluid().getFluid()).toString();
+        }
+        return "";
     }
 
     @Override
@@ -299,38 +373,13 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
         return 0;
     }
 
-    private void compress(){
-        isActive = true;
-
-        int gasAvailable = Math.min(CONVERSION_RATE, gasTank.getFluidAmount());
-        Fluid inputGas = gasTank.getFluid().getFluid();
-        
-        ResourceLocation gasId = BuiltInRegistries.FLUID.getKey(inputGas);
-        String liquidName = gasId.getPath().replace("_gas", "_liquid");
-        ResourceLocation liquidId = ResourceLocation.fromNamespaceAndPath(gasId.getNamespace(), liquidName);
-        Fluid outputLiquid = BuiltInRegistries.FLUID.get(liquidId);
-        
-        if (outputLiquid != null && outputLiquid != Fluids.EMPTY) {
-            FluidStack liquidStack = new FluidStack(outputLiquid, gasAvailable);
-            
-            FluidStack simulatedDrain = gasTank.drain(gasAvailable, IFluidHandler.FluidAction.SIMULATE);
-            int acceptedLiquid = liquidTank.fill(new FluidStack(outputLiquid, simulatedDrain.getAmount()), IFluidHandler.FluidAction.SIMULATE);
-
-            if(acceptedLiquid > 0){
-                gasTank.drain(acceptedLiquid, IFluidHandler.FluidAction.EXECUTE);
-                liquidTank.fill(new FluidStack(outputLiquid, acceptedLiquid), IFluidHandler.FluidAction.EXECUTE);
-            }
-        }
-        this.energyStorage.extractEnergy(this.ENERGY_USAGE, false);
-    }
-
     public EnergyStorage getEnergyStorage() {return energyStorage;}
     public FluidTank getGasTank() {return gasTank;}
     public FluidTank getLiquidTank() {return liquidTank;}
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("container.heliocore.refinery");
+        return Component.translatable("container.heliocore.gas_compressor");
     }
 
     @Override

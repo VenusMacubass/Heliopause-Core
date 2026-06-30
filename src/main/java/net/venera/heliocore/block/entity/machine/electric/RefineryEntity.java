@@ -3,8 +3,10 @@ package net.venera.heliocore.block.entity.machine.electric;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -16,6 +18,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -200,12 +203,17 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
         for (BlockEntity entity : connectedMachines) {
             if (entity == this) continue;
 
-            if (entity instanceof IFluidMachine targetMachine) {
-                int accepted = targetMachine.insertFluid(HeliopauseCore.MOD_ID + ":refined_fuel", fluidToPush, false);
+            if (fluidToPush <= 0) break;
+
+            if (entity instanceof IFluidMachine targetMachine && !fuelTank.isEmpty()) {
+                ResourceLocation liquidId = BuiltInRegistries.FLUID.getKey(fuelTank.getFluid().getFluid());
+                String fluidTypeString = liquidId.toString();
+
+                int accepted = targetMachine.insertFluid(fluidTypeString, fluidToPush, false);
+
                 if (accepted > 0) {
                     fuelTank.drain(accepted, IFluidHandler.FluidAction.EXECUTE);
                     fluidToPush -= accepted;
-                    if (fluidToPush <= 0) break;
                 }
             }
         }
@@ -215,7 +223,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
         if (oilTank.getFluidAmount() >= this.maxCapacity) return;
 
         Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
-        Direction inputFace = machineFacing.getClockWise(); 
+        Direction inputFace = machineFacing.getClockWise();
 
         BlockPos pipePos = pos.relative(inputFace);
         if (!(level.getBlockState(pipePos).getBlock() instanceof FluidPipeBlock)) return;
@@ -229,6 +237,10 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
             if (entity == this) continue;
 
             if (entity instanceof IFluidMachine targetMachine) {
+                if (targetMachine.getFluidPortType(inputFace.getOpposite()) == PortType.OUTPUT) {
+                    continue;
+                }
+
                 int availableToExtract = targetMachine.extractFluid(HeliopauseCore.MOD_ID + ":crude_oil", fluidToPull, true);
 
                 if (availableToExtract > 0) {
@@ -261,14 +273,33 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     }
 
     @Override
-    public int insertFluid(String fluidType, int amount, boolean simulate) {
-        if (!fluidType.equals(HeliopauseCore.MOD_ID + ":crude_oil")) return 0;
-        
-        IFluidHandler.FluidAction action = simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE;
-        
-        return oilTank.fill(new FluidStack(HpCFluids.CRUDE_OIL.getSource(), amount), action);
+    public @Nullable String peekFluid(Direction face) {
+        PortType port = getFluidPortType(face);
+        if(port == PortType.OUTPUT &&  !fuelTank.isEmpty()){
+            return BuiltInRegistries.FLUID.getKey(fuelTank.getFluid().getFluid()).toString();
+        }
+        if(port == PortType.INPUT&&  !oilTank.isEmpty()){
+            return BuiltInRegistries.FLUID.getKey(oilTank.getFluid().getFluid()).toString();
+        }
+        return null;
     }
 
+    @Override
+    public int insertFluid(String fluidType, int amount, boolean simulate) {
+        ResourceLocation fluidLocation = ResourceLocation.parse(fluidType);
+        Fluid resolvedFluid = BuiltInRegistries.FLUID.get(fluidLocation);
+
+        if (resolvedFluid != null && resolvedFluid != net.minecraft.world.level.material.Fluids.EMPTY) {
+            FluidStack newStack = new FluidStack(resolvedFluid, amount);
+
+            if (oilTank.isFluidValid(newStack)) {
+                IFluidHandler.FluidAction action = simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE;
+                return oilTank.fill(newStack, action);
+            }
+        }
+        return 0;
+    }
+    
     @Override
     public int extractFluid(String fluidType, int amount, boolean simulate) {
         if (!fluidType.equals(HeliopauseCore.MOD_ID + ":refined_fuel")) return 0;
@@ -311,7 +342,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("container.heliocore.refinery");
+        return Component.translatable("container."+HeliopauseCore.MOD_ID+".refinery");
     }
 
     @Override

@@ -3,8 +3,10 @@ package net.venera.heliocore.block.entity.machine.electric;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -16,6 +18,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -112,16 +115,17 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
         boolean isCurrentlyWorking = false;
 
         if (rocket != null) {
-            if (isFueling && fuelTank.getFluidAmount() > 0) {
+            if (isFueling && fuelTank.getFluidAmount() > 0 && this.energyStorage.getEnergyStored() >= ENERGY_USAGE) {
                 int acceptedFuel = rocket.fillFuel(Math.min(fuelTank.getFluidAmount(), 5), false);
                 FluidStack loadedFuel = fuelTank.drain(acceptedFuel, IFluidHandler.FluidAction.SIMULATE);
+
                 if (loadedFuel.getAmount() > 0) {
                     fuelTank.drain(loadedFuel, IFluidHandler.FluidAction.EXECUTE);
+                    this.energyStorage.extractEnergy(ENERGY_USAGE, false); 
                     isCurrentlyWorking = true;
                 }
             }
-
-            // Push Energy
+            
             if (isCharging && this.energyStorage.getEnergyStored() > 0) {
                 int acceptedEnergy = rocket.chargeEnergy(Math.min(this.energyStorage.getEnergyStored(), 50), false);
                 if (acceptedEnergy > 0) {
@@ -192,7 +196,7 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
         if (!(level.getBlockState(pipePos).getBlock() instanceof FluidPipeBlock)) return false;
 
         Set<BlockEntity> connectedMachines = PipeNetworkHelper.findConnectedInventories(level, pipePos, pos);
-        
+
         int fluidToPull = Math.min(fuelTank.getSpace(), FUEL_LOAD_RATE);
         boolean actuallyPulledSomething = false;
 
@@ -200,6 +204,10 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
             if (entity == this) continue;
 
             if (entity instanceof IFluidMachine targetMachine) {
+                if (targetMachine.getFluidPortType(inputFace.getOpposite()) == PortType.OUTPUT) {
+                    continue;
+                }
+
                 int availableToExtract = targetMachine.extractFluid(HeliopauseCore.MOD_ID + ":refined_fuel", fluidToPull, true);
 
                 if (availableToExtract > 0) {
@@ -228,16 +236,33 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
         return PortType.NONE;
     }
 
+    @Override
+    public @Nullable String peekFluid(Direction face) {
+        PortType port =  getFluidPortType(face);
+        if(port == PortType.INPUT && !fuelTank.isEmpty()){
+            return BuiltInRegistries.FLUID.getKey(fuelTank.getFluid().getFluid()).toString();
+        }
+        return null;
+    }
+
     private boolean hasEnergy(){
         return energyStorage.getEnergyStored() >= ENERGY_USAGE;
     }
 
     @Override
     public int insertFluid(String fluidType, int amount, boolean simulate) {
-        if (!fluidType.equals(HeliopauseCore.MOD_ID + ":refined_fuel")) return 0;
+        ResourceLocation fluidLocation = ResourceLocation.parse(fluidType);
+        Fluid resolvedFluid = BuiltInRegistries.FLUID.get(fluidLocation);
 
-        IFluidHandler.FluidAction action = simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE;
-        return fuelTank.fill(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), amount), action);
+        if (resolvedFluid != null && resolvedFluid != net.minecraft.world.level.material.Fluids.EMPTY) {
+            FluidStack newStack = new FluidStack(resolvedFluid, amount);
+
+            if (fuelTank.isFluidValid(newStack)) {
+                IFluidHandler.FluidAction action = simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE;
+                return fuelTank.fill(newStack, action);
+            }
+        }
+        return 0;
     }
 
     @Override

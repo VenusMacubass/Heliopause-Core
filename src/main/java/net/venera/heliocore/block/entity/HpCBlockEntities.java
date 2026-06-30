@@ -73,7 +73,7 @@ public class HpCBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GasCompressorEntity>> GAS_COMPRESSOR_ENTITY = BLOCK_ENTITIES.register("gas_compressor_entity",
             ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
                             new GasCompressorEntity(HpCBlockEntities.GAS_COMPRESSOR_ENTITY.get(), blockPos, blockState,
-                                    10000, 100, 2, 1),
+                                    10000, 100, 3, 5),
                     HpCBlocks.GAS_COMPRESSOR_BLOCK.get()).build(null));
     
     //endregion

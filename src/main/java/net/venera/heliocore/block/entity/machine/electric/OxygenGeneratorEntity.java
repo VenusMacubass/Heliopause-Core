@@ -3,6 +3,7 @@ package net.venera.heliocore.block.entity.machine.electric;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -14,12 +15,14 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.venera.heliocore.HeliopauseCore;
+import net.venera.heliocore.block.hpc_custom.FluidPipeBlock;
 import net.venera.heliocore.block.hpc_custom.machine.BaseMachineBlock;
 import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.data.component.GasTankData;
@@ -31,6 +34,7 @@ import net.venera.heliocore.item.hpc_custom.GasTankItem;
 import net.venera.heliocore.screen.custom.BasicSolarMenu;
 import net.venera.heliocore.screen.custom.OxygenGeneratorMenu;
 import net.venera.heliocore.util.MachineConfigHelper;
+import net.venera.heliocore.util.PipeNetworkHelper;
 import org.jetbrains.annotations.Nullable;
 
 public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements IFluidMachine, MachineConfigHelper.IToggleableMachine {
@@ -110,6 +114,10 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
                     dirty = true;
                 }
             }
+            if (oxygenTank.getFluidAmount() > 0) {
+                pumpFluidOut(level, pos);
+                dirty = true;
+            }
         }
 
         if (dirty) setChanged();
@@ -132,11 +140,11 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
         }
         return false;
     }
-    
+
     private void generateOxygen(int oxyGen){
         int generatedOxygen = oxygenTank.fill(new FluidStack(HpCFluids.OXYGEN.get(), oxyGen), IFluidHandler.FluidAction.SIMULATE);
         if(generatedOxygen > 0){
-            oxygenTank.fill(new FluidStack(HpCFluids.OXYGEN.get(), oxyGen), IFluidHandler.FluidAction.EXECUTE);
+            oxygenTank.fill(new FluidStack(HpCFluids.OXYGEN.get(), generatedOxygen), IFluidHandler.FluidAction.EXECUTE);
         }
     }
     
@@ -173,18 +181,51 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
         }
         return  passiveDimensionGenValue + leafBonus/5;
     }
-    
+
+    private void pumpFluidOut(Level level, BlockPos pos) {
+        Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
+        Direction outputFace = machineFacing.getOpposite(); // Based on your getFluidPortType
+
+        BlockPos pipePos = pos.relative(outputFace);
+        if (!(level.getBlockState(pipePos).getBlock() instanceof FluidPipeBlock)) return;
+
+        java.util.Set<BlockEntity> connectedMachines = PipeNetworkHelper.findConnectedInventories(level, pipePos, pos);
+        int fluidToPush = Math.min(oxygenTank.getFluidAmount(), 10); // Max flow rate of 10
+
+        for (BlockEntity entity : connectedMachines) {
+            if (entity == this) continue;
+
+            if (fluidToPush <= 0) break;
+
+            if (entity instanceof IFluidMachine targetMachine && !oxygenTank.isEmpty()) {
+                ResourceLocation fluidId = BuiltInRegistries.FLUID.getKey(oxygenTank.getFluid().getFluid());
+                String fluidTypeString = fluidId.toString();
+
+                int accepted = targetMachine.insertFluid(fluidTypeString, fluidToPush, false);
+
+                if (accepted > 0) {
+                    oxygenTank.drain(accepted, IFluidHandler.FluidAction.EXECUTE);
+                    fluidToPush -= accepted;
+                }
+            }
+        }
+    }
+
     private boolean canGenerateOxygen(BlockPos pos){
         boolean spaceCheck = oxygenTank.getSpace() > 0;
         boolean energyCheck = energyStorage.getEnergyStored() >= ENERGY_USAGE;
-        boolean blockedState = false;
-        BlockPos eastPos = pos.relative(Direction.EAST);
-        BlockPos westPos = pos.relative(Direction.WEST);
-        BlockState eastState = level.getBlockState(eastPos);
-        BlockState westState = level.getBlockState(westPos);
-        if(eastState.isFaceSturdy(level, eastPos, Direction.WEST) || westState.isFaceSturdy(level, eastPos, Direction.EAST)){
-            blockedState = true;
-        }
+
+        Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
+        Direction rightSide = machineFacing.getClockWise();
+        Direction leftSide = machineFacing.getCounterClockWise();
+        BlockPos rightPos = pos.relative(rightSide);
+        BlockPos leftPos = pos.relative(leftSide);
+        BlockState rightState = level.getBlockState(rightPos);
+        BlockState leftState = level.getBlockState(leftPos);
+        
+        boolean blockedState = rightState.isFaceSturdy(level, rightPos, rightSide.getOpposite()) ||
+                leftState.isFaceSturdy(level, leftPos, leftSide.getOpposite());
+
         return spaceCheck && energyCheck && !blockedState;
     }
     
@@ -218,6 +259,15 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
             return PortType.OUTPUT;
         }
         return PortType.NONE;
+    }
+
+    @Override
+    public @Nullable String peekFluid(Direction face) {
+        PortType port = getFluidPortType(face);
+        if(port == PortType.OUTPUT && !oxygenTank.isEmpty()){
+            return BuiltInRegistries.FLUID.getKey(oxygenTank.getFluid().getFluid()).toString();
+        }
+        return null;
     }
 
     @Override

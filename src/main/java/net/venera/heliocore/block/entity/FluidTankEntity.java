@@ -27,6 +27,7 @@ import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.fluid.IFluidMachine;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
+import org.jetbrains.annotations.Nullable;
 
 
 public class FluidTankEntity extends BlockEntity implements IFluidMachine {
@@ -194,6 +195,14 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
     @Override
     public IFluidMachine.PortType getFluidPortType(Direction face) {
         return IFluidMachine.PortType.CONTAINER; 
+    }
+
+    @Override
+    public @Nullable String peekFluid(Direction face) {
+        if(fluidTank.getFluidAmount() <= 0){
+            return null;
+        }
+        return BuiltInRegistries.FLUID.getKey(fluidTank.getFluid().getFluid()).toString();
     }
 
     @Override
