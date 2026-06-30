@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.hpc_custom.machine.electric.SolarPanelBlock;
 import net.venera.heliocore.item.hpc_custom.BatteryItem;
 import net.venera.heliocore.screen.custom.BasicSolarMenu;
@@ -139,7 +140,7 @@ public class SolarPanelEntity extends BaseElectricMachineEntity implements Machi
     
     @Override
     public Component getDisplayName() {
-        return Component.literal("Basic Solar Panel");
+        return Component.translatable("container." + HeliopauseCore.MOD_ID + ".solar_panel");
     }
 
     @Override

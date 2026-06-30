@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
+import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.hpc_custom.LaunchPadBlock;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 import net.venera.heliocore.screen.custom.CargoManagerMenu;
@@ -82,47 +83,38 @@ public class CargoManagerEntity extends BaseElectricMachineEntity implements Mac
     
     public boolean processLoading(Tier1RocketEntity rocketEntity){
         for (int i : INPUT_SLOTS) {
-            // 1. Simulate extracting exactly 1 item from the machine's slot
             ItemStack extracted = inventory.extractItem(i, 1, true);
             if (extracted.isEmpty()) continue; // Slot is empty, check next slot
-
-            // 2. Simulate pushing that 1 item into the rocket
+            
             ItemStack leftover = ItemHandlerHelper.insertItem(rocketEntity.inventory, extracted, true);
-
-            // 3. If it fit perfectly (no leftovers), actually do the transfer!
+            
             if (leftover.isEmpty()) {
                 inventory.extractItem(i, 1, false); // Actually extract
                 ItemHandlerHelper.insertItem(rocketEntity.inventory, extracted, false); // Actually insert
-
-                // We moved 1 item. Stop looping and return true!
+                
                 return true;
             }
         }
-        return false; // Nothing was moved
+        return false; 
     }
     
     public boolean processUnloading(Tier1RocketEntity rocketEntity){
         for (int i = 0; i < rocketEntity.inventory.getSlots(); i++) {
-            // 1. Simulate extracting exactly 1 item from the rocket's slot
             ItemStack extracted = rocketEntity.inventory.extractItem(i, 1, true);
             if (extracted.isEmpty()) continue;
-
-            // 2. Try to find a place for it in our output slots
+            
             for (int outSlot : OUTPUT_SLOTS) {
-                // Simulate inserting into the output slot
                 ItemStack leftover = inventory.insertItem(outSlot, extracted, true);
-
-                // 3. If it fit perfectly, actually do the transfer!
+                
                 if (leftover.isEmpty()) {
-                    rocketEntity.inventory.extractItem(i, 1, false); // Actually extract
-                    inventory.insertItem(outSlot, extracted, false); // Actually insert
-
-                    // We moved 1 item. Stop looping and return true!
+                    rocketEntity.inventory.extractItem(i, 1, false);
+                    inventory.insertItem(outSlot, extracted, false); 
+                    
                     return true;
                 }
             }
         }
-        return false; // Nothing was moved
+        return false; 
     }
 
     public Tier1RocketEntity findValidRocket(Level level, BlockPos pos) {
@@ -152,7 +144,7 @@ public class CargoManagerEntity extends BaseElectricMachineEntity implements Mac
 
     @Override
     public Component getDisplayName() {
-        return Component.literal("Rocket Cargo Manager");
+        return Component.translatable("container." + HeliopauseCore.MOD_ID + ".cargo_manager");
     }
 
     @Override

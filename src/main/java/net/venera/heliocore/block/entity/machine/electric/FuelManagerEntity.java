@@ -272,7 +272,7 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
 
     @Override
     public Component getDisplayName() {
-        return Component.literal("Rocket Fuel and Energy Manager");
+        return Component.translatable("container." + HeliopauseCore.MOD_ID + ".fuel_manager");
     }
 
     @Override

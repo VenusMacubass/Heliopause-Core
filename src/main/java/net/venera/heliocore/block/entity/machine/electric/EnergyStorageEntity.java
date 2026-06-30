@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.hpc_custom.machine.electric.EnergyStorageBlock;
 import net.venera.heliocore.item.hpc_custom.BatteryItem;
 import net.venera.heliocore.screen.custom.EnergyStorageUnitMenu;
@@ -90,7 +91,7 @@ public class EnergyStorageEntity extends BaseElectricMachineEntity {
 
     @Override
     public Component getDisplayName() {
-        return Component.literal("Energy Storage Unit");
+        return Component.translatable("container." + HeliopauseCore.MOD_ID + ".energy_storage_unit");
     }
 
     @Override

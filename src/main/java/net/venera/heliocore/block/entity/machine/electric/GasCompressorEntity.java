@@ -379,7 +379,7 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("container.heliocore.gas_compressor");
+        return Component.translatable("container." + HeliopauseCore.MOD_ID + ".gas_compressor");
     }
 
     @Override
@@ -402,6 +402,7 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
         tag.put("LiquidTank", liquidTank.writeToNBT(registries, new CompoundTag()));
         tag.putBoolean("IsActive", isActive);
         tag.putBoolean("Enabled", enabled);
+        tag.putInt("ConversionScore", conversionScore);
     }
 
     @Override
@@ -411,5 +412,6 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
         if (tag.contains("LiquidTank")) liquidTank.readFromNBT(registries, tag.getCompound("LiquidTank"));
         isActive = tag.getBoolean("IsActive");
         enabled = tag.getBoolean("Enabled");
+        conversionScore = tag.getInt("ConversionScore");
     }
 }

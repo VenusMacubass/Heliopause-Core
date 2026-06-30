@@ -231,7 +231,7 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
     
     @Override
     public Component getDisplayName() {
-        return Component.literal("Oxygen Extractor");
+        return Component.translatable("container." + HeliopauseCore.MOD_ID + ".oxygen_generator");
     }
 
     @Override
