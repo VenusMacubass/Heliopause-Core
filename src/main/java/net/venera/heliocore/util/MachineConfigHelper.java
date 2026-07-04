@@ -15,8 +15,8 @@ public class MachineConfigHelper {
         ));
         
         IO_CONFIG.put(HpCBlockEntities.ENERGY_STORAGE_ENTITY, Map.of(
-                Direction.WEST, true,
-                Direction.EAST, false
+                Direction.WEST, false,
+                Direction.EAST, true
         ));
         
         IO_CONFIG.put(HpCBlockEntities.BASIC_SOLAR_PANEL_ENTITY, Map.of(

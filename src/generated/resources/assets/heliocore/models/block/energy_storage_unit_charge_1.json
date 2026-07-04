@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "heliocore:block/machine/machine_bottom",
+    "east": "heliocore:block/machine/machine_energy_input",
+    "north": "heliocore:block/machine/energy_storage_unit/energy_storage_unit_1",
+    "particle": "heliocore:block/machine/machine_side",
+    "south": "heliocore:block/machine/energy_storage_unit/energy_storage_unit_1",
+    "up": "heliocore:block/machine/machine",
+    "west": "heliocore:block/machine/machine_energy_output"
+  }
+}

@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
@@ -15,6 +16,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
+import net.venera.heliocore.block.hpc_custom.machine.electric.EnergyStorageBlock;
 
 import java.util.Map;
 
@@ -74,6 +76,20 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         tintedSlabBlock(HpCBlocks.MOON_ROCK_SLAB, moonRockTex);
         tintedWallBlock(HpCBlocks.MOON_ROCK_WALL, moonRockTex);
 
+        chargeableMachineBlock(
+                HpCBlocks.ENERGY_STORAGE_UNIT.get(),
+                EnergyStorageBlock.CHARGE,
+                machineSide,
+                Map.of(
+                        Direction.EAST, energyInPort,   
+                        Direction.WEST, energyOutPort,  
+                        Direction.UP, machineTop,        
+                        Direction.DOWN, machineBottom    
+                ),
+                "block/machine/energy_storage_unit/energy_storage_unit_",
+                Direction.NORTH, Direction.SOUTH 
+        );
+        
         directionalMachineBlock(HpCBlocks.OXYGEN_GENERATOR_BLOCK.get(), 
                 machineSide, 
                 Map.of(
@@ -245,6 +261,67 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                     .rotationY(y)
                     .build();
         });
+    }
+
+    public void chargeableMachineBlock(Block block, IntegerProperty chargeProperty, ResourceLocation defaultTexture, Map<Direction, ResourceLocation> staticOverrides, String chargeTexturePrefix, Direction... chargeFaces) {
+        String baseName = BuiltInRegistries.BLOCK.getKey(block).getPath();
+        
+        getVariantBuilder(block).forAllStates(state -> {
+            Direction dir = state.getValue(BlockStateProperties.FACING);
+            int charge = state.getValue(chargeProperty);
+
+            String modelName = baseName + "_charge_" + charge;
+
+            BlockModelBuilder model = models().withExistingParent(modelName, "minecraft:block/cube");
+            
+            model.texture("north", staticOverrides.getOrDefault(Direction.NORTH, defaultTexture));
+            model.texture("south", staticOverrides.getOrDefault(Direction.SOUTH, defaultTexture));
+            model.texture("up", staticOverrides.getOrDefault(Direction.UP, defaultTexture));
+            model.texture("down", staticOverrides.getOrDefault(Direction.DOWN, defaultTexture));
+            model.texture("east", staticOverrides.getOrDefault(Direction.EAST, defaultTexture));
+            model.texture("west", staticOverrides.getOrDefault(Direction.WEST, defaultTexture));
+            model.texture("particle", defaultTexture);
+            
+            for (Direction face : chargeFaces) {
+                model.texture(face.getSerializedName(), modLoc(chargeTexturePrefix + charge));
+            }
+
+            int x = 0;
+            int y = 0;
+
+            switch (dir) {
+                case NORTH -> y = 0;
+                case EAST -> y = 90;
+                case SOUTH -> y = 180;
+                case WEST -> y = 270;
+                case UP -> x = 270;
+                case DOWN -> x = 90;
+            }
+
+            return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .rotationX(x)
+                    .rotationY(y)
+                    .build();
+        });
+
+        var itemBuilder = itemModels().getBuilder(baseName)
+                .parent(new ModelFile.UncheckedModelFile(modLoc("block/" + baseName + "_charge_0")))
+                .transforms()
+                .transform(ItemDisplayContext.GUI)
+                .rotation(30, 135, 0)
+                .scale(0.625f)
+                .end()
+                .end();
+
+        int maxCharge = chargeProperty.getPossibleValues().stream().max(Integer::compareTo).orElse(15);
+
+        for (int i = 1; i <= maxCharge; i++) {
+            itemBuilder.override()
+                    .predicate(modLoc("charge"), (float) i / maxCharge)
+                    .model(new ModelFile.UncheckedModelFile(modLoc("block/" + baseName + "_charge_" + i)))
+                    .end();
+        }
     }
     //endregion
 }
