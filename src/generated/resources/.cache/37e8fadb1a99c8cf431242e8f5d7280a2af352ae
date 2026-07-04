@@ -1,5 +1,6 @@
-// 1.21.1	2026-06-29T21:34:27.8745895	Block States: heliocore
+// 1.21.1	2026-07-04T20:55:01.5380386	Block States: heliocore
 56a824dbf7b0a403e8347f92d41f1793671fa488 assets/heliocore/blockstates/copper_wire_block.json
+7921fb79041bcd0fb70ac67eb6f67b34aa6ce85a assets/heliocore/blockstates/energy_generator_block.json
 293a29d7f719cd7a46e6910d34710ee861d3c680 assets/heliocore/blockstates/gas_compressor_block.json
 e919186787782fd40baf6453a96cf3e167a9f80a assets/heliocore/blockstates/iridium_block.json
 faeff39040cf8ef3db52efd77679fe517f904cda assets/heliocore/blockstates/moon_cobblestone.json
@@ -23,6 +24,7 @@ fda4812685ed3f8c23961269e4a0d47f68b80749 assets/heliocore/blockstates/tin_buildi
 9bf13bf0370c6002f636d14aa20773dc9250303c assets/heliocore/blockstates/tin_building_stairs.json
 4fff04432fbf5f8f657dba909dac3b1ce9a0eb03 assets/heliocore/blockstates/tin_building_wall.json
 a79ab9ed88961a186873487c680212e116a6f83d assets/heliocore/models/block/copper_wire_block.json
+987a247909dd4938916bc22d9b504f66a2cd4dc3 assets/heliocore/models/block/energy_generator_block.json
 61d028e15968a81faebc243aa5f04d8619341d8b assets/heliocore/models/block/gas_compressor_block.json
 5c1eeae7f196c849d770368f794020903ff8fd72 assets/heliocore/models/block/iridium_block.json
 7847c016038b064343c859d5eeef8e0290f99cce assets/heliocore/models/block/moon_cobblestone.json
@@ -68,6 +70,7 @@ a7fd10c479e1abd5f5cf6439a43883a89155df08 assets/heliocore/models/block/tin_build
 3d2e46247bc285fbaceeb4326e8d786163e3014a assets/heliocore/models/block/tin_building_wall_side.json
 7c3ea2d8573e1a9fcee86362f3b234079bb3a2bf assets/heliocore/models/block/tin_building_wall_side_tall.json
 05636817611352edbd072da5689af1ebdaac516a assets/heliocore/models/item/copper_wire_block.json
+bb9da722e784d42612539b54594dd75837daa366 assets/heliocore/models/item/energy_generator_block.json
 582cc9118ccd451646393bce4a958f75baac50de assets/heliocore/models/item/gas_compressor_block.json
 8dbbfd8aa50496da60dfce394bb81cbc05f98f6c assets/heliocore/models/item/iridium_block.json
 54ab18e63a59946e7571e73f8f9c7e6bd71a06a9 assets/heliocore/models/item/moon_cobblestone.json

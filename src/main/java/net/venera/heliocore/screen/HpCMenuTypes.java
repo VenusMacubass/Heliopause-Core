@@ -39,10 +39,13 @@ public class HpCMenuTypes {
             registerMenuType("fuel_manager_menu", FuelManagerMenu::new);
     
     public static final DeferredHolder<MenuType<?>, MenuType<OxygenGeneratorMenu>> OXYGEN_GENERATOR_MENU =
-            registerMenuType( "oxygen_generator_menu", OxygenGeneratorMenu::new);
+            registerMenuType("oxygen_generator_menu", OxygenGeneratorMenu::new);
 
     public static final DeferredHolder<MenuType<?>, MenuType<GasCompressorMenu>> GAS_COMPRESSOR_MENU =
-            registerMenuType( "gas_compressor_menu", GasCompressorMenu::new);
+            registerMenuType("gas_compressor_menu", GasCompressorMenu::new);
+
+    public static final DeferredHolder<MenuType<?>, MenuType<EnergyGeneratorMenu>> ENERGY_GENERATOR_MENU =
+            registerMenuType("energy_generator_menu", EnergyGeneratorMenu::new);
 
     private static <T extends AbstractContainerMenu>DeferredHolder<MenuType<?>, MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENU_TYPES.register(name, () -> IMenuTypeExtension.create(factory));

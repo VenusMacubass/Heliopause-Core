@@ -1,4 +1,4 @@
-// 1.21.1	2026-06-11T13:15:59.0701551	Loot Tables
+// 1.21.1	2026-07-04T20:55:01.5340399	Loot Tables
 4c6effb42af79317efc025b64a17716f1bcfaa42 data/heliocore/loot_table/blocks/aluminium_block.json
 64247a8f311a92e6ec87cc7d0e221e1a168f6380 data/heliocore/loot_table/blocks/aluminium_ore.json
 169aa8b3cb872639f3c6660ddb1af2fc0bbcdf83 data/heliocore/loot_table/blocks/arc_lamp.json
@@ -12,6 +12,7 @@ b7bf97a84f487f477628982c43b98c6087bdc122 data/heliocore/loot_table/blocks/cheese
 b7bc75985ea6a6309924bea0631d396456967510 data/heliocore/loot_table/blocks/deepslate_iridium_ore.json
 1e9087afb4135e39900e79a9f34f62d03f165894 data/heliocore/loot_table/blocks/deepslate_silicon_ore.json
 0c57cb6a500b0f944c3b217e1c57b765cbaee13d data/heliocore/loot_table/blocks/deepslate_tin_ore.json
+24b8d18ef3f188439ef80a7c092973cc3dab8534 data/heliocore/loot_table/blocks/energy_generator_block.json
 f0212cadba30b6af7b467b4263f8647ce9f49101 data/heliocore/loot_table/blocks/energy_storage_unit.json
 516b1967f25a4f3f22dccea4163da0b238f84368 data/heliocore/loot_table/blocks/fluid_pipe.json
 f3e0fac232a025f86474cc7096a8b8ba3f9c9fc0 data/heliocore/loot_table/blocks/fluid_tank.json

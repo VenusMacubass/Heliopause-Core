@@ -163,6 +163,7 @@ public class HeliopauseCoreClient {
         event.register(HpCMenuTypes.FUEL_MANAGER_MENU.get(), FuelManagerScreen::new);
         event.register(HpCMenuTypes.OXYGEN_GENERATOR_MENU.get(), OxygenGeneratorScreen::new);
         event.register(HpCMenuTypes.GAS_COMPRESSOR_MENU.get(), GasCompressorScreen::new);
+        event.register(HpCMenuTypes.ENERGY_GENERATOR_MENU.get(), EnergyGeneratorScreen::new);
     }
 
     @SubscribeEvent

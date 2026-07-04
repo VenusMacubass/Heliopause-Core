@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -289,7 +290,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
         ResourceLocation fluidLocation = ResourceLocation.parse(fluidType);
         Fluid resolvedFluid = BuiltInRegistries.FLUID.get(fluidLocation);
 
-        if (resolvedFluid != null && resolvedFluid != net.minecraft.world.level.material.Fluids.EMPTY) {
+        if (resolvedFluid != null && resolvedFluid != Fluids.EMPTY) {
             FluidStack newStack = new FluidStack(resolvedFluid, amount);
 
             if (oilTank.isFluidValid(newStack)) {

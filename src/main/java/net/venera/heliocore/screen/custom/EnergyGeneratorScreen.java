@@ -12,17 +12,17 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.util.MachineButtonHelper;
 
-public class GasCompressorScreen extends AbstractContainerScreen<GasCompressorMenu> {
+public class EnergyGeneratorScreen extends AbstractContainerScreen<EnergyGeneratorMenu> {
     private Button enabilitationButton;
 
-    private static final ResourceLocation GAS_COMPRESSOR_GUI =
-            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/refinery/refinery_gui.png");
-    private static final ResourceLocation GAS_GUI =
-            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/oxygen_gas_gui.png");
-    private static final ResourceLocation LIQUID_GUI =
-            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/oxygen_gui.png");
+    private static final ResourceLocation ENERGY_GENERATOR_GUI =
+            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/energy_generator/energy_generator_gui.png");
+    private static final ResourceLocation FUEL_GUI =
+            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/fuel_gui.png");
+    private static final ResourceLocation FIRE_ICON =
+            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/lit_fire.png");
 
-    public GasCompressorScreen(GasCompressorMenu menu, Inventory playerInventory, Component title) {
+    public EnergyGeneratorScreen(EnergyGeneratorMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
     }
 
@@ -33,13 +33,13 @@ public class GasCompressorScreen extends AbstractContainerScreen<GasCompressorMe
         int y = (height - imageHeight) / 2;
 
         this.enabilitationButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.data.get(8) > 0 ? "Disable" : "Enable"),
+                        Component.literal(menu.data.get(6) > 0 ? "Disable" : "Enable"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
                             );
                         })
-                .bounds(x + 81, y + 23, 35, 18)
+                .bounds(x + 93, y + 47, 36, 18)
                 .build()
         );
     }
@@ -48,30 +48,38 @@ public class GasCompressorScreen extends AbstractContainerScreen<GasCompressorMe
     protected void renderBg(GuiGraphics guiGraphics, float v, int i, int i1) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, GAS_COMPRESSOR_GUI);
+        RenderSystem.setShaderTexture(0, ENERGY_GENERATOR_GUI);
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
-        guiGraphics.blit(GAS_COMPRESSOR_GUI, x, y, 0, 0, 175, 146);
+        guiGraphics.blit(ENERGY_GENERATOR_GUI, x, y, 0, 0, 175, 170);
 
-        int scaledGas = menu.getGasScaled(41);
-        if (scaledGas > 0) {
-            int emptySpace = 41 - scaledGas;
-            guiGraphics.blit(GAS_GUI, x + 8, y + 13 + emptySpace, 0, emptySpace, 16, scaledGas, 16, 41);
-        }
-
-        int scaledLiquid = menu.getLiquidScaled(41);
-        if (scaledLiquid > 0) {
-            int emptySpace = 41 - scaledLiquid;
-            guiGraphics.blit(LIQUID_GUI, x + 152, y + 13 + emptySpace, 0, emptySpace, 16, scaledLiquid, 16, 41);
+        int scaledFuel = menu.getFuelScaled(41);
+        if (scaledFuel > 0) {
+            int emptySpace = 41 - scaledFuel;
+            guiGraphics.blit(FUEL_GUI, x + 8, y + 35 + emptySpace, 0, emptySpace, 16, scaledFuel, 16, 41);
         }
 
         int chargeLength = menu.getEnergyScaled(54);
         if (chargeLength > 0) {
-            int startX = x + 61;
-            int startY = y + 13;
+            int startX = x + 94;
+            int startY = y + 69;
             int endX = startX + chargeLength;
             int endY = startY + 7;
             guiGraphics.fill(startX, startY, endX, endY, 0xFFFFE400);
+        }
+
+        int fireHeight = menu.getBurnTimeScaled(13);
+        if (fireHeight > 0) {
+            guiGraphics.blit(FIRE_ICON,
+                    x + 45,                      
+                    y + 44 + (13 - fireHeight),    
+                    0.0F,                          
+                    (float) (13 - fireHeight),  
+                    13,                           
+                    fireHeight,                    
+                    13,                          
+                    13                          
+            );
         }
     }
 
@@ -80,43 +88,29 @@ public class GasCompressorScreen extends AbstractContainerScreen<GasCompressorMe
         super.renderTooltip(guiGraphics, mouseX, mouseY);
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
-
-        int gasX = x + 8;  // X of the tank texture
-        int gasY = y + 13;   // Y of the top of the tank
-        int gasWidth = 16;   // Width in pixels
-        int gasHeight = 41;   //Height in pixel
-        int liquidX = x + 152;
-        int liquidY = y + 13;
-        int liquidWidth = 16;
-        int liquidHeight = 41;
-        int energyX = x + 61;
-        int energyY = y + 13;
+        
+        int fuelX = x + 8;
+        int fuelY = y + 35;
+        int fuelWidth = 16;
+        int fuelHeight = 41;
+        int energyX = x + 94;
+        int energyY = y + 69;
         int energyWidth = 54;
         int energyHeight = 7;
 
-        if (isMouseOver(mouseX, mouseY, gasX, gasY, gasWidth, gasHeight)) {
-            int currentGas = menu.blockEntity.gasTank.getFluidAmount();
-            int capacity = menu.blockEntity.gasTank.getCapacity();
+        if (isMouseOver(mouseX, mouseY, fuelX, fuelY, fuelWidth, fuelHeight)) {
+            int currentFuel = menu.blockEntity.getFuelAmount();
+            int capacity = menu.blockEntity.getMaxCapacity();
 
             guiGraphics.renderTooltip(font,
-                    Component.literal("Gas: " + currentGas + " mB / " + capacity + " mB"),
-                    mouseX, mouseY
-            );
-        }
-
-        if (isMouseOver(mouseX, mouseY, liquidX, liquidY, liquidWidth, liquidHeight)) {
-            int currentLiquid = menu.blockEntity.liquidTank.getFluidAmount();
-            int capacity = menu.blockEntity.liquidTank.getCapacity();
-
-            guiGraphics.renderTooltip(font,
-                    Component.literal("Liquified Gas: " + currentLiquid + " mB / " + capacity + " mB"),
+                    Component.literal("Fuel: " + currentFuel + " mB / " + capacity + " mB"),
                     mouseX, mouseY
             );
         }
 
         if (isMouseOver(mouseX, mouseY, energyX, energyY, energyWidth, energyHeight)) {
-            int currentEnergy = menu.data.get(6);
-            int capacity = menu.data.get(7);
+            int currentEnergy = menu.data.get(4);
+            int capacity = menu.data.get(5);
 
             guiGraphics.renderTooltip(font,
                     Component.literal("Energy: " + currentEnergy + " FE / " + capacity + " FE"),
@@ -128,7 +122,7 @@ public class GasCompressorScreen extends AbstractContainerScreen<GasCompressorMe
     @Override
     protected void containerTick() {
         super.containerTick();
-        this.enabilitationButton.setMessage(Component.literal(menu.data.get(8) > 0 ? "Disable" : "Enable"));
+        this.enabilitationButton.setMessage(Component.literal(menu.data.get(6) > 0 ? "Disable" : "Enable"));
     }
 
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {
@@ -138,7 +132,7 @@ public class GasCompressorScreen extends AbstractContainerScreen<GasCompressorMe
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         guiGraphics.drawString(this.font, this.title, 7, 3, 0x404040, false);
-        guiGraphics.drawString(this.font, this.playerInventoryTitle, 7, 55, 0x404040, false);
+        guiGraphics.drawString(this.font, this.playerInventoryTitle, 7, 78, 0x404040, false);
     }
 
     @Override

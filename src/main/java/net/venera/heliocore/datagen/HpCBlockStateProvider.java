@@ -96,6 +96,16 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                         Direction.WEST, fluidOutPort
                 )
         );
+        directionalMachineBlock(HpCBlocks.ENERGY_GENERATOR_BLOCK.get(),
+                machineSide,
+                Map.of(
+                        Direction.NORTH, energyOutPort,
+                        Direction.UP, machineTop,
+                        Direction.DOWN, machineBottom,
+                        Direction.SOUTH, machineSide,
+                        Direction.EAST, fluidInPort
+                )
+        );
     }
 
     //region Helpers

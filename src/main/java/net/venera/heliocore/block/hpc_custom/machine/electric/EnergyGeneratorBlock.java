@@ -1,0 +1,45 @@
+package net.venera.heliocore.block.hpc_custom.machine.electric;
+
+import com.mojang.serialization.MapCodec;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.venera.heliocore.block.entity.HpCBlockEntities;
+import net.venera.heliocore.block.entity.machine.electric.EnergyGeneratorEntity;
+import net.venera.heliocore.block.hpc_custom.machine.BaseMachineBlock;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Supplier;
+
+public class EnergyGeneratorBlock extends BaseMachineBlock<EnergyGeneratorEntity> {
+    public static final MapCodec<EnergyGeneratorBlock> CODEC = simpleCodec(EnergyGeneratorBlock::new);
+    public EnergyGeneratorBlock(Properties properties) {
+        this(properties, HpCBlockEntities.ENERGY_GENERATOR_ENTITY);
+    }
+    public EnergyGeneratorBlock(Properties properties, Supplier<BlockEntityType<EnergyGeneratorEntity>> type) {
+        super(properties, type);
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return this.blockEntityType.get().create(blockPos, blockState);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        if(level.isClientSide()) return null;
+
+        return createTickerHelper(blockEntityType, this.blockEntityType.get(),
+                (level1, blockPos, blockState, blockEntity) -> blockEntity.tick(level1, blockPos, blockState));
+    }
+}

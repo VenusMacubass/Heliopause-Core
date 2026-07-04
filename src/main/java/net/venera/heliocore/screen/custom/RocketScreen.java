@@ -28,7 +28,7 @@ public class RocketScreen  extends AbstractContainerScreen<RocketMenu> {
 
         int chargeLength = menu.getEnergyScaled(54);
         if (chargeLength > 0) {
-            int startX = x + 72;
+            int startX = x + 92;
             int startY = y + 51;
             int endX = startX + chargeLength;
             int endY = startY + 7;
@@ -61,7 +61,7 @@ public class RocketScreen  extends AbstractContainerScreen<RocketMenu> {
         int imageX = (width - imageWidth) / 2;
         int imageY = (height - imageHeight) / 2;
 
-        int energyX = imageX + 72;
+        int energyX = imageX + 92;
         int energyY = imageY + 51;
         int energyWidth = 54;
         int energyHeight = 7;

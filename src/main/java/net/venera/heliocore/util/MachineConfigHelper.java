@@ -36,6 +36,9 @@ public class MachineConfigHelper {
         IO_CONFIG.put(HpCBlockEntities.GAS_COMPRESSOR_ENTITY, Map.of(
                 Direction.NORTH, true
         ));
+        IO_CONFIG.put(HpCBlockEntities.ENERGY_GENERATOR_ENTITY, Map.of(
+                Direction.NORTH, false
+        ));
     }
     
     public static Map<Direction, Boolean> getConfigFor(BlockEntityType<?> type) {

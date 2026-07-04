@@ -158,7 +158,7 @@
   "container.heliocore.energy_storage_unit": "Energy Storage Unit",
   "container.heliocore.cargo_manager": "Cargo Manager",
   "container.heliocore.solar_panel": "Solar Panel",
-  
+  "container.heliocore.energy_generator": "Energy Generator",
 
 
   "death.attack.radiation_damage": "%1$s succumbed to radiation poisoning.",

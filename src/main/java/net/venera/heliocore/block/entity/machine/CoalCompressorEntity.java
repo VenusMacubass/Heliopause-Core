@@ -172,7 +172,7 @@ public class CoalCompressorEntity extends BaseMachineEntity{
         }
     }
 
-    private void craftItem(net.minecraft.world.item.crafting.Recipe<?> recipe) {
+    private void craftItem(Recipe<?> recipe) {
         ItemStack result = recipe.getResultItem(level.registryAccess()).copy();
 
         if (recipe instanceof CoalCompressorRecipe) {
@@ -211,7 +211,7 @@ public class CoalCompressorEntity extends BaseMachineEntity{
         return level.getRecipeManager().getRecipeFor(HpCRecipes.COAL_COMPRESSOR_TYPE.get(), input, level).orElse(null);
     }
 
-    private RecipeHolder<net.minecraft.world.item.crafting.BlastingRecipe> getBlastingRecipe() {
+    private RecipeHolder<BlastingRecipe> getBlastingRecipe() {
         if (level == null) return null;
 
         ItemStack inputItem = ItemStack.EMPTY;
@@ -272,7 +272,7 @@ public class CoalCompressorEntity extends BaseMachineEntity{
         
         int scaledProgress = (int) ((float) progress / maxProgress * pixels); 
         
-        return Math.min(scaledProgress, pixels); //Within the texture bounds
+        return Math.min(scaledProgress, pixels); 
     }
     public int getFireIconScaled(int pixels) {
         if (burnTime == 0) return 0;

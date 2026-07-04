@@ -68,6 +68,7 @@ public class HpCEvents {
         registerElectric(event, HpCBlockEntities.CARGO_MANAGER_ENTITY.get());
         registerElectric(event, HpCBlockEntities.FUEL_MANAGER_ENTITY.get());
         registerElectric(event, HpCBlockEntities.OXYGEN_GENERATOR_ENTITY.get());
+        registerElectric(event, HpCBlockEntities.ENERGY_GENERATOR_ENTITY.get());
     }
     
     private static void registerElectric(RegisterCapabilitiesEvent event, BlockEntityType<? extends BaseElectricMachineEntity> type) {
@@ -253,7 +254,6 @@ public class HpCEvents {
                 LanderControlPayload.TYPE,
                 LanderControlPayload.STREAM_CODEC,
                 (payload, context) -> {
-                    // This runs on the Server!
                     context.enqueueWork(() -> {
                         Player player = context.player();
                         if (player.getVehicle() instanceof Tier1RocketLanderEntity lander) {

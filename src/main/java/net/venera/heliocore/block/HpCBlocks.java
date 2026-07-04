@@ -98,9 +98,10 @@ public class HpCBlocks {
 
     public static final DeferredBlock<Block> GAS_COMPRESSOR_BLOCK = registerBlock("gas_compressor_block",
             () -> new GasCompressorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.GAS_COMPRESSOR_ENTITY));
-    
-    
-    
+
+    public static final DeferredBlock<Block> ENERGY_GENERATOR_BLOCK = registerBlock("energy_generator_block",
+            () -> new EnergyGeneratorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.ENERGY_GENERATOR_ENTITY));
+
     //endregion
     
     //region Moon
