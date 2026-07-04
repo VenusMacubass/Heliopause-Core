@@ -17,6 +17,8 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.hpc_custom.machine.electric.EnergyStorageBlock;
+import net.venera.heliocore.block.hpc_custom.machine.electric.SolarPanelBlock;
+import net.venera.heliocore.fluid.HpCFluids;
 
 import java.util.Map;
 
@@ -40,6 +42,9 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     ResourceLocation fluidInPort = modLoc("block/machine/machine_fluid_input");
     ResourceLocation fluidOutPort = modLoc("block/machine/machine_fluid_output");
     ResourceLocation airVent = modLoc("block/machine/machine_gas_vent");
+    
+    ResourceLocation solarPanelSide = modLoc("block/machine/machine_basic_solar_panel");
+    ResourceLocation solarPanelTop = modLoc("block/machine/machine_solar_top");
 
     @Override
     protected void registerStatesAndModels() {
@@ -52,6 +57,10 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         blockWithItem(HpCBlocks.SILICON_BLOCK);
         blockWithItem(HpCBlocks.MOON_COBBLESTONE);
         blockWithItem(HpCBlocks.COPPER_WIRE_BLOCK);
+
+        fluidBlock(HpCFluids.CRUDE_OIL.getFluidBlockRegistry(), modLoc("block/crude_oil_still"));
+        fluidBlock(HpCFluids.REFINED_FUEL.getFluidBlockRegistry(), modLoc("block/refined_fuel_still"));
+        //fluidBlock(HpCFluids.LIQUID_OXYGEN.getFluidBlockRegistry(), modLoc("block/oxygen_liquid_still"));
 
         translucentBlock(HpCBlocks.PRISMATIC_GLASS, prismaticTex);
         translucentPaneBlock(HpCBlocks.PRISMATIC_GLASS_PANE.get(), prismaticTex, prismaticPaneTex);
@@ -88,6 +97,20 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 ),
                 "block/machine/energy_storage_unit/energy_storage_unit_",
                 Direction.NORTH, Direction.SOUTH 
+        );
+
+        chargeableMachineBlock(
+                HpCBlocks.BASIC_SOLAR_BLOCK.get(),
+                SolarPanelBlock.CHARGE,
+                machineSide,
+                Map.of(
+                        Direction.NORTH, energyOutPort,
+                        Direction.SOUTH, solarPanelSide,
+                        Direction.UP, solarPanelTop,
+                        Direction.DOWN, machineBottom
+                ),
+                "block/machine/energy_storage_unit/energy_storage_unit_",
+                Direction.EAST, Direction.WEST
         );
         
         directionalMachineBlock(HpCBlocks.OXYGEN_GENERATOR_BLOCK.get(), 
@@ -200,6 +223,19 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         ModelFile model = models().cubeAll(deferredBlock.getId().getPath(), texture)
                 .renderType("minecraft:translucent");
         simpleBlockWithItem(deferredBlock.get(), model);
+    }
+
+    public void fluidBlock(DeferredBlock<?> fluidBlock, ResourceLocation particleTexture) {
+        String baseName = fluidBlock.getId().getPath();
+        
+        ModelFile model = models().getBuilder(baseName)
+                .texture("particle", particleTexture);
+        
+        getVariantBuilder(fluidBlock.get()).forAllStates(state ->
+                ConfiguredModel.builder()
+                        .modelFile(model)
+                        .build()
+        );
     }
 
     public void translucentPaneBlock(IronBarsBlock block, ResourceLocation pane, ResourceLocation edge) {

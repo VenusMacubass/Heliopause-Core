@@ -77,6 +77,10 @@ public class HpCLiquidBlockFactory {
 		return fluidblock.get();
 	}
 
+	public DeferredBlock<LiquidBlock> getFluidBlockRegistry() {
+		return fluidblock;
+	}
+
 	public DeferredItem<LiquidBucketItem> getBucketRegistry() {
 		return bucket;
 	}

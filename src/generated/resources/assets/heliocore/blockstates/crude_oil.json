@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "heliocore:block/crude_oil"
+    },
+    "level=1": {
+      "model": "heliocore:block/crude_oil"
+    },
+    "level=10": {
+      "model": "heliocore:block/crude_oil"
+    },
+    "level=11": {
+      "model": "heliocore:block/crude_oil"
+    },
+    "level=12": {
+      "model": "heliocore:block/crude_oil"
+    },
+    "level=13": {
+      "model": "heliocore:block/crude_oil"
+    },
+    "level=14": {
+      "model": "heliocore:block/crude_oil"
+    },
+    "level=15": {
+      "model": "heliocore:block/crude_oil"
+    },
+    "level=2": {
+      "model": "heliocore:block/crude_oil"
+    },
+    "level=3": {
+      "model": "heliocore:block/crude_oil"
+    },
+    "level=4": {
+      "model": "heliocore:block/crude_oil"
+    },
+    "level=5": {
+      "model": "heliocore:block/crude_oil"
+    },
+    "level=6": {
+      "model": "heliocore:block/crude_oil"
+    },
+    "level=7": {
+      "model": "heliocore:block/crude_oil"
+    },
+    "level=8": {
+      "model": "heliocore:block/crude_oil"
+    },
+    "level=9": {
+      "model": "heliocore:block/crude_oil"
+    }
+  }
+}
