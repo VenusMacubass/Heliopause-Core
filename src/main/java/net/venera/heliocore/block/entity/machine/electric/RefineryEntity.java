@@ -42,8 +42,8 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     private final int OUTPUT_SLOT = 1;
     private final int BATTERY_SLOT = 2;
     private final int BUCKET_CAPACITY = 1000;
-    private int CONVERSION_RATE = 1;
-    private int ENERGY_USAGE = 2; 
+    private final int CONVERSION_RATE;
+    private final int ENERGY_USAGE; 
     private final int maxCapacity = 6000;
     public boolean isActive = false;
     private final int MAX_FLOW_RATE = 10;
@@ -123,7 +123,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
         if (processOutputs()) dirty = true;
 
         if (canRefine() && enabled) {
-            refine();
+            refine(level);
             dirty = true;
         } else {
             if (isActive) {
@@ -255,7 +255,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     }
 
     private boolean canRefine(){
-        return oilTank.getFluidAmount() > 0 && fuelTank.getSpace() > 0 && energyStorage.getEnergyStored() >= ENERGY_USAGE;
+        return oilTank.getFluidAmount() > 2 && fuelTank.getSpace() > 0 && energyStorage.getEnergyStored() >= ENERGY_USAGE;
     }
 
     @Override
@@ -309,19 +309,21 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
         return fuelTank.drain(amount, action).getAmount();
     }
 
-    private void refine(){
-        isActive = true;
-        
-        int oilAvailable = oilTank.getFluidAmount();
-        int fuelSpace = maxCapacity - fuelTank.getFluidAmount();
+    private void refine(Level level){
+        if((level.getGameTime() % 5) == 0){
+            isActive = true;
 
-        int conversionAmount = Math.min(this.CONVERSION_RATE, oilAvailable);
-        conversionAmount = Math.min(conversionAmount, fuelSpace);
-        
-        oilTank.drain(conversionAmount, IFluidHandler.FluidAction.EXECUTE);
-        fuelTank.fill(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), conversionAmount), IFluidHandler.FluidAction.EXECUTE);
+            int oilAvailable = oilTank.getFluidAmount();
+            int fuelSpace = fuelTank.getSpace();
 
-        this.energyStorage.extractEnergy(this.ENERGY_USAGE, false);
+            int conversionAmount = Math.min(this.CONVERSION_RATE, oilAvailable);
+            conversionAmount = Math.min(conversionAmount/2, fuelSpace);
+
+            oilTank.drain((conversionAmount*2), IFluidHandler.FluidAction.EXECUTE);
+            fuelTank.fill(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), conversionAmount), IFluidHandler.FluidAction.EXECUTE);
+
+            this.energyStorage.extractEnergy(this.ENERGY_USAGE, false);
+        }
     }
 
     public int getOilAmount() {

@@ -25,7 +25,7 @@ public class HpCBlockEntities {
             BLOCK_ENTITIES.register("refinery", () ->
                     BlockEntityType.Builder.of(
                             (pos, state) -> new RefineryEntity(HpCBlockEntities.REFINERY_ENTITY.get(), pos, state,
-                                    10000, 100, 2, 1
+                                    10000, 100, 2, 10
                             ),
                             HpCBlocks.REFINERY.get()
                     ).build(null));
@@ -75,6 +75,12 @@ public class HpCBlockEntities {
                             new GasCompressorEntity(HpCBlockEntities.GAS_COMPRESSOR_ENTITY.get(), blockPos, blockState,
                                     10000, 100, 3, 5),
                     HpCBlocks.GAS_COMPRESSOR_BLOCK.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EnergyGeneratorEntity>> ENERGY_GENERATOR_ENTITY = BLOCK_ENTITIES.register("energy_generator_entity",
+            ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
+                            new EnergyGeneratorEntity(HpCBlockEntities.OXYGEN_GENERATOR_ENTITY.get(), blockPos, blockState,
+                                    100, 3,  3),
+                    HpCBlocks.ENERGY_GENERATOR_BLOCK.get()).build(null));
     
     //endregion
 

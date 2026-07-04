@@ -87,13 +87,11 @@ public class CoalCompressorEntity extends BaseMachineEntity{
 
     public void tick(Level level, BlockPos pos, BlockState state, CoalCompressorEntity entity) {
         if (level.isClientSide()) return;
-
-        // Check which recipe is active
+        
         RecipeHolder<CoalCompressorRecipe> compRecipe = getCompressorRecipe();
-        RecipeHolder<net.minecraft.world.item.crafting.BlastingRecipe> blastRecipe = getBlastingRecipe();
-
-        // Set the active recipe (Prioritize Compressor recipes)
-        net.minecraft.world.item.crafting.Recipe<?> activeRecipe = null;
+        RecipeHolder<BlastingRecipe> blastRecipe = getBlastingRecipe();
+        
+        Recipe<?> activeRecipe = null;
         if (compRecipe != null) activeRecipe = compRecipe.value();
         else if (blastRecipe != null) activeRecipe = blastRecipe.value();
 
@@ -107,9 +105,6 @@ public class CoalCompressorEntity extends BaseMachineEntity{
         if (burnTime > 0 && activeRecipe != null && canCraft(activeRecipe)) {
             progress++;
             isActive = true;
-
-            // Set the state! If it's your hpc_custom recipe, compressing = true. 
-            // If it's a blasting recipe, this returns false.
             compressing = (activeRecipe instanceof CoalCompressorRecipe);
 
             dirty = true;
@@ -181,13 +176,11 @@ public class CoalCompressorEntity extends BaseMachineEntity{
         ItemStack result = recipe.getResultItem(level.registryAccess()).copy();
 
         if (recipe instanceof CoalCompressorRecipe) {
-            // It's a compressor recipe: shrink all valid inputs in the 3x3 grid
             for (int i : INPUT_SLOTS) {
                 ItemStack stack = inventory.getStackInSlot(i);
                 if (!stack.isEmpty()) stack.shrink(1);
             }
         } else {
-            // It's a blasting recipe: find the ONE valid item and shrink it
             for (int i : INPUT_SLOTS) {
                 ItemStack stack = inventory.getStackInSlot(i);
                 if (!stack.isEmpty()) {
@@ -223,8 +216,7 @@ public class CoalCompressorEntity extends BaseMachineEntity{
 
         ItemStack inputItem = ItemStack.EMPTY;
         int count = 0;
-
-        // Count how many items are in the 3x3 grid
+        
         for (int i : INPUT_SLOTS) {
             ItemStack stack = inventory.getStackInSlot(i);
             if (!stack.isEmpty()) {
@@ -232,7 +224,6 @@ public class CoalCompressorEntity extends BaseMachineEntity{
                 count++;
             }
         }
-        // Blasting recipes require exactly ONE input stack. Abort if grid is cluttered.
         if (count != 1) return null;
 
         SingleRecipeInput input = new SingleRecipeInput(inputItem);
@@ -279,16 +270,16 @@ public class CoalCompressorEntity extends BaseMachineEntity{
     public int getArrowScaled(int pixels) {
         if (maxProgress == 0) return 0;
         
-        int scaledProgress = (int) ((float) progress / maxProgress * pixels); //Calculate the scaled progress based on texture length
+        int scaledProgress = (int) ((float) progress / maxProgress * pixels); 
         
         return Math.min(scaledProgress, pixels); //Within the texture bounds
     }
     public int getFireIconScaled(int pixels) {
         if (burnTime == 0) return 0;
         
-        int scaledFire = (int) ((float) burnTime / maxBurnTime * pixels); //Calculate the scaled progress based on texture length
+        int scaledFire = (int) ((float) burnTime / maxBurnTime * pixels); 
         
-        return Math.min(scaledFire, pixels); //Within the texture bounds
+        return Math.min(scaledFire, pixels); 
     }
 
     @Override
