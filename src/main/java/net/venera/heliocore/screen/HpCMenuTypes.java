@@ -44,6 +44,9 @@ public class HpCMenuTypes {
     public static final DeferredHolder<MenuType<?>, MenuType<GasCompressorMenu>> GAS_COMPRESSOR_MENU =
             registerMenuType("gas_compressor_menu", GasCompressorMenu::new);
 
+    public static final DeferredHolder<MenuType<?>, MenuType<VaporizerMenu>> VAPORIZER_MENU =
+            registerMenuType("vaporizer_menu", VaporizerMenu::new);
+
     public static final DeferredHolder<MenuType<?>, MenuType<EnergyGeneratorMenu>> ENERGY_GENERATOR_MENU =
             registerMenuType("energy_generator_menu", EnergyGeneratorMenu::new);
 

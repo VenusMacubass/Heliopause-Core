@@ -45,6 +45,8 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     
     ResourceLocation solarPanelSide = modLoc("block/machine/machine_basic_solar_panel");
     ResourceLocation solarPanelTop = modLoc("block/machine/machine_solar_top");
+    ResourceLocation gasCompressor = modLoc("block/machine/gas_compressor");
+    ResourceLocation gasVaporizer = modLoc("block/machine/gas_vaporizer");
 
     @Override
     protected void registerStatesAndModels() {
@@ -124,17 +126,31 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                         Direction.SOUTH, fluidOutPort
                 )
         );
+        
         directionalMachineBlock(HpCBlocks.GAS_COMPRESSOR_BLOCK.get(),
                 machineSide, 
                 Map.of(
                         Direction.NORTH, energyInPort, 
                         Direction.UP, machineTop,
                         Direction.DOWN, machineBottom,
-                        Direction.SOUTH, machineSide,
+                        Direction.SOUTH, gasCompressor,
                         Direction.EAST, fluidInPort,
                         Direction.WEST, fluidOutPort
                 )
         );
+
+        directionalMachineBlock(HpCBlocks.GAS_VAPORIZER_BLOCK.get(),
+                machineSide,
+                Map.of(
+                        Direction.NORTH, energyInPort,
+                        Direction.UP, machineTop,
+                        Direction.DOWN, machineBottom,
+                        Direction.SOUTH, gasVaporizer,
+                        Direction.EAST, fluidInPort,
+                        Direction.WEST, fluidOutPort
+                )
+        );
+        
         directionalMachineBlock(HpCBlocks.ENERGY_GENERATOR_BLOCK.get(),
                 machineSide,
                 Map.of(

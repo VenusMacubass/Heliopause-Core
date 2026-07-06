@@ -76,6 +76,13 @@ public class HpCBlockEntities {
                                     5000, 100, 3, 5),
                     HpCBlocks.GAS_COMPRESSOR_BLOCK.get()).build(null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GasVaporizerEntity>> GAS_VAPORIZER_ENTITY = BLOCK_ENTITIES.register("gas_vaporizer_entity",
+            ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
+                            new GasVaporizerEntity(HpCBlockEntities.GAS_VAPORIZER_ENTITY.get(), blockPos, blockState,
+                                    5000, 100, 3, 5),
+                    HpCBlocks.GAS_VAPORIZER_BLOCK.get()).build(null));
+    
+
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EnergyGeneratorEntity>> ENERGY_GENERATOR_ENTITY = BLOCK_ENTITIES.register("energy_generator_entity",
             ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
                             new EnergyGeneratorEntity(HpCBlockEntities.ENERGY_GENERATOR_ENTITY.get(), blockPos, blockState,

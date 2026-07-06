@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-04T20:55:01.5340399	Loot Tables
+// 1.21.1	2026-07-06T22:17:58.8853029	Loot Tables
 4c6effb42af79317efc025b64a17716f1bcfaa42 data/heliocore/loot_table/blocks/aluminium_block.json
 64247a8f311a92e6ec87cc7d0e221e1a168f6380 data/heliocore/loot_table/blocks/aluminium_ore.json
 169aa8b3cb872639f3c6660ddb1af2fc0bbcdf83 data/heliocore/loot_table/blocks/arc_lamp.json
@@ -18,6 +18,7 @@ f0212cadba30b6af7b467b4263f8647ce9f49101 data/heliocore/loot_table/blocks/energy
 f3e0fac232a025f86474cc7096a8b8ba3f9c9fc0 data/heliocore/loot_table/blocks/fluid_tank.json
 04a55b99be3dc61e198fc9f67dbe3efc8e4ba010 data/heliocore/loot_table/blocks/fuel_manager_block.json
 295b8dcfff45d723d80f36dd9acef8061ad9750e data/heliocore/loot_table/blocks/gas_compressor_block.json
+a33438df35a47f59e2bf8394e5cb8b48a96bacca data/heliocore/loot_table/blocks/gas_vaporizer_block.json
 c8cbd89d9cb2ec033847285a1a520cc836416cdc data/heliocore/loot_table/blocks/iridium_block.json
 2c61e64bfb6343cbfa7208480e673da26d733233 data/heliocore/loot_table/blocks/iridium_ore.json
 d73da6f9b5b36a1f6d6c4284b2a664070bac1342 data/heliocore/loot_table/blocks/launch_pad.json
