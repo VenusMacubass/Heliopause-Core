@@ -81,10 +81,10 @@ public class VaporizerScreen  extends AbstractContainerScreen<VaporizerMenu> {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
-        int gasX = x + 8;  // X of the tank texture
-        int gasY = y + 13;   // Y of the top of the tank
-        int gasWidth = 16;   // Width in pixels
-        int gasHeight = 41;   //Height in pixel
+        int gasX = x + 8; 
+        int gasY = y + 13;   
+        int gasWidth = 16;   
+        int gasHeight = 41;   
         int liquidX = x + 152;
         int liquidY = y + 13;
         int liquidWidth = 16;

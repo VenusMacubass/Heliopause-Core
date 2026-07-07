@@ -122,7 +122,7 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
                 }
             }
             @Override
-            public int getCount() { return 9; } // Updated total count
+            public int getCount() { return 9; }
         };
     }
 
@@ -278,27 +278,22 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
                 if (targetMachine.getFluidPortType(inputFace.getOpposite()) == PortType.OUTPUT) {
                     continue;
                 }
-
-                // 2. DETERMINE THE TARGET FLUID
+                
                 String fluidToAskFor = null;
 
                 if (!gasTank.isEmpty()) {
-                    // We already have gas, so we MUST strictly ask for this exact gas
                     fluidToAskFor = BuiltInRegistries.FLUID.getKey(gasTank.getFluid().getFluid()).toString();
                 } else {
-                    // We are empty! Use our new interface method to peek at what the passive tank has
                     String peekedFluid = targetMachine.peekFluid(inputFace.getOpposite());
 
                     if (peekedFluid != null) {
-                        // Check if the peeked fluid is a valid gas (density < 0) before we try to pull it
                         Fluid resolvedFluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(peekedFluid));
                         if (resolvedFluid != null && resolvedFluid.getFluidType().getDensity() < 0) {
                             fluidToAskFor = peekedFluid;
                         }
                     }
                 }
-
-                // 3. EXECUTE THE PULL
+                
                 if (fluidToAskFor != null) {
                     int availableToExtract = targetMachine.extractFluid(fluidToAskFor, fluidToPull, true);
 

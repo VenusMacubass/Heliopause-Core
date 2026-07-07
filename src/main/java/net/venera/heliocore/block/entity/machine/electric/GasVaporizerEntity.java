@@ -51,7 +51,6 @@ public class GasVaporizerEntity extends BaseElectricMachineEntity implements IFl
     private int conversionScore = 0;
     private final int conversionThreshold = 100;
     private final int conversionMaximum = 2400;
-    FluidStack conversionStack;
     public final FluidTank gasTank = new FluidTank(maxCapacity) {
         @Override
         protected void onContentsChanged() {
@@ -159,26 +158,10 @@ public class GasVaporizerEntity extends BaseElectricMachineEntity implements IFl
         if (dirty) setChanged();
         BaseElectricMachineEntity.tick(level, pos, state, this);
     }
-    
-    private void evaporate(FluidStack gasStack){
-        if(this.conversionScore > 0 && gasStack.getAmount() > 0){
-            gasStack.setAmount(gasStack.getAmount()-Math.min(this.CONVERSION_RATE, gasStack.getAmount()));
-            
-        }
-    }
-
-    private boolean canEvaporate() {
-        return liquidTank.getFluidAmount() > 0
-                && gasTank.getSpace() >= (CONVERSION_RATE * conversionThreshold)
-                && energyStorage.getEnergyStored() >= ENERGY_USAGE;
-    }
 
     private boolean processPhaseChange() {
         boolean didWork = false;
-
-        // ==========================================
-        // STEP 1: THE BOILER (Liquid -> Score)
-        // ==========================================
+        
         if (liquidTank.getFluidAmount() > 0 && energyStorage.getEnergyStored() >= ENERGY_USAGE) {
             if (conversionScore <= conversionMaximum - conversionThreshold) {
                 FluidStack drained = liquidTank.drain(1, IFluidHandler.FluidAction.EXECUTE);
@@ -193,18 +176,13 @@ public class GasVaporizerEntity extends BaseElectricMachineEntity implements IFl
         } else if (conversionScore <= 0) {
             isActive = false;
         }
-
-        // ==========================================
-        // STEP 2: THE VENT (Score -> Gas Tank)
-        // ==========================================
+        
         if (conversionScore > 0) {
             Fluid targetGas = net.minecraft.world.level.material.Fluids.EMPTY;
-
-            // 1. Identify the gas we should be generating
+            
             if (!gasTank.isEmpty()) {
                 targetGas = gasTank.getFluid().getFluid();
             } else if (!liquidTank.isEmpty()) {
-                // PHASE CHANGE MAPPING: Dynamically swap "_liquid" for "_gas"
                 ResourceLocation liquidId = BuiltInRegistries.FLUID.getKey(liquidTank.getFluid().getFluid());
                 String gasName = liquidId.getPath().replace("_liquid", "_gas");
 
@@ -217,12 +195,9 @@ public class GasVaporizerEntity extends BaseElectricMachineEntity implements IFl
                     }
                 }
             }
-
-            // 2. Safely push the valid gas into the tank
+            
             if (targetGas != net.minecraft.world.level.material.Fluids.EMPTY) {
                 int gasToPush = Math.min(conversionScore, CONVERSION_RATE);
-
-                // FIXED: Capture EXACTLY how much the tank accepted, preventing ghost voids!
                 int accepted = gasTank.fill(new FluidStack(targetGas, gasToPush), IFluidHandler.FluidAction.EXECUTE);
 
                 if (accepted > 0) {
@@ -230,7 +205,6 @@ public class GasVaporizerEntity extends BaseElectricMachineEntity implements IFl
                     didWork = true;
                 }
             } else {
-                // If there is no valid gas mapping (e.g. someone put crude oil in), wipe the score
                 conversionScore = 0;
                 didWork = true;
             }
@@ -247,8 +221,6 @@ public class GasVaporizerEntity extends BaseElectricMachineEntity implements IFl
 
             if (data != null && !data.isEmpty() && data.getFluid() != null && data.getFluid().getFluidType().getDensity() > 0) {
                 ResourceLocation fluidId = BuiltInRegistries.FLUID.getKey(data.getFluid());
-
-                // Only process the canister if the fluid ends in "_liquid"
                 if (fluidId.getPath().endsWith("_liquid")) {
                     int receivedLiquid = liquidTank.fill(new FluidStack(data.getFluid(), data.amount()), IFluidHandler.FluidAction.SIMULATE);
 
@@ -330,27 +302,22 @@ public class GasVaporizerEntity extends BaseElectricMachineEntity implements IFl
                 if (targetMachine.getFluidPortType(inputFace.getOpposite()) == IFluidMachine.PortType.OUTPUT) {
                     continue;
                 }
-
-                // 2. DETERMINE THE TARGET FLUID
+                
                 String fluidToAskFor = null;
 
                 if (!liquidTank.isEmpty()) {
-                    // We already have gas, so we MUST strictly ask for this exact gas
                     fluidToAskFor = BuiltInRegistries.FLUID.getKey(liquidTank.getFluid().getFluid()).toString();
                 } else {
-                    // We are empty! Use our new interface method to peek at what the passive tank has
                     String peekedFluid = targetMachine.peekFluid(inputFace.getOpposite());
 
                     if (peekedFluid != null) {
                         Fluid resolvedFluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(peekedFluid));
-                        // Must be a liquid AND the name must end in "_liquid"
                         if (resolvedFluid != null && resolvedFluid.getFluidType().getDensity() > 0 && peekedFluid.endsWith("_liquid")) {
                             fluidToAskFor = peekedFluid;
                         }
                     }
                 }
-
-                // 3. EXECUTE THE PULL
+                
                 if (fluidToAskFor != null) {
                     int availableToExtract = targetMachine.extractFluid(fluidToAskFor, fluidToPull, true);
 

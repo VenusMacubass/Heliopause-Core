@@ -69,6 +69,8 @@ public class HpCEvents {
         registerElectric(event, HpCBlockEntities.FUEL_MANAGER_ENTITY.get());
         registerElectric(event, HpCBlockEntities.OXYGEN_GENERATOR_ENTITY.get());
         registerElectric(event, HpCBlockEntities.ENERGY_GENERATOR_ENTITY.get());
+        registerElectric(event, HpCBlockEntities.GAS_COMPRESSOR_ENTITY.get());
+        registerElectric(event, HpCBlockEntities.GAS_VAPORIZER_ENTITY.get());
     }
     
     private static void registerElectric(RegisterCapabilitiesEvent event, BlockEntityType<? extends BaseElectricMachineEntity> type) {
@@ -151,8 +153,8 @@ public class HpCEvents {
             if (living.getType().is(HpCTags.Entities.DOES_NOT_BREATHE)) return;
             if (living.isInvertedHealAndHarm()) return;
 
-//            //Is the entity wearing an oxygen mask on their head? (Checks your JSON tag!)
-//            ItemStack headGear = living.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.HEAD);
+//            //Is the entity wearing an oxygen mask on their head?
+//            ItemStack headGear = living.getItemBySlot(EquipmentSlot.HEAD);
 //            if (headGear.is(OXYGEN_GEAR)) {
 //                return;
 //            }

@@ -5,8 +5,8 @@ import net.minecraft.core.Direction;
 
 public record GridPort(BlockPos machinePos, Direction machineFace, GridPort.PortType type) {
     public enum PortType {
-        INPUT,  //Battery, Sink
-        OUTPUT  //Generator, Source
+        INPUT,  //Consumer
+        OUTPUT  //Generator
     }
     
     public BlockPos getConnectedWirePos() {
