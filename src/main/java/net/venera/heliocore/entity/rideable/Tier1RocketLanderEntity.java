@@ -20,7 +20,7 @@ import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.item.hpc_custom.BatteryItem;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
-import net.venera.heliocore.screen.custom.LanderMenu;
+import net.venera.heliocore.screen.hpc_custom.LanderMenu;
 
 import javax.annotation.Nullable;
 

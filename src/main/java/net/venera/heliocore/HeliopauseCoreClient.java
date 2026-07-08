@@ -44,7 +44,7 @@ import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import net.venera.heliocore.render.FluidTankRenderer;
 import net.venera.heliocore.render.sky.MoonSkyRenderer;
 import net.venera.heliocore.screen.HpCMenuTypes;
-import net.venera.heliocore.screen.custom.*;
+import net.venera.heliocore.screen.hpc_custom.*;
 import net.venera.heliocore.util.LanderControlPayload;
 import org.joml.Matrix4f;
 
@@ -227,7 +227,7 @@ public class HeliopauseCoreClient {
                 return OXYGEN_TEXTURE;
             }
 
-        }, HpCFluids.OXYGEN_TYPE.get()); // <-- Tie it to your registered Oxygen Type here!
+        }, HpCFluids.OXYGEN_TYPE.get()); 
 
 
         /* Example for future gases:

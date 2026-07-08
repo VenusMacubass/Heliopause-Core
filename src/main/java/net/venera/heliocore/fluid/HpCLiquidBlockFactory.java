@@ -39,6 +39,7 @@ public class HpCLiquidBlockFactory {
     private static final ResourceLocation CRUDE_OIL_FLOW = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "block/crude_oil_flow");
     private static final ResourceLocation REFINED_FUEL_STILL = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "block/refined_fuel_still");
     private static final ResourceLocation REFINED_FUEL_FLOW = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "block/refined_fuel_flow");
+	private static final ResourceLocation OXYGEN_STILL = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "block/oxygen_liquid_still");
 
 	private final String name;
 	private final DeferredHolder<FluidType, FluidType> fluidType;
@@ -120,6 +121,7 @@ public class HpCLiquidBlockFactory {
                         return switch (name) {
                             case "crude_oil" -> CRUDE_OIL_STILL;
                             case "refined_fuel" -> REFINED_FUEL_STILL;
+							case "oxygen_liquid" -> OXYGEN_STILL;
                             default -> STILL_METAL;
                         };
                     }

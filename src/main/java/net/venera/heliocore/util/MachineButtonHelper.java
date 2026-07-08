@@ -10,7 +10,6 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.venera.heliocore.HeliopauseCore;
 
 public record MachineButtonHelper(BlockPos pos, int buttonId) implements CustomPacketPayload {
-    // Renamed the ID to be universal
     public static final Type<MachineButtonHelper> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "toggle_machine"));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, MachineButtonHelper> STREAM_CODEC = StreamCodec.composite(

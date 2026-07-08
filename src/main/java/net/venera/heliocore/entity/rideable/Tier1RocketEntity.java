@@ -1,14 +1,10 @@
 package net.venera.heliocore.entity.rideable;
 
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.*;
@@ -20,15 +16,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import net.venera.heliocore.HeliopauseCore;
-import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.dimension.HpCDimensions;
 import net.venera.heliocore.entity.HpCEntities;
 import net.venera.heliocore.item.HpCItems;
-import net.venera.heliocore.screen.custom.RocketMenu;
+import net.venera.heliocore.screen.hpc_custom.RocketMenu;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
 
 public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
     public final ItemStackHandler inventory = new ItemStackHandler(28);

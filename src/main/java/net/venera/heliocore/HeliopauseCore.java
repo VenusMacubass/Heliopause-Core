@@ -85,15 +85,13 @@ public class HeliopauseCore {
 //
 //        HeliopauseConfig.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
     }
-
-    // Add the example block item to the building blocks tab
+    
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
         //event.accept(ModBlocks.SPACE_GLASS);
         }
     }
-
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
+    
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts

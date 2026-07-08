@@ -22,7 +22,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.venera.heliocore.block.entity.HpCBlockEntities;
 import net.venera.heliocore.recipe.CoalCompressorRecipe;
 import net.venera.heliocore.recipe.HpCRecipes;
-import net.venera.heliocore.screen.custom.CoalCompressorMenu;
+import net.venera.heliocore.screen.hpc_custom.CoalCompressorMenu;
 import org.jetbrains.annotations.Nullable;
 
 public class CoalCompressorEntity extends BaseMachineEntity{

@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north": { "model": "heliocore:block/fuel_manager" },
-    "facing=east":  { "model": "heliocore:block/fuel_manager", "y": 90 },
-    "facing=west":  { "model": "heliocore:block/fuel_manager", "y": 270 },
-    "facing=south": { "model": "heliocore:block/fuel_manager", "y": 180 }
-  }
-}

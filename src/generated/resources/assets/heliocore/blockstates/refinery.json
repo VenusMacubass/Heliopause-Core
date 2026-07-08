@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "heliocore:block/refinery",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "heliocore:block/refinery",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "heliocore:block/refinery"
+    },
+    "facing=south": {
+      "model": "heliocore:block/refinery",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "heliocore:block/refinery",
+      "x": 270
+    },
+    "facing=west": {
+      "model": "heliocore:block/refinery",
+      "y": 270
+    }
+  }
+}

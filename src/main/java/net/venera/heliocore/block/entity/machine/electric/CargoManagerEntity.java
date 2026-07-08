@@ -17,7 +17,7 @@ import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.hpc_custom.LaunchPadBlock;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
-import net.venera.heliocore.screen.custom.CargoManagerMenu;
+import net.venera.heliocore.screen.hpc_custom.CargoManagerMenu;
 import net.venera.heliocore.util.MachineConfigHelper;
 import org.jetbrains.annotations.Nullable;
 

@@ -32,7 +32,7 @@ import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 import net.venera.heliocore.fluid.IFluidMachine;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
-import net.venera.heliocore.screen.custom.FuelManagerMenu;
+import net.venera.heliocore.screen.hpc_custom.FuelManagerMenu;
 import net.venera.heliocore.util.MachineConfigHelper;
 import net.venera.heliocore.util.PipeNetworkHelper;
 import org.jetbrains.annotations.Nullable;

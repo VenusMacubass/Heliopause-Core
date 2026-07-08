@@ -43,6 +43,10 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     ResourceLocation fluidOutPort = modLoc("block/machine/machine_fluid_output");
     ResourceLocation airVent = modLoc("block/machine/machine_gas_vent");
     
+    ResourceLocation coalCompressor = modLoc("block/machine/coal_compressor");
+    ResourceLocation refineryFront =  modLoc("block/machine/refinery_front");
+    ResourceLocation refineryTop =  modLoc("block/machine/refinery_energy_input");
+    ResourceLocation refinerySide =  modLoc("block/machine/refinery_side");
     ResourceLocation solarPanelSide = modLoc("block/machine/machine_basic_solar_panel");
     ResourceLocation solarPanelTop = modLoc("block/machine/machine_solar_top");
     ResourceLocation gasCompressor = modLoc("block/machine/gas_compressor");
@@ -62,7 +66,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
 
         fluidBlock(HpCFluids.CRUDE_OIL.getFluidBlockRegistry(), modLoc("block/crude_oil_still"));
         fluidBlock(HpCFluids.REFINED_FUEL.getFluidBlockRegistry(), modLoc("block/refined_fuel_still"));
-        //fluidBlock(HpCFluids.LIQUID_OXYGEN.getFluidBlockRegistry(), modLoc("block/oxygen_liquid_still"));
+        fluidBlock(HpCFluids.LIQUID_OXYGEN.getFluidBlockRegistry(), modLoc("block/oxygen_liquid_still"));
 
         translucentBlock(HpCBlocks.PRISMATIC_GLASS, prismaticTex);
         translucentPaneBlock(HpCBlocks.PRISMATIC_GLASS_PANE.get(), prismaticTex, prismaticPaneTex);
@@ -86,6 +90,27 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         tintedStairsBlock(HpCBlocks.MOON_ROCK_STAIRS,  moonRockTex);
         tintedSlabBlock(HpCBlocks.MOON_ROCK_SLAB, moonRockTex);
         tintedWallBlock(HpCBlocks.MOON_ROCK_WALL, moonRockTex);
+
+        directionalMachineBlock(HpCBlocks.COAL_COMPRESSOR.get(),
+                machineSide,
+                Map.of(
+                        Direction.NORTH, coalCompressor,
+                        Direction.UP, machineTop,
+                        Direction.DOWN, machineBottom
+                )
+        );
+        
+        directionalMachineBlock(HpCBlocks.REFINERY.get(), 
+                machineSide, 
+                Map.of(
+                        Direction.NORTH, refineryFront, 
+                        Direction.UP, refineryTop,    
+                        Direction.DOWN, machineBottom,
+                        Direction.EAST, fluidInPort,
+                        Direction.WEST, fluidOutPort,
+                        Direction.SOUTH, refinerySide
+                )
+        );
 
         chargeableMachineBlock(
                 HpCBlocks.ENERGY_STORAGE_UNIT.get(),
@@ -150,6 +175,25 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                         Direction.WEST, fluidOutPort
                 )
         );
+
+        directionalMachineBlock(HpCBlocks.FUEL_MANAGER_BLOCK.get(),
+                machineSide,
+                Map.of(
+                        Direction.NORTH, energyInPort,
+                        Direction.UP, machineTop,
+                        Direction.DOWN, machineBottom,
+                        Direction.EAST, fluidInPort
+                )
+        );
+
+        directionalMachineBlock(HpCBlocks.CARGO_MANAGER_BLOCK.get(),
+                machineSide,
+                Map.of(
+                        Direction.NORTH, energyInPort,
+                        Direction.UP, machineTop,
+                        Direction.DOWN, machineBottom
+                )
+        );
         
         directionalMachineBlock(HpCBlocks.ENERGY_GENERATOR_BLOCK.get(),
                 machineSide,
@@ -157,7 +201,6 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                         Direction.NORTH, energyOutPort,
                         Direction.UP, machineTop,
                         Direction.DOWN, machineBottom,
-                        Direction.SOUTH, machineSide,
                         Direction.EAST, fluidInPort
                 )
         );

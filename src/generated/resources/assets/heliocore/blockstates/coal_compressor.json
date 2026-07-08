@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "heliocore:block/coal_compressor",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "heliocore:block/coal_compressor",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "heliocore:block/coal_compressor"
+    },
+    "facing=south": {
+      "model": "heliocore:block/coal_compressor",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "heliocore:block/coal_compressor",
+      "x": 270
+    },
+    "facing=west": {
+      "model": "heliocore:block/coal_compressor",
+      "y": 270
+    }
+  }
+}

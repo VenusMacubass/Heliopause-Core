@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "heliocore:block/cargo_manager_block",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "heliocore:block/cargo_manager_block",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "heliocore:block/cargo_manager_block"
+    },
+    "facing=south": {
+      "model": "heliocore:block/cargo_manager_block",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "heliocore:block/cargo_manager_block",
+      "x": 270
+    },
+    "facing=west": {
+      "model": "heliocore:block/cargo_manager_block",
+      "y": 270
+    }
+  }
+}

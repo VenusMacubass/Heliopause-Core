@@ -31,7 +31,7 @@ import net.venera.heliocore.data.component.GasTankData;
 import net.venera.heliocore.fluid.IFluidMachine;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
-import net.venera.heliocore.screen.custom.GasCompressorMenu;
+import net.venera.heliocore.screen.hpc_custom.GasCompressorMenu;
 import net.venera.heliocore.util.MachineConfigHelper;
 import net.venera.heliocore.util.PipeNetworkHelper;
 import org.jetbrains.annotations.Nullable;

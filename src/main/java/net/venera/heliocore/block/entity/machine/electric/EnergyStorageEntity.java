@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.hpc_custom.machine.electric.EnergyStorageBlock;
 import net.venera.heliocore.item.hpc_custom.BatteryItem;
-import net.venera.heliocore.screen.custom.EnergyStorageUnitMenu;
+import net.venera.heliocore.screen.hpc_custom.EnergyStorageUnitMenu;
 import javax.annotation.Nullable;
 
 public class EnergyStorageEntity extends BaseElectricMachineEntity {
