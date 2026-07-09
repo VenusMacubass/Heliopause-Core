@@ -20,18 +20,15 @@ public class HpCBiomes {
         var configuredCarvers = context.lookup(Registries.CONFIGURED_CARVER);
         
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
-
-        // 2. Generation Rules (Ores and Trees)
-        // We leave this mostly empty because your BiomeModifiers automatically inject the ores for us!
+        
         BiomeGenerationSettings.Builder biomeBuilder = new BiomeGenerationSettings.Builder(placedFeatures, configuredCarvers);
-
-        // 3. The Biome Definition
+        
         context.register(LUNAR_HIGHLANDS , new Biome.BiomeBuilder()
                 .hasPrecipitation(false)
                 .temperature(0.5f)
                 .downfall(0.0f)
                 .specialEffects((new BiomeSpecialEffects.Builder())
-                        .skyColor(0) // Pitch Black
+                        .skyColor(0) 
                         .fogColor(0)
                         .waterColor(4159204)
                         .waterFogColor(329011)
@@ -48,7 +45,7 @@ public class HpCBiomes {
                 .temperature(0.5f)
                 .downfall(0.0f)
                 .specialEffects((new BiomeSpecialEffects.Builder())
-                        .skyColor(0) // Pitch Black
+                        .skyColor(0) 
                         .fogColor(0)
                         .waterColor(4159204)
                         .waterFogColor(329011)

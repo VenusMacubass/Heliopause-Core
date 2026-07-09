@@ -20,8 +20,7 @@ public class HpCPlacedFeatures {  //Where to place and how to place
     public static final ResourceKey<PlacedFeature> SILICON_ORE_KEY = registerKey("silicon_ore_placed");
     public static final ResourceKey<PlacedFeature> IRIDIUM_ORE_KEY = registerKey("iridium_ore_placed");
     
-    
-    
+    public static final ResourceKey<PlacedFeature> MOON_TEKTITE_PLACED_KEY = registerKey("moon_tektite_placed");
     public static final ResourceKey<PlacedFeature> MOON_TIN_ORE_PLACED_KEY = registerKey("moon_tin_ore_placed");
     public static final ResourceKey<PlacedFeature> MOON_IRON_ORE_PLACED_KEY = registerKey("moon_iron_ore_placed");
     public static final ResourceKey<PlacedFeature> MOON_COPPER_ORE_PLACED_KEY = registerKey("moon_copper_ore_placed");
@@ -51,9 +50,11 @@ public class HpCPlacedFeatures {  //Where to place and how to place
         
         register(context, IRIDIUM_ORE_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.OVERWORLD_IRIDIUM_ORE_KEY),
                 HpCOrePlacement.rareOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.absolute(64), VerticalAnchor.absolute(256))));
-        
-        
-        
+
+
+
+        register(context, MOON_TEKTITE_PLACED_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.MOON_TEKTITE_KEY), List.of(
+                CountPlacement.of(30), InSquarePlacement.spread(), HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG), BiomeFilter.biome()));
         
         register(context, MOON_TIN_ORE_PLACED_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.MOON_TIN_ORE_KEY),
                 HpCOrePlacement.commonOrePlacement(12, HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(80))));

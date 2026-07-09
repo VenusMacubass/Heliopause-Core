@@ -67,7 +67,7 @@ public class HeliopauseCoreClient {
     }
 
     @SubscribeEvent
-    public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
+    public static void registerBlockColors(RegisterColorHandlersEvent.Block event) { //Block tinter
         event.register((state, getter, pos, tintIndex) -> {
             if (getter != null && pos != null) {
                 FluidState fluidState = getter.getFluidState(pos);
@@ -102,7 +102,7 @@ public class HeliopauseCoreClient {
     }
 
     @SubscribeEvent
-    public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
+    public static void registerItemColors(RegisterColorHandlersEvent.Item event) { //Item tinter
         for (var itemObject : HpCItems.ITEMS.getEntries()) {
             event.register((stack, tintIndex) -> {
                 if (tintIndex != 1) return 0xFFFFFFFF;
@@ -146,13 +146,13 @@ public class HeliopauseCoreClient {
     }
 
     @SubscribeEvent
-    public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
+    public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) { //Renderers for entities
         event.registerEntityRenderer(HpCEntities.SPACE_ZOMBIE.get(), SpaceZombieRenderer::new);
         event.registerBlockEntityRenderer(HpCBlockEntities.FLUID_TANK_ENTITY.get(), FluidTankRenderer::new);
     }
 
     @SubscribeEvent
-    public static void registerScreens(RegisterMenuScreensEvent event) {
+    public static void registerScreens(RegisterMenuScreensEvent event) { //Screen Registry
         event.register(HpCMenuTypes.COAL_COMPRESSOR_MENU.get(), CoalCompressorScreen::new);
         event.register(HpCMenuTypes.REFINERY_MENU.get(), RefineryScreen::new);
         event.register(HpCMenuTypes.ENERGY_STORAGE_UNIT_MENU.get(), EnergyStorageUnitScreen::new);
@@ -168,7 +168,7 @@ public class HeliopauseCoreClient {
     }
 
     @SubscribeEvent
-    public static void onRenderGuiLayer(RenderGuiLayerEvent.Pre event) {
+    public static void onRenderGuiLayer(RenderGuiLayerEvent.Pre event) { //To disable the jump meter on rideable entities
         if (event.getName().equals(VanillaGuiLayers.JUMP_METER)) {
             Player player = Minecraft.getInstance().player;
             

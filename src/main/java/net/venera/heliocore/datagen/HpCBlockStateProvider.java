@@ -26,7 +26,23 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     public HpCBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, HeliopauseCore.MOD_ID, exFileHelper);
     }
+    //region Resource Locations
+    ResourceLocation crudeOilStill = modLoc("block/crude_oil_still");
+    ResourceLocation refinedFuelStill = modLoc("block/refined_fuel_still");
+    ResourceLocation liquidOxygenStill = modLoc("block/oxygen_liquid_still");
+    
+    ResourceLocation moonStone = modLoc("block/moon_rock");
+    ResourceLocation moonDirt = modLoc("block/moon_dirt");
+    ResourceLocation stone = mcLoc("block/stone");
+    ResourceLocation deepslate = mcLoc("block/deepslate");
 
+    ResourceLocation copper = modLoc("block/copper_ore");
+    ResourceLocation iron =  modLoc("block/iron_ore");
+    ResourceLocation tintedOreTex = modLoc("block/ore");
+    ResourceLocation siliconOreTex = modLoc("block/silicon_ore");
+    ResourceLocation iridiumOreTex = modLoc("block/iridium_ore");
+    ResourceLocation tektitesOreTex = modLoc("block/raw_tektites");
+    
     ResourceLocation dungeonBrickTex = modLoc("block/dungeon_bricks");
     ResourceLocation buildingBlockTex = modLoc("block/tin_building_block");
     ResourceLocation moonRockTex = modLoc("block/moon_rock");
@@ -51,7 +67,8 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     ResourceLocation solarPanelTop = modLoc("block/machine/machine_solar_top");
     ResourceLocation gasCompressor = modLoc("block/machine/gas_compressor");
     ResourceLocation gasVaporizer = modLoc("block/machine/gas_vaporizer");
-
+    //endregion
+    
     @Override
     protected void registerStatesAndModels() {
         blockWithItem(HpCBlocks.IRIDIUM_BLOCK);
@@ -64,14 +81,15 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         blockWithItem(HpCBlocks.MOON_COBBLESTONE);
         blockWithItem(HpCBlocks.COPPER_WIRE_BLOCK);
 
-        fluidBlock(HpCFluids.CRUDE_OIL.getFluidBlockRegistry(), modLoc("block/crude_oil_still"));
-        fluidBlock(HpCFluids.REFINED_FUEL.getFluidBlockRegistry(), modLoc("block/refined_fuel_still"));
-        fluidBlock(HpCFluids.LIQUID_OXYGEN.getFluidBlockRegistry(), modLoc("block/oxygen_liquid_still"));
+        fluidBlock(HpCFluids.CRUDE_OIL.getFluidBlockRegistry(), crudeOilStill);
+        fluidBlock(HpCFluids.REFINED_FUEL.getFluidBlockRegistry(), refinedFuelStill);
+        fluidBlock(HpCFluids.LIQUID_OXYGEN.getFluidBlockRegistry(), liquidOxygenStill);
 
         translucentBlock(HpCBlocks.PRISMATIC_GLASS, prismaticTex);
         translucentPaneBlock(HpCBlocks.PRISMATIC_GLASS_PANE.get(), prismaticTex, prismaticPaneTex);
         translucentBlock(HpCBlocks.TINTED_PRISMATIC_GLASS, tintedPrismaticTex);
-
+        
+        //region Non-Full Blocks
         blockItem(HpCBlocks.TIN_BUILDING_SLAB);
         blockItem(HpCBlocks.MOON_ROCK_SLAB);
         blockItem(HpCBlocks.MOON_DUNGEON_BRICK_SLAB);
@@ -90,7 +108,9 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         tintedStairsBlock(HpCBlocks.MOON_ROCK_STAIRS,  moonRockTex);
         tintedSlabBlock(HpCBlocks.MOON_ROCK_SLAB, moonRockTex);
         tintedWallBlock(HpCBlocks.MOON_ROCK_WALL, moonRockTex);
+        //endregion
 
+        //region Machines
         directionalMachineBlock(HpCBlocks.COAL_COMPRESSOR.get(),
                 machineSide,
                 Map.of(
@@ -204,6 +224,25 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                         Direction.EAST, fluidInPort
                 )
         );
+        //endregion
+
+        //region Ores
+        tintedOreBlock(HpCBlocks.MOON_COPPER_ORE.get(), moonStone, copper);
+        tintedOreBlock(HpCBlocks.MOON_TIN_ORE.get(), moonStone, tintedOreTex);
+        tintedOreBlock(HpCBlocks.TIN_ORE.get(), stone, tintedOreTex);
+        tintedOreBlock(HpCBlocks.DEEPSLATE_TIN_ORE.get(), deepslate, tintedOreTex);
+        tintedOreBlock(HpCBlocks.MOON_IRON_ORE.get(), moonStone, iron);
+        tintedOreBlock(HpCBlocks.MOON_ALUMINIUM_ORE.get(), moonStone, tintedOreTex);
+        tintedOreBlock(HpCBlocks.ALUMINIUM_ORE.get(), stone, tintedOreTex);
+        tintedOreBlock(HpCBlocks.DEEPSLATE_ALUMINIUM_ORE.get(), deepslate, tintedOreTex);
+        tintedOreBlock(HpCBlocks.MOON_SILICON_ORE.get(), moonStone, siliconOreTex);
+        tintedOreBlock(HpCBlocks.SILICON_ORE.get(), stone, siliconOreTex);
+        tintedOreBlock(HpCBlocks.DEEPSLATE_SILICON_ORE.get(), deepslate, siliconOreTex);
+        tintedOreBlock(HpCBlocks.MOON_IRIDIUM_ORE.get(), moonStone, iridiumOreTex);
+        tintedOreBlock(HpCBlocks.IRIDIUM_ORE.get(), stone, iridiumOreTex);
+        tintedOreBlock(HpCBlocks.DEEPSLATE_IRIDIUM_ORE.get(), deepslate, iridiumOreTex);
+        tintedOreBlock(HpCBlocks.MOON_TEKTITES.get(), moonDirt, tektitesOreTex);
+        //endregion
     }
 
     //region Helpers
@@ -216,6 +255,18 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     }
     private void blockItem(DeferredBlock<?> deferredBlock, String appendix){
         simpleBlockItem(deferredBlock.get(), new ModelFile.UncheckedModelFile(HeliopauseCore.MOD_ID + ":block/" + deferredBlock.getId().getPath() + appendix));
+    }
+
+    public void tintedOreBlock(Block block, ResourceLocation baseTexture, ResourceLocation overlayTexture) {
+        String baseName = BuiltInRegistries.BLOCK.getKey(block).getPath();
+        
+        ModelFile oreModel = models().withExistingParent(baseName, modLoc("block/tinted_ore_template"))
+                .texture("base", baseTexture)
+                .texture("overlay", overlayTexture);
+        
+        simpleBlock(block, oreModel);
+        itemModels().getBuilder(baseName)
+                .parent(oreModel);
     }
 
     public void tintedStairsBlock(DeferredBlock<?> block, ResourceLocation texture) {

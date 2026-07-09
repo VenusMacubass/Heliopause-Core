@@ -23,6 +23,7 @@ public class HpCBiomeModifiers {  //In what biome and in what stage shall I plac
     public static final ResourceKey<BiomeModifier> ADD_SILICON_ORE = registerKey("add_silicon_ore");
     public static final ResourceKey<BiomeModifier> ADD_IRIDIUM_ORE = registerKey("add_iridium_ore");
     
+    public static final ResourceKey<BiomeModifier> ADD_MOON_TEKTITES = registerKey("add_moon_tektites");
     public static final ResourceKey<BiomeModifier> ADD_MOON_TIN_ORE = registerKey("add_moon_tin_ore");
     public static final ResourceKey<BiomeModifier> ADD_MOON_IRON_ORE = registerKey("add_moon_iron_ore");
     public static final ResourceKey<BiomeModifier> ADD_MOON_COPPER_ORE = registerKey("add_moon_copper_ore");
@@ -64,16 +65,10 @@ public class HpCBiomeModifiers {  //In what biome and in what stage shall I plac
                 HolderSet.direct(placedFeatures.getOrThrow(HpCPlacedFeatures.IRIDIUM_ORE_KEY)),
                 GenerationStep.Decoration.UNDERGROUND_ORES));
 
-//        context.register(ADD_NETHER_TIN_ORE, new BiomeModifiers.AddFeaturesBiomeModifier(
-//                biomes.getOrThrow(BiomeTags.IS_NETHER),
-//                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.NETHER_TIN_ORE_PLACED_KEY)),
-//                GenerationStep.Decoration.UNDERGROUND_ORES));
-
-//        context.register(ADD_END_TIN_ORE, new BiomeModifiers.AddFeaturesBiomeModifier(
-//                biomes.getOrThrow(BiomeTags.IS_END),
-//                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.END_TIN_ORE_KEY)),
-//                GenerationStep.Decoration.UNDERGROUND_ORES));
-
+        context.register(ADD_MOON_TEKTITES, new BiomeModifiers.AddFeaturesBiomeModifier(
+                moonBiomes,
+                HolderSet.direct(placedFeatures.getOrThrow(HpCPlacedFeatures.MOON_TEKTITE_PLACED_KEY)),
+                GenerationStep.Decoration.UNDERGROUND_ORES));
 
         context.register(ADD_MOON_TIN_ORE, new BiomeModifiers.AddFeaturesBiomeModifier(
                 moonBiomes,

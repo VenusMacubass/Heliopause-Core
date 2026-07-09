@@ -1,0 +1,7 @@
+{
+  "parent": "heliocore:block/tinted_ore_template",
+  "textures": {
+    "base": "heliocore:block/moon_dirt",
+    "overlay": "heliocore:block/raw_tektites"
+  }
+}

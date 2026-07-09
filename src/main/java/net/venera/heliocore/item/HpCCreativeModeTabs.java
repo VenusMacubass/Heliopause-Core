@@ -57,6 +57,7 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCItems.RAW_ALUMINIUM.get());
                         output.accept(HpCItems.RAW_TIN.get());
                         output.accept(HpCItems.RAW_SILICON.get());
+                        output.accept(HpCItems.TEKTITES.get());
                         output.accept(HpCItems.COMPRESSED_ALUMINIUM.get());
                         output.accept(HpCItems.COMPRESSED_BRONZE.get());
                         output.accept(HpCItems.COMPRESSED_COPPER.get());
@@ -153,6 +154,7 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCBlocks.PRISMATIC_GLASS_PANE.get());
                         output.accept(HpCBlocks.TINTED_PRISMATIC_GLASS.get());
                         output.accept(HpCBlocks.COPPER_WIRE_BLOCK.get());
+                        output.accept(HpCBlocks.MOON_TEKTITES.get());
 
                     })
                     .build()

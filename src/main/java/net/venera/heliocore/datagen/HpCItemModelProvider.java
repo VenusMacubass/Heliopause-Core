@@ -68,6 +68,7 @@ public class HpCItemModelProvider extends ItemModelProvider {
         basicItem(HpCItems.RAW_ALUMINIUM.get());
         basicItem(HpCItems.RAW_TIN.get());
         basicItem(HpCItems.RAW_SILICON.get());
+        basicItem(HpCItems.TEKTITES.get());
         
         basicItem(HpCItems.COMPRESSED_BRONZE.get());
         basicItem(HpCItems.COMPRESSED_COPPER.get());

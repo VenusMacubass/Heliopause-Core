@@ -1,0 +1,9 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": [
+    "heliocore:lunar_maria",
+    "heliocore:lunar_highlands"
+  ],
+  "features": "heliocore:moon_tektite_placed",
+  "step": "underground_ores"
+}

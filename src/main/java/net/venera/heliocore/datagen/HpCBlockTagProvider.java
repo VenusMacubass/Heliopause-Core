@@ -38,6 +38,7 @@ public class HpCBlockTagProvider extends BlockTagsProvider {
                 .add(HpCBlocks.TIN_BUILDING_SLAB.get())
                 .add(HpCBlocks.MOON_ROCK_SLAB.get())
                 .add(HpCBlocks.MOON_DUNGEON_BRICK_SLAB.get())
+                .add(HpCBlocks.MOON_TEKTITES.get())
                 
                 .add(HpCBlocks.IRIDIUM_BLOCK.get());
 
@@ -45,7 +46,8 @@ public class HpCBlockTagProvider extends BlockTagsProvider {
                 .add(HpCBlocks.MOON_DIRT.get());
 
         tag(BlockTags.NEEDS_STONE_TOOL)
-                .add(HpCBlocks.TIN_ORE.get());
+                .add(HpCBlocks.TIN_ORE.get())
+                .add(HpCBlocks.MOON_TEKTITES.get());
         
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(HpCBlocks.ALUMINIUM_ORE.get())
@@ -74,6 +76,8 @@ public class HpCBlockTagProvider extends BlockTagsProvider {
         
         tag(HpCTags.Blocks.MOON_STONE_REPLACEABLES)
                 .add(HpCBlocks.MOON_ROCK.get());
+        
+        tag(HpCTags.Blocks.MOON_DIRT_REPLACEABLES).add(HpCBlocks.MOON_DIRT.get());
         
     }
 }

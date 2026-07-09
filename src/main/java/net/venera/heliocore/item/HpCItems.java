@@ -25,6 +25,7 @@ public class HpCItems {
     public static final DeferredItem<Item> ALUMINIUM_INGOT = ITEMS.register("aluminium_ingot", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> TIN_INGOT = ITEMS.register("tin_ingot", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> IRIDIUM_INGOT = ITEMS.register("iridium_ingot", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> TEKTITES = ITEMS.register("tektites", () -> new Item(new Item.Properties()));
     
     //endregion
    

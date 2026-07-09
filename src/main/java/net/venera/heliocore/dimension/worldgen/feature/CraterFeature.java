@@ -26,8 +26,7 @@ public class CraterFeature extends Feature<CraterConfig> {
         if (level.isEmptyBlock(origin.below())) {
             return false;
         }
-
-        // 3. Replaced the biome checks with the safe config variables
+        
         int radius = random.nextInt(config.maxRadius() - config.minRadius() + 1) + config.minRadius();
         double squish = config.squish();
         boolean placedAny = false;
