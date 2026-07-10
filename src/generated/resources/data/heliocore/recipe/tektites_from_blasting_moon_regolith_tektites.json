@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 2.5,
+  "group": "regolith_tektite_shards",
+  "ingredient": {
+    "item": "heliocore:moon_regolith_tektites"
+  },
+  "result": {
+    "count": 1,
+    "id": "heliocore:tektites"
+  }
+}

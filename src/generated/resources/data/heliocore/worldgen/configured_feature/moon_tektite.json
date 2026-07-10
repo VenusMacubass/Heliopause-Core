@@ -2,7 +2,7 @@
   "type": "minecraft:ore",
   "config": {
     "discard_chance_on_air_exposure": 0.0,
-    "size": 8,
+    "size": 3,
     "targets": [
       {
         "state": {
@@ -11,6 +11,15 @@
         "target": {
           "predicate_type": "minecraft:tag_match",
           "tag": "heliocore:moon_dirt_replaceables"
+        }
+      },
+      {
+        "state": {
+          "Name": "heliocore:moon_regolith_tektites"
+        },
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "heliocore:moon_regolith_replaceables"
         }
       }
     ]

@@ -73,11 +73,16 @@ public class HpCBlockTagProvider extends BlockTagsProvider {
                 .add(HpCBlocks.REFINERY.get())
                 .add(HpCBlocks.ENERGY_STORAGE_UNIT.get())
                 .add(HpCBlocks.BASIC_SOLAR_BLOCK.get());
+
+
+        tag(HpCTags.Blocks.MOON_REGOLITH_REPLACEABLES).add(HpCBlocks.MOON_REGOLITH.get());
+        
+        tag(HpCTags.Blocks.MOON_DIRT_REPLACEABLES).add(HpCBlocks.MOON_DIRT.get());
         
         tag(HpCTags.Blocks.MOON_STONE_REPLACEABLES)
                 .add(HpCBlocks.MOON_ROCK.get());
         
-        tag(HpCTags.Blocks.MOON_DIRT_REPLACEABLES).add(HpCBlocks.MOON_DIRT.get());
+        
         
     }
 }

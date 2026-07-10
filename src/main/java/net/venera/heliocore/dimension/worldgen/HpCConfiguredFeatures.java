@@ -48,9 +48,8 @@ public class HpCConfiguredFeatures { //What to place
 
         RuleTest stoneReplaceables = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
         RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
+        RuleTest regolithReplaceable = new TagMatchTest(HpCTags.Blocks.MOON_REGOLITH_REPLACEABLES);
         RuleTest moonDirtReplaceables = new TagMatchTest(HpCTags.Blocks.MOON_DIRT_REPLACEABLES);
-//        RuleTest netherrackReplaceables = new BlockMatchTest(Blocks.NETHERRACK);
-//        RuleTest endReplaceables = new BlockMatchTest(Blocks.END_STONE);
         RuleTest moonReplaceables = new TagMatchTest(HpCTags.Blocks.MOON_STONE_REPLACEABLES);
 
         List<OreConfiguration.TargetBlockState> overworldTinOres = List.of(
@@ -70,7 +69,9 @@ public class HpCConfiguredFeatures { //What to place
                 OreConfiguration.target(deepslateReplaceables, HpCBlocks.DEEPSLATE_IRIDIUM_ORE.get().defaultBlockState()));
 
         List<OreConfiguration.TargetBlockState> moonTektiteOres = List.of(
-                OreConfiguration.target(moonDirtReplaceables, HpCBlocks.MOON_TEKTITES.get().defaultBlockState()));
+                OreConfiguration.target(moonDirtReplaceables, HpCBlocks.MOON_TEKTITES.get().defaultBlockState()),
+                OreConfiguration.target(regolithReplaceable, HpCBlocks.MOON_TEKTITES_REGOLITH.get().defaultBlockState()));
+        
         List<OreConfiguration.TargetBlockState> moonTinOres = List.of(
                 OreConfiguration.target(moonReplaceables, HpCBlocks.MOON_TIN_ORE.get().defaultBlockState()));
         List<OreConfiguration.TargetBlockState> moonIronOres = List.of(
@@ -83,25 +84,15 @@ public class HpCConfiguredFeatures { //What to place
                 OreConfiguration.target(moonReplaceables, HpCBlocks.MOON_SILICON_ORE.get().defaultBlockState()));
         List<OreConfiguration.TargetBlockState> moonIridiumOres = List.of(
                 OreConfiguration.target(moonReplaceables, HpCBlocks.MOON_IRIDIUM_ORE.get().defaultBlockState()));
-
-
-        List<OreConfiguration.TargetBlockState> deepslateOilTargets = List.of(
-                OreConfiguration.target(
-                        new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES), 
-                        HpCFluids.CRUDE_OIL.getFluidblock().defaultBlockState()
-                )
-        );
-        
-        
         
         //region Registry
         register(context, OVERWORLD_TIN_ORE_KEY, Feature.ORE, new OreConfiguration(overworldTinOres, 10));
         register(context, OVERWORLD_ALUMINIUM_ORE_KEY, Feature.ORE, new OreConfiguration(overworldAluminiumOres, 10));
         register(context, OVERWORLD_SILICON_ORE_KEY, Feature.ORE, new OreConfiguration(overworldSiliconOres, 2));
         register(context, OVERWORLD_IRIDIUM_ORE_KEY, Feature.ORE, new OreConfiguration(overworldIridiumOres, 2));
-        
-        register(context, MOON_TEKTITE_KEY, Feature.ORE, new OreConfiguration(moonTektiteOres, 8));
-        register(context, MOON_TIN_ORE_KEY, Feature.ORE, new OreConfiguration(moonTinOres, 10));
+
+        register(context, MOON_TEKTITE_KEY, Feature.ORE, new OreConfiguration(moonTektiteOres, 3));
+        register(context, MOON_TIN_ORE_KEY, Feature.ORE, new OreConfiguration(moonTinOres, 3));
         register(context, MOON_IRON_ORE_KEY, Feature.ORE, new OreConfiguration(moonIronOres, 7)); // Slightly smaller than Earth Iron
         register(context, MOON_COPPER_ORE_KEY, Feature.ORE, new OreConfiguration(moonCopperOres, 9)); // Standard copper vein size
         register(context, MOON_ALUMINIUM_ORE_KEY, Feature.ORE, new OreConfiguration(moonAluminiumOres, 8)); // Abundant veins
@@ -120,12 +111,12 @@ public class HpCConfiguredFeatures { //What to place
         
         context.register(MARIA_CRATER_KEY, new ConfiguredFeature<>(
                 HpCFeatures.CRATER_FEATURE.get(),
-                new CraterConfig(5, 20, 5.0) 
+                new CraterConfig(4, 20, 5.0) 
         ));
 
         context.register(HIGHLANDS_CRATER_KEY, new ConfiguredFeature<>(
                 HpCFeatures.CRATER_FEATURE.get(),
-                new CraterConfig(3, 12, 2.0) 
+                new CraterConfig(2, 12, 2.0) 
         ));
     }
     

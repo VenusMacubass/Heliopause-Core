@@ -54,10 +54,21 @@ public class CraterFeature extends Feature<CraterConfig> {
                 BlockPos turfPos = new BlockPos(worldX, actualFloorY, worldZ);
                 BlockPos dirtPos = new BlockPos(worldX, actualFloorY - 1, worldZ);
                 BlockPos rockPos = new BlockPos(worldX, actualFloorY - 2, worldZ);
-                
+
                 if (!level.isStateAtPosition(turfPos, state -> state.getBlock() == Blocks.BEDROCK)) {
-                    level.setBlock(turfPos, HpCBlocks.MOON_REGOLITH.get().defaultBlockState(), 2);
-                    level.setBlock(dirtPos, HpCBlocks.MOON_DIRT.get().defaultBlockState(), 2);
+                    if (random.nextFloat() < 0.2F) {
+                        if (random.nextFloat() < 0.15F) {
+                            level.setBlock(turfPos, HpCBlocks.MOON_TEKTITES_REGOLITH.get().defaultBlockState(), 2);
+                        } else {
+                            level.setBlock(turfPos, HpCBlocks.MOON_REGOLITH.get().defaultBlockState(), 2);
+                        }
+                        level.setBlock(dirtPos, HpCBlocks.MOON_TEKTITES.get().defaultBlockState(), 2);
+
+                    } else {
+                        level.setBlock(turfPos, HpCBlocks.MOON_REGOLITH.get().defaultBlockState(), 2);
+                        level.setBlock(dirtPos, HpCBlocks.MOON_DIRT.get().defaultBlockState(), 2);
+                    }
+                    
                     level.setBlock(rockPos, HpCBlocks.MOON_ROCK.get().defaultBlockState(), 2);
                     placedAny = true;
                 }

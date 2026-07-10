@@ -77,6 +77,9 @@ public class HpCBlocks {
     
     public static final DeferredBlock<Block> MOON_IRON_ORE = registerBlock("moon_iron_ore",
             ()-> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_ORE)));
+    
+    public static final DeferredBlock<Block> MOON_TEKTITES_REGOLITH = registerBlock("moon_regolith_tektites",
+            ()-> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.GRAVEL)));
 
     public static final DeferredBlock<Block> MOON_TEKTITES = registerBlock("moon_tektites",
             ()-> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.EMERALD_ORE)));

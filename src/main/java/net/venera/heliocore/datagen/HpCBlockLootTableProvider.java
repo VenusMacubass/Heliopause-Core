@@ -43,6 +43,8 @@ public class HpCBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(HpCBlocks.IRIDIUM_ORE.get());
         dropSelf(HpCBlocks.DEEPSLATE_IRIDIUM_ORE.get());
         dropSelf(HpCBlocks.MOON_IRIDIUM_ORE.get());
+        dropSelf(HpCBlocks.MOON_TEKTITES_REGOLITH.get());
+        dropSelf(HpCBlocks.MOON_TEKTITES.get());
         
         dropSelf(HpCBlocks.ARC_LAMP.get());
         dropSelf(HpCBlocks.COAL_COMPRESSOR.get());
@@ -115,9 +117,6 @@ public class HpCBlockLootTableProvider extends BlockLootSubProvider {
         
         add(HpCBlocks.MOON_IRON_ORE.get(),
                 block -> createMultipleOreDrops(HpCBlocks.MOON_IRON_ORE.get(), Items.RAW_IRON,1,5));
-
-        add(HpCBlocks.MOON_TEKTITES.get(),
-                block -> createMultipleOreDrops(HpCBlocks.MOON_TEKTITES.get(), HpCItems.TEKTITES.get(),2,5));
         
 
         add(HpCBlocks.TIN_BUILDING_SLAB.get(), block -> createSlabItemTable(HpCBlocks.TIN_BUILDING_SLAB.get()));

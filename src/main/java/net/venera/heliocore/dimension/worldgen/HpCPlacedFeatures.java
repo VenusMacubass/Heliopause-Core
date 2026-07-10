@@ -54,7 +54,7 @@ public class HpCPlacedFeatures {  //Where to place and how to place
 
 
         register(context, MOON_TEKTITE_PLACED_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.MOON_TEKTITE_KEY), List.of(
-                CountPlacement.of(30), InSquarePlacement.spread(), HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG), BiomeFilter.biome()));
+                CountPlacement.of(3), InSquarePlacement.spread(), HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG), BiomeFilter.biome()));
         
         register(context, MOON_TIN_ORE_PLACED_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.MOON_TIN_ORE_KEY),
                 HpCOrePlacement.commonOrePlacement(12, HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(80))));

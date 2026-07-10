@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_tektites": {
+      "conditions": {
+        "items": [
+          {
+            "items": "heliocore:tektites"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:prismatic_glass_from_tektites_crafting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_tektites"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:prismatic_glass_from_tektites_crafting"
+    ]
+  }
+}

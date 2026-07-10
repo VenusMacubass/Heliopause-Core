@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-09T18:07:45.0182061	Loot Tables
+// 1.21.1	2026-07-10T13:06:19.9898512	Loot Tables
 4c6effb42af79317efc025b64a17716f1bcfaa42 data/heliocore/loot_table/blocks/aluminium_block.json
 64247a8f311a92e6ec87cc7d0e221e1a168f6380 data/heliocore/loot_table/blocks/aluminium_ore.json
 169aa8b3cb872639f3c6660ddb1af2fc0bbcdf83 data/heliocore/loot_table/blocks/arc_lamp.json
@@ -33,12 +33,13 @@ d70586fe1b243c44e74eb791bb0d4e5992c0e5b4 data/heliocore/loot_table/blocks/moon_d
 a726770f5d1db0deeca3a00f4b67820164b69ef0 data/heliocore/loot_table/blocks/moon_iridium_ore.json
 e8a12daeb9f890699f38c5f373c1a0c54d2e7a15 data/heliocore/loot_table/blocks/moon_iron_ore.json
 be652852178a9bca441ba8983924f3a2dd75bc27 data/heliocore/loot_table/blocks/moon_regolith.json
+c66e4f125cca7a03136c8c5eebd686d3bf8064a5 data/heliocore/loot_table/blocks/moon_regolith_tektites.json
 d2440e78d184d233bbd6999d0f1daae8f193ab28 data/heliocore/loot_table/blocks/moon_rock.json
 964183cf4ab8108b919ea7a3e84b07948974321d data/heliocore/loot_table/blocks/moon_rock_slab.json
 56e083edffa5ae588662a3c7e2847815ce4c8c19 data/heliocore/loot_table/blocks/moon_rock_stairs.json
 3f218dc95bbdc7d13fc5528e835399bbe1ada71e data/heliocore/loot_table/blocks/moon_rock_wall.json
 ea33085e1d656059a7ca6b153f26dd5516b1ccc6 data/heliocore/loot_table/blocks/moon_silicon_ore.json
-e6734b8f52320575ad29c6de787753d077dc5ad7 data/heliocore/loot_table/blocks/moon_tektites.json
+94cd9eee0dfabb02e0d3c31194d10c5788cb89da data/heliocore/loot_table/blocks/moon_tektites.json
 0fcaceb2ddc4c18e3d475da12c300df009c7ddf5 data/heliocore/loot_table/blocks/moon_tin_ore.json
 7c10a7249ddf43584569922a36f68796806156be data/heliocore/loot_table/blocks/oxygen_generator_block.json
 46afaec6bbb0463975b900dc3c53d27421e144c8 data/heliocore/loot_table/blocks/pizza_block.json

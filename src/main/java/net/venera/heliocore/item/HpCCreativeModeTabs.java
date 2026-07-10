@@ -97,10 +97,10 @@ public class HpCCreativeModeTabs {
                     .title(Component.translatable("creativetab.heliocore_blocks"))
                     .withTabsBefore(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, HeliopauseCore.MOD_ID + "_items"))
                     .displayItems((parameters, output) -> {
+                        output.accept(HpCBlocks.RADIOACTIVE_BLOCK.get());
                         output.accept(HpCBlocks.ALUMINIUM_ORE.get());
                         output.accept(HpCBlocks.DEEPSLATE_ALUMINIUM_ORE.get());
                         output.accept(HpCBlocks.ALUMINIUM_BLOCK.get());
-                        output.accept(HpCBlocks.RADIOACTIVE_BLOCK.get());
                         output.accept(HpCBlocks.CHEESE_BLOCK.get());
                         output.accept(HpCBlocks.PIZZA_BLOCK.get());
                         output.accept(HpCBlocks.MOON_REGOLITH.get());
@@ -143,17 +143,18 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCBlocks.OXYGEN_GENERATOR_BLOCK.get());
                         output.accept(HpCBlocks.GAS_COMPRESSOR_BLOCK.get());
                         output.accept(HpCBlocks.GAS_VAPORIZER_BLOCK.get());
-                        output.accept(HpCBlocks.LAUNCH_PAD.get());
-                        output.accept(HpCBlocks.FLUID_TANK.get());
                         output.accept(HpCBlocks.ENERGY_STORAGE_UNIT.get());
                         output.accept(HpCBlocks.BASIC_SOLAR_BLOCK.get());
                         output.accept(HpCBlocks.ENERGY_GENERATOR_BLOCK.get());
+                        output.accept(HpCBlocks.COPPER_WIRE_BLOCK.get());
+                        output.accept(HpCBlocks.LAUNCH_PAD.get());
+                        output.accept(HpCBlocks.FLUID_TANK.get());
                         output.accept(HpCBlocks.COPPER_WIRE.get());
                         output.accept(HpCBlocks.FLUID_PIPE.get());
                         output.accept(HpCBlocks.PRISMATIC_GLASS.get());
                         output.accept(HpCBlocks.PRISMATIC_GLASS_PANE.get());
                         output.accept(HpCBlocks.TINTED_PRISMATIC_GLASS.get());
-                        output.accept(HpCBlocks.COPPER_WIRE_BLOCK.get());
+                        output.accept(HpCBlocks.MOON_TEKTITES_REGOLITH.get());
                         output.accept(HpCBlocks.MOON_TEKTITES.get());
 
                     })

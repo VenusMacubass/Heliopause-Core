@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "heliocore:moon_tektites"
+          "name": "heliocore:moon_regolith_tektites"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "heliocore:blocks/moon_tektites"
+  "random_sequence": "heliocore:blocks/moon_regolith_tektites"
 }

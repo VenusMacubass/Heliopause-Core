@@ -46,6 +46,7 @@
   "item.heliocore.compressed_steel": "Compressed Steel",
   "item.heliocore.compressed_tin": "Compressed Tin",
   "item.heliocore.heavy_duty_plate": "Heavy Duty Plate",
+  "item.heliocore..tektites": "Tektite Shards",
 
   "item.heliocore.oxygen_mask": "Oxygen Mask",
   "item.heliocore.oxygen_connectors": "Oxygen Connectors",
@@ -112,6 +113,7 @@
   "block.heliocore.moon_silicon_ore": "Moon Silicon Ore",
   "block.heliocore.silicon_block": "Block of Silicon",
   "block.heliocore.moon_iron_ore": "Moon Iron Ore",
+  "block.heliocore.moon_tektites": "Moon Tektites",
 
   "block.heliocore.moon_copper_ore": "Moon Copper Ore",
   "block.heliocore.moon_tin_ore": "Moon Tin Ore",
@@ -147,6 +149,8 @@
   "block.heliocore.cargo_manager_block": "Rocket Cargo Manager",
   "block.heliocore.oxygen_generator_block": "Oxygen Generator",
   "block.heliocore.gas_compressor_block": "Gas Compressor",
+  "block.heliocore.gas_vaporizer_block": "Gas Vaporizer",
+  "block.heliocore.energy_generator_block": "Energy Generator",
 
 
   "block.heliocore.coal_compressor_menu_name": "Coal Powered Compressor",

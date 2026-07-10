@@ -25,6 +25,8 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
         List<ItemLike> ALUMINIUM_SMELTABLES = List.of(HpCBlocks.ALUMINIUM_ORE, HpCItems.RAW_ALUMINIUM);
         List<ItemLike> TIN_SMELTABLES = List.of(HpCBlocks.TIN_ORE, HpCItems.RAW_TIN);
 
+        
+        
         //region Metals
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCBlocks.ALUMINIUM_BLOCK.get())
                 .pattern("AAA")
@@ -190,7 +192,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput, "standard_wrench_crafting");
         //endregion
 
-        //region Mod Foods
+        //region Foods
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HpCItems.DEHYDRATED_APPLE.get())
                 .pattern("CA ")
                 .pattern("A  ")
@@ -227,17 +229,20 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput, "cheeseburger_crafting");
 
         //endregion
-
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //Smelting and Blasting
+        
+        //region Smelting and Blasting
         oreSmelting(recipeOutput, TIN_SMELTABLES, RecipeCategory.MISC, HpCItems.TIN_INGOT.get(),0.5f, 400, "tin_ingot");
         oreBlasting(recipeOutput, TIN_SMELTABLES, RecipeCategory.MISC, HpCItems.TIN_INGOT.get(),0.5f, 200, "tin_ingot");
         oreSmelting(recipeOutput, ALUMINIUM_SMELTABLES, RecipeCategory.MISC, HpCItems.ALUMINIUM_INGOT.get(),0.7f, 400, "aluminium_ingot");
         oreBlasting(recipeOutput, ALUMINIUM_SMELTABLES, RecipeCategory.MISC, HpCItems.ALUMINIUM_INGOT.get(),0.7f, 200, "aluminium_ingot");
         oreSmelting(recipeOutput, HpCBlocks.IRIDIUM_ORE, RecipeCategory.MISC, HpCItems.IRIDIUM_INGOT.get(),1.8f, 400, "iridium_ingot");
         oreBlasting(recipeOutput, HpCBlocks.IRIDIUM_ORE, RecipeCategory.MISC, HpCItems.IRIDIUM_INGOT.get(),1.8f, 200, "iridium_ingot");
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        oreSmelting(recipeOutput, HpCBlocks.MOON_TEKTITES_REGOLITH, RecipeCategory.MISC, HpCItems.TEKTITES.get(),2.5f, 400, "regolith_tektite_shards");
+        oreBlasting(recipeOutput, HpCBlocks.MOON_TEKTITES_REGOLITH, RecipeCategory.MISC, HpCItems.TEKTITES.get(),2.5f, 200, "regolith_tektite_shards");
+        oreSmelting(recipeOutput, HpCBlocks.MOON_TEKTITES, RecipeCategory.MISC, HpCItems.TEKTITES.get(),2.5f, 400, "tektite_shards");
+        oreBlasting(recipeOutput, HpCBlocks.MOON_TEKTITES, RecipeCategory.MISC, HpCItems.TEKTITES.get(),2.5f, 200, "tektite_shards");
+        //endregion
+        
         //Special Blocks
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, HpCBlocks.ARC_LAMP.get())
                 .pattern("SGS")
@@ -250,7 +255,12 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput, "arc_lamp_crafting");
 
 
-        //Building Blocks
+        //region Building Blocks
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.PRISMATIC_GLASS.get(), 1)
+                .requires(HpCItems.TEKTITES.get(), 4)
+                .unlockedBy("has_tektites", has(HpCItems.TEKTITES.get()))
+                .save(recipeOutput, "prismatic_glass_from_tektites_crafting");
+        
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.TIN_BUILDING_BLOCK.get())
                 .pattern("SS ")
                 .pattern("SS ")
@@ -320,7 +330,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('L', HpCBlocks.MOON_DUNGEON_BRICKS.get())
                 .unlockedBy("has_moon_dungeon_bricks", has(HpCBlocks.MOON_DUNGEON_BRICKS.get()))
                 .save(recipeOutput, "moon_dungeon_brick_slab_crafting");
-        
+        //endregion
 
 
         

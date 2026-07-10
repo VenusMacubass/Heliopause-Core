@@ -30,8 +30,10 @@ public class HpCTags {
         public static final TagKey<Block> NEEDS_STEEL_TOOLS = createTag("needs_steel_tools");
         public static final TagKey<Block> INCORRECT_FOR_STEEL_TOOL = createTag("incorrect_for_steel_tool");
         public static final TagKey<Block> MACHINERY = createTag("machinery");
-        public static final TagKey<Block> MOON_STONE_REPLACEABLES = createTag("moon_stone_replaceables");
+        public static final TagKey<Block> MOON_REGOLITH_REPLACEABLES = createTag("moon_regolith_replaceables");
         public static final TagKey<Block> MOON_DIRT_REPLACEABLES = createTag("moon_dirt_replaceables");
+        public static final TagKey<Block> MOON_STONE_REPLACEABLES = createTag("moon_stone_replaceables");
+        
         public static final TagKey<Block> RADIOACTIVE = createTag("radioactive");
 
         private static TagKey<Block> createTag(String name){

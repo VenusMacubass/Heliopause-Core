@@ -31,8 +31,9 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     ResourceLocation refinedFuelStill = modLoc("block/refined_fuel_still");
     ResourceLocation liquidOxygenStill = modLoc("block/oxygen_liquid_still");
     
-    ResourceLocation moonStone = modLoc("block/moon_rock");
+    ResourceLocation moonRegolith = modLoc("block/moon_regolith");
     ResourceLocation moonDirt = modLoc("block/moon_dirt");
+    ResourceLocation moonStone = modLoc("block/moon_rock");
     ResourceLocation stone = mcLoc("block/stone");
     ResourceLocation deepslate = mcLoc("block/deepslate");
 
@@ -241,6 +242,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         tintedOreBlock(HpCBlocks.MOON_IRIDIUM_ORE.get(), moonStone, iridiumOreTex);
         tintedOreBlock(HpCBlocks.IRIDIUM_ORE.get(), stone, iridiumOreTex);
         tintedOreBlock(HpCBlocks.DEEPSLATE_IRIDIUM_ORE.get(), deepslate, iridiumOreTex);
+        tintedOreBlock(HpCBlocks.MOON_TEKTITES_REGOLITH.get(), moonRegolith, tektitesOreTex);
         tintedOreBlock(HpCBlocks.MOON_TEKTITES.get(), moonDirt, tektitesOreTex);
         //endregion
     }

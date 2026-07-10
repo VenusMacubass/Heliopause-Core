@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-09T19:07:48.7774711	Block States: heliocore
+// 1.21.1	2026-07-10T13:06:19.9934604	Block States: heliocore
 bed3fb55b3f2e9b64cb594a3edf17394cb82284a assets/heliocore/blockstates/aluminium_ore.json
 3ec7dafb201f8ebabac7ace9f3ac848c465aeb8e assets/heliocore/blockstates/basic_solar_block.json
 5a53928564120b90a34ba4a14d00148eb87d7b2e assets/heliocore/blockstates/cargo_manager_block.json
@@ -26,6 +26,7 @@ ab6933636bcd2facf223b414c780669d8e945708 assets/heliocore/blockstates/moon_dunge
 922bfec657ed3ed389eeb468de1fa700ad0f8415 assets/heliocore/blockstates/moon_iridium_ore.json
 3eb459979b52e1937b486e8430b509d9b8bc6dcf assets/heliocore/blockstates/moon_iron_ore.json
 fa362e30c77dd7e15d358263c9add3339c22e5bb assets/heliocore/blockstates/moon_regolith.json
+1965b445dfa96f74d9e3ef16488fd962bb042ebe assets/heliocore/blockstates/moon_regolith_tektites.json
 f10ea130a9b8a1a951f1e9c6bf94746b95e7740d assets/heliocore/blockstates/moon_rock.json
 cb60134dedd89a7acab87fa3a925f12b2f0d531b assets/heliocore/blockstates/moon_rock_slab.json
 b7171090517407814e9dd3fb38326683869c5968 assets/heliocore/blockstates/moon_rock_stairs.json
@@ -111,6 +112,7 @@ a0ab61b6df6401d325e06be646d729a6132d0808 assets/heliocore/models/block/moon_dung
 d201b1610f498258dad62e074b6c19f8aea2e67c assets/heliocore/models/block/moon_iridium_ore.json
 9dab55a141ee46da5311211811850822ffeeb4cc assets/heliocore/models/block/moon_iron_ore.json
 da76bba0e6ff9b9b1ee6fadd9e68f825db6f4b27 assets/heliocore/models/block/moon_regolith.json
+7e4e29a2159ddf231762a92afddf05b66d3634fe assets/heliocore/models/block/moon_regolith_tektites.json
 c69e62abad09d913e5bbe73d87041ac9066422ea assets/heliocore/models/block/moon_rock.json
 131291ffc8bccb118861efd060d46922b069dd50 assets/heliocore/models/block/moon_rock_slab.json
 d8ba5156091f386e190360301bcb125ae8c93e1b assets/heliocore/models/block/moon_rock_slab_double.json
@@ -174,6 +176,7 @@ f7e598e3a73c70ecd840c95a2a6dc51cb8ab09fb assets/heliocore/models/item/moon_dunge
 9ef9c26d9db9f8a938b844c1935afdf7ec3dcf65 assets/heliocore/models/item/moon_iridium_ore.json
 6a75eaf3409e46ade5ea6514fc7e50fd6c586dd8 assets/heliocore/models/item/moon_iron_ore.json
 e60622e8be2db176a7d719a76cc117da8b07169c assets/heliocore/models/item/moon_regolith.json
+50d6d8be42bcf303a2e3f77a51e99f9034a88044 assets/heliocore/models/item/moon_regolith_tektites.json
 c5918b6052f18632c3f0932d685b09746cc86248 assets/heliocore/models/item/moon_rock.json
 a90c184157dc40e5ed6074621bd37cd8eb564802 assets/heliocore/models/item/moon_rock_slab.json
 6816e9f69fccd9ccb3647d2c6ba5a7ae2bfc8cb3 assets/heliocore/models/item/moon_rock_stairs.json

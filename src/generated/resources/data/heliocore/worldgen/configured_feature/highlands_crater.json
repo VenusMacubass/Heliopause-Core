@@ -2,7 +2,7 @@
   "type": "heliocore:crater",
   "config": {
     "max_radius": 12,
-    "min_radius": 3,
+    "min_radius": 2,
     "squish": 2.0
   }
 }
