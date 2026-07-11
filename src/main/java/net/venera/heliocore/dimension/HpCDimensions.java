@@ -54,7 +54,7 @@ public class HpCDimensions {
                                 Climate.Parameter.span(-1.0F, 1.0F), // Depth 
                                 Climate.Parameter.span(-1.0F, 1.0F), // Weirdness 
                                 0.0F
-                        ), biomeRegistry.getOrThrow(HpCBiomes.LUNAR_MARIA)), // Replace with your actual biome key
+                        ), biomeRegistry.getOrThrow(HpCBiomes.LUNAR_MARIA)), 
 
                         // LUNAR HIGHLANDS (Low Erosion = Jagged)
                         Pair.of(Climate.parameters(
@@ -65,7 +65,7 @@ public class HpCDimensions {
                                 Climate.Parameter.span(-1.0F, 1.0F), // Depth 
                                 Climate.Parameter.span(-1.0F, 1.0F), // Weirdness 
                                 0.0F
-                        ), biomeRegistry.getOrThrow(HpCBiomes.LUNAR_HIGHLANDS)) // Replace with your actual biome key
+                        ), biomeRegistry.getOrThrow(HpCBiomes.LUNAR_HIGHLANDS)) 
                 ))
         );
 
@@ -90,8 +90,8 @@ public class HpCDimensions {
                 -64,                  // minY
                 320,                  // height
                 320,                  // logicalHeight
-                BlockTags.INFINIBURN_OVERWORLD, // infiniburn
-                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon"), // effectsLocation 
+                BlockTags.INFINIBURN_OVERWORLD, 
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon"), 
                 0.0f,                 // ambientLight 
                 new DimensionType.MonsterSettings(false, false, UniformInt.of(0, 7), 0)
         ));

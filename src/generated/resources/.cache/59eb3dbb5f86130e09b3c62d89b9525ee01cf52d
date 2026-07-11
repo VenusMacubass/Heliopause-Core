@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-10T13:06:19.9898512	Loot Tables
+// 1.21.1	2026-07-11T18:11:35.568506	Loot Tables
 4c6effb42af79317efc025b64a17716f1bcfaa42 data/heliocore/loot_table/blocks/aluminium_block.json
 64247a8f311a92e6ec87cc7d0e221e1a168f6380 data/heliocore/loot_table/blocks/aluminium_ore.json
 169aa8b3cb872639f3c6660ddb1af2fc0bbcdf83 data/heliocore/loot_table/blocks/arc_lamp.json
@@ -8,6 +8,7 @@ b7bf97a84f487f477628982c43b98c6087bdc122 data/heliocore/loot_table/blocks/cheese
 7b378b3b6ed7261b4e8a493d71d9664d106a15de data/heliocore/loot_table/blocks/coal_compressor.json
 3129084d407e83575a042f10a92f3a9be94bf8d3 data/heliocore/loot_table/blocks/copper_wire.json
 87c26cfc049f020f32f0e8f407079080dd138273 data/heliocore/loot_table/blocks/copper_wire_block.json
+fe04e53c3366efac217c23c65ee373b361577b79 data/heliocore/loot_table/blocks/deconstructor_block.json
 0e2cdf53c62cd597800e6cc2788dbe3040c09b62 data/heliocore/loot_table/blocks/deepslate_aluminium_ore.json
 b7bc75985ea6a6309924bea0631d396456967510 data/heliocore/loot_table/blocks/deepslate_iridium_ore.json
 1e9087afb4135e39900e79a9f34f62d03f165894 data/heliocore/loot_table/blocks/deepslate_silicon_ore.json

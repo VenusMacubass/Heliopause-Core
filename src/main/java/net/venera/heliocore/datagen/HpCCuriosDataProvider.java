@@ -22,15 +22,15 @@ public class HpCCuriosDataProvider extends CuriosDataProvider {
                 .size(1)
                 .order(200);
 
-        this.createSlot("oxygen_connectors")
+        this.createSlot("oxygen_tank_1")
                 .size(1)
                 .order(201);
 
-        this.createSlot("oxygen_tank_1")
+        this.createSlot("oxygen_tank_2")
                 .size(1)
                 .order(202);
 
-        this.createSlot("oxygen_tank_2")
+        this.createSlot("oxygen_connectors")
                 .size(1)
                 .order(203);
 

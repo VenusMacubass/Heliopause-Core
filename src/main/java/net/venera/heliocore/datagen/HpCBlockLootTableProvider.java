@@ -59,6 +59,7 @@ public class HpCBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(HpCBlocks.GAS_COMPRESSOR_BLOCK.get());
         dropSelf(HpCBlocks.GAS_VAPORIZER_BLOCK.get());
         dropSelf(HpCBlocks.ENERGY_GENERATOR_BLOCK.get());
+        dropSelf(HpCBlocks.DECONSTRUCTOR_BLOCK.get());
         dropSelf(HpCBlocks.COPPER_WIRE.get());
         dropSelf(HpCBlocks.FLUID_PIPE.get());
 

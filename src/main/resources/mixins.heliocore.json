@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.venera.heliocore.mixin",
+  "refmap": "heliocore.refmap.json",
+  "mixins": [
+    "MixinChangeOverTimeBlock",
+    "MixinLiquidBlock",
+    "MixinIceBlock"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

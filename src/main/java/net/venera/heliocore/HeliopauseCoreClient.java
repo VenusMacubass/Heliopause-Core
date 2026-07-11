@@ -48,6 +48,8 @@ import net.venera.heliocore.screen.hpc_custom.*;
 import net.venera.heliocore.util.LanderControlPayload;
 import org.joml.Matrix4f;
 
+import javax.annotation.Nullable;
+
 
 @EventBusSubscriber(modid = HeliopauseCore.MOD_ID, value = Dist.CLIENT)
 public class HeliopauseCoreClient {
@@ -180,9 +182,14 @@ public class HeliopauseCoreClient {
 
     @SubscribeEvent
     public static void registerDimensionEffects(RegisterDimensionSpecialEffectsEvent event) {
-
         DimensionSpecialEffects moonEffects = new DimensionSpecialEffects(Float.NaN, true, DimensionSpecialEffects.SkyType.NORMAL, false, false) {
 
+            @Nullable
+            @Override
+            public float[] getSunriseColor(float timeOfDay, float partialTicks) {
+                return null;
+            }
+            
             @Override
             public Vec3 getBrightnessDependentFogColor(Vec3 biomeFogColor, float daylight) {
                 return biomeFogColor;

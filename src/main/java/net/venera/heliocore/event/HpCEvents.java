@@ -60,6 +60,7 @@ public class HpCEvents {
       }
     }
 
+    //region Registries
     @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         registerElectric(event, HpCBlockEntities.ENERGY_STORAGE_ENTITY.get());
@@ -91,6 +92,25 @@ public class HpCEvents {
                 }
         );
     }
+    
+    @SubscribeEvent
+    public static void register(final RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar(HeliopauseCore.MOD_ID);
+
+        registrar.playToServer(
+                LanderControlPayload.TYPE,
+                LanderControlPayload.STREAM_CODEC,
+                (payload, context) -> {
+                    context.enqueueWork(() -> {
+                        Player player = context.player();
+                        if (player.getVehicle() instanceof Tier1RocketLanderEntity lander) {
+                            lander.isThrusting = payload.isThrusting();
+                        }
+                    });
+                }
+        );
+    }
+    //endregion
     
     //region Atmospherics
     @SubscribeEvent
@@ -176,13 +196,10 @@ public class HpCEvents {
             if (entity.isOnFire()) {
                 entity.clearFire();
             }
+            if (entity.isOnFire()) entity.clearFire();
 
-            if (isOnMoon) {
-                if (entity.isOnFire()) entity.clearFire();
-
-                if (entity instanceof LivingEntity living && living.isFallFlying()) {
-                    living.setSharedFlag(7, false);
-                }
+            if (entity instanceof LivingEntity living && living.isFallFlying()) {
+                living.setSharedFlag(7, false);
             }
         }
         
@@ -248,21 +265,6 @@ public class HpCEvents {
         );
     }
     //endregion
-    @SubscribeEvent
-    public static void register(final RegisterPayloadHandlersEvent event) {
-        final PayloadRegistrar registrar = event.registrar(HeliopauseCore.MOD_ID);
-
-        registrar.playToServer(
-                LanderControlPayload.TYPE,
-                LanderControlPayload.STREAM_CODEC,
-                (payload, context) -> {
-                    context.enqueueWork(() -> {
-                        Player player = context.player();
-                        if (player.getVehicle() instanceof Tier1RocketLanderEntity lander) {
-                            lander.isThrusting = payload.isThrusting();
-                        }
-                    });
-                }
-        );
-    }
+    
+    
 }

@@ -98,18 +98,16 @@ public class HpCBlocks {
             () -> new CargoManagerBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.CARGO_MANAGER_ENTITY));
     public static final DeferredBlock<Block> FUEL_MANAGER_BLOCK = registerBlock("fuel_manager_block",
             () -> new FuelManagerBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.FUEL_MANAGER_ENTITY));
-    
     public static final DeferredBlock<Block> OXYGEN_GENERATOR_BLOCK = registerBlock("oxygen_generator_block",
             () -> new OxygenGeneratorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.OXYGEN_GENERATOR_ENTITY));
-
     public static final DeferredBlock<Block> GAS_COMPRESSOR_BLOCK = registerBlock("gas_compressor_block",
             () -> new GasCompressorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.GAS_COMPRESSOR_ENTITY));
-
     public static final DeferredBlock<Block> GAS_VAPORIZER_BLOCK = registerBlock("gas_vaporizer_block",
             () -> new GasVaporizerBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.GAS_VAPORIZER_ENTITY));
-
     public static final DeferredBlock<Block> ENERGY_GENERATOR_BLOCK = registerBlock("energy_generator_block",
             () -> new EnergyGeneratorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.ENERGY_GENERATOR_ENTITY));
+    public static final DeferredBlock<Block> DECONSTRUCTOR_BLOCK = registerBlock("deconstructor_block",
+            () -> new DeconstructorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.DECONSTRUCTOR_ENTITY));
 
     //endregion
     
