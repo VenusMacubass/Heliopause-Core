@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-10T13:06:19.9934604	Block States: heliocore
+// 1.21.1	2026-07-12T23:02:46.2535534	Block States: heliocore
 bed3fb55b3f2e9b64cb594a3edf17394cb82284a assets/heliocore/blockstates/aluminium_ore.json
 3ec7dafb201f8ebabac7ace9f3ac848c465aeb8e assets/heliocore/blockstates/basic_solar_block.json
 5a53928564120b90a34ba4a14d00148eb87d7b2e assets/heliocore/blockstates/cargo_manager_block.json
@@ -66,7 +66,7 @@ adbcc94d8cd2c3d1ba59399af86a7a1b3911d123 assets/heliocore/models/block/basic_sol
 4937a1e15e22ddcac72e4aa3d276561255a9321d assets/heliocore/models/block/basic_solar_block_charge_7.json
 3db618f38a0ae45423d3ac32320031330a48ffc3 assets/heliocore/models/block/basic_solar_block_charge_8.json
 2186481f5436030c1da7be85c3bb737f6ad55e2f assets/heliocore/models/block/basic_solar_block_charge_9.json
-bc47e139baa0ca20bc78f37d8ce640b8c19eccca assets/heliocore/models/block/cargo_manager_block.json
+ed8e12edb56f975f95d66e869257dd09fb7343fa assets/heliocore/models/block/cargo_manager_block.json
 fa498f1ea160c25a10ee19cd58e322b7c2450010 assets/heliocore/models/block/coal_compressor.json
 a79ab9ed88961a186873487c680212e116a6f83d assets/heliocore/models/block/copper_wire_block.json
 36a2068a3b1ae003c2b23f74bf254b5f31571bd2 assets/heliocore/models/block/crude_oil.json
@@ -91,7 +91,7 @@ a720008ef987236c2ce757de87d9e977f9a0441c assets/heliocore/models/block/energy_st
 404c849920c93b35c736ac53c67ea3a95aa639ce assets/heliocore/models/block/energy_storage_unit_charge_7.json
 1fbb759c692ee1973a116575ef84698bf60f65dc assets/heliocore/models/block/energy_storage_unit_charge_8.json
 ab51f77994bc132c57bd378e3210ca8e32fdfe92 assets/heliocore/models/block/energy_storage_unit_charge_9.json
-5011c137fb86696952b944c25196a452e95df8ef assets/heliocore/models/block/fuel_manager_block.json
+2ed2822ff9eed72c65204378929f838e6977d9af assets/heliocore/models/block/fuel_manager_block.json
 544b7bf088bde2eaf71a0437ddb57721d6c41616 assets/heliocore/models/block/gas_compressor_block.json
 95339e79c4212e6105c67c3149786d7e5051228b assets/heliocore/models/block/gas_vaporizer_block.json
 5c1eeae7f196c849d770368f794020903ff8fd72 assets/heliocore/models/block/iridium_block.json

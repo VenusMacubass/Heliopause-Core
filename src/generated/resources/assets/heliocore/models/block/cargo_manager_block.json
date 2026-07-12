@@ -2,7 +2,7 @@
   "parent": "minecraft:block/cube",
   "textures": {
     "down": "heliocore:block/machine/machine_bottom",
-    "east": "heliocore:block/machine/machine_side",
+    "east": "heliocore:block/machine/cargo_manager_side",
     "north": "heliocore:block/machine/machine_energy_input",
     "particle": "heliocore:block/machine/machine_side",
     "south": "heliocore:block/machine/machine_side",

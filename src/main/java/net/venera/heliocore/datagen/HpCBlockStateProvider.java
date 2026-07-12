@@ -66,6 +66,8 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     ResourceLocation refinerySide =  modLoc("block/machine/refinery_side");
     ResourceLocation solarPanelSide = modLoc("block/machine/machine_basic_solar_panel");
     ResourceLocation solarPanelTop = modLoc("block/machine/machine_solar_top");
+    ResourceLocation cargoManagerSide = modLoc("block/machine/cargo_manager_side");
+    ResourceLocation fuelManagerLoader = modLoc("block/machine/fuel_loader_side");
     ResourceLocation gasCompressor = modLoc("block/machine/gas_compressor");
     ResourceLocation gasVaporizer = modLoc("block/machine/gas_vaporizer");
     //endregion
@@ -201,6 +203,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 machineSide,
                 Map.of(
                         Direction.NORTH, energyInPort,
+                        Direction.SOUTH, fuelManagerLoader,
                         Direction.UP, machineTop,
                         Direction.DOWN, machineBottom,
                         Direction.EAST, fluidInPort
@@ -211,6 +214,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 machineSide,
                 Map.of(
                         Direction.NORTH, energyInPort,
+                        Direction.EAST, cargoManagerSide,
                         Direction.UP, machineTop,
                         Direction.DOWN, machineBottom
                 )
