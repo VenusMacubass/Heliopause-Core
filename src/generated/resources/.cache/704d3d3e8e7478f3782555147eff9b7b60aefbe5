@@ -1,5 +1,8 @@
-// 1.21.1	2026-05-28T17:11:36.1237006	Tags for minecraft:item mod id heliocore
+// 1.21.1	2026-07-12T12:44:48.8945576	Tags for minecraft:item mod id heliocore
+d78dea7881ff6c4bce8bb1760d7d5d5ab868168e data/curios/tags/item/oxygen_connectors.json
 96ac74fc3ae79a5bbc1fc47a30a7a0d7c40e70b3 data/curios/tags/item/oxygen_mask.json
+660304c1431a89599c3470290ddb23ba64b6500e data/curios/tags/item/oxygen_tank_1.json
+660304c1431a89599c3470290ddb23ba64b6500e data/curios/tags/item/oxygen_tank_2.json
 e0bfc26d31f2a836e943fe7930590f71e8a3e74c data/heliocore/tags/item/canister.json
 6db9722aa3e98cc50f72ac4c0a991f901f7309c6 data/heliocore/tags/item/compressible_ingots.json
 af79c9c489a78edac75a3387f25c4a1234d24420 data/minecraft/tags/item/axes.json

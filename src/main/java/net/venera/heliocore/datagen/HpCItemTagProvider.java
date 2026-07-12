@@ -13,7 +13,7 @@ import net.venera.heliocore.util.HpCTags;
 import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
-import static net.venera.heliocore.util.HpCTags.Items.CURIOS_OXYGEN_MASK;
+import static net.venera.heliocore.util.HpCTags.Items.*;
 
 public class HpCItemTagProvider extends ItemTagsProvider {
     public HpCItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags, @Nullable ExistingFileHelper existingFileHelper) {
@@ -54,7 +54,9 @@ public class HpCItemTagProvider extends ItemTagsProvider {
 //        tag(CURIOS_BACK)
 //                .add(Items.ELYTRA);
         
-        tag(CURIOS_OXYGEN_MASK)
-                .add(HpCItems.OXYGEN_MASK.get());
+        tag(CURIOS_OXYGEN_MASK).add(HpCItems.OXYGEN_MASK.get());
+        tag(CURIOS_OXYGEN_CONNECTORS).add(HpCItems.OXYGEN_CONNECTORS.get());
+        tag(CURIOS_OXYGEN_TANK_1).add(HpCItems.COMPRESSED_GAS_TANK.get());
+        tag(CURIOS_OXYGEN_TANK_2).add(HpCItems.COMPRESSED_GAS_TANK.get());
     }
 }

@@ -44,6 +44,7 @@ import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import net.venera.heliocore.util.LanderControlPayload;
 import net.venera.heliocore.util.MachineButtonHelper;
 import net.venera.heliocore.util.HpCTags;
+import net.venera.heliocore.util.OxygenSetupHelper;
 
 @EventBusSubscriber
 public class HpCEvents {
@@ -167,17 +168,11 @@ public class HpCEvents {
             return;
         }
 
-        boolean hasOxygen = !living.level().dimension().equals(HpCDimensions.MOON_LEVEL_KEY);
+        boolean hasOxygen = OxygenSetupHelper.checkOxygenSetup(living);
 
         if (!hasOxygen) {
             if (living.getType().is(HpCTags.Entities.DOES_NOT_BREATHE)) return;
             if (living.isInvertedHealAndHarm()) return;
-
-//            //Is the entity wearing an oxygen mask on their head?
-//            ItemStack headGear = living.getItemBySlot(EquipmentSlot.HEAD);
-//            if (headGear.is(OXYGEN_GEAR)) {
-//                return;
-//            }
             living.hurt(living.damageSources().drown(), 2.0f);
         }
     }

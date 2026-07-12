@@ -19,6 +19,15 @@ public class HpCTags {
         public static final TagKey<Item> CURIOS_OXYGEN_MASK = ItemTags.create(
                 ResourceLocation.fromNamespaceAndPath("curios", "oxygen_mask")
         );
+        public static final TagKey<Item> CURIOS_OXYGEN_CONNECTORS = ItemTags.create(
+                ResourceLocation.fromNamespaceAndPath("curios", "oxygen_connectors")
+        );
+        public static final TagKey<Item> CURIOS_OXYGEN_TANK_1 = ItemTags.create(
+                ResourceLocation.fromNamespaceAndPath("curios", "oxygen_tank_1")
+        );
+        public static final TagKey<Item> CURIOS_OXYGEN_TANK_2 = ItemTags.create(
+                ResourceLocation.fromNamespaceAndPath("curios", "oxygen_tank_2")
+        );
 
         private static TagKey<Item> createTag(String name){
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, name));
