@@ -20,12 +20,12 @@ public abstract class BaseElectricMachineEntity extends BaseMachineEntity {
     protected final EnergyStorage energyStorage;
 
     public BaseElectricMachineEntity(BlockEntityType<?> type, BlockPos pos, BlockState state,
-                                     int slotCount, int capacity, int transferRate, int usagePerTick) {
+                                     int slotCount, int capacity, int energyTransferRate, int energyUsagePerTick) {
         super(type, pos, state, slotCount);
         
         
         
-        this.energyStorage = new EnergyStorage(capacity, transferRate, usagePerTick, 0) {
+        this.energyStorage = new EnergyStorage(capacity, energyTransferRate, energyUsagePerTick, 0) {
             @Override
             public int receiveEnergy(int maxReceive, boolean simulate) {
                 int retval = super.receiveEnergy(maxReceive, simulate);

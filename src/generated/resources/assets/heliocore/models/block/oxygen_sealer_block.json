@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "heliocore:block/machine/machine_bottom",
+    "east": "heliocore:block/machine/machine_fluid_input",
+    "north": "heliocore:block/machine/machine_energy_input",
+    "particle": "heliocore:block/machine/machine_side",
+    "south": "heliocore:block/machine/machine_side",
+    "up": "heliocore:block/machine/oxygen_sealer_top",
+    "west": "heliocore:block/machine/machine_side"
+  }
+}

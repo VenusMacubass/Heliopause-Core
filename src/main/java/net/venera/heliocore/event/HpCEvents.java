@@ -1,14 +1,13 @@
 package net.venera.heliocore.event;
 
-import net.minecraft.client.CameraType;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.behavior.SetWalkTargetFromAttackTargetIfTargetOutOfReach;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -16,7 +15,6 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.phys.Vec3;
@@ -24,27 +22,20 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.client.event.ModelEvent;
-import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.ExplosionEvent;
+import net.neoforged.neoforge.event.level.PistonEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.entity.HpCBlockEntities;
 import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
-import net.venera.heliocore.data.component.CanisterData;
-import net.venera.heliocore.data.temperature.EnvironmentalTemperature;
-import net.venera.heliocore.dimension.HpCDimensions;
-import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
+import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
 import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
 import net.venera.heliocore.item.HpCItems;
-import net.venera.heliocore.item.hpc_custom.CanisterItem;
-import net.venera.heliocore.util.LanderControlPayload;
-import net.venera.heliocore.util.MachineButtonHelper;
-import net.venera.heliocore.util.HpCTags;
-import net.venera.heliocore.util.OxygenSetupHelper;
+import net.venera.heliocore.util.*;
 
 @EventBusSubscriber
 public class HpCEvents {
@@ -59,6 +50,38 @@ public class HpCEvents {
               event.setNewDamage(event.getOriginalDamage() * (1f + damageBuff));
           }
       }
+    }
+
+    @SubscribeEvent
+    public static void onBlockBreak(BlockEvent.BreakEvent event) {
+        if (event.getLevel().isClientSide()) return;
+        BlockPos sealerPos = OxygenVolumeHelper.getSealerForWall(event.getPos().asLong());
+        if (sealerPos != null && event.getLevel().getBlockEntity(sealerPos) instanceof OxygenSealerEntity sealer) {
+            sealer.seal = false;
+            OxygenVolumeHelper.removeRoom(sealerPos);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onExplosion(ExplosionEvent.Detonate event) {
+        if (event.getLevel().isClientSide()) return;
+        for (BlockPos pos : event.getAffectedBlocks()) {
+            BlockPos sealerPos = OxygenVolumeHelper.getSealerForWall(pos.asLong());
+            if (sealerPos != null && event.getLevel().getBlockEntity(sealerPos) instanceof OxygenSealerEntity sealer) {
+                sealer.seal = false;
+                OxygenVolumeHelper.removeRoom(sealerPos);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPistonMove(PistonEvent.Pre event) {
+        if (event.getLevel().isClientSide()) return;
+        BlockPos sealerPos = OxygenVolumeHelper.getSealerForWall(event.getPos().asLong());
+        if (sealerPos != null && event.getLevel().getBlockEntity(sealerPos) instanceof OxygenSealerEntity sealer) {
+            sealer.seal = false;
+            OxygenVolumeHelper.removeRoom(sealerPos);
+        }
     }
 
     //region Registries
@@ -139,23 +162,23 @@ public class HpCEvents {
             return;
         }
 
-        Level level = living.level();
-        var biome = level.getBiome(living.blockPosition());
-
-        double currentTemp = EnvironmentalTemperature.getEnvironmentalTemperature(level, biome);
-
-        if (currentTemp >= 55.0) {
-            living.hurt(level.damageSources().onFire(), 1.0f);
-
-            if (currentTemp >= 60.0 && !living.isOnFire()) {
-                living.setRemainingFireTicks(2);
-            }
-        }
-        else if (currentTemp <= -50.0) {
-            living.hurt(level.damageSources().freeze(), 1.0f);
-
-            living.setTicksFrozen(150);
-        }
+//        Level level = living.level();
+//        var biome = level.getBiome(living.blockPosition());
+//
+//        double currentTemp = EnvironmentalTemperature.getEnvironmentalTemperature(level, biome);
+//
+//        if (currentTemp >= 55.0) {
+//            living.hurt(level.damageSources().onFire(), 1.0f);
+//
+//            if (currentTemp >= 60.0 && !living.isOnFire()) {
+//                living.setRemainingFireTicks(2);
+//            }
+//        }
+//        else if (currentTemp <= -50.0) {
+//            living.hurt(level.damageSources().freeze(), 1.0f);
+//
+//            living.setTicksFrozen(150);
+//        }
     }
 
     @SubscribeEvent
@@ -169,8 +192,11 @@ public class HpCEvents {
         }
 
         boolean hasOxygen = OxygenSetupHelper.checkOxygenSetup(living);
+        BlockPos headPos = BlockPos.containing(event.getEntity().getX(), event.getEntity().getEyeY(), event.getEntity().getZ());
+        long headLong = headPos.asLong();
+        boolean inOxygen = OxygenVolumeHelper.isPositionSealed(headLong);
 
-        if (!hasOxygen) {
+        if (!hasOxygen && !inOxygen) {
             if (living.getType().is(HpCTags.Entities.DOES_NOT_BREATHE)) return;
             if (living.isInvertedHealAndHarm()) return;
             living.hurt(living.damageSources().drown(), 2.0f);
@@ -249,7 +275,7 @@ public class HpCEvents {
     }
     //endregion
     
-    // region Solar Panel Helper
+    // region Machine Button Helper
     @SubscribeEvent
     public static void registerNetworking(final RegisterPayloadHandlersEvent event) {
         final PayloadRegistrar registrar = event.registrar(HeliopauseCore.MOD_ID);

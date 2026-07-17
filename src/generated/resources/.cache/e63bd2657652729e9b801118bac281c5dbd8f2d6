@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-09T18:38:34.5927267	Item Models: heliocore
+// 1.21.1	2026-07-15T19:41:02.0652771	Item Models: heliocore
 62c01033a4c1f12560cd7e8e0deda9ef61f67c70 assets/heliocore/models/item/cheese_slice.json
 8cc483167b9451eb7ae0dd7530e83781ecfa22ab assets/heliocore/models/item/compressed_bronze.json
 0af2591c590f42947c6a487a09f4041de52d7575 assets/heliocore/models/item/compressed_copper.json
@@ -20,6 +20,7 @@ bab023cceeedf9effb921268cd18de4d22505d00 assets/heliocore/models/item/dehydrated
 d754b71e6180081a586fe7630dd92361e15d31f8 assets/heliocore/models/item/heavy_duty_plate.json
 f161f4e5733fdfa637181ee0e9da9a60bf97c014 assets/heliocore/models/item/moon_dungeon_brick_wall.json
 8ba848f79f24fecc74d70c6e43e32f4a49d5ce29 assets/heliocore/models/item/moon_rock_wall.json
+f643fc074ecadea8066344fa970997e691ff0ec0 assets/heliocore/models/item/oxygen_connectors.json
 9db10c806ab44c23453ac69ba3a416204a4c276e assets/heliocore/models/item/radioactive_core.json
 0e474d186bc7156778e29da40edfbb3d13255444 assets/heliocore/models/item/raw_aluminium.json
 e701efa9efed45d7fa802d2601dd8008f4d0afae assets/heliocore/models/item/raw_silicon.json

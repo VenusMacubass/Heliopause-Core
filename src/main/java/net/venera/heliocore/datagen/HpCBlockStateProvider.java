@@ -59,6 +59,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     ResourceLocation fluidInPort = modLoc("block/machine/machine_fluid_input");
     ResourceLocation fluidOutPort = modLoc("block/machine/machine_fluid_output");
     ResourceLocation airVent = modLoc("block/machine/machine_gas_vent");
+    ResourceLocation filterVent = modLoc("block/machine/oxygen_sealer_top");
     
     ResourceLocation coalCompressor = modLoc("block/machine/coal_compressor");
     ResourceLocation refineryFront =  modLoc("block/machine/refinery_front");
@@ -225,6 +226,16 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 Map.of(
                         Direction.NORTH, energyOutPort,
                         Direction.UP, machineTop,
+                        Direction.DOWN, machineBottom,
+                        Direction.EAST, fluidInPort
+                )
+        );
+
+        directionalMachineBlock(HpCBlocks.OXYGEN_SEALER_BLOCK.get(),
+                machineSide,
+                Map.of(
+                        Direction.NORTH, energyInPort,
+                        Direction.UP, filterVent,
                         Direction.DOWN, machineBottom,
                         Direction.EAST, fluidInPort
                 )

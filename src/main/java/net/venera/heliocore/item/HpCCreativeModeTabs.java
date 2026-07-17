@@ -146,6 +146,7 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCBlocks.ENERGY_STORAGE_UNIT.get());
                         output.accept(HpCBlocks.BASIC_SOLAR_BLOCK.get());
                         output.accept(HpCBlocks.ENERGY_GENERATOR_BLOCK.get());
+                        output.accept(HpCBlocks.OXYGEN_SEALER_BLOCK.get());
                         output.accept(HpCBlocks.COPPER_WIRE_BLOCK.get());
                         output.accept(HpCBlocks.LAUNCH_PAD.get());
                         output.accept(HpCBlocks.FLUID_TANK.get());

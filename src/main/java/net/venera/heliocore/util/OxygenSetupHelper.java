@@ -8,44 +8,54 @@ import net.venera.heliocore.item.hpc_custom.GasTankItem;
 import top.theillusivec4.curios.api.CuriosApi;
 
 public class OxygenSetupHelper {
-    private static final int OXYGEN_USAGE = 5;
-    private static boolean oxygenMaskValid = false;
-    private static boolean oxygenConnectorsValid = false;
-    private static boolean oxygenTank1Valid = false;
-    private static boolean oxygenTank2Valid = false;
-    
-    public static boolean checkOxygenSetup(LivingEntity livingEntity) {
-        validOxygenSetup(livingEntity);
-        return oxygenMaskValid && oxygenConnectorsValid && (oxygenTank1Valid || oxygenTank2Valid);
-    }
-    
-    public static void validOxygenSetup(LivingEntity entity) {
-        var curiosInventory = CuriosApi.getCuriosInventory(entity);
-        if (curiosInventory.isEmpty()) {
-            return;
-        }
-        var oxygenMask = curiosInventory.get().getCurios().get("oxygen_mask");
-        var oxygenConnectors = curiosInventory.get().getCurios().get("oxygen_connectors");
-        var oxygenTank1 =  curiosInventory.get().getCurios().get("oxygen_tank_1");
-        var oxygenTank2 =  curiosInventory.get().getCurios().get("oxygen_tank_2");
+    private static final int OXYGEN_USAGE = 2;
 
-        oxygenMaskValid = oxygenMask.getStacks().getStackInSlot(0).getItem() == HpCItems.OXYGEN_MASK.get();
-        oxygenConnectorsValid = oxygenConnectors.getStacks().getStackInSlot(0).getItem() == HpCItems.OXYGEN_CONNECTORS.get();
+    public static boolean checkOxygenSetup(LivingEntity livingEntity) {
+        var optionalCurios = CuriosApi.getCuriosInventory(livingEntity);
+        if (optionalCurios.isEmpty()) {
+            return false; 
+        }
+
+        var curios = optionalCurios.get().getCurios();
+        var maskSlot = curios.get("oxygen_mask");
+        if (maskSlot == null || maskSlot.getStacks().getStackInSlot(0).getItem() != HpCItems.OXYGEN_MASK.get()) {
+            return false;
+        }
         
-        if(oxygenTank1.getStacks().getStackInSlot(0).getItem() instanceof GasTankItem gasTankItem1){
-            oxygenTank1Valid = tankOxygenLevel(gasTankItem1, oxygenTank1.getStacks().getStackInSlot(0)) > OXYGEN_USAGE;
+        var connectorSlot = curios.get("oxygen_connectors");
+        if (connectorSlot == null || connectorSlot.getStacks().getStackInSlot(0).getItem() != HpCItems.OXYGEN_CONNECTORS.get()) {
+            return false;
         }
-        if(oxygenTank2.getStacks().getStackInSlot(0).getItem() instanceof GasTankItem gasTankItem2){
-            oxygenTank2Valid = tankOxygenLevel(gasTankItem2, oxygenTank1.getStacks().getStackInSlot(0)) > OXYGEN_USAGE;
+        
+        var tank1Slot = curios.get("oxygen_tank_1");
+        var tank2Slot = curios.get("oxygen_tank_2");
+
+        ItemStack tank1Stack = tank1Slot != null ? tank1Slot.getStacks().getStackInSlot(0) : ItemStack.EMPTY;
+        ItemStack tank2Stack = tank2Slot != null ? tank2Slot.getStacks().getStackInSlot(0) : ItemStack.EMPTY;
+        
+        if (tryConsumeOxygen(tank1Stack)) {
+            return true;
         }
-    }    
-    
-    private static int tankOxygenLevel(GasTankItem gasTankItem, ItemStack stack) {
+        
+        if (tryConsumeOxygen(tank2Stack)) {
+            return true;
+        }
+        
+        return false;
+    }
+
+    private static boolean tryConsumeOxygen(ItemStack stack) {
+        if (stack.isEmpty() || !(stack.getItem() instanceof GasTankItem gasTankItem)) {
+            return false;
+        }
+
         GasTankData data = gasTankItem.getGasTankData(stack);
-        if(data == null) return 0;
-        if(data.isOxygen() && data.amount() > OXYGEN_USAGE){ 
-            return data.amount();
+
+        if (data != null && data.isOxygen() && data.amount() >= OXYGEN_USAGE) {
+            gasTankItem.drain(stack, OXYGEN_USAGE);
+            return true;
         }
-        return 0;
+
+        return false;
     }
 }

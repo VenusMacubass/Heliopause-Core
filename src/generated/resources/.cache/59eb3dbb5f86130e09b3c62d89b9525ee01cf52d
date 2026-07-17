@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-11T18:11:35.568506	Loot Tables
+// 1.21.1	2026-07-17T15:14:24.8089511	Loot Tables
 4c6effb42af79317efc025b64a17716f1bcfaa42 data/heliocore/loot_table/blocks/aluminium_block.json
 64247a8f311a92e6ec87cc7d0e221e1a168f6380 data/heliocore/loot_table/blocks/aluminium_ore.json
 169aa8b3cb872639f3c6660ddb1af2fc0bbcdf83 data/heliocore/loot_table/blocks/arc_lamp.json
@@ -43,6 +43,7 @@ ea33085e1d656059a7ca6b153f26dd5516b1ccc6 data/heliocore/loot_table/blocks/moon_s
 94cd9eee0dfabb02e0d3c31194d10c5788cb89da data/heliocore/loot_table/blocks/moon_tektites.json
 0fcaceb2ddc4c18e3d475da12c300df009c7ddf5 data/heliocore/loot_table/blocks/moon_tin_ore.json
 7c10a7249ddf43584569922a36f68796806156be data/heliocore/loot_table/blocks/oxygen_generator_block.json
+2d569f4ac1d2c27eeda44c2fad58ceb5da36b70d data/heliocore/loot_table/blocks/oxygen_sealer_block.json
 46afaec6bbb0463975b900dc3c53d27421e144c8 data/heliocore/loot_table/blocks/pizza_block.json
 2e952a5a57bdcf83b6316c4e241f38451e778342 data/heliocore/loot_table/blocks/prismatic_glass.json
 69aa2357e897190284a3d311f9784894a3900da9 data/heliocore/loot_table/blocks/prismatic_glass_pane.json

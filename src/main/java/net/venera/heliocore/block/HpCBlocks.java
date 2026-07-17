@@ -108,6 +108,8 @@ public class HpCBlocks {
             () -> new EnergyGeneratorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.ENERGY_GENERATOR_ENTITY));
     public static final DeferredBlock<Block> DECONSTRUCTOR_BLOCK = registerBlock("deconstructor_block",
             () -> new DeconstructorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.DECONSTRUCTOR_ENTITY));
+    public static final DeferredBlock<Block> OXYGEN_SEALER_BLOCK = registerBlock("oxygen_sealer_block",
+            () -> new OxygenSealerBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.OXYGEN_SEALER_ENTITY));
 
     //endregion
     

@@ -72,7 +72,15 @@ public class HpCBlockTagProvider extends BlockTagsProvider {
                 .add(HpCBlocks.COAL_COMPRESSOR.get())
                 .add(HpCBlocks.REFINERY.get())
                 .add(HpCBlocks.ENERGY_STORAGE_UNIT.get())
-                .add(HpCBlocks.BASIC_SOLAR_BLOCK.get());
+                .add(HpCBlocks.BASIC_SOLAR_BLOCK.get())
+                .add(HpCBlocks.CARGO_MANAGER_BLOCK.get())
+                .add(HpCBlocks.FUEL_MANAGER_BLOCK.get())
+                .add(HpCBlocks.OXYGEN_GENERATOR_BLOCK.get())
+                .add(HpCBlocks.GAS_COMPRESSOR_BLOCK.get())
+                .add(HpCBlocks.GAS_VAPORIZER_BLOCK.get())
+                .add(HpCBlocks.ENERGY_GENERATOR_BLOCK.get())
+                .add(HpCBlocks.DECONSTRUCTOR_BLOCK.get())
+                .add(HpCBlocks.OXYGEN_SEALER_BLOCK.get());
 
 
         tag(HpCTags.Blocks.MOON_REGOLITH_REPLACEABLES).add(HpCBlocks.MOON_REGOLITH.get());

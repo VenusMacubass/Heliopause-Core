@@ -3,6 +3,14 @@
     "heliocore:coal_compressor",
     "heliocore:refinery",
     "heliocore:energy_storage_unit",
-    "heliocore:basic_solar_block"
+    "heliocore:basic_solar_block",
+    "heliocore:cargo_manager_block",
+    "heliocore:fuel_manager_block",
+    "heliocore:oxygen_generator_block",
+    "heliocore:gas_compressor_block",
+    "heliocore:gas_vaporizer_block",
+    "heliocore:energy_generator_block",
+    "heliocore:deconstructor_block",
+    "heliocore:oxygen_sealer_block"
   ]
 }

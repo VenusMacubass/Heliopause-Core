@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-12T23:02:46.2535534	Block States: heliocore
+// 1.21.1	2026-07-17T15:14:24.8089511	Block States: heliocore
 bed3fb55b3f2e9b64cb594a3edf17394cb82284a assets/heliocore/blockstates/aluminium_ore.json
 3ec7dafb201f8ebabac7ace9f3ac848c465aeb8e assets/heliocore/blockstates/basic_solar_block.json
 5a53928564120b90a34ba4a14d00148eb87d7b2e assets/heliocore/blockstates/cargo_manager_block.json
@@ -36,6 +36,7 @@ e0caf686822cb0824f10c73461e433c8a645928e assets/heliocore/blockstates/moon_silic
 ad24e9abeca38b34b61ff206f2f2f2924fcf0a6e assets/heliocore/blockstates/moon_tin_ore.json
 200412fa5a989e729146fa3ec738ea4be0796286 assets/heliocore/blockstates/oxygen_generator_block.json
 675389f3c967e09545f2e271c4dc8dbb707e99f9 assets/heliocore/blockstates/oxygen_liquid.json
+f42d5c7ae719b6bb6756214038ae42eae43421be assets/heliocore/blockstates/oxygen_sealer_block.json
 5c8c1b5dd6f11c9058e4c132b34c190f540135f7 assets/heliocore/blockstates/prismatic_glass.json
 ae008beda36175210e89ffa92728212e747a2f3d assets/heliocore/blockstates/prismatic_glass_pane.json
 8dc70a33648b7273cd8fa972b6b3f31830d5f17d assets/heliocore/blockstates/radioactive_block.json
@@ -128,6 +129,7 @@ ca05973dcdee83f08d270502053a9d32dc599d26 assets/heliocore/models/block/moon_rock
 014b83b26192a0cd758c8c22bdbc0e0cee713f90 assets/heliocore/models/block/moon_tin_ore.json
 5ee30c306683758a7392d00c11b17d74b6ee9689 assets/heliocore/models/block/oxygen_generator_block.json
 1aae1c9968eecbf48adebc9ae7705784751663bc assets/heliocore/models/block/oxygen_liquid.json
+3ee1235f4d703bb7b8bb1cb8ef7c19b5be761257 assets/heliocore/models/block/oxygen_sealer_block.json
 89ea74e95d498d4f312b8a6a5c38a41b22dad502 assets/heliocore/models/block/prismatic_glass.json
 b3cc1911187850997a6b6ace06d42fe95ff7db15 assets/heliocore/models/block/prismatic_glass_pane_noside.json
 7132f03506cbbefb01e0596a5f500723fe617213 assets/heliocore/models/block/prismatic_glass_pane_noside_alt.json
@@ -184,6 +186,7 @@ a574415804378785b1c10d6c7e87547ab8734aa9 assets/heliocore/models/item/moon_silic
 02d326778a9262be49ae99ffe5b8a74c1b4fc681 assets/heliocore/models/item/moon_tektites.json
 1b789c0f1b46c2c0b2c844303e2d9c4bcbf633af assets/heliocore/models/item/moon_tin_ore.json
 5659411209c9d43583d22bbf27c1ca20910b9a21 assets/heliocore/models/item/oxygen_generator_block.json
+e99b200da696a08c939c55fb3b7975cbf63feacd assets/heliocore/models/item/oxygen_sealer_block.json
 0355e14f3e11f095f2eba37a6083a4ac6aa1df89 assets/heliocore/models/item/prismatic_glass.json
 7665f4bb19aa900dbf0c70fa4ca2671a7b70079d assets/heliocore/models/item/prismatic_glass_pane.json
 bddd64de92e74c00bc4f79487c8c87221c068a31 assets/heliocore/models/item/radioactive_block.json

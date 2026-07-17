@@ -180,13 +180,13 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
 
     private void pumpFluidOut(Level level, BlockPos pos) {
         Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
-        Direction outputFace = machineFacing.getOpposite(); // Based on your getFluidPortType
+        Direction outputFace = machineFacing.getOpposite(); 
 
         BlockPos pipePos = pos.relative(outputFace);
         if (!(level.getBlockState(pipePos).getBlock() instanceof FluidPipeBlock)) return;
 
         java.util.Set<BlockEntity> connectedMachines = PipeNetworkHelper.findConnectedInventories(level, pipePos, pos);
-        int fluidToPush = Math.min(oxygenTank.getFluidAmount(), 10); // Max flow rate of 10
+        int fluidToPush = Math.min(oxygenTank.getFluidAmount(), 10); 
 
         for (BlockEntity entity : connectedMachines) {
             if (entity == this) continue;
