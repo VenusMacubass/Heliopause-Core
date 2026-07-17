@@ -50,6 +50,9 @@ public class HpCMenuTypes {
     public static final DeferredHolder<MenuType<?>, MenuType<EnergyGeneratorMenu>> ENERGY_GENERATOR_MENU =
             registerMenuType("energy_generator_menu", EnergyGeneratorMenu::new);
 
+    public static final DeferredHolder<MenuType<?>, MenuType<OxygenSealerMenu>> OXYGEN_SEALER_MENU =
+            registerMenuType("oxygen_sealer_menu", OxygenSealerMenu::new);
+
     private static <T extends AbstractContainerMenu>DeferredHolder<MenuType<?>, MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENU_TYPES.register(name, () -> IMenuTypeExtension.create(factory));
     }

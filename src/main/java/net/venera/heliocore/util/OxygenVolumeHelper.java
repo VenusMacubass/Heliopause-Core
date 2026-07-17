@@ -27,7 +27,6 @@ public class OxygenVolumeHelper {
             BlockPos currentPos = BlockPos.of(currentLong);
 
             if (visitedAir.size() > maxVolume) {
-                // Room is breached or too big. Make sure it's removed from the registry.
                 ACTIVE_ROOMS.remove(sealerPos);
                 return null;
             }
@@ -39,7 +38,7 @@ public class OxygenVolumeHelper {
                 if (!visitedAir.contains(neighborLong)) {
                     BlockState state = level.getBlockState(neighborPos);
 
-                    if (!state.isSolidRender(level, neighborPos)) {
+                    if (!state.isCollisionShapeFullBlock(level, neighborPos)) {
                         visitedAir.add(neighborLong);
                         queue.enqueue(neighborLong);
                     } else {
@@ -53,13 +52,10 @@ public class OxygenVolumeHelper {
         ACTIVE_ROOMS.put(sealerPos, new SealedVolumeResult(visitedAir, walls));
         return new SealedVolumeResult(visitedAir, walls);
     }
-
-    // 2. Cleanup method for when a machine turns off or breaks
+    
     public static void removeRoom(BlockPos sealerPos) {
         ACTIVE_ROOMS.remove(sealerPos);
     }
-
-    // 3. The fast-check for the Player Tick Event
     public static boolean isPositionSealed(long targetPosLong) {
         for (SealedVolumeResult room : ACTIVE_ROOMS.values()) {
             if (room.airBlocks().contains(targetPosLong)) {

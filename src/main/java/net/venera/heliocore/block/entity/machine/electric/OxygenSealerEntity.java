@@ -14,6 +14,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
@@ -22,21 +23,30 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.venera.heliocore.HeliopauseCore;
+import net.venera.heliocore.block.hpc_custom.FluidPipeBlock;
 import net.venera.heliocore.block.hpc_custom.machine.BaseMachineBlock;
 import net.venera.heliocore.data.component.GasTankData;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.fluid.IFluidMachine;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
+import net.venera.heliocore.screen.hpc_custom.GasCompressorMenu;
+import net.venera.heliocore.screen.hpc_custom.OxygenSealerMenu;
 import net.venera.heliocore.util.MachineConfigHelper;
 import net.venera.heliocore.util.OxygenVolumeHelper;
+import net.venera.heliocore.util.PipeNetworkHelper;
 import org.jetbrains.annotations.Nullable;
+
+import java.awt.*;
+import java.util.Set;
 
 public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFluidMachine, MachineConfigHelper.IToggleableMachine{
     private final int OXYGEN_TANK_SLOT = 0;
     private final int THERMAL_EQUIPMENT_SLOT = 1;
     private final int BATTERY_SLOT = 2;
     public final int oxygenUsage;
+    public final int energyUsage;
     private final int maxOxygenCapacity = 6000;
+    private final int MAX_FLOW_RATE = 10;
     public boolean isActive = false;
     public boolean enabled = true;
     public boolean seal = false;
@@ -51,14 +61,15 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
         }
         @Override
         public boolean isFluidValid(FluidStack stack) {
-            return stack.getFluid().isSame(HpCFluids.OXYGEN.get());
+            return stack.getFluid().getFluidType() == HpCFluids.OXYGEN.get().getFluidType();
         }
     };
     private final int maxVolume = 100000;
     
-    public OxygenSealerEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int capacity, int transferRate, int usagePerTick, int oxygenUsage) {
+    public OxygenSealerEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int capacity, int transferRate, int usagePerTick, int oxygenUsage, int energyUsage) {
         super(type, pos, state, 3, capacity, transferRate, usagePerTick);
         this.oxygenUsage = oxygenUsage;
+        this.energyUsage = energyUsage;
     }
 
     @Override
@@ -97,31 +108,57 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
         boolean batteryProcessed = processBatterySlot(BATTERY_SLOT);
         boolean oxygenProcessed = processOxygenSlot(OXYGEN_TANK_SLOT);
         if (batteryProcessed || oxygenProcessed) dirty = true;
-        if (enabled && level.getGameTime() % 5 == 0 && level.getBlockState(pos.above()).isAir()) {
-            if(!seal){
-                var result = OxygenVolumeHelper.scanAndRegisterRoom(level, pos, maxVolume);
-                if (result != null) {
-                    seal = true;
-                    currentVolumeCost = oxygenUsage * (1 + result.airBlocks().size() / 1000);
-                } else {
-                    seal = false;
-                }
+        if (pullFluidIn(level, pos)) dirty = true;
+        boolean hasEnergy = this.energyStorage.getEnergyStored() > 0;
+        boolean isUnblocked = !level.getBlockState(pos.above()).isSolidRender(level, pos.above());
+
+        if (enabled && hasEnergy && isUnblocked) {
+            if (!isActive) {
+                isActive = true;
+                dirty = true;
             }
-            if(seal) {
-                if(!spendOxygen(currentVolumeCost)){
-                    seal = false;
-                    OxygenVolumeHelper.removeRoom(pos);
+            if (level.getGameTime() % 5 == 0) {
+
+                if(!seal){
+                    var result = OxygenVolumeHelper.scanAndRegisterRoom(level, pos, maxVolume);
+                    if (result != null) {
+                        seal = true;
+                        currentVolumeCost = oxygenUsage * (1 + result.airBlocks().size() / 1000);
+                    } else {
+                        seal = false;
+                    }
+                }
+
+                if(seal) {
+                    // If it fails to spend oxygen (tank is empty), depressurize!
+                    if(!spendOxygen(currentVolumeCost)){
+                        seal = false;
+                        OxygenVolumeHelper.removeRoom(pos);
+                    } else {
+                        this.energyStorage.extractEnergy(this.energyUsage, false);
+                    }
                 }
             }
         }
+        else {
+            if (isActive || seal) {
+                isActive = false;
+                seal = false;
+                OxygenVolumeHelper.removeRoom(pos);
+                dirty = true;
+            }
+        }
+
         if (dirty) setChanged();
         BaseElectricMachineEntity.tick(level, pos, state, this);
     }
-    
+
     protected boolean spendOxygen(int volumeScale){
-        FluidStack drainable = oxygenTank.drain(Math.min(volumeScale, oxygenTank.getFluidAmount()), IFluidHandler.FluidAction.SIMULATE);
-        if (drainable.getAmount() > 0) {
-            oxygenTank.drain(drainable, IFluidHandler.FluidAction.EXECUTE);
+        if (volumeScale <= 0) return true;
+
+        FluidStack drainable = oxygenTank.drain(volumeScale, IFluidHandler.FluidAction.SIMULATE);
+        if (drainable.getAmount() >= volumeScale) {
+            oxygenTank.drain(volumeScale, IFluidHandler.FluidAction.EXECUTE);
             return true;
         }
         return false;
@@ -133,12 +170,18 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
             GasTankData data = gasTankItem.getGasTankData(inputStack);
 
             if (data != null && !data.isEmpty() && data.getFluid() != null && data.getFluid().getFluidType() == HpCFluids.OXYGEN.get().getFluidType()) {
-                int receivedGas = oxygenTank.fill(new FluidStack(data.getFluid(), data.amount()), IFluidHandler.FluidAction.SIMULATE);
+                
+                int amountToTry = Math.min(data.amount(), MAX_FLOW_RATE);
+                int maxAcceptable = oxygenTank.fill(new FluidStack(data.getFluid(), amountToTry), IFluidHandler.FluidAction.SIMULATE);
 
-                if (receivedGas > 0) {
-                    oxygenTank.fill(new FluidStack(data.getFluid(), receivedGas), IFluidHandler.FluidAction.EXECUTE);
-                    int actuallyDrained = gasTankItem.drain(inputStack, receivedGas);
-                    return actuallyDrained > 0;
+                if (maxAcceptable > 0) {
+                    int actuallyDrained = gasTankItem.drain(inputStack, maxAcceptable);
+                    
+                    if (actuallyDrained > 0) {
+                        oxygenTank.fill(new FluidStack(data.getFluid(), actuallyDrained), IFluidHandler.FluidAction.EXECUTE);
+                        inventory.setStackInSlot(slotIndex, inputStack);
+                        return true;
+                    }
                 }
             }
         }
@@ -152,7 +195,47 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return null;
+        return new OxygenSealerMenu(i, inventory, this);
+    }
+
+    private boolean pullFluidIn(Level level, BlockPos pos) {
+        if (oxygenTank.getFluidAmount() >= maxOxygenCapacity) return false;
+
+        Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
+        Direction inputFace = machineFacing.getClockWise();
+
+        BlockPos pipePos = pos.relative(inputFace);
+        if (!(level.getBlockState(pipePos).getBlock() instanceof FluidPipeBlock)) return false;
+
+        Set<BlockEntity> connectedMachines = PipeNetworkHelper.findConnectedInventories(level, pipePos, pos);
+
+        int spaceAvailable = oxygenTank.getSpace();
+        int fluidToPull = Math.min(spaceAvailable, MAX_FLOW_RATE);
+
+        String targetFluidString = HpCFluids.OXYGEN.getId().toString();
+        boolean actuallyPulledSomething = false;
+
+        for (BlockEntity entity : connectedMachines) {
+            if (entity == this) continue;
+
+            if (entity instanceof IFluidMachine targetMachine) {
+                if (targetMachine.getFluidPortType(inputFace.getOpposite()) == IFluidMachine.PortType.OUTPUT) {
+                    continue;
+                }
+
+                int availableToExtract = targetMachine.extractFluid(targetFluidString, fluidToPull, true);
+
+                if (availableToExtract > 0) {
+                    int actuallyExtracted = targetMachine.extractFluid(targetFluidString, availableToExtract, false);
+                    oxygenTank.fill(new FluidStack(HpCFluids.OXYGEN.get(), actuallyExtracted), IFluidHandler.FluidAction.EXECUTE);
+
+                    fluidToPull -= actuallyExtracted;
+                    actuallyPulledSomething = true;
+                    if (fluidToPull <= 0) break;
+                }
+            }
+        }
+        return actuallyPulledSomething;
     }
 
     @Override
@@ -180,7 +263,6 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
 
         if (resolvedFluid != null && resolvedFluid != Fluids.EMPTY) {
             FluidStack newStack = new FluidStack(resolvedFluid, amount);
-
             if (oxygenTank.isFluidValid(newStack)) {
                 IFluidHandler.FluidAction action = simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE;
                 return oxygenTank.fill(newStack, action);

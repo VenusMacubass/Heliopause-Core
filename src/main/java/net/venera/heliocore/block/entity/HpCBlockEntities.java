@@ -91,7 +91,7 @@ public class HpCBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<OxygenSealerEntity>> OXYGEN_SEALER_ENTITY = BLOCK_ENTITIES.register("oxygen_sealer_entity",
             ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
                             new OxygenSealerEntity(HpCBlockEntities.OXYGEN_SEALER_ENTITY.get(), blockPos, blockState,
-                                    5000, 100, 3, 1),
+                                    5000, 100, 3, 1, 3),
                     HpCBlocks.OXYGEN_SEALER_BLOCK.get()).build(null));
     
     //endregion
