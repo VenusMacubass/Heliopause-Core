@@ -6,17 +6,24 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class OxygenVolumeHelper {
     private static final Map<BlockPos, SealedVolumeResult> ACTIVE_ROOMS = new ConcurrentHashMap<>();
-    public record SealedVolumeResult(LongOpenHashSet airBlocks, LongOpenHashSet wallBlocks) {}
-    public static SealedVolumeResult scanAndRegisterRoom(Level level, BlockPos sealerPos, int maxVolume) {
+    public record SealedVolumeResult(LongOpenHashSet airBlocks, LongOpenHashSet wallBlocks, Set<BlockPos> activeSealers, long lastScanTick) {}
+    public static SealedVolumeResult scanAndRegisterRoom(Level level, BlockPos sealerPos, int maxVolumePerSealer) {
         LongOpenHashSet visitedAir = new LongOpenHashSet();
         LongOpenHashSet walls = new LongOpenHashSet();
         LongArrayFIFOQueue queue = new LongArrayFIFOQueue();
+        
+        Set<BlockPos> connectedSealers = new HashSet<>();
+        connectedSealers.add(sealerPos);
+        int currentMaxVolume = maxVolumePerSealer;
 
         long start = sealerPos.above().asLong();
         queue.enqueue(start);
@@ -26,8 +33,9 @@ public class OxygenVolumeHelper {
             long currentLong = queue.dequeueLong();
             BlockPos currentPos = BlockPos.of(currentLong);
 
-            if (visitedAir.size() > maxVolume) {
-                ACTIVE_ROOMS.remove(sealerPos);
+            // Uses the dynamic limit that grows with more machines
+            if (visitedAir.size() > currentMaxVolume) {
+                for (BlockPos pos : connectedSealers) ACTIVE_ROOMS.remove(pos);
                 return null;
             }
 
@@ -43,18 +51,33 @@ public class OxygenVolumeHelper {
                         queue.enqueue(neighborLong);
                     } else {
                         walls.add(neighborLong);
+
+                        // NEW: If the wall is another Sealer, add it to the network!
+                        if (level.getBlockEntity(neighborPos) instanceof OxygenSealerEntity partner) {
+                            if (partner.enabled && connectedSealers.add(neighborPos)) {
+                                currentMaxVolume += maxVolumePerSealer; // Stack the limit!
+                            }
+                        }
                     }
                 }
             }
         }
 
+        SealedVolumeResult result = new SealedVolumeResult(visitedAir, walls, connectedSealers, level.getGameTime());
         
-        ACTIVE_ROOMS.put(sealerPos, new SealedVolumeResult(visitedAir, walls));
-        return new SealedVolumeResult(visitedAir, walls);
+        for (BlockPos partnerPos : connectedSealers) {
+            ACTIVE_ROOMS.put(partnerPos, result);
+        }
+        return result;
     }
-    
+
     public static void removeRoom(BlockPos sealerPos) {
-        ACTIVE_ROOMS.remove(sealerPos);
+        SealedVolumeResult room = ACTIVE_ROOMS.get(sealerPos);
+        if (room != null) {
+            for (BlockPos partnerPos : room.activeSealers()) {
+                ACTIVE_ROOMS.remove(partnerPos);
+            }
+        }
     }
     public static boolean isPositionSealed(long targetPosLong) {
         for (SealedVolumeResult room : ACTIVE_ROOMS.values()) {
@@ -73,4 +96,10 @@ public class OxygenVolumeHelper {
         }
         return null;
     }
+
+    public static SealedVolumeResult getExistingRoom(BlockPos pos) {
+        return ACTIVE_ROOMS.get(pos);
+    }
 }
+
+

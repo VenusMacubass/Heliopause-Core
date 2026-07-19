@@ -4,8 +4,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -26,6 +28,7 @@ import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.hpc_custom.FluidPipeBlock;
 import net.venera.heliocore.block.hpc_custom.machine.BaseMachineBlock;
 import net.venera.heliocore.data.component.GasTankData;
+import net.venera.heliocore.dimension.HpCDimensions;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.fluid.IFluidMachine;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
@@ -111,6 +114,8 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
         if (pullFluidIn(level, pos)) dirty = true;
         boolean hasEnergy = this.energyStorage.getEnergyStored() > 0;
         boolean isUnblocked = !level.getBlockState(pos.above()).isSolidRender(level, pos.above());
+        ResourceKey<Level> currentDimension = level.dimension();
+        boolean isInSpace = currentDimension == ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon")); //TODO: make this one based on dimension tags and not direct dimensions
 
         if (enabled && hasEnergy && isUnblocked) {
             if (!isActive) {
@@ -118,19 +123,27 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
                 dirty = true;
             }
             if (level.getGameTime() % 5 == 0) {
+                if(!seal && isInSpace){
+                    var existingRoom = OxygenVolumeHelper.getExistingRoom(pos);
 
-                if(!seal){
-                    var result = OxygenVolumeHelper.scanAndRegisterRoom(level, pos, maxVolume);
-                    if (result != null) {
+                    if (existingRoom != null && (level.getGameTime() - existingRoom.lastScanTick()) <= 5) {
                         seal = true;
-                        currentVolumeCost = oxygenUsage * (1 + result.airBlocks().size() / 1000);
-                    } else {
-                        seal = false;
+                        int totalCost = oxygenUsage * (1 + existingRoom.airBlocks().size() / 1000);
+                        currentVolumeCost = Math.max(1, totalCost / existingRoom.activeSealers().size());
+                    }
+                    else {
+                        var result = OxygenVolumeHelper.scanAndRegisterRoom(level, pos, maxVolume);
+                        if (result != null) {
+                            seal = true;
+                            int totalCost = oxygenUsage * (1 + result.airBlocks().size() / 1000);
+                            currentVolumeCost = Math.max(1, totalCost / result.activeSealers().size());
+                        } else {
+                            seal = false;
+                        }
                     }
                 }
 
                 if(seal) {
-                    // If it fails to spend oxygen (tank is empty), depressurize!
                     if(!spendOxygen(currentVolumeCost)){
                         seal = false;
                         OxygenVolumeHelper.removeRoom(pos);

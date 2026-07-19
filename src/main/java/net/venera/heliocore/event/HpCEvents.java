@@ -15,14 +15,17 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
 import net.neoforged.neoforge.event.level.PistonEvent;
@@ -137,14 +140,25 @@ public class HpCEvents {
     //endregion
     
     //region Atmospherics
-    @SubscribeEvent
-    public static void onFirePlaced(BlockEvent.EntityPlaceEvent event) {
-        if (event.getEntity() == null) return;
-        boolean isOnMoon = event.getEntity().level().dimension().location().equals(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon"));
 
-        if (isOnMoon) {
-            if (event.getPlacedBlock().is(Blocks.FIRE) ||
-                    event.getPlacedBlock().is(Blocks.SOUL_FIRE)) {
+    @SubscribeEvent
+    public static void onFlintAndSteel(PlayerInteractEvent.RightClickBlock event) {
+        if (event.getLevel().isClientSide()) return;
+
+        if (event.getItemStack().is(Items.FLINT_AND_STEEL) || event.getItemStack().is(Items.FIRE_CHARGE)) {
+            BlockPos targetPos = event.getPos().relative(event.getFace());
+            if (!OxygenVolumeHelper.isPositionSealed(targetPos.asLong())) {
+                event.setCanceled(true);
+            }
+        }
+    }
+    
+    @SubscribeEvent
+    public static void onFirePlace(BlockEvent.EntityPlaceEvent event) {
+        if (event.getLevel().isClientSide()) return;
+        BlockState placedState = event.getPlacedBlock();
+        if (placedState.is(Blocks.FIRE) || placedState.is(Blocks.SOUL_FIRE)) {
+            if (!OxygenVolumeHelper.isPositionSealed(event.getPos().asLong())) {
                 event.setCanceled(true);
             }
         }
