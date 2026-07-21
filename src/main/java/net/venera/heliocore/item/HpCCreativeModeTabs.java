@@ -17,7 +17,6 @@ import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
-import net.venera.heliocore.item.hpc_custom.RocketItem;
 
 import java.util.function.Supplier;
 
@@ -106,7 +105,8 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCBlocks.MOON_REGOLITH.get());
                         output.accept(HpCBlocks.MOON_DIRT.get());
                         output.accept(HpCBlocks.MOON_ROCK.get());
-                        output.accept(HpCBlocks.TIN_BUILDING_BLOCK.get());
+                        output.accept(HpCBlocks.BASE_BUILDING_WHITE_BLOCK.get());
+                        output.accept(HpCBlocks.BASE_BUILDING_BLACK_BLOCK.get());
                         output.accept(HpCBlocks.TIN_BLOCK.get());
                         output.accept(HpCBlocks.TIN_ORE.get());
                         output.accept(HpCBlocks.DEEPSLATE_TIN_ORE.get());
@@ -122,13 +122,16 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCBlocks.MOON_IRON_ORE);
                         output.accept(HpCBlocks.MOON_COPPER_ORE.get());
                         output.accept(HpCBlocks.MOON_DUNGEON_BRICKS.get());
-                        output.accept(HpCBlocks.TIN_BUILDING_WALL.get());
+                        output.accept(HpCBlocks.TIN_BUILDING_WALL_WHITE.get());
+                        output.accept(HpCBlocks.TIN_BUILDING_WALL_BLACK.get());
                         output.accept(HpCBlocks.MOON_ROCK_WALL.get());
                         output.accept(HpCBlocks.MOON_DUNGEON_BRICK_WALL.get());
-                        output.accept(HpCBlocks.TIN_BUILDING_STAIRS.get());
+                        output.accept(HpCBlocks.TIN_BUILDING_STAIRS_WHITE.get());
+                        output.accept(HpCBlocks.TIN_BUILDING_STAIRS_BLACK.get());
                         output.accept(HpCBlocks.MOON_ROCK_STAIRS.get());
                         output.accept(HpCBlocks.MOON_DUNGEON_BRICK_STAIRS.get());
-                        output.accept(HpCBlocks.TIN_BUILDING_SLAB.get());
+                        output.accept(HpCBlocks.TIN_BUILDING_SLAB_WHITE.get());
+                        output.accept(HpCBlocks.TIN_BUILDING_SLAB_BLACK.get());
                         output.accept(HpCBlocks.MOON_ROCK_SLAB.get());
                         output.accept(HpCBlocks.MOON_DUNGEON_BRICK_SLAB.get());
                         output.accept(HpCBlocks.ARC_LAMP.get());

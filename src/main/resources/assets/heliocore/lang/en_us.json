@@ -46,7 +46,7 @@
   "item.heliocore.compressed_steel": "Compressed Steel",
   "item.heliocore.compressed_tin": "Compressed Tin",
   "item.heliocore.heavy_duty_plate": "Heavy Duty Plate",
-  "item.heliocore..tektites": "Tektite Shards",
+  "item.heliocore.tektites": "Tektite Shards",
 
   "item.heliocore.oxygen_mask": "Oxygen Mask",
   "item.heliocore.oxygen_connectors": "Oxygen Connectors",
@@ -102,7 +102,8 @@
   "block.heliocore.moon_dirt": "Moon Dirt",
   "block.heliocore.moon_rock": "Moon Rock",
 
-  "block.heliocore.tin_building_block": "Tin Building Block",
+  "block.heliocore.base_building_block_white": "White Base Building Block",
+  "block.heliocore.base_building_block_black": "Black Base Building Block",
   "block.heliocore.tin_block": "Block of Tin",
   "block.heliocore.tin_ore": "Tin Ore",
   "block.heliocore.deepslate_tin_ore": "Deepslate Tin Ore",
@@ -114,19 +115,23 @@
   "block.heliocore.silicon_block": "Block of Silicon",
   "block.heliocore.moon_iron_ore": "Moon Iron Ore",
   "block.heliocore.moon_tektites": "Moon Tektites",
+  "block.heliocore.moon_regolith_tektites": "Moon Regolith Tektites",
 
   "block.heliocore.moon_copper_ore": "Moon Copper Ore",
   "block.heliocore.moon_tin_ore": "Moon Tin Ore",
   "block.heliocore.moon_cobblestone": "Moon Cobblestone",
   "block.heliocore.moon_dungeon_bricks": "Moon Dungeon Bricks",
 
-  "block.heliocore.tin_building_wall": "Tin Building Wall",
+  "block.heliocore.base_building_wall_white": "White Base Building Wall",
+  "block.heliocore.base_building_wall_black": "Black Base Building Wall",
   "block.heliocore.moon_rock_wall": "Moon Rock Wall",
   "block.heliocore.moon_dungeon_brick_wall": "Moon Dungeon Brick Wall",
-  "block.heliocore.tin_building_stairs": "Tin Building Stairs",
+  "block.heliocore.base_building_stairs_white": "White Base Building Stairs",
+  "block.heliocore.base_building_stairs_black": "Black Base Building Stairs",
   "block.heliocore.moon_rock_stairs": "Moon Rock Stairs",
   "block.heliocore.moon_dungeon_brick_stairs": "Moon Dungeon Brick Stairs",
-  "block.heliocore.tin_building_slab": "Tin Building Slab",
+  "block.heliocore.base_building_slab_white": "White Base Building Slab",
+  "block.heliocore.base_building_slab_black": "Black Base Building Slab",
   "block.heliocore.moon_rock_slab": "Moon Rock Slab",
   "block.heliocore.moon_dungeon_brick_slab": "Moon Dungeon Brick Slab",
   
@@ -151,6 +156,7 @@
   "block.heliocore.gas_compressor_block": "Gas Compressor",
   "block.heliocore.gas_vaporizer_block": "Gas Vaporizer",
   "block.heliocore.energy_generator_block": "Energy Generator",
+  "block.heliocore.oxygen_sealer_block": "Oxygen Sealer",
 
 
   "block.heliocore.coal_compressor_menu_name": "Coal Powered Compressor",

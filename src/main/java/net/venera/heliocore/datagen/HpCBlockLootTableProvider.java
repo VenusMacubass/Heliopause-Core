@@ -33,7 +33,8 @@ public class HpCBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(HpCBlocks.PIZZA_BLOCK.get());
         dropSelf(HpCBlocks.MOON_REGOLITH.get());
         dropSelf(HpCBlocks.MOON_DIRT.get());
-        dropSelf(HpCBlocks.TIN_BUILDING_BLOCK.get());
+        dropSelf(HpCBlocks.BASE_BUILDING_WHITE_BLOCK.get());
+        dropSelf(HpCBlocks.BASE_BUILDING_BLACK_BLOCK.get());
         dropSelf(HpCBlocks.TIN_BLOCK.get());
         dropSelf(HpCBlocks.RAW_TIN_BLOCK.get());
         dropSelf(HpCBlocks.RAW_ALUMINIUM_BLOCK.get());
@@ -64,11 +65,13 @@ public class HpCBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(HpCBlocks.COPPER_WIRE.get());
         dropSelf(HpCBlocks.FLUID_PIPE.get());
 
-        dropSelf(HpCBlocks.TIN_BUILDING_WALL.get());
+        dropSelf(HpCBlocks.TIN_BUILDING_WALL_WHITE.get());
+        dropSelf(HpCBlocks.TIN_BUILDING_WALL_BLACK.get());
         dropSelf(HpCBlocks.MOON_ROCK_WALL.get());
         dropSelf(HpCBlocks.MOON_DUNGEON_BRICK_WALL.get());
         
-        dropSelf(HpCBlocks.TIN_BUILDING_STAIRS.get());
+        dropSelf(HpCBlocks.TIN_BUILDING_STAIRS_WHITE.get());
+        dropSelf(HpCBlocks.TIN_BUILDING_STAIRS_BLACK.get());
         dropSelf(HpCBlocks.MOON_ROCK_STAIRS.get());
         dropSelf(HpCBlocks.MOON_DUNGEON_BRICK_STAIRS.get());
         dropSelf(HpCBlocks.IRIDIUM_BLOCK.get());
@@ -121,7 +124,8 @@ public class HpCBlockLootTableProvider extends BlockLootSubProvider {
                 block -> createMultipleOreDrops(HpCBlocks.MOON_IRON_ORE.get(), Items.RAW_IRON,1,5));
         
 
-        add(HpCBlocks.TIN_BUILDING_SLAB.get(), block -> createSlabItemTable(HpCBlocks.TIN_BUILDING_SLAB.get()));
+        add(HpCBlocks.TIN_BUILDING_SLAB_WHITE.get(), block -> createSlabItemTable(HpCBlocks.TIN_BUILDING_SLAB_WHITE.get()));
+        add(HpCBlocks.TIN_BUILDING_SLAB_BLACK.get(), block -> createSlabItemTable(HpCBlocks.TIN_BUILDING_SLAB_BLACK.get()));
         add(HpCBlocks.MOON_ROCK_SLAB.get(), block -> createSlabItemTable(HpCBlocks.MOON_ROCK_SLAB.get()));
         add(HpCBlocks.MOON_DUNGEON_BRICK_SLAB.get(), block -> createSlabItemTable(HpCBlocks.MOON_DUNGEON_BRICK_SLAB.get()));
     }

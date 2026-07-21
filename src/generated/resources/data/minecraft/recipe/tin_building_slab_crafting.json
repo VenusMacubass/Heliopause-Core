@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "T": {
-      "item": "heliocore:tin_building_block"
+      "item": "heliocore:base_building_block_white"
     }
   },
   "pattern": [
@@ -11,6 +11,6 @@
   ],
   "result": {
     "count": 6,
-    "id": "heliocore:tin_building_slab"
+    "id": "heliocore:base_building_slab_white"
   }
 }

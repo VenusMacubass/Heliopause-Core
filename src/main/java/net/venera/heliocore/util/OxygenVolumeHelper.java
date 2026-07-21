@@ -15,7 +15,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class OxygenVolumeHelper {
     private static final Map<BlockPos, SealedVolumeResult> ACTIVE_ROOMS = new ConcurrentHashMap<>();
+    
     public record SealedVolumeResult(LongOpenHashSet airBlocks, LongOpenHashSet wallBlocks, Set<BlockPos> activeSealers, long lastScanTick) {}
+    
     public static SealedVolumeResult scanAndRegisterRoom(Level level, BlockPos sealerPos, int maxVolumePerSealer) {
         LongOpenHashSet visitedAir = new LongOpenHashSet();
         LongOpenHashSet walls = new LongOpenHashSet();
@@ -32,8 +34,7 @@ public class OxygenVolumeHelper {
         while (!queue.isEmpty()) {
             long currentLong = queue.dequeueLong();
             BlockPos currentPos = BlockPos.of(currentLong);
-
-            // Uses the dynamic limit that grows with more machines
+            
             if (visitedAir.size() > currentMaxVolume) {
                 for (BlockPos pos : connectedSealers) ACTIVE_ROOMS.remove(pos);
                 return null;
@@ -51,8 +52,6 @@ public class OxygenVolumeHelper {
                         queue.enqueue(neighborLong);
                     } else {
                         walls.add(neighborLong);
-
-                        // NEW: If the wall is another Sealer, add it to the network!
                         if (level.getBlockEntity(neighborPos) instanceof OxygenSealerEntity partner) {
                             if (partner.enabled && connectedSealers.add(neighborPos)) {
                                 currentMaxVolume += maxVolumePerSealer; // Stack the limit!
@@ -91,7 +90,7 @@ public class OxygenVolumeHelper {
     public static BlockPos getSealerForWall(long wallPosLong) {
         for (Map.Entry<BlockPos, SealedVolumeResult> entry : ACTIVE_ROOMS.entrySet()) {
             if (entry.getValue().wallBlocks().contains(wallPosLong)) {
-                return entry.getKey(); // Returns the coordinates of the Sealer
+                return entry.getKey(); //Returns the coordinates of the sealers
             }
         }
         return null;

@@ -1,4 +1,6 @@
-// 1.21.1	2026-07-15T19:41:02.0652771	Item Models: heliocore
+// 1.21.1	2026-07-21T15:28:47.6066785	Item Models: heliocore
+0734313d99e1a4ca395735a0943619e787dd452a assets/heliocore/models/item/base_building_wall_black.json
+77313ec5bf2583da66c950d2ae65ff21c6eb341c assets/heliocore/models/item/base_building_wall_white.json
 62c01033a4c1f12560cd7e8e0deda9ef61f67c70 assets/heliocore/models/item/cheese_slice.json
 8cc483167b9451eb7ae0dd7530e83781ecfa22ab assets/heliocore/models/item/compressed_bronze.json
 0af2591c590f42947c6a487a09f4041de52d7575 assets/heliocore/models/item/compressed_copper.json
@@ -79,5 +81,4 @@ b87e44ad5d125b61fdadd2f28f3dc71182490759 assets/heliocore/models/item/steel_pick
 e7ebfcb0462c86dcc22e377730708f2c3f096a82 assets/heliocore/models/item/steel_shovel.json
 4b71b21d1bca743224cfde6d3562508e28f7b7e5 assets/heliocore/models/item/steel_sword.json
 a900bde53a5d489a2b8ba1f4da88452d1bde67e2 assets/heliocore/models/item/tektites.json
-4511fb39b4ff66fb7e258053131b0a2e68baddc5 assets/heliocore/models/item/tin_building_wall.json
 6fd8a87b2a85618f369419c444839dadff10afce assets/heliocore/models/item/tin_canister.json

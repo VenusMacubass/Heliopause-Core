@@ -1,0 +1,8 @@
+{
+  "parent": "heliocore:block/tinted_slab_top",
+  "textures": {
+    "bottom": "heliocore:block/base_building_block_black",
+    "side": "heliocore:block/base_building_block_black",
+    "top": "heliocore:block/base_building_block_black"
+  }
+}

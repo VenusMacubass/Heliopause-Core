@@ -1,6 +1,0 @@
-{
-  "parent": "heliocore:block/tinted_wall_post",
-  "textures": {
-    "wall": "heliocore:block/tin_building_block"
-  }
-}

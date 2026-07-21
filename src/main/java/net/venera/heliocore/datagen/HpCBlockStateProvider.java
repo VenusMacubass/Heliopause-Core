@@ -45,7 +45,8 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     ResourceLocation tektitesOreTex = modLoc("block/raw_tektites");
     
     ResourceLocation dungeonBrickTex = modLoc("block/dungeon_bricks");
-    ResourceLocation buildingBlockTex = modLoc("block/tin_building_block");
+    ResourceLocation buildingBlockWhiteTex = modLoc("block/base_building_block_white");
+    ResourceLocation buildingBlockBlackTex = modLoc("block/base_building_block_black");
     ResourceLocation moonRockTex = modLoc("block/moon_rock");
     ResourceLocation prismaticTex = modLoc("block/prismatic_glass");
     ResourceLocation prismaticPaneTex = modLoc("block/prismatic_glass_pane_top");
@@ -80,7 +81,8 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         blockWithItem(HpCBlocks.MOON_REGOLITH);
         blockWithItem(HpCBlocks.MOON_DIRT);
         blockWithItem(HpCBlocks.MOON_ROCK);
-        blockWithItem(HpCBlocks.TIN_BUILDING_BLOCK);
+        blockWithItem(HpCBlocks.BASE_BUILDING_WHITE_BLOCK);
+        blockWithItem(HpCBlocks.BASE_BUILDING_BLACK_BLOCK);
         blockWithItem(HpCBlocks.SILICON_BLOCK);
         blockWithItem(HpCBlocks.MOON_COBBLESTONE);
         blockWithItem(HpCBlocks.COPPER_WIRE_BLOCK);
@@ -94,10 +96,12 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         translucentBlock(HpCBlocks.TINTED_PRISMATIC_GLASS, tintedPrismaticTex);
         
         //region Non-Full Blocks
-        blockItem(HpCBlocks.TIN_BUILDING_SLAB);
+        blockItem(HpCBlocks.TIN_BUILDING_SLAB_WHITE);
+        blockItem(HpCBlocks.TIN_BUILDING_SLAB_BLACK);
         blockItem(HpCBlocks.MOON_ROCK_SLAB);
         blockItem(HpCBlocks.MOON_DUNGEON_BRICK_SLAB);
-        stairItem(HpCBlocks.TIN_BUILDING_STAIRS);
+        stairItem(HpCBlocks.TIN_BUILDING_STAIRS_WHITE);
+        stairItem(HpCBlocks.TIN_BUILDING_STAIRS_BLACK);
         stairItem(HpCBlocks.MOON_ROCK_STAIRS);
         stairItem(HpCBlocks.MOON_DUNGEON_BRICK_STAIRS);
         
@@ -105,9 +109,13 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         tintedSlabBlock(HpCBlocks.MOON_DUNGEON_BRICK_SLAB, dungeonBrickTex);
         tintedWallBlock(HpCBlocks.MOON_DUNGEON_BRICK_WALL, dungeonBrickTex);
         
-        tintedStairsBlock(HpCBlocks.TIN_BUILDING_STAIRS,  buildingBlockTex);
-        tintedSlabBlock(HpCBlocks.TIN_BUILDING_SLAB, buildingBlockTex);
-        tintedWallBlock(HpCBlocks.TIN_BUILDING_WALL, buildingBlockTex);
+        tintedStairsBlock(HpCBlocks.TIN_BUILDING_STAIRS_WHITE, buildingBlockWhiteTex);
+        tintedSlabBlock(HpCBlocks.TIN_BUILDING_SLAB_WHITE, buildingBlockWhiteTex);
+        tintedWallBlock(HpCBlocks.TIN_BUILDING_WALL_WHITE, buildingBlockWhiteTex);
+
+        tintedStairsBlock(HpCBlocks.TIN_BUILDING_STAIRS_BLACK, buildingBlockBlackTex);
+        tintedSlabBlock(HpCBlocks.TIN_BUILDING_SLAB_BLACK, buildingBlockBlackTex);
+        tintedWallBlock(HpCBlocks.TIN_BUILDING_WALL_BLACK, buildingBlockBlackTex);
         
         tintedStairsBlock(HpCBlocks.MOON_ROCK_STAIRS,  moonRockTex);
         tintedSlabBlock(HpCBlocks.MOON_ROCK_SLAB, moonRockTex);

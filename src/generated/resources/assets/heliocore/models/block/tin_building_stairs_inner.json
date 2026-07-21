@@ -1,8 +1,0 @@
-{
-  "parent": "heliocore:block/tinted_stairs_inner",
-  "textures": {
-    "bottom": "heliocore:block/tin_building_block",
-    "side": "heliocore:block/tin_building_block",
-    "top": "heliocore:block/tin_building_block"
-  }
-}

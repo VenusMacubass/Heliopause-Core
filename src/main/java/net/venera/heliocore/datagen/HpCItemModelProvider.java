@@ -34,7 +34,8 @@ public class HpCItemModelProvider extends ItemModelProvider {
     }
 
     ResourceLocation dungeonBrickTex = modLoc("block/dungeon_bricks");
-    ResourceLocation buildingBlockTex = modLoc("block/tin_building_block");
+    ResourceLocation buildingBlockWhiteTex = modLoc("block/base_building_block_white");
+    ResourceLocation buildingBlockBlackTex = modLoc("block/base_building_block_black");
     ResourceLocation moonRockTex = modLoc("block/moon_rock");
 
     public HpCItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
@@ -79,7 +80,8 @@ public class HpCItemModelProvider extends ItemModelProvider {
         
         basicItem(HpCItems.SMALL_BATTERY.get());
 
-       wallItem(HpCBlocks.TIN_BUILDING_WALL, buildingBlockTex);
+       wallItem(HpCBlocks.TIN_BUILDING_WALL_WHITE, buildingBlockWhiteTex);
+        wallItem(HpCBlocks.TIN_BUILDING_WALL_BLACK, buildingBlockBlackTex);
        wallItem(HpCBlocks.MOON_ROCK_WALL, moonRockTex);
        wallItem(HpCBlocks.MOON_DUNGEON_BRICK_WALL, dungeonBrickTex);
         

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "heliocore:block/base_building_slab_white"
+    },
+    "type=double": {
+      "model": "heliocore:block/base_building_slab_white_double"
+    },
+    "type=top": {
+      "model": "heliocore:block/base_building_slab_white_top"
+    }
+  }
+}
