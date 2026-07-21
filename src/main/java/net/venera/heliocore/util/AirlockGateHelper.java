@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.venera.heliocore.block.HpCBlocks;
 
 import java.util.HashSet;
@@ -13,59 +14,75 @@ import java.util.Queue;
 import java.util.Set;
 
 public class AirlockGateHelper {
-    private static final int MAX_DOOR_SIZE = 100; 
+    private static final int MAX_DOOR_SIZE = 100;
 
     public static boolean toggleAirlockBlocks(Level level, BlockPos switchPos, Direction switchFacing, boolean isOpening) {
-        Direction right = (switchFacing.getAxis() == Direction.Axis.Z) ? Direction.EAST : Direction.SOUTH;
-        Direction left = right.getOpposite();
-        Direction[] planeDirections = {Direction.UP, Direction.DOWN, left, right};
+        Direction.Axis axis = switchFacing.getAxis();
+        Direction[] planeDirections;
+
+        if (axis == Direction.Axis.Y) {
+            planeDirections = new Direction[]{Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
+        } else if (axis == Direction.Axis.Z) {
+            planeDirections = new Direction[]{Direction.UP, Direction.DOWN, Direction.EAST, Direction.WEST};
+        } else {
+            planeDirections = new Direction[]{Direction.UP, Direction.DOWN, Direction.NORTH, Direction.SOUTH};
+        }
+
+        Set<BlockPos> validInnerBlocks = null;
         
-        BlockPos seed = null;
         for (Direction dir : planeDirections) {
             BlockPos checkPos = switchPos.relative(dir);
             BlockState state = level.getBlockState(checkPos);
-            if (state.isAir() || state.is(HpCBlocks.BASE_BUILDING_WALL_BLACK.get())) {
-                seed = checkPos;
-                break;
-            }
-        }
 
-        if (seed == null) return false; 
-        Set<BlockPos> innerBlocks = new HashSet<>();
-        Set<BlockPos> visited = new HashSet<>();
-        Queue<BlockPos> queue = new LinkedList<>();
-
-        queue.add(seed);
-        visited.add(seed);
-
-        while (!queue.isEmpty()) {
-            BlockPos current = queue.poll();
-            innerBlocks.add(current);
-
-            if (innerBlocks.size() > MAX_DOOR_SIZE) return false;
-
-            for (Direction dir : planeDirections) {
-                BlockPos neighbor = current.relative(dir);
-                if (!visited.add(neighbor)) continue;
-
-                BlockState neighborState = level.getBlockState(neighbor);
-
-                if (neighborState.is(HpCBlocks.AIRLOCK_FRAME_BLOCK.get()) || neighborState.is(HpCBlocks.AIRLOCK_FRAME_SWITCH_BLOCK.get())) {
-                    continue;
-                } else if (neighborState.isAir() || neighborState.is(HpCBlocks.BASE_BUILDING_WALL_BLACK.get())) {
-                    queue.add(neighbor);
-                } else {
-                    return false;
+            if (state.isAir() || state.is(HpCBlocks.AIRLOCK_GENERATED_BLOCK.get())) {
+                validInnerBlocks = findClosedRegion(level, checkPos, planeDirections);
+                if (validInnerBlocks != null) {
+                    break; 
                 }
             }
         }
         
-        BlockState targetState = isOpening ? Blocks.AIR.defaultBlockState() : HpCBlocks.BASE_BUILDING_WALL_BLACK.get().defaultBlockState();
+        if (validInnerBlocks == null) return false;
 
-        for (BlockPos pos : innerBlocks) {
+        BlockState targetState = isOpening ? Blocks.AIR.defaultBlockState() : HpCBlocks.AIRLOCK_GENERATED_BLOCK.get().defaultBlockState();
+        if (!isOpening && targetState.hasProperty(BlockStateProperties.AXIS)) {
+            targetState = targetState.setValue(BlockStateProperties.AXIS, axis);
+        }
+
+        for (BlockPos pos : validInnerBlocks) {
             level.setBlock(pos, targetState, 3);
         }
 
         return true;
+    }
+    
+    private static Set<BlockPos> findClosedRegion(Level level, BlockPos startPos, Direction[] planeDirections) {
+        Set<BlockPos> innerBlocks = new HashSet<>();
+        Queue<BlockPos> queue = new LinkedList<>();
+
+        queue.add(startPos);
+        innerBlocks.add(startPos);
+
+        while (!queue.isEmpty()) {
+            BlockPos current = queue.poll();
+            if (innerBlocks.size() > MAX_DOOR_SIZE) return null;
+
+            for (Direction dir : planeDirections) {
+                BlockPos neighbor = current.relative(dir);
+                if (innerBlocks.contains(neighbor)) continue;
+
+                BlockState neighborState = level.getBlockState(neighbor);
+
+                if (neighborState.is(HpCBlocks.AIRLOCK_FRAME_BLOCK.get()) || neighborState.is(HpCBlocks.AIRLOCK_FRAME_SWITCH_BLOCK.get())) {
+                    continue; 
+                } else if (neighborState.isAir() || neighborState.is(HpCBlocks.AIRLOCK_GENERATED_BLOCK.get())) {
+                    queue.add(neighbor);
+                    innerBlocks.add(neighbor);
+                } else {
+                    return null;
+                }
+            }
+        }
+        return innerBlocks; 
     }
 }

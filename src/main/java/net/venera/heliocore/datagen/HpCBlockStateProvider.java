@@ -53,8 +53,6 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     ResourceLocation prismaticTex = modLoc("block/prismatic_glass");
     ResourceLocation prismaticPaneTex = modLoc("block/prismatic_glass_pane_top");
     ResourceLocation tintedPrismaticTex = modLoc("block/tinted_prismatic_glass");
-    ResourceLocation blockSwitchOffTex = modLoc("block/airlock_gate_switch_off");
-    ResourceLocation blockSwitchOnTex = modLoc("block/airlock_gate_switch_on");
     ResourceLocation airlockBlockTex = modLoc("block/airlock_gate_frame");
     
     ResourceLocation machineTop = modLoc("block/machine/machine");
@@ -135,6 +133,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 "_on","_off",
                 Direction.NORTH, Direction.SOUTH
         );
+        airlockGeneratedBlock(HpCBlocks.AIRLOCK_GENERATED_BLOCK, buildingBlockBlackTex);
         //endregion
 
         //region Machines
@@ -559,6 +558,33 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                     .rotationY(y)
                     .build();
         });
+    }
+    //endregion
+    
+    //region Niche Helpers
+    public void airlockGeneratedBlock(DeferredBlock<?> block, ResourceLocation texture) {
+        String baseName = block.getId().getPath();
+
+        ModelFile sideTall = models().withExistingParent(baseName + "_side_tall", modLoc("block/tinted_wall_side_tall"))
+                .texture("wall", texture);
+        
+        ModelFile flat = models().getBuilder(baseName + "_flat")
+                .texture("particle", texture)
+                .texture("wall", texture)
+                .element()
+                .from(0, 6, 0).to(16, 10, 16)
+                .allFaces((dir, face) -> face.texture("#wall"))
+                .end();
+
+        var builder = getMultipartBuilder(block.get());
+        
+        builder.part().modelFile(sideTall).rotationY(0).addModel().condition(BlockStateProperties.AXIS, Direction.Axis.X).end()
+                .part().modelFile(sideTall).rotationY(180).addModel().condition(BlockStateProperties.AXIS, Direction.Axis.X).end();
+
+        builder.part().modelFile(sideTall).rotationY(90).addModel().condition(BlockStateProperties.AXIS, Direction.Axis.Z).end()
+                .part().modelFile(sideTall).rotationY(270).addModel().condition(BlockStateProperties.AXIS, Direction.Axis.Z).end();
+        
+        builder.part().modelFile(flat).addModel().condition(BlockStateProperties.AXIS, Direction.Axis.Y).end();
     }
     //endregion
 }

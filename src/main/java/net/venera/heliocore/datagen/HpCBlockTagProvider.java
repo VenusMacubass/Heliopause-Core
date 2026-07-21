@@ -62,6 +62,7 @@ public class HpCBlockTagProvider extends BlockTagsProvider {
 
         tag(BlockTags.WALLS)
                 .add(HpCBlocks.BASE_BUILDING_WALL_WHITE.get())
+                .add(HpCBlocks.BASE_BUILDING_WALL_BLACK.get())
                 .add(HpCBlocks.MOON_ROCK_WALL.get())
                 .add(HpCBlocks.MOON_DUNGEON_BRICK_WALL.get());
 

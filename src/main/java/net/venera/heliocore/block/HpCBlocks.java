@@ -208,6 +208,9 @@ public class HpCBlocks {
     public static final DeferredBlock<Block> AIRLOCK_FRAME_SWITCH_BLOCK = registerBlock("airlock_frame_switch_block",
             () -> new AirlockFrameSwitch(BlockBehaviour.Properties.of().sound(SoundType.METAL)));
 
+    public static final DeferredBlock<Block> AIRLOCK_GENERATED_BLOCK = BLOCKS.register("airlock_generated_black",
+            () -> new AirlockGeneratedBlock(BlockBehaviour.Properties.of().noLootTable().sound(SoundType.METAL).strength(-1.0F, 3600000.0F).noOcclusion()));
+
     public static final DeferredBlock<Block> PIZZA_BLOCK = registerBlock("pizza_block",
             () -> new PizzaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE)));
     

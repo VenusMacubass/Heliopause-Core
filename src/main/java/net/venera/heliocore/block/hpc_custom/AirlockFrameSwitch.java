@@ -39,7 +39,6 @@ public class AirlockFrameSwitch extends Block {
             
             boolean isOpening = !isActive;
             boolean success = AirlockGateHelper.toggleAirlockBlocks(level, pos, doorFacing, isOpening);
-
             if (success) {
                 if (isOpening) {
                     BlockPos front = pos.relative(doorFacing);

@@ -212,7 +212,7 @@ public class HpCEvents {
         boolean inOxygen = OxygenVolumeHelper.isPositionSealed(headLong);
         if (!inOxygen) {
             BlockState headState = living.level().getBlockState(headPos);
-            if (headState.is(HpCBlocks.BASE_BUILDING_WALL_BLACK.get())) { //TODO:This shall change
+            if (headState.is(HpCBlocks.AIRLOCK_GENERATED_BLOCK.get())) { 
                 for (Direction dir : Direction.Plane.HORIZONTAL) {
                     if (OxygenVolumeHelper.isPositionSealed(headPos.relative(dir).asLong())) {
                         inOxygen = true;

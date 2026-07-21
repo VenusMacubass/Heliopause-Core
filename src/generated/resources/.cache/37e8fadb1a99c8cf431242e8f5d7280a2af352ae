@@ -1,6 +1,7 @@
-// 1.21.1	2026-07-21T20:35:31.9174081	Block States: heliocore
+// 1.21.1	2026-07-22T01:21:18.7578336	Block States: heliocore
 d59962edbb614daa7605d955b287ee61773bd2a2 assets/heliocore/blockstates/airlock_frame_switch_block.json
 a23ba85944456dbe50bd58319b35ee6bd730f46f assets/heliocore/blockstates/airlock_gate_frame.json
+bdf870c7e5505d6271b1fd115489f88d5a3e3959 assets/heliocore/blockstates/airlock_generated_black.json
 bed3fb55b3f2e9b64cb594a3edf17394cb82284a assets/heliocore/blockstates/aluminium_ore.json
 6cd927781589af73454f3cb1a7c4bdb29e540f18 assets/heliocore/blockstates/base_building_block_black.json
 939816d1028c58ffaac8ed356e9ec8e38853aefc assets/heliocore/blockstates/base_building_block_white.json
@@ -59,6 +60,8 @@ af9c0251ffae938e20292daa4e3eb0621440e084 assets/heliocore/blockstates/tinted_pri
 86638fb14588252c109aaab62e8f45b9718a90c2 assets/heliocore/models/block/airlock_gate_frame.json
 280b283c2f2c39dc5dba86d3f488d8e06a867e26 assets/heliocore/models/block/airlock_gate_switch_off.json
 22b25c7f0bd3e8cc948e77b6c1999abb7215ba1d assets/heliocore/models/block/airlock_gate_switch_on.json
+5d95eff6f958f06972f981866f772c0b5988333d assets/heliocore/models/block/airlock_generated_black_flat.json
+f843389fe32205645ddfca6a1d2050f8678eafc6 assets/heliocore/models/block/airlock_generated_black_side_tall.json
 90ae5700c48476a62f7184a58ceb4011af96b7ab assets/heliocore/models/block/aluminium_ore.json
 29ef30b57925092934a35b06bcfe0968ddb0b31a assets/heliocore/models/block/base_building_block_black.json
 2caed03eb8bf974ea5454ab290b6e2f05fd9957a assets/heliocore/models/block/base_building_block_white.json

@@ -36,6 +36,7 @@ public class OxygenVolumeHelper {
             long currentLong = queue.dequeueLong();
             BlockPos currentPos = BlockPos.of(currentLong);
             
+            
             if (visitedAir.size() > currentMaxVolume) {
                 for (BlockPos pos : connectedSealers) ACTIVE_ROOMS.remove(pos);
                 return null;
@@ -48,7 +49,13 @@ public class OxygenVolumeHelper {
                 if (!visitedAir.contains(neighborLong)) {
                     BlockState state = level.getBlockState(neighborPos);
 
-                    if (!state.isCollisionShapeFullBlock(level, neighborPos)) {
+                    boolean isAirtight = state.isCollisionShapeFullBlock(level, neighborPos)
+                            || state.getBlock() instanceof net.venera.heliocore.block.hpc_custom.machine.BaseMachineBlock
+                            || state.is(HpCBlocks.AIRLOCK_GENERATED_BLOCK.get())
+                            || state.is(HpCBlocks.AIRLOCK_FRAME_BLOCK.get())
+                            || state.is(HpCBlocks.AIRLOCK_FRAME_SWITCH_BLOCK.get());
+
+                    if (!isAirtight) {
                         visitedAir.add(neighborLong);
                         queue.enqueue(neighborLong);
                     } else {

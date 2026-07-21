@@ -1,6 +1,7 @@
 {
   "values": [
     "heliocore:base_building_wall_white",
+    "heliocore:base_building_wall_black",
     "heliocore:moon_rock_wall",
     "heliocore:moon_dungeon_brick_wall"
   ]

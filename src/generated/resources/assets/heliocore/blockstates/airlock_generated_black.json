@@ -1,0 +1,47 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "heliocore:block/airlock_generated_black_side_tall"
+      },
+      "when": {
+        "axis": "x"
+      }
+    },
+    {
+      "apply": {
+        "model": "heliocore:block/airlock_generated_black_side_tall",
+        "y": 180
+      },
+      "when": {
+        "axis": "x"
+      }
+    },
+    {
+      "apply": {
+        "model": "heliocore:block/airlock_generated_black_side_tall",
+        "y": 90
+      },
+      "when": {
+        "axis": "z"
+      }
+    },
+    {
+      "apply": {
+        "model": "heliocore:block/airlock_generated_black_side_tall",
+        "y": 270
+      },
+      "when": {
+        "axis": "z"
+      }
+    },
+    {
+      "apply": {
+        "model": "heliocore:block/airlock_generated_black_flat"
+      },
+      "when": {
+        "axis": "y"
+      }
+    }
+  ]
+}

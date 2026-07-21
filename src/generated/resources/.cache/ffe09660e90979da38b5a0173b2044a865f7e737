@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-21T15:28:47.6016576	Tags for minecraft:block mod id heliocore
+// 1.21.1	2026-07-22T00:40:38.6404808	Tags for minecraft:block mod id heliocore
 4bdfaa8683cef3fe3c678ecbd48b25091d141649 data/heliocore/tags/block/incorrect_for_steel_tool.json
 9394609c5ee21882f58aa9995b9f5ab1a76b37d8 data/heliocore/tags/block/machinery.json
 17a611661c51cb3629a693880a93f4f9e3d0074a data/heliocore/tags/block/moon_dirt_replaceables.json
@@ -10,4 +10,4 @@ a86e752d37a915d40b998f0e04b3a2d563971f28 data/heliocore/tags/block/moon_regolith
 8282fbf38887abc9700f2cfa706fd00df0031a3f data/minecraft/tags/block/needs_diamond_tool.json
 a25459ea4f30deaea5f87877dc4c7f0948d3f532 data/minecraft/tags/block/needs_iron_tool.json
 c9ed257a13177e3bc6543ad30940d70789422193 data/minecraft/tags/block/needs_stone_tool.json
-fcea9a998a3249afdf4a7835cce149710425cfb2 data/minecraft/tags/block/walls.json
+f3e6af1a2fcec7a35a5629eb864b757f538fe0a3 data/minecraft/tags/block/walls.json
