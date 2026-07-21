@@ -1,13 +1,13 @@
 package net.venera.heliocore.event;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.behavior.SetWalkTargetFromAttackTargetIfTargetOutOfReach;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -33,6 +33,7 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.venera.heliocore.HeliopauseCore;
+import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.HpCBlockEntities;
 import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
 import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
@@ -209,7 +210,17 @@ public class HpCEvents {
         BlockPos headPos = BlockPos.containing(event.getEntity().getX(), event.getEntity().getEyeY(), event.getEntity().getZ());
         long headLong = headPos.asLong();
         boolean inOxygen = OxygenVolumeHelper.isPositionSealed(headLong);
-
+        if (!inOxygen) {
+            BlockState headState = living.level().getBlockState(headPos);
+            if (headState.is(HpCBlocks.BASE_BUILDING_WALL_BLACK.get())) { //TODO:This shall change
+                for (Direction dir : Direction.Plane.HORIZONTAL) {
+                    if (OxygenVolumeHelper.isPositionSealed(headPos.relative(dir).asLong())) {
+                        inOxygen = true;
+                        break; 
+                    }
+                }
+            }
+        }
         if (!hasOxygen && !inOxygen) {
             if (living.getType().is(HpCTags.Entities.DOES_NOT_BREATHE)) return;
             if (living.isInvertedHealAndHarm()) return;

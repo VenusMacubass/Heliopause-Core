@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
@@ -16,6 +17,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
+import net.venera.heliocore.block.hpc_custom.AirlockFrameSwitch;
 import net.venera.heliocore.block.hpc_custom.machine.electric.EnergyStorageBlock;
 import net.venera.heliocore.block.hpc_custom.machine.electric.SolarPanelBlock;
 import net.venera.heliocore.fluid.HpCFluids;
@@ -51,6 +53,9 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     ResourceLocation prismaticTex = modLoc("block/prismatic_glass");
     ResourceLocation prismaticPaneTex = modLoc("block/prismatic_glass_pane_top");
     ResourceLocation tintedPrismaticTex = modLoc("block/tinted_prismatic_glass");
+    ResourceLocation blockSwitchOffTex = modLoc("block/airlock_gate_switch_off");
+    ResourceLocation blockSwitchOnTex = modLoc("block/airlock_gate_switch_on");
+    ResourceLocation airlockBlockTex = modLoc("block/airlock_gate_frame");
     
     ResourceLocation machineTop = modLoc("block/machine/machine");
     ResourceLocation machineBottom = modLoc("block/machine/machine_bottom");
@@ -96,12 +101,12 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         translucentBlock(HpCBlocks.TINTED_PRISMATIC_GLASS, tintedPrismaticTex);
         
         //region Non-Full Blocks
-        blockItem(HpCBlocks.TIN_BUILDING_SLAB_WHITE);
-        blockItem(HpCBlocks.TIN_BUILDING_SLAB_BLACK);
+        blockItem(HpCBlocks.BASE_BUILDING_SLAB_WHITE);
+        blockItem(HpCBlocks.BASE_BUILDING_SLAB_BLACK);
         blockItem(HpCBlocks.MOON_ROCK_SLAB);
         blockItem(HpCBlocks.MOON_DUNGEON_BRICK_SLAB);
-        stairItem(HpCBlocks.TIN_BUILDING_STAIRS_WHITE);
-        stairItem(HpCBlocks.TIN_BUILDING_STAIRS_BLACK);
+        stairItem(HpCBlocks.BASE_BUILDING_STAIRS_WHITE);
+        stairItem(HpCBlocks.BASE_BUILDING_STAIRS_BLACK);
         stairItem(HpCBlocks.MOON_ROCK_STAIRS);
         stairItem(HpCBlocks.MOON_DUNGEON_BRICK_STAIRS);
         
@@ -109,17 +114,27 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         tintedSlabBlock(HpCBlocks.MOON_DUNGEON_BRICK_SLAB, dungeonBrickTex);
         tintedWallBlock(HpCBlocks.MOON_DUNGEON_BRICK_WALL, dungeonBrickTex);
         
-        tintedStairsBlock(HpCBlocks.TIN_BUILDING_STAIRS_WHITE, buildingBlockWhiteTex);
-        tintedSlabBlock(HpCBlocks.TIN_BUILDING_SLAB_WHITE, buildingBlockWhiteTex);
-        tintedWallBlock(HpCBlocks.TIN_BUILDING_WALL_WHITE, buildingBlockWhiteTex);
+        tintedStairsBlock(HpCBlocks.BASE_BUILDING_STAIRS_WHITE, buildingBlockWhiteTex);
+        tintedSlabBlock(HpCBlocks.BASE_BUILDING_SLAB_WHITE, buildingBlockWhiteTex);
+        tintedWallBlock(HpCBlocks.BASE_BUILDING_WALL_WHITE, buildingBlockWhiteTex);
 
-        tintedStairsBlock(HpCBlocks.TIN_BUILDING_STAIRS_BLACK, buildingBlockBlackTex);
-        tintedSlabBlock(HpCBlocks.TIN_BUILDING_SLAB_BLACK, buildingBlockBlackTex);
-        tintedWallBlock(HpCBlocks.TIN_BUILDING_WALL_BLACK, buildingBlockBlackTex);
+        tintedStairsBlock(HpCBlocks.BASE_BUILDING_STAIRS_BLACK, buildingBlockBlackTex);
+        tintedSlabBlock(HpCBlocks.BASE_BUILDING_SLAB_BLACK, buildingBlockBlackTex);
+        tintedWallBlock(HpCBlocks.BASE_BUILDING_WALL_BLACK, buildingBlockBlackTex);
         
         tintedStairsBlock(HpCBlocks.MOON_ROCK_STAIRS,  moonRockTex);
         tintedSlabBlock(HpCBlocks.MOON_ROCK_SLAB, moonRockTex);
         tintedWallBlock(HpCBlocks.MOON_ROCK_WALL, moonRockTex);
+
+        blockWithItem(HpCBlocks.AIRLOCK_FRAME_BLOCK);
+        booleanBlock(HpCBlocks.AIRLOCK_FRAME_SWITCH_BLOCK.get(),
+                AirlockFrameSwitch.ACTIVE,
+                airlockBlockTex,
+                Map.of(),
+                "block/airlock_gate_switch",
+                "_on","_off",
+                Direction.NORTH, Direction.SOUTH
+        );
         //endregion
 
         //region Machines
@@ -394,12 +409,12 @@ public class HpCBlockStateProvider extends BlockStateProvider {
 
         BlockModelBuilder model = models().withExistingParent(name, "minecraft:block/cube");
 
-        model.texture("north", overrides.getOrDefault(Direction.NORTH, defaultTexture)); // The Front
-        model.texture("south", overrides.getOrDefault(Direction.SOUTH, defaultTexture)); // The Back
-        model.texture("up", overrides.getOrDefault(Direction.UP, defaultTexture));       // The Top
-        model.texture("down", overrides.getOrDefault(Direction.DOWN, defaultTexture));   // The Bottom
-        model.texture("east", overrides.getOrDefault(Direction.EAST, defaultTexture));   // The Right Side
-        model.texture("west", overrides.getOrDefault(Direction.WEST, defaultTexture));   // The Left Side
+        model.texture("north", overrides.getOrDefault(Direction.NORTH, defaultTexture)); //Front
+        model.texture("south", overrides.getOrDefault(Direction.SOUTH, defaultTexture)); //Back
+        model.texture("up", overrides.getOrDefault(Direction.UP, defaultTexture));       //Top
+        model.texture("down", overrides.getOrDefault(Direction.DOWN, defaultTexture));   //Bottom
+        model.texture("east", overrides.getOrDefault(Direction.EAST, defaultTexture));   //Right Side
+        model.texture("west", overrides.getOrDefault(Direction.WEST, defaultTexture));   //Left Side
 
         model.texture("particle", defaultTexture);
 
@@ -422,8 +437,8 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 case EAST -> y = 90;
                 case SOUTH -> y = 180;
                 case WEST -> y = 270;
-                case UP -> x = 270; // Tips the North face up to the sky
-                case DOWN -> x = 90;  // Tips the North face down to the floor
+                case UP -> x = 270; 
+                case DOWN -> x = 90;  
             }
 
             return ConfiguredModel.builder()
@@ -493,6 +508,57 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                     .model(new ModelFile.UncheckedModelFile(modLoc("block/" + baseName + "_charge_" + i)))
                     .end();
         }
+    }
+
+    public void booleanBlock(Block block, BooleanProperty activityProperty, ResourceLocation defaultTexture, Map<Direction, ResourceLocation> staticOverrides, String activityTextureName, String positiveTexLoc, String negativeTexLoc, Direction... activeFaces) {
+        String registryName = BuiltInRegistries.BLOCK.getKey(block).getPath();
+        String defaultModelName = activityTextureName + negativeTexLoc;
+
+        itemModels().getBuilder(registryName)
+                .parent(new ModelFile.UncheckedModelFile(modLoc(defaultModelName)))
+                .transforms()
+                .transform(ItemDisplayContext.GUI)
+                .rotation(30, 135, 0)
+                .scale(0.625f)
+                .end();
+        
+        getVariantBuilder(block).forAllStates(state -> {
+            Direction dir = state.getValue(BlockStateProperties.FACING);
+            boolean active = state.getValue(activityProperty);
+
+            String modelName = activityTextureName + (active ? positiveTexLoc : negativeTexLoc);
+            BlockModelBuilder model = models().withExistingParent(modelName, "minecraft:block/cube");
+
+            model.texture("north", staticOverrides.getOrDefault(Direction.NORTH, defaultTexture));
+            model.texture("south", staticOverrides.getOrDefault(Direction.SOUTH, defaultTexture));
+            model.texture("up", staticOverrides.getOrDefault(Direction.UP, defaultTexture));
+            model.texture("down", staticOverrides.getOrDefault(Direction.DOWN, defaultTexture));
+            model.texture("east", staticOverrides.getOrDefault(Direction.EAST, defaultTexture));
+            model.texture("west", staticOverrides.getOrDefault(Direction.WEST, defaultTexture));
+            model.texture("particle", defaultTexture);
+
+            for (Direction face : activeFaces) {
+                model.texture(face.getSerializedName(), modLoc(modelName));
+            }
+
+            int x = 0;
+            int y = 0;
+
+            switch (dir) {
+                case NORTH -> y = 0;
+                case EAST -> y = 90;
+                case SOUTH -> y = 180;
+                case WEST -> y = 270;
+                case UP -> x = 270;
+                case DOWN -> x = 90;
+            }
+            
+            return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .rotationX(x)
+                    .rotationY(y)
+                    .build();
+        });
     }
     //endregion
 }

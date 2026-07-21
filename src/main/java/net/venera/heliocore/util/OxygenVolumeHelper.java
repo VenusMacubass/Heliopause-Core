@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
 
 import java.util.HashSet;
@@ -54,7 +55,7 @@ public class OxygenVolumeHelper {
                         walls.add(neighborLong);
                         if (level.getBlockEntity(neighborPos) instanceof OxygenSealerEntity partner) {
                             if (partner.enabled && connectedSealers.add(neighborPos)) {
-                                currentMaxVolume += maxVolumePerSealer; // Stack the limit!
+                                currentMaxVolume += maxVolumePerSealer;
                             }
                         }
                     }
@@ -98,6 +99,15 @@ public class OxygenVolumeHelper {
 
     public static SealedVolumeResult getExistingRoom(BlockPos pos) {
         return ACTIVE_ROOMS.get(pos);
+    }
+
+    public static BlockPos getSealerForAir(long airPosLong) {
+        for (Map.Entry<BlockPos, SealedVolumeResult> entry : ACTIVE_ROOMS.entrySet()) {
+            if (entry.getValue().airBlocks().contains(airPosLong)) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 }
 

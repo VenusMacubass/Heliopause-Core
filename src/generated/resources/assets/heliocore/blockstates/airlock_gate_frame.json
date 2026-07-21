@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "heliocore:block/airlock_gate_frame"
+    }
+  }
+}

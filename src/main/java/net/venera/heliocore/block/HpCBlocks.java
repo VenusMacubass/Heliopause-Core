@@ -149,22 +149,22 @@ public class HpCBlocks {
     public static final DeferredBlock<Block> BASE_BUILDING_BLACK_BLOCK = registerBlock("base_building_block_black",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).sound(SoundType.METAL)));
 
-    public static final DeferredBlock<WallBlock> TIN_BUILDING_WALL_WHITE = registerBlock("base_building_wall_white",
+    public static final DeferredBlock<WallBlock> BASE_BUILDING_WALL_WHITE = registerBlock("base_building_wall_white",
             ()-> new WallBlock(BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(4f)));
 
-    public static final DeferredBlock<WallBlock> TIN_BUILDING_WALL_BLACK = registerBlock("base_building_wall_black",
+    public static final DeferredBlock<WallBlock> BASE_BUILDING_WALL_BLACK = registerBlock("base_building_wall_black",
             ()-> new WallBlock(BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(4f)));
 
-    public static final DeferredBlock<StairBlock> TIN_BUILDING_STAIRS_WHITE = registerBlock("base_building_stairs_white",
+    public static final DeferredBlock<StairBlock> BASE_BUILDING_STAIRS_WHITE = registerBlock("base_building_stairs_white",
             ()-> new StairBlock(HpCBlocks.BASE_BUILDING_WHITE_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(4f)));
 
-    public static final DeferredBlock<StairBlock> TIN_BUILDING_STAIRS_BLACK = registerBlock("base_building_stairs_black",
+    public static final DeferredBlock<StairBlock> BASE_BUILDING_STAIRS_BLACK = registerBlock("base_building_stairs_black",
             ()-> new StairBlock(HpCBlocks.BASE_BUILDING_WHITE_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(4f)));
 
-    public static final DeferredBlock<SlabBlock> TIN_BUILDING_SLAB_WHITE = registerBlock("base_building_slab_white",
+    public static final DeferredBlock<SlabBlock> BASE_BUILDING_SLAB_WHITE = registerBlock("base_building_slab_white",
             ()-> new SlabBlock(BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(5f)));
 
-    public static final DeferredBlock<SlabBlock> TIN_BUILDING_SLAB_BLACK = registerBlock("base_building_slab_black",
+    public static final DeferredBlock<SlabBlock> BASE_BUILDING_SLAB_BLACK = registerBlock("base_building_slab_black",
             ()-> new SlabBlock(BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(5f)));
 
     public static final DeferredBlock<Block> ARC_LAMP = registerBlock("arc_lamp",
@@ -200,7 +200,13 @@ public class HpCBlocks {
                 public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
                     return Shapes.block();
                 }
-            });
+    });
+
+    public static final DeferredBlock<Block> AIRLOCK_FRAME_BLOCK = registerBlock("airlock_gate_frame",
+            () -> new Block(BlockBehaviour.Properties.of().sound(SoundType.METAL)));
+
+    public static final DeferredBlock<Block> AIRLOCK_FRAME_SWITCH_BLOCK = registerBlock("airlock_frame_switch_block",
+            () -> new AirlockFrameSwitch(BlockBehaviour.Properties.of().sound(SoundType.METAL)));
 
     public static final DeferredBlock<Block> PIZZA_BLOCK = registerBlock("pizza_block",
             () -> new PizzaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE)));

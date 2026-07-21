@@ -80,8 +80,8 @@ public class HpCItemModelProvider extends ItemModelProvider {
         
         basicItem(HpCItems.SMALL_BATTERY.get());
 
-       wallItem(HpCBlocks.TIN_BUILDING_WALL_WHITE, buildingBlockWhiteTex);
-        wallItem(HpCBlocks.TIN_BUILDING_WALL_BLACK, buildingBlockBlackTex);
+       wallItem(HpCBlocks.BASE_BUILDING_WALL_WHITE, buildingBlockWhiteTex);
+        wallItem(HpCBlocks.BASE_BUILDING_WALL_BLACK, buildingBlockBlackTex);
        wallItem(HpCBlocks.MOON_ROCK_WALL, moonRockTex);
        wallItem(HpCBlocks.MOON_DUNGEON_BRICK_WALL, dungeonBrickTex);
         

@@ -115,7 +115,7 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
         boolean hasEnergy = this.energyStorage.getEnergyStored() > 0;
         boolean isUnblocked = !level.getBlockState(pos.above()).isSolidRender(level, pos.above());
         ResourceKey<Level> currentDimension = level.dimension();
-        boolean isInSpace = currentDimension == ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon")); //TODO: make this one based on dimension tags and not direct dimensions
+        boolean isInSpace = currentDimension.location().equals(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon")); //TODO: make this one based on dimension tags and not direct dimensions
 
         if (enabled && hasEnergy && isUnblocked) {
             if (!isActive) {

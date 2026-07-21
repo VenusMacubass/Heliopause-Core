@@ -1,4 +1,6 @@
-// 1.21.1	2026-07-21T15:28:47.6046584	Loot Tables
+// 1.21.1	2026-07-21T20:09:00.5253278	Loot Tables
+21e562aa5bd307b899a46c53c00b09a6b8a687bb data/heliocore/loot_table/blocks/airlock_frame_switch_block.json
+ff4b0fd001180ba9d9b920b1e9c59581a4720d73 data/heliocore/loot_table/blocks/airlock_gate_frame.json
 4c6effb42af79317efc025b64a17716f1bcfaa42 data/heliocore/loot_table/blocks/aluminium_block.json
 64247a8f311a92e6ec87cc7d0e221e1a168f6380 data/heliocore/loot_table/blocks/aluminium_ore.json
 169aa8b3cb872639f3c6660ddb1af2fc0bbcdf83 data/heliocore/loot_table/blocks/arc_lamp.json

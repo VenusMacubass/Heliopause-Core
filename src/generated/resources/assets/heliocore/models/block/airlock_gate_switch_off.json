@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "heliocore:block/airlock_gate_frame",
+    "east": "heliocore:block/airlock_gate_frame",
+    "north": "heliocore:block/airlock_gate_switch_off",
+    "particle": "heliocore:block/airlock_gate_frame",
+    "south": "heliocore:block/airlock_gate_switch_off",
+    "up": "heliocore:block/airlock_gate_frame",
+    "west": "heliocore:block/airlock_gate_frame"
+  }
+}

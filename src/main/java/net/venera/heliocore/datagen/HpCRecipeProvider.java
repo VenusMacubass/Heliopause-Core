@@ -270,7 +270,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_compressed_tin", has(HpCItems.COMPRESSED_TIN.get()))
                 .save(recipeOutput, "tin_building_block_crafting");
         //Walls
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.TIN_BUILDING_WALL_WHITE.get(), 6)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.BASE_BUILDING_WALL_WHITE.get(), 6)
                 .pattern("TTT")
                 .pattern("TTT")
                 .define('T', HpCBlocks.BASE_BUILDING_WHITE_BLOCK.get())
@@ -292,7 +292,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
        
 
         //Stairs
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.TIN_BUILDING_STAIRS_WHITE.get(), 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.BASE_BUILDING_STAIRS_WHITE.get(), 4)
                 .pattern("T  ")
                 .pattern("TT ")
                 .pattern("TTT")
@@ -315,7 +315,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput, "moon_dungeon_brick_stairs_crafting");
 
         //Slabs
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.TIN_BUILDING_SLAB_WHITE.get(), 6)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.BASE_BUILDING_SLAB_WHITE.get(), 6)
                 .pattern("TTT")
                 .define('T', HpCBlocks.BASE_BUILDING_WHITE_BLOCK.get())
                 .unlockedBy("has_tin_building_block", has(HpCBlocks.BASE_BUILDING_WHITE_BLOCK.get()))
