@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-21T15:28:47.6066785	Item Models: heliocore
+// 1.21.1	2026-07-22T21:18:58.7524943	Item Models: heliocore
 0734313d99e1a4ca395735a0943619e787dd452a assets/heliocore/models/item/base_building_wall_black.json
 77313ec5bf2583da66c950d2ae65ff21c6eb341c assets/heliocore/models/item/base_building_wall_white.json
 62c01033a4c1f12560cd7e8e0deda9ef61f67c70 assets/heliocore/models/item/cheese_slice.json
@@ -20,6 +20,7 @@ bab023cceeedf9effb921268cd18de4d22505d00 assets/heliocore/models/item/dehydrated
 1f5f611f28b823a9553c4a282c0690eb16df8ea1 assets/heliocore/models/item/glass_sword.json
 648416d890e1e258846806fa09a9afcab34f40ce assets/heliocore/models/item/hamburger.json
 d754b71e6180081a586fe7630dd92361e15d31f8 assets/heliocore/models/item/heavy_duty_plate.json
+8a10ac5f69edc5d975f0db37feccfa7fab92b6de assets/heliocore/models/item/hydrocarbons.json
 f161f4e5733fdfa637181ee0e9da9a60bf97c014 assets/heliocore/models/item/moon_dungeon_brick_wall.json
 8ba848f79f24fecc74d70c6e43e32f4a49d5ce29 assets/heliocore/models/item/moon_rock_wall.json
 f643fc074ecadea8066344fa970997e691ff0ec0 assets/heliocore/models/item/oxygen_connectors.json

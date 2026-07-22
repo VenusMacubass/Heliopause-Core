@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "heliocore:base_building_block_black"
+    },
+    "P": {
+      "item": "heliocore:fluid_pipe"
+    }
+  },
+  "pattern": [
+    "   ",
+    "PBP",
+    "   "
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:fluid_pipe_block"
+  }
+}

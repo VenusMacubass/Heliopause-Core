@@ -57,6 +57,7 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCItems.RAW_TIN.get());
                         output.accept(HpCItems.RAW_SILICON.get());
                         output.accept(HpCItems.TEKTITES.get());
+                        output.accept(HpCItems.HYDROCARBONS.get());
                         output.accept(HpCItems.COMPRESSED_ALUMINIUM.get());
                         output.accept(HpCItems.COMPRESSED_BRONZE.get());
                         output.accept(HpCItems.COMPRESSED_COPPER.get());
@@ -151,6 +152,7 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCBlocks.ENERGY_GENERATOR_BLOCK.get());
                         output.accept(HpCBlocks.OXYGEN_SEALER_BLOCK.get());
                         output.accept(HpCBlocks.COPPER_WIRE_BLOCK.get());
+                        output.accept(HpCBlocks.FLUID_PIPE_BLOCK.get());
                         output.accept(HpCBlocks.LAUNCH_PAD.get());
                         output.accept(HpCBlocks.FLUID_TANK.get());
                         output.accept(HpCBlocks.COPPER_WIRE.get());

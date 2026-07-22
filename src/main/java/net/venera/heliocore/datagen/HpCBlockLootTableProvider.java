@@ -77,6 +77,7 @@ public class HpCBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(HpCBlocks.IRIDIUM_BLOCK.get());
         
         dropSelf(HpCBlocks.COPPER_WIRE_BLOCK.get());
+        dropSelf(HpCBlocks.FLUID_PIPE_BLOCK.get());
         dropSelf(HpCBlocks.AIRLOCK_FRAME_BLOCK.get());
         dropSelf(HpCBlocks.AIRLOCK_FRAME_SWITCH_BLOCK.get());
         dropSelf(HpCBlocks.MAGNETIC_CRAFTING_TABLE.get());

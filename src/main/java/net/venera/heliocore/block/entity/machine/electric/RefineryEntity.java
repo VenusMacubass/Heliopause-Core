@@ -30,6 +30,7 @@ import net.venera.heliocore.block.hpc_custom.machine.BaseMachineBlock;
 import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.fluid.IFluidMachine;
 import net.venera.heliocore.fluid.HpCFluids;
+import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import net.venera.heliocore.screen.hpc_custom.RefineryMenu;
 import net.venera.heliocore.util.MachineConfigHelper;
@@ -42,6 +43,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     private final int INPUT_SLOT = 0;
     private final int OUTPUT_SLOT = 1;
     private final int BATTERY_SLOT = 2;
+    private final int[] HYDROCARBON_SLOTS = {3, 4, 5, 6, 7};
     private final int BUCKET_CAPACITY = 1000;
     private final int CONVERSION_RATE;
     private final int ENERGY_USAGE; 
@@ -49,6 +51,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     public boolean isActive = false;
     private final int MAX_FLOW_RATE = 10;
     public boolean enabled = true;
+    private int petroleumScore = 0;
     public final FluidTank oilTank = new FluidTank(maxCapacity) {
         @Override
         protected void onContentsChanged() {
@@ -80,7 +83,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
 
     public RefineryEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState,
                           int energyCapacity, int transferRate, int energyUsage, int conversionRate) {
-        super(type, pos, blockState, 3, energyCapacity, transferRate, energyUsage);
+        super(type, pos, blockState, 8, energyCapacity, transferRate, energyUsage);
         this.CONVERSION_RATE = conversionRate;
         this.ENERGY_USAGE = energyUsage;
     }
@@ -110,7 +113,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
                 }
             }
             @Override
-            public int getCount() { return 7; }
+            public int getCount() { return 8; }
         };
     }
 
@@ -145,6 +148,37 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
         BaseElectricMachineEntity.tick(level, pos, state, this);
     }
 
+    private void refine(Level level){
+        if((level.getGameTime() % 5) == 0){
+            isActive = true;
+            isolateHydrocarbons();
+
+            int oilAvailable = oilTank.getFluidAmount();
+            int fuelSpace = fuelTank.getSpace();
+
+            int conversionAmount = Math.min(this.CONVERSION_RATE, oilAvailable);
+            conversionAmount = Math.min(conversionAmount/2, fuelSpace);
+            petroleumScore += conversionAmount;
+            oilTank.drain((conversionAmount*2), IFluidHandler.FluidAction.EXECUTE);
+            fuelTank.fill(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), conversionAmount), IFluidHandler.FluidAction.EXECUTE);
+
+            this.energyStorage.extractEnergy(this.ENERGY_USAGE, false);
+        }
+    }
+    
+    private void isolateHydrocarbons() {
+        if(petroleumScore >= CONVERSION_RATE*2){
+            ItemStack petroleumStack = new ItemStack(HpCItems.HYDROCARBONS.get(), 1);
+            for(int i = 3; i <= 7; i++){
+                if(inventory.insertItem(i, petroleumStack, true).isEmpty()){
+                    inventory.insertItem(i, petroleumStack, false);
+                    break;
+                }
+            }
+            petroleumScore = 0;
+        }
+    }
+
     private boolean processInputs() {
         ItemStack inputStack = inventory.getStackInSlot(INPUT_SLOT);
         int receivedOilBucket = oilTank.fill(new FluidStack(HpCFluids.CRUDE_OIL.getSource(), BUCKET_CAPACITY), IFluidHandler.FluidAction.SIMULATE);
@@ -172,7 +206,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     private boolean processOutputs() {
         ItemStack outputStack = inventory.getStackInSlot(OUTPUT_SLOT);
         FluidStack fuelBucket = fuelTank.drain(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), BUCKET_CAPACITY), IFluidHandler.FluidAction.SIMULATE);
-        if(outputStack.getItem() == Items.BUCKET && fuelBucket.getAmount() >= BUCKET_CAPACITY) {
+        if(outputStack.getItem() == Items.BUCKET && fuelBucket.getAmount() >= BUCKET_CAPACITY && outputStack.getCount() == 1) {
             fuelTank.drain(fuelBucket, IFluidHandler.FluidAction.EXECUTE);
             inventory.setStackInSlot(OUTPUT_SLOT, new ItemStack(HpCFluids.REFINED_FUEL.getBucket()));
             return true;
@@ -310,23 +344,6 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
         return fuelTank.drain(amount, action).getAmount();
     }
 
-    private void refine(Level level){
-        if((level.getGameTime() % 5) == 0){
-            isActive = true;
-
-            int oilAvailable = oilTank.getFluidAmount();
-            int fuelSpace = fuelTank.getSpace();
-
-            int conversionAmount = Math.min(this.CONVERSION_RATE, oilAvailable);
-            conversionAmount = Math.min(conversionAmount/2, fuelSpace);
-
-            oilTank.drain((conversionAmount*2), IFluidHandler.FluidAction.EXECUTE);
-            fuelTank.fill(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), conversionAmount), IFluidHandler.FluidAction.EXECUTE);
-
-            this.energyStorage.extractEnergy(this.ENERGY_USAGE, false);
-        }
-    }
-
     public int getOilAmount() {
         return oilTank.getFluidAmount();
     }
@@ -369,6 +386,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
 
         tag.putBoolean("IsActive", isActive);
         tag.putBoolean("Enabled", enabled);
+        tag.putInt("PetroleumScore", petroleumScore);
     }
 
     @Override
@@ -379,5 +397,6 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
 
         isActive = tag.getBoolean("IsActive");
         enabled = tag.getBoolean("Enabled");
+        petroleumScore = tag.getInt("PetroleumScore");
     }
 }

@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-22T12:31:16.6517439	Loot Tables
+// 1.21.1	2026-07-22T16:38:50.5129671	Loot Tables
 21e562aa5bd307b899a46c53c00b09a6b8a687bb data/heliocore/loot_table/blocks/airlock_frame_switch_block.json
 ff4b0fd001180ba9d9b920b1e9c59581a4720d73 data/heliocore/loot_table/blocks/airlock_gate_frame.json
 4c6effb42af79317efc025b64a17716f1bcfaa42 data/heliocore/loot_table/blocks/aluminium_block.json
@@ -26,6 +26,7 @@ b7bc75985ea6a6309924bea0631d396456967510 data/heliocore/loot_table/blocks/deepsl
 24b8d18ef3f188439ef80a7c092973cc3dab8534 data/heliocore/loot_table/blocks/energy_generator_block.json
 f0212cadba30b6af7b467b4263f8647ce9f49101 data/heliocore/loot_table/blocks/energy_storage_unit.json
 516b1967f25a4f3f22dccea4163da0b238f84368 data/heliocore/loot_table/blocks/fluid_pipe.json
+6ab9a9b4f3995a29fcdcff3154a6bdbae805b6a1 data/heliocore/loot_table/blocks/fluid_pipe_block.json
 f3e0fac232a025f86474cc7096a8b8ba3f9c9fc0 data/heliocore/loot_table/blocks/fluid_tank.json
 04a55b99be3dc61e198fc9f67dbe3efc8e4ba010 data/heliocore/loot_table/blocks/fuel_manager_block.json
 295b8dcfff45d723d80f36dd9acef8061ad9750e data/heliocore/loot_table/blocks/gas_compressor_block.json

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "heliocore:base_building_block_black"
+    },
+    "W": {
+      "item": "heliocore:copper_wire"
+    }
+  },
+  "pattern": [
+    "   ",
+    "WBW",
+    "   "
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:copper_wire_block"
+  }
+}

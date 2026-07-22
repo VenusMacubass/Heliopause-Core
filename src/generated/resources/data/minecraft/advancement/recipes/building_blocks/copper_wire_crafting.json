@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_compressed_steel": {
+      "conditions": {
+        "items": [
+          {
+            "items": "heliocore:compressed_steel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:copper_wire_crafting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_compressed_steel"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:copper_wire_crafting"
+    ]
+  }
+}

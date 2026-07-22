@@ -90,6 +90,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         blockWithItem(HpCBlocks.SILICON_BLOCK);
         blockWithItem(HpCBlocks.MOON_COBBLESTONE);
         blockWithItem(HpCBlocks.COPPER_WIRE_BLOCK);
+        blockWithItem(HpCBlocks.FLUID_PIPE_BLOCK);
 
         fluidBlock(HpCFluids.CRUDE_OIL.getFluidBlockRegistry(), crudeOilStill);
         fluidBlock(HpCFluids.REFINED_FUEL.getFluidBlockRegistry(), refinedFuelStill);

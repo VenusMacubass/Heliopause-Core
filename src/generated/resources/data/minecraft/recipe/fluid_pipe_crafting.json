@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "G": {
+      "item": "minecraft:glass_pane"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "   ",
+    "GGG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:fluid_pipe"
+  }
+}

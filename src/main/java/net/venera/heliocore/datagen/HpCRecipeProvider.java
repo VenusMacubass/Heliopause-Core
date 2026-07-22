@@ -21,25 +21,27 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
 
     @Override
     protected void buildRecipes(RecipeOutput recipeOutput) {
-        //Ingredient Lists
         List<ItemLike> ALUMINIUM_SMELTABLES = List.of(HpCBlocks.ALUMINIUM_ORE, HpCItems.RAW_ALUMINIUM);
         List<ItemLike> TIN_SMELTABLES = List.of(HpCBlocks.TIN_ORE, HpCItems.RAW_TIN);
 
+        //region ingots
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.TIN_INGOT.get(), 9)
+                .requires(HpCBlocks.TIN_BLOCK.get(), 1)
+                .unlockedBy("has_tin_block", has(HpCBlocks.ALUMINIUM_BLOCK.get()))
+                .save(recipeOutput, "tin_ingots_from_block");
         
-        
-        //region Metals
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCBlocks.ALUMINIUM_BLOCK.get())
-                .pattern("AAA")
-                .pattern("AAA")
-                .pattern("AAA")
-                .define('A', HpCItems.ALUMINIUM_INGOT.get())
-                .unlockedBy("has_aluminium_ingot", has(HpCItems.ALUMINIUM_INGOT.get()))
-                .save(recipeOutput, "aluminium_block_from_ingots");
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.ALUMINIUM_INGOT.get(), 9)
                 .requires(HpCBlocks.ALUMINIUM_BLOCK.get(), 1)
                 .unlockedBy("has_aluminium_block", has(HpCBlocks.ALUMINIUM_BLOCK.get()))
                 .save(recipeOutput, "aluminium_ingots_from_block");
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.IRIDIUM_INGOT.get(), 9)
+                .requires(HpCBlocks.IRIDIUM_BLOCK.get(),    1)
+                .unlockedBy("has_iridium_block", has(HpCBlocks.IRIDIUM_BLOCK.get()))
+                .save(recipeOutput, "iridium_ingots_from_iridium_block");
+        //endregion
+        
+        //region Metal Blocks
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCBlocks.TIN_BLOCK.get())
                 .pattern("TTT")
                 .pattern("TTT")
@@ -47,21 +49,14 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('T', HpCItems.TIN_INGOT.get())
                 .unlockedBy("has_tin_ingots", has(HpCItems.TIN_INGOT.get()))
                 .save(recipeOutput, "tin_block_from_ingots");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.TIN_INGOT.get(), 9)
-                .requires(HpCBlocks.TIN_BLOCK.get(), 1)
-                .unlockedBy("has_tin_block", has(HpCBlocks.ALUMINIUM_BLOCK.get()))
-                .save(recipeOutput, "tin_ingots_from_block");
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCBlocks.SILICON_BLOCK.get())
-                 .pattern("SSS")
-                 .pattern("SSS")
-                 .pattern("SSS").define('S', HpCItems.RAW_SILICON.get())
-                 .unlockedBy("has_raw_silicon", has(HpCItems.RAW_SILICON.get()))
-                 .save(recipeOutput, "silicon_block_from_raw_silicon");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.RAW_SILICON.get(), 9)
-                    .requires(HpCBlocks.SILICON_BLOCK.get(),    1)
-                    .unlockedBy("has_silicon_block", has(HpCBlocks.SILICON_BLOCK.get()))
-                    .save(recipeOutput, "raw_silicon_from_silicon_block");
+        
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCBlocks.ALUMINIUM_BLOCK.get())
+                .pattern("AAA")
+                .pattern("AAA")
+                .pattern("AAA")
+                .define('A', HpCItems.ALUMINIUM_INGOT.get())
+                .unlockedBy("has_aluminium_ingot", has(HpCItems.ALUMINIUM_INGOT.get()))
+                .save(recipeOutput, "aluminium_block_from_ingots");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCBlocks.IRIDIUM_BLOCK.get())
                 .pattern("III")
@@ -69,12 +64,21 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("III").define('I', HpCItems.IRIDIUM_INGOT.get())
                 .unlockedBy("has_iridium_ingot", has(HpCItems.IRIDIUM_INGOT.get()))
                 .save(recipeOutput, "iridium_block_from_ingots");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.IRIDIUM_INGOT.get(), 9)
-                .requires(HpCBlocks.IRIDIUM_BLOCK.get(),    1)
-                .unlockedBy("has_iridium_block", has(HpCBlocks.IRIDIUM_BLOCK.get()))
-                .save(recipeOutput, "iridium_ingots_from_iridium_block");
 
-        //Raw Metal Blocks
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCBlocks.SILICON_BLOCK.get())
+                .pattern("SSS")
+                .pattern("SSS")
+                .pattern("SSS").define('S', HpCItems.RAW_SILICON.get())
+                .unlockedBy("has_raw_silicon", has(HpCItems.RAW_SILICON.get()))
+                .save(recipeOutput, "silicon_block_from_raw_silicon");
+        //endregion
+        
+        //region Raw Metals
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.RAW_SILICON.get(), 9)
+                .requires(HpCBlocks.SILICON_BLOCK.get(),    1)
+                .unlockedBy("has_silicon_block", has(HpCBlocks.SILICON_BLOCK.get()))
+                .save(recipeOutput, "raw_silicon_from_silicon_block");
+        
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCBlocks.RAW_TIN_BLOCK.get())
                 .pattern("RRR")
                 .pattern("RRR")
@@ -82,6 +86,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('R', HpCItems.RAW_TIN.get())
                 .unlockedBy("has_raw_tin", has(HpCItems.RAW_TIN.get()))
                 .save(recipeOutput, "raw_tin_block_crafting");
+        
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCBlocks.RAW_ALUMINIUM_BLOCK.get())
                 .pattern("RRR")
                 .pattern("RRR")
@@ -243,7 +248,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
         oreBlasting(recipeOutput, HpCBlocks.MOON_TEKTITES, RecipeCategory.MISC, HpCItems.TEKTITES.get(),2.5f, 200, "tektite_shards");
         //endregion
         
-        //Special Blocks
+        //region Low Functionality Items and Blocks
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, HpCBlocks.ARC_LAMP.get())
                 .pattern("SGS")
                 .pattern("GRG")
@@ -254,6 +259,47 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_compressed_steel", has(HpCItems.COMPRESSED_STEEL.get()))
                 .save(recipeOutput, "arc_lamp_crafting");
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCBlocks.MAGNETIC_CRAFTING_TABLE.get(), 1)
+                .requires(HpCItems.COMPRESSED_IRON.get(), 1).requires(Items.CRAFTING_TABLE, 1)
+                .unlockedBy("has_compressed_iron", has(HpCItems.COMPRESSED_IRON.get()))
+                .save(recipeOutput, "magnetic_crafting_table_from_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.COPPER_WIRE.get())
+                .pattern("SGS")
+                .pattern("GRG")
+                .pattern("SGS")
+                .define('S', HpCItems.COMPRESSED_STEEL.get())
+                .define('G', Items.GLOWSTONE_DUST)
+                .define('R', Blocks.REDSTONE_BLOCK)
+                .unlockedBy("has_compressed_steel", has(HpCItems.COMPRESSED_STEEL.get()))
+                .save(recipeOutput, "copper_wire_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.FLUID_PIPE.get())
+                .pattern("GGG")
+                .pattern("   ")
+                .pattern("GGG")
+                .define('G', Items.GLASS_PANE)
+                .unlockedBy("has_glass_pane", has(Items.GLASS_PANE))
+                .save(recipeOutput, "fluid_pipe_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.COPPER_WIRE_BLOCK.get())
+                .pattern("   ")
+                .pattern("WBW")
+                .pattern("   ")
+                .define('W', HpCBlocks.COPPER_WIRE.get())
+                .define('B', HpCBlocks.BASE_BUILDING_BLACK_BLOCK.get())
+                .unlockedBy("has_wire", has(HpCBlocks.COPPER_WIRE.get()))
+                .save(recipeOutput, "copper_wire_block_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.FLUID_PIPE_BLOCK.get())
+                .pattern("   ")
+                .pattern("PBP")
+                .pattern("   ")
+                .define('P', HpCBlocks.FLUID_PIPE.get())
+                .define('B', HpCBlocks.BASE_BUILDING_BLACK_BLOCK.get())
+                .unlockedBy("has_fluid_pipe", has(HpCBlocks.FLUID_PIPE.get()))
+                .save(recipeOutput, "fluid_pipe_block_crafting");
+        //endregion
 
         //region Building Blocks
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.PRISMATIC_GLASS.get(), 1)
@@ -336,7 +382,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
         
 
     }
-//----------------------------------------------------------------------------------------------------------------------
+    //region Helpers
     protected static void oreSmelting(RecipeOutput recipeOutput, List<ItemLike> ingredients, RecipeCategory category, ItemLike result, float experience, int cookingTime, String group) {
         oreCooking(recipeOutput, RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, ingredients, category, result, experience, cookingTime, group, "_from_smelting");
     }
@@ -361,4 +407,5 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ingredient), has(ingredient))
                 .save(recipeOutput, HeliopauseCore.MOD_ID + ":" + getItemName(result) + suffix + "_" + getItemName(ingredient));
     }
+    //endregion
 }

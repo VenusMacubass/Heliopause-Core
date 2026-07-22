@@ -16,7 +16,7 @@ public class RefineryScreen extends AbstractContainerScreen<RefineryMenu> {
     private Button enabilitationButton;
     
     private static final ResourceLocation REFINERY_GUI =
-            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/refinery/refinery_gui.png");
+            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/refinery/refinery_gui2.png");
     private static final ResourceLocation OIL_GUI =
             ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/oil_gui.png");
     private static final ResourceLocation FUEL_GUI =

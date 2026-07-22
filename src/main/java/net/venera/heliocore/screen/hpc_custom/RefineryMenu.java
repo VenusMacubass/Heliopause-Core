@@ -35,6 +35,7 @@ public class RefineryMenu extends AbstractContainerMenu {
         addDataSlots(this.data);
         addPlayerInventory(inventory);
         addPlayerHotbar(inventory);
+//        
 
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 0, 28, 13) {
             @Override
@@ -69,6 +70,17 @@ public class RefineryMenu extends AbstractContainerMenu {
                 return 1;
             }
         });
+
+        int hydroCarbonSlotIndex = 3;
+        int rightmostX = 132;
+        for (int num = 0; num < 5; num++) {
+            this.addSlot(new SlotItemHandler(this.blockEntity.inventory, hydroCarbonSlotIndex++, rightmostX - (num * 18), 43) {
+                @Override
+                public boolean mayPlace(ItemStack stack) {
+                    return false;
+                }
+            });
+        }
     }
 
     private static final int HOTBAR_SLOT_COUNT = 9;
@@ -78,7 +90,7 @@ public class RefineryMenu extends AbstractContainerMenu {
     private static final int VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INVENTORY_SLOT_COUNT;
     private static final int VANILLA_FIRST_SLOT_INDEX = 0;
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
-    private static final int TE_INVENTORY_SLOT_COUNT = 3;
+    private static final int TE_INVENTORY_SLOT_COUNT = 8;
 
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
@@ -115,7 +127,7 @@ public class RefineryMenu extends AbstractContainerMenu {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
                 player, HpCBlocks.REFINERY.get());
     }
-
+    
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {

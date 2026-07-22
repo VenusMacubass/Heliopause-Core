@@ -202,6 +202,14 @@ public class HpCBlocks {
                 }
     });
 
+    public static final DeferredBlock<Block> FLUID_PIPE_BLOCK = registerBlock("fluid_pipe_block",
+            () -> new FluidPipeBlock(BlockBehaviour.Properties.of().sound(SoundType.GLASS)){
+                @Override
+                public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+                    return Shapes.block();
+                }
+    });
+
     public static final DeferredBlock<Block> AIRLOCK_FRAME_BLOCK = registerBlock("airlock_gate_frame",
             () -> new Block(BlockBehaviour.Properties.of().sound(SoundType.METAL)));
 

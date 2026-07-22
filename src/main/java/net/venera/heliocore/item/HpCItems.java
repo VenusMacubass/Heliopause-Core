@@ -86,7 +86,7 @@ public class HpCItems {
             HpCDataComponents.CANISTER_COMPONENT.get(), new CanisterData(null, 0)).stacksTo(1)));
     public static final DeferredItem<GasTankItem> COMPRESSED_GAS_TANK = ITEMS.register("compressed_gas_tank", () -> new GasTankItem(new Item.Properties().component(
             HpCDataComponents.GAS_TANK_COMPONENT.get(), new GasTankData(null, 0)).stacksTo(1)));
-    
+    public static final DeferredItem<Item> HYDROCARBONS = ITEMS.register("hydrocarbons", () -> new Item(new Item.Properties()));
     //endregion
 
     //region Tools
