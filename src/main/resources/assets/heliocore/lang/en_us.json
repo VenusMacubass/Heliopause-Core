@@ -145,6 +145,7 @@
   "block.heliocore.rocket_bot": "Tier 1 Rocket",
   "block.heliocore.copper_wire_block": "Copper Wire Block",
   "block.heliocore.fluid_pipe": "Fluid Pipe",
+  "block.heliocore.magnetic_crafting_table": "Magnetic Crafting Table",
 
   "block.heliocore.coal_compressor": "Coal Powered Compressor",
   "block.heliocore.energy_storage_unit": "Energy Storage Unit",
@@ -171,7 +172,8 @@
   "container.heliocore.energy_generator": "Energy Generator",
   "container.heliocore.oxygen_sealer":"Oxygen Sealer",
 
-
+  "container.heliocore.magnetic_crafting": "Crafting",
+  
   "death.attack.radiation_damage": "%1$s succumbed to radiation poisoning.",
 
 

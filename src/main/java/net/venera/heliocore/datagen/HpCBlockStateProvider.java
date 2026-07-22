@@ -54,6 +54,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     ResourceLocation prismaticPaneTex = modLoc("block/prismatic_glass_pane_top");
     ResourceLocation tintedPrismaticTex = modLoc("block/tinted_prismatic_glass");
     ResourceLocation airlockBlockTex = modLoc("block/airlock_gate_frame");
+    ResourceLocation magneticCraftingTopTex = modLoc("block/magnetic_crafting_table_top");
     
     ResourceLocation machineTop = modLoc("block/machine/machine");
     ResourceLocation machineBottom = modLoc("block/machine/machine_bottom");
@@ -134,6 +135,15 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 Direction.NORTH, Direction.SOUTH
         );
         airlockGeneratedBlock(HpCBlocks.AIRLOCK_GENERATED_BLOCK, buildingBlockBlackTex);
+
+        customFacesBlock(HpCBlocks.MAGNETIC_CRAFTING_TABLE.get(),
+                mcLoc("block/crafting_table_side"), 
+                Map.of(
+                        Direction.UP, magneticCraftingTopTex,
+                        Direction.DOWN, mcLoc("block/oak_planks"),
+                        Direction.NORTH, mcLoc("block/crafting_table_front")
+                )
+        );
         //endregion
 
         //region Machines
@@ -294,6 +304,31 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     }
     private void blockItem(DeferredBlock<?> deferredBlock, String appendix){
         simpleBlockItem(deferredBlock.get(), new ModelFile.UncheckedModelFile(HeliopauseCore.MOD_ID + ":block/" + deferredBlock.getId().getPath() + appendix));
+    }
+
+    public void customFacesBlock(Block block, ResourceLocation defaultTexture, Map<Direction, ResourceLocation> overrides) {
+        String name = BuiltInRegistries.BLOCK.getKey(block).getPath();
+
+        BlockModelBuilder model = models().withExistingParent(name, "minecraft:block/cube");
+        
+        model.texture("north", overrides.getOrDefault(Direction.NORTH, defaultTexture));
+        model.texture("south", overrides.getOrDefault(Direction.SOUTH, defaultTexture));
+        model.texture("up", overrides.getOrDefault(Direction.UP, defaultTexture));
+        model.texture("down", overrides.getOrDefault(Direction.DOWN, defaultTexture));
+        model.texture("east", overrides.getOrDefault(Direction.EAST, defaultTexture));
+        model.texture("west", overrides.getOrDefault(Direction.WEST, defaultTexture));
+        
+        model.texture("particle", overrides.getOrDefault(Direction.UP, defaultTexture));
+        simpleBlock(block, model);
+        
+        itemModels().getBuilder(name)
+                .parent(new ModelFile.UncheckedModelFile(modLoc("block/" + name)))
+                .transforms()
+                .transform(ItemDisplayContext.GUI)
+                .rotation(30, 135, 0)
+                .scale(0.625f)
+                .end()
+                .end();
     }
 
     public void tintedOreBlock(Block block, ResourceLocation baseTexture, ResourceLocation overlayTexture) {

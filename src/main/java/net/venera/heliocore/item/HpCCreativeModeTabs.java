@@ -155,6 +155,7 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCBlocks.FLUID_TANK.get());
                         output.accept(HpCBlocks.COPPER_WIRE.get());
                         output.accept(HpCBlocks.FLUID_PIPE.get());
+                        output.accept(HpCBlocks.MAGNETIC_CRAFTING_TABLE.get());
                         output.accept(HpCBlocks.AIRLOCK_FRAME_BLOCK.get());
                         output.accept(HpCBlocks.AIRLOCK_FRAME_SWITCH_BLOCK.get());
                         output.accept(HpCBlocks.PRISMATIC_GLASS.get());

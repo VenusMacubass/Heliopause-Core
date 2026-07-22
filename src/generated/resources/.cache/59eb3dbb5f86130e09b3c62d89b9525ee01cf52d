@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-21T20:09:00.5253278	Loot Tables
+// 1.21.1	2026-07-22T12:31:16.6517439	Loot Tables
 21e562aa5bd307b899a46c53c00b09a6b8a687bb data/heliocore/loot_table/blocks/airlock_frame_switch_block.json
 ff4b0fd001180ba9d9b920b1e9c59581a4720d73 data/heliocore/loot_table/blocks/airlock_gate_frame.json
 4c6effb42af79317efc025b64a17716f1bcfaa42 data/heliocore/loot_table/blocks/aluminium_block.json
@@ -33,6 +33,7 @@ a33438df35a47f59e2bf8394e5cb8b48a96bacca data/heliocore/loot_table/blocks/gas_va
 c8cbd89d9cb2ec033847285a1a520cc836416cdc data/heliocore/loot_table/blocks/iridium_block.json
 2c61e64bfb6343cbfa7208480e673da26d733233 data/heliocore/loot_table/blocks/iridium_ore.json
 d73da6f9b5b36a1f6d6c4284b2a664070bac1342 data/heliocore/loot_table/blocks/launch_pad.json
+2b62ad648edb369a3ea44d12e9bd1620c9c529fc data/heliocore/loot_table/blocks/magnetic_crafting_table.json
 ec12e667029be52368e3cc00f2b13efcfeef27ed data/heliocore/loot_table/blocks/moon_aluminium_ore.json
 47f7c7bcdd634ae3df9199d4676d5799d05f3148 data/heliocore/loot_table/blocks/moon_cobblestone.json
 8f6206da8cc36ed0aecd2830f5acfe233fc0f90b data/heliocore/loot_table/blocks/moon_copper_ore.json

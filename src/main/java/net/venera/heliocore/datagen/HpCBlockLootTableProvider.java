@@ -79,6 +79,7 @@ public class HpCBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(HpCBlocks.COPPER_WIRE_BLOCK.get());
         dropSelf(HpCBlocks.AIRLOCK_FRAME_BLOCK.get());
         dropSelf(HpCBlocks.AIRLOCK_FRAME_SWITCH_BLOCK.get());
+        dropSelf(HpCBlocks.MAGNETIC_CRAFTING_TABLE.get());
 
         dropOther(HpCBlocks.MOON_ROCK.get(), HpCBlocks.MOON_COBBLESTONE.get());
         

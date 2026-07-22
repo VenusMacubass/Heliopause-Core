@@ -211,6 +211,9 @@ public class HpCBlocks {
     public static final DeferredBlock<Block> AIRLOCK_GENERATED_BLOCK = BLOCKS.register("airlock_generated_black",
             () -> new AirlockGeneratedBlock(BlockBehaviour.Properties.of().noLootTable().sound(SoundType.METAL).strength(-1.0F, 3600000.0F).noOcclusion()));
 
+    public static final DeferredBlock<Block> MAGNETIC_CRAFTING_TABLE = registerBlock("magnetic_crafting_table",
+            () -> new MagneticCraftingTableBlock(BlockBehaviour.Properties.of().sound(SoundType.METAL)));
+    
     public static final DeferredBlock<Block> PIZZA_BLOCK = registerBlock("pizza_block",
             () -> new PizzaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE)));
     

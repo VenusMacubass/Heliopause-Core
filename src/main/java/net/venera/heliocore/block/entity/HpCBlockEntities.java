@@ -102,6 +102,9 @@ public class HpCBlockEntities {
                                     5000, 50, 50),
                     HpCBlocks.DECONSTRUCTOR_BLOCK.get()).build(null));
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MagneticCraftingTableEntity>> MAGNETIC_CRAFTING_TABLE_ENTITY = BLOCK_ENTITIES.register("magnetic_crafting_table_entity",
+            ()-> BlockEntityType.Builder.of(MagneticCraftingTableEntity::new, HpCBlocks.MAGNETIC_CRAFTING_TABLE.get()).build(null));
+
 
     public static void register(IEventBus eventBus){
         BLOCK_ENTITIES.register(eventBus);

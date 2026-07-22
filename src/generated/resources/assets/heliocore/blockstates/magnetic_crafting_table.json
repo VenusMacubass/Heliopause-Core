@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "heliocore:block/magnetic_crafting_table"
+    }
+  }
+}

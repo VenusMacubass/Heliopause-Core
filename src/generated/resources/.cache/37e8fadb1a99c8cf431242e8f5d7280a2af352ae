@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-22T01:21:18.7578336	Block States: heliocore
+// 1.21.1	2026-07-22T12:31:16.6558944	Block States: heliocore
 d59962edbb614daa7605d955b287ee61773bd2a2 assets/heliocore/blockstates/airlock_frame_switch_block.json
 a23ba85944456dbe50bd58319b35ee6bd730f46f assets/heliocore/blockstates/airlock_gate_frame.json
 bdf870c7e5505d6271b1fd115489f88d5a3e3959 assets/heliocore/blockstates/airlock_generated_black.json
@@ -27,6 +27,7 @@ e79bd1b3ad1b5925fbd8fd5d3b1039c009ed71b1 assets/heliocore/blockstates/fuel_manag
 e93ba8a673452954b8dc4b6f557a7035a6f4ef71 assets/heliocore/blockstates/gas_vaporizer_block.json
 e919186787782fd40baf6453a96cf3e167a9f80a assets/heliocore/blockstates/iridium_block.json
 59657644da111b4410871e9832e69082bb506b9d assets/heliocore/blockstates/iridium_ore.json
+875330e3c813084acc24f29df6b9ec6663820aa4 assets/heliocore/blockstates/magnetic_crafting_table.json
 7cbeaff592012fa9728e7f8382a5877d6faac73d assets/heliocore/blockstates/moon_aluminium_ore.json
 faeff39040cf8ef3db52efd77679fe517f904cda assets/heliocore/blockstates/moon_cobblestone.json
 6e44ac62fcfe4ff508bcd933a316775840cbacf9 assets/heliocore/blockstates/moon_copper_ore.json
@@ -129,6 +130,7 @@ ab51f77994bc132c57bd378e3210ca8e32fdfe92 assets/heliocore/models/block/energy_st
 95339e79c4212e6105c67c3149786d7e5051228b assets/heliocore/models/block/gas_vaporizer_block.json
 5c1eeae7f196c849d770368f794020903ff8fd72 assets/heliocore/models/block/iridium_block.json
 c31b8a14e5f417ec7446dbe093a142c68f04d7e4 assets/heliocore/models/block/iridium_ore.json
+6542ddff0f9cd3aba62fb3d141ef7582327c48c3 assets/heliocore/models/block/magnetic_crafting_table.json
 014b83b26192a0cd758c8c22bdbc0e0cee713f90 assets/heliocore/models/block/moon_aluminium_ore.json
 7847c016038b064343c859d5eeef8e0290f99cce assets/heliocore/models/block/moon_cobblestone.json
 05c8c1d20b536c50cb72bc2ae9357b4e9fd9b16c assets/heliocore/models/block/moon_copper_ore.json
@@ -199,6 +201,7 @@ f71b167981477e127f6c85b5f2c2c46eb02c00b9 assets/heliocore/models/item/energy_sto
 4067346f1ecb9c07014752fdc6197064c225b81a assets/heliocore/models/item/gas_vaporizer_block.json
 8dbbfd8aa50496da60dfce394bb81cbc05f98f6c assets/heliocore/models/item/iridium_block.json
 ac0f617d9ed7f1584c670f5d3d8c87f97ebb2a32 assets/heliocore/models/item/iridium_ore.json
+cd2052b5996c758b92f287025d051e48939b9ae7 assets/heliocore/models/item/magnetic_crafting_table.json
 89f2c09e18b1e972eac5711756f3897519058c96 assets/heliocore/models/item/moon_aluminium_ore.json
 54ab18e63a59946e7571e73f8f9c7e6bd71a06a9 assets/heliocore/models/item/moon_cobblestone.json
 abceae37ff5cc2ed5fd33f5df646b0938fefbc2a assets/heliocore/models/item/moon_copper_ore.json
