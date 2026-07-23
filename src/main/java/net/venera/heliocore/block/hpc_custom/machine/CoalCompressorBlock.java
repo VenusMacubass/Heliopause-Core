@@ -54,6 +54,6 @@ public class CoalCompressorBlock extends BaseMachineBlock<CoalCompressorEntity> 
         }
 
         return createTickerHelper(blockEntityType, HpCBlockEntities.COAL_COMPRESSOR_ENTITY.get(),
-                (level1, blockPos, blockState, blockEntity) -> blockEntity.tick(level1, blockPos, blockState, blockEntity));
+                (level1, blockPos, blockState, blockEntity) -> blockEntity.tick(level1));
     }
 }

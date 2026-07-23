@@ -40,7 +40,7 @@ public class CoalCompressorEntity extends BaseMachineEntity{
     private final int FUEL_SLOT = 9;
     private final int OUTPUT_SLOT = 10;
     private int progress = 0;
-    private int maxProgress = 200;
+    private int maxProgress = 400;
     public int burnTime = 0;
     public int maxBurnTime;
     public boolean isActive = false;
@@ -85,7 +85,7 @@ public class CoalCompressorEntity extends BaseMachineEntity{
         };
     }
 
-    public void tick(Level level, BlockPos pos, BlockState state, CoalCompressorEntity entity) {
+    public void tick(Level level) {
         if (level.isClientSide()) return;
         
         RecipeHolder<CoalCompressorRecipe> compRecipe = getCompressorRecipe();

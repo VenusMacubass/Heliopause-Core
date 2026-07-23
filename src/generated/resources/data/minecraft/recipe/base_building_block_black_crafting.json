@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "S": {
+      "tag": "heliocore:stone_variants"
+    },
+    "T": {
+      "item": "heliocore:compressed_tin"
+    }
+  },
+  "pattern": [
+    "SS ",
+    "SS ",
+    " T "
+  ],
+  "result": {
+    "count": 4,
+    "id": "heliocore:base_building_block_black"
+  }
+}

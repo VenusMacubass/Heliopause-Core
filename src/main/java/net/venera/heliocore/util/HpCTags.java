@@ -29,6 +29,8 @@ public class HpCTags {
                 ResourceLocation.fromNamespaceAndPath("curios", "oxygen_tank_2")
         );
 
+        public static final TagKey<Item> STONES = createTag("stone_variants");
+
         private static TagKey<Item> createTag(String name){
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, name));
         }
@@ -42,6 +44,7 @@ public class HpCTags {
         public static final TagKey<Block> MOON_REGOLITH_REPLACEABLES = createTag("moon_regolith_replaceables");
         public static final TagKey<Block> MOON_DIRT_REPLACEABLES = createTag("moon_dirt_replaceables");
         public static final TagKey<Block> MOON_STONE_REPLACEABLES = createTag("moon_stone_replaceables");
+        
         
         public static final TagKey<Block> RADIOACTIVE = createTag("radioactive");
 

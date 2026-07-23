@@ -2,12 +2,12 @@
   "type": "heliocore:coal_compressor",
   "category": "misc",
   "key": {
-    "A": {
+    "I": {
       "item": "heliocore:iridium_ingot"
     }
   },
   "pattern": [
-    "A"
+    "I"
   ],
   "result": {
     "count": 1,

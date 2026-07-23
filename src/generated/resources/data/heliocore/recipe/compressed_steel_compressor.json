@@ -1,0 +1,21 @@
+{
+  "type": "heliocore:coal_compressor",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:coal"
+    },
+    "I": {
+      "item": "heliocore:compressed_iron"
+    }
+  },
+  "pattern": [
+    "C  ",
+    "I  ",
+    "C  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:compressed_steel"
+  }
+}

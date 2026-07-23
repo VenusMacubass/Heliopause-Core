@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "C": {
+      "item": "heliocore:compressed_iron"
+    },
+    "I": {
+      "item": "minecraft:iron_block"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "III"
+  ],
+  "result": {
+    "count": 9,
+    "id": "heliocore:launch_pad"
+  }
+}

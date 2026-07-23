@@ -6,8 +6,10 @@ import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.venera.heliocore.HeliopauseCore;
+import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.util.HpCTags;
 import org.jetbrains.annotations.Nullable;
@@ -58,5 +60,16 @@ public class HpCItemTagProvider extends ItemTagsProvider {
         tag(CURIOS_OXYGEN_CONNECTORS).add(HpCItems.OXYGEN_CONNECTORS.get());
         tag(CURIOS_OXYGEN_TANK_1).add(HpCItems.COMPRESSED_GAS_TANK.get());
         tag(CURIOS_OXYGEN_TANK_2).add(HpCItems.COMPRESSED_GAS_TANK.get());
+
+        tag(HpCTags.Items.STONES)
+                .add(Blocks.STONE.asItem())
+                .add(Blocks.SMOOTH_STONE.asItem())
+                .add(Blocks.ANDESITE.asItem())
+                .add(Blocks.DIORITE.asItem())
+                .add(Blocks.GRANITE.asItem())
+                .add(Blocks.DEEPSLATE.asItem())
+                .add(Blocks.BASALT.asItem())
+                .add(Blocks.SANDSTONE.asItem())
+                .add(HpCBlocks.MOON_ROCK.get().asItem());
     }
 }

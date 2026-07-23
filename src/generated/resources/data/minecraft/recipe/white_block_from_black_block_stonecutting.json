@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "heliocore:base_building_block_black"
+  },
+  "result": {
+    "count": 1,
+    "id": "heliocore:base_building_block_white"
+  }
+}

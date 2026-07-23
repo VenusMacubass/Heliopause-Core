@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-22T16:38:50.5129671	Block States: heliocore
+// 1.21.1	2026-07-23T17:40:34.9982224	Block States: heliocore
 d59962edbb614daa7605d955b287ee61773bd2a2 assets/heliocore/blockstates/airlock_frame_switch_block.json
 a23ba85944456dbe50bd58319b35ee6bd730f46f assets/heliocore/blockstates/airlock_gate_frame.json
 bdf870c7e5505d6271b1fd115489f88d5a3e3959 assets/heliocore/blockstates/airlock_generated_black.json
@@ -132,7 +132,7 @@ ab51f77994bc132c57bd378e3210ca8e32fdfe92 assets/heliocore/models/block/energy_st
 95339e79c4212e6105c67c3149786d7e5051228b assets/heliocore/models/block/gas_vaporizer_block.json
 5c1eeae7f196c849d770368f794020903ff8fd72 assets/heliocore/models/block/iridium_block.json
 c31b8a14e5f417ec7446dbe093a142c68f04d7e4 assets/heliocore/models/block/iridium_ore.json
-6542ddff0f9cd3aba62fb3d141ef7582327c48c3 assets/heliocore/models/block/magnetic_crafting_table.json
+580f629ecb1784de9ee49de0f86cde3d4b6d5e78 assets/heliocore/models/block/magnetic_crafting_table.json
 014b83b26192a0cd758c8c22bdbc0e0cee713f90 assets/heliocore/models/block/moon_aluminium_ore.json
 7847c016038b064343c859d5eeef8e0290f99cce assets/heliocore/models/block/moon_cobblestone.json
 05c8c1d20b536c50cb72bc2ae9357b4e9fd9b16c assets/heliocore/models/block/moon_copper_ore.json

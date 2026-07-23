@@ -3,6 +3,7 @@ package net.venera.heliocore.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.venera.heliocore.HeliopauseCore;
@@ -88,8 +89,7 @@ public class HpCBlockTagProvider extends BlockTagsProvider {
         
         tag(HpCTags.Blocks.MOON_DIRT_REPLACEABLES).add(HpCBlocks.MOON_DIRT.get());
         
-        tag(HpCTags.Blocks.MOON_STONE_REPLACEABLES)
-                .add(HpCBlocks.MOON_ROCK.get());
+        tag(HpCTags.Blocks.MOON_STONE_REPLACEABLES).add(HpCBlocks.MOON_ROCK.get());
         
         
         

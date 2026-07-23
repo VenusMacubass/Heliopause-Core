@@ -12,6 +12,9 @@ import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.item.HpCItems;
+import net.venera.heliocore.recipe.CoalCompressorRecipeBuilder;
+import net.venera.heliocore.util.HpCTags;
+
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -24,7 +27,6 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
     protected void buildRecipes(RecipeOutput recipeOutput) {
         List<ItemLike> ALUMINIUM_SMELTABLES = List.of(HpCBlocks.ALUMINIUM_ORE, HpCItems.RAW_ALUMINIUM);
         List<ItemLike> TIN_SMELTABLES = List.of(HpCBlocks.TIN_ORE, HpCItems.RAW_TIN);
-        List<ItemLike> STONES = List.of(HpCBlocks.MOON_ROCK, Blocks.BEDROCK, Blocks.STONE, Blocks.DEEPSLATE, Blocks.ANDESITE, Blocks.DIORITE);
 
         //region Metals
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.TIN_INGOT.get(), 9)
@@ -113,6 +115,10 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('T', HpCItems.TIN_INGOT.get())
                 .unlockedBy("has_tin_ingot", has(HpCItems.TIN_INGOT.get()))
                 .save(recipeOutput, "tin_canister_crafting");
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.HYDROCARBONS.get(), 3)
+                .requires(Items.COAL, 1)
+                .unlockedBy("has_coal", has(Items.COAL))
+                .save(recipeOutput, "hydrocarbons_from_coal_crafting");
         //endregion
 
         //region Tools
@@ -308,6 +314,14 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('B', HpCBlocks.BASE_BUILDING_BLACK_BLOCK.get())
                 .unlockedBy("has_fluid_pipe", has(HpCBlocks.FLUID_PIPE.get()))
                 .save(recipeOutput, "fluid_pipe_block_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.LAUNCH_PAD.get(), 9)
+                .pattern("CCC")
+                .pattern("III")
+                .define('C', HpCItems.COMPRESSED_IRON.get())
+                .define('I', Blocks.IRON_BLOCK)
+                .unlockedBy("has_compressed_iron", has(HpCItems.COMPRESSED_IRON.get()))
+                .save(recipeOutput, "launch_pad_crafting");
         //endregion
 
         //region Building Blocks
@@ -318,15 +332,22 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('T', HpCItems.TEKTITES.get())
                 .unlockedBy("has_tektites", has(HpCItems.TEKTITES.get()))
                 .save(recipeOutput, "prismatic_glass_from_tekties_4_crafting");
-        
-//        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.BASE_BUILDING_WHITE_BLOCK.get())
-//                .pattern("SS ")
-//                .pattern("SS ")
-//                .pattern(" T ")
-//                .define('T', HpCItems.COMPRESSED_TIN.get())
-//                .define('S', Ingredient.of(STONES))
-//                .unlockedBy("has_compressed_tin", has(HpCItems.COMPRESSED_TIN.get()))
-//                .save(recipeOutput, "tin_building_block_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.BASE_BUILDING_BLACK_BLOCK.get(), 4)
+                .pattern("SS ")
+                .pattern("SS ")
+                .pattern(" T ")
+                .define('T', HpCItems.COMPRESSED_TIN.get())
+                .define('S', HpCTags.Items.STONES)
+                .unlockedBy("has_compressed_tin", has(HpCItems.COMPRESSED_TIN.get()))
+                .save(recipeOutput, "base_building_block_black_crafting");
+
+        SingleItemRecipeBuilder.stonecutting(
+                        Ingredient.of(HpCBlocks.BASE_BUILDING_BLACK_BLOCK.get()), //Input
+                        RecipeCategory.BUILDING_BLOCKS,
+                        HpCBlocks.BASE_BUILDING_WHITE_BLOCK.get() //Output
+                ).unlockedBy("has_black_block", has(HpCBlocks.BASE_BUILDING_BLACK_BLOCK.get()))
+                .save(recipeOutput, "white_block_from_black_block_stonecutting");
         //Walls
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.BASE_BUILDING_WALL_WHITE.get(), 6)
                 .pattern("TTT")
@@ -405,6 +426,61 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('L', HpCBlocks.MOON_DUNGEON_BRICKS.get())
                 .unlockedBy("has_moon_dungeon_bricks", has(HpCBlocks.MOON_DUNGEON_BRICKS.get()))
                 .save(recipeOutput, "moon_dungeon_brick_slab_crafting");
+        //endregion
+        
+        //region Compressors
+        CoalCompressorRecipeBuilder.compress(RecipeCategory.MISC, HpCItems.COMPRESSED_COPPER.get())
+                .pattern("C  ")
+                .pattern("C  ")
+                .define('C', Items.COPPER_INGOT)
+                .unlockedBy("has_copper", has(Items.COPPER_INGOT))
+                .save(recipeOutput, HeliopauseCore.MOD_ID + ":compressed_copper_compressor");
+        CoalCompressorRecipeBuilder.compress(RecipeCategory.MISC, HpCItems.COMPRESSED_TIN.get())
+                .pattern("T  ")
+                .pattern("T  ")
+                .define('T', HpCItems.TIN_INGOT.get())
+                .unlockedBy("has_tin", has(HpCItems.TIN_INGOT.get()))
+                .save(recipeOutput, HeliopauseCore.MOD_ID + ":compressed_tin_compressor");
+        CoalCompressorRecipeBuilder.compress(RecipeCategory.MISC, HpCItems.COMPRESSED_BRONZE.get())
+                .pattern("CT  ")
+                .define('C', HpCItems.COMPRESSED_COPPER.get())
+                .define('T', HpCItems.COMPRESSED_TIN.get())
+                .unlockedBy("has_compressed_tin", has(HpCItems.COMPRESSED_TIN.get()))
+                .save(recipeOutput, HeliopauseCore.MOD_ID + ":compressed_bronze_compressor");
+        CoalCompressorRecipeBuilder.compress(RecipeCategory.MISC, HpCItems.COMPRESSED_IRON.get())
+                .pattern("I  ")
+                .pattern("I  ")
+                .define('I', Items.IRON_INGOT)
+                .unlockedBy("has_iron", has(Items.IRON_INGOT))
+                .save(recipeOutput, HeliopauseCore.MOD_ID + ":compressed_iron_compressor");
+        CoalCompressorRecipeBuilder.compress(RecipeCategory.MISC, HpCItems.COMPRESSED_ALUMINIUM.get())
+                .pattern("A  ")
+                .pattern("A  ")
+                .define('A', HpCItems.ALUMINIUM_INGOT.get())
+                .unlockedBy("has_aluminium", has(HpCItems.ALUMINIUM_INGOT.get()))
+                .save(recipeOutput, HeliopauseCore.MOD_ID + ":compressed_aluminium_compressor");
+        CoalCompressorRecipeBuilder.compress(RecipeCategory.MISC, HpCItems.COMPRESSED_STEEL.get())
+                .pattern("C  ")
+                .pattern("I  ")
+                .pattern("C  ")
+                .define('C', Items.COAL)
+                .define('I', HpCItems.COMPRESSED_IRON.get())
+                .unlockedBy("has_compressed_iron", has(HpCItems.COMPRESSED_IRON.get()))
+                .save(recipeOutput, HeliopauseCore.MOD_ID + ":compressed_steel_compressor");
+        CoalCompressorRecipeBuilder.compress(RecipeCategory.MISC, HpCItems.COMPRESSED_HD_PLATE.get())
+                .pattern("SAB")
+                .pattern("SAB")
+                .define('S', HpCItems.COMPRESSED_STEEL.get())
+                .define('A', HpCItems.COMPRESSED_ALUMINIUM.get())
+                .define('B', HpCItems.COMPRESSED_BRONZE.get())
+                .unlockedBy("has_bronze", has(HpCItems.COMPRESSED_BRONZE.get()))
+                .save(recipeOutput, HeliopauseCore.MOD_ID + ":compressed_hd_plate_compressor");
+        CoalCompressorRecipeBuilder.compress(RecipeCategory.MISC, HpCItems.COMPRESSED_IRIDIUM.get())
+                .pattern("I")
+                .define('I', HpCItems.IRIDIUM_INGOT.get())
+                .unlockedBy("has_iridium", has(HpCItems.IRIDIUM_INGOT.get()))
+                .save(recipeOutput, HeliopauseCore.MOD_ID + ":compressed_iridium_compressor");
+        
         //endregion
 
 
