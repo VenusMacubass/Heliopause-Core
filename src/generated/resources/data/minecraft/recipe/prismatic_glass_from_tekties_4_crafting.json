@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "T": {
+      "item": "heliocore:tektites"
+    }
+  },
+  "pattern": [
+    " TT",
+    " TT",
+    "   "
+  ],
+  "result": {
+    "count": 2,
+    "id": "heliocore:prismatic_glass"
+  }
+}

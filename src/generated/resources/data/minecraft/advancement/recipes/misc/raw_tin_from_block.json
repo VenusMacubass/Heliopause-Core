@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_glowstone": {
+    "has_raw_tin_block": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:glowstone"
+            "items": "heliocore:raw_tin_block"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:arc_lamp_crafting"
+        "recipe": "minecraft:raw_tin_from_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_glowstone"
+      "has_raw_tin_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:arc_lamp_crafting"
+      "minecraft:raw_tin_from_block"
     ]
   }
 }

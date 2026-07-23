@@ -3,19 +3,19 @@
   "category": "equipment",
   "key": {
     "C": {
-      "item": "heliocore:compressed_steel"
+      "item": "minecraft:glass"
     },
     "S": {
       "tag": "c:rods/wooden"
     }
   },
   "pattern": [
-    "CCC",
-    " S ",
+    " C ",
+    " C ",
     " S "
   ],
   "result": {
     "count": 1,
-    "id": "heliocore:steel_pickaxe"
+    "id": "heliocore:glass_sword"
   }
 }

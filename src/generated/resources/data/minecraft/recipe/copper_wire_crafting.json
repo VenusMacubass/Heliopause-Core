@@ -2,23 +2,20 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "G": {
-      "item": "minecraft:glowstone_dust"
+    "C": {
+      "item": "minecraft:copper_ingot"
     },
-    "R": {
-      "item": "minecraft:redstone_block"
-    },
-    "S": {
-      "item": "heliocore:compressed_steel"
+    "P": {
+      "item": "heliocore:hydrocarbons"
     }
   },
   "pattern": [
-    "SGS",
-    "GRG",
-    "SGS"
+    "PPP",
+    "CCC",
+    "PPP"
   ],
   "result": {
-    "count": 1,
+    "count": 6,
     "id": "heliocore:copper_wire"
   }
 }

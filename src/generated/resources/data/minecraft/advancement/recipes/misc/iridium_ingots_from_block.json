@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_compressed_tin": {
+    "has_iridium_block": {
       "conditions": {
         "items": [
           {
-            "items": "heliocore:compressed_tin"
+            "items": "heliocore:iridium_block"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:tin_building_block_crafting"
+        "recipe": "minecraft:iridium_ingots_from_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_compressed_tin"
+      "has_iridium_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:tin_building_block_crafting"
+      "minecraft:iridium_ingots_from_block"
     ]
   }
 }

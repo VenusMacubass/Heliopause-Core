@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_iridium_block": {
+    "has_compressed_steel": {
       "conditions": {
         "items": [
           {
-            "items": "heliocore:iridium_block"
+            "items": "heliocore:compressed_steel"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:iridium_ingots_from_iridium_block"
+        "recipe": "minecraft:glass_sword_crafting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_iridium_block"
+      "has_compressed_steel"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:iridium_ingots_from_iridium_block"
+      "minecraft:glass_sword_crafting"
     ]
   }
 }

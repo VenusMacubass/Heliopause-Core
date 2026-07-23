@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "T": {
+      "item": "heliocore:base_building_block_black"
+    }
+  },
+  "pattern": [
+    "TTT",
+    "TTT"
+  ],
+  "result": {
+    "count": 6,
+    "id": "heliocore:base_building_wall_black"
+  }
+}

@@ -142,6 +142,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 Map.of(
                         Direction.UP, magneticCraftingTopTex,
                         Direction.DOWN, mcLoc("block/oak_planks"),
+                        Direction.WEST, mcLoc("block/crafting_table_front"),
                         Direction.NORTH, mcLoc("block/crafting_table_front")
                 )
         );

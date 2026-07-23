@@ -6,12 +6,12 @@
       "item": "heliocore:compressed_steel"
     },
     "S": {
-      "item": "minecraft:stick"
+      "tag": "c:rods/wooden"
     }
   },
   "pattern": [
     " C ",
-    " S ",
+    " C ",
     " S "
   ],
   "result": {

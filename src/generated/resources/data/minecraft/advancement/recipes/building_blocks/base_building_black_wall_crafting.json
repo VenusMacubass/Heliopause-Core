@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_compressed_iron": {
+    "has_base_building_block": {
       "conditions": {
         "items": [
           {
-            "items": "heliocore:compressed_iron"
+            "items": "heliocore:base_building_block_black"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:magnetic_crafting_table_from_crafting"
+        "recipe": "minecraft:base_building_black_wall_crafting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_compressed_iron"
+      "has_base_building_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:magnetic_crafting_table_from_crafting"
+      "minecraft:base_building_black_wall_crafting"
     ]
   }
 }
