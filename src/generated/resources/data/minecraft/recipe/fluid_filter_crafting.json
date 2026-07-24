@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": {
+      "item": "heliocore:compressed_steel"
+    },
+    "T": {
+      "item": "heliocore:compressed_tin"
+    }
+  },
+  "pattern": [
+    "TT",
+    "TS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:fluid_filter"
+  }
+}

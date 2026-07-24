@@ -3,7 +3,6 @@
     "minecraft:player"
   ],
   "slots": [
-    "gauntlets",
     "oxygen_mask",
     "oxygen_connectors",
     "oxygen_tank_1",

@@ -1,6 +1,8 @@
-// 1.21.1	2026-07-22T21:18:58.7524943	Item Models: heliocore
+// 1.21.1	2026-07-24T15:38:12.4262341	Item Models: heliocore
+1ac96947d6d705457f38d0a1fa68a0dcb74bc592 assets/heliocore/models/item/air_fan.json
 0734313d99e1a4ca395735a0943619e787dd452a assets/heliocore/models/item/base_building_wall_black.json
 77313ec5bf2583da66c950d2ae65ff21c6eb341c assets/heliocore/models/item/base_building_wall_white.json
+c6829bb222dde1c8025676c0f19e9914d2d2b24b assets/heliocore/models/item/basic_circuit_board.json
 62c01033a4c1f12560cd7e8e0deda9ef61f67c70 assets/heliocore/models/item/cheese_slice.json
 8cc483167b9451eb7ae0dd7530e83781ecfa22ab assets/heliocore/models/item/compressed_bronze.json
 0af2591c590f42947c6a487a09f4041de52d7575 assets/heliocore/models/item/compressed_copper.json
@@ -17,6 +19,9 @@ d69ce434ef98748f62f4e1d6ebdf9fe9297e27a1 assets/heliocore/models/item/dehydrated
 bab023cceeedf9effb921268cd18de4d22505d00 assets/heliocore/models/item/dehydrated_glow_berries.json
 083fb4f648b0fc8236b43a962ef2fe5291fdccd8 assets/heliocore/models/item/dehydrated_potato.json
 7b6cde9a11c9f7411212fcf43535c596375571fd assets/heliocore/models/item/dehydrated_rabbit.json
+7582407395437a5eaae8f7742f4d909ad6459bef assets/heliocore/models/item/electromagnetic_sensors.json
+9732a5109bc554d824f368b3f3aeb9daaae6a205 assets/heliocore/models/item/fluid_filter.json
+a5d460edca37824a4e26dc7a6edeeea70b8dcbec assets/heliocore/models/item/gas_regulator.json
 1f5f611f28b823a9553c4a282c0690eb16df8ea1 assets/heliocore/models/item/glass_sword.json
 648416d890e1e258846806fa09a9afcab34f40ce assets/heliocore/models/item/hamburger.json
 d754b71e6180081a586fe7630dd92361e15d31f8 assets/heliocore/models/item/heavy_duty_plate.json

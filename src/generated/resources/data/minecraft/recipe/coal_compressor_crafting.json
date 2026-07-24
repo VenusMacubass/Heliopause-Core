@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "A": {
+      "item": "minecraft:anvil"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "X": {
+      "item": "heliocore:aluminium_ingot"
+    }
+  },
+  "pattern": [
+    "CXC",
+    "IFI",
+    "IAI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:coal_compressor"
+  }
+}

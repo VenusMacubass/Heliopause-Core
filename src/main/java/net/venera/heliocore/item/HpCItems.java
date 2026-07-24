@@ -87,6 +87,11 @@ public class HpCItems {
     public static final DeferredItem<GasTankItem> COMPRESSED_GAS_TANK = ITEMS.register("compressed_gas_tank", () -> new GasTankItem(new Item.Properties().component(
             HpCDataComponents.GAS_TANK_COMPONENT.get(), new GasTankData(null, 0)).stacksTo(1)));
     public static final DeferredItem<Item> HYDROCARBONS = ITEMS.register("hydrocarbons", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> AIR_FAN = ITEMS.register("air_fan", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> BASIC_CIRCUIT_BOARD = ITEMS.register("basic_circuit_board", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> ELECTROMAGNETIC_SENSORS = ITEMS.register("electromagnetic_sensors", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> FLUID_FILTER = ITEMS.register("fluid_filter", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> GAS_REGULATOR =  ITEMS.register("gas_regulator", () -> new Item(new Item.Properties()));
     //endregion
 
     //region Tools

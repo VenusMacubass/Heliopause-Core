@@ -10,9 +10,7 @@
     }
   },
   "pattern": [
-    "   ",
-    "WBW",
-    "   "
+    "WBW"
   ],
   "result": {
     "count": 1,

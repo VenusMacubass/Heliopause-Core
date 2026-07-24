@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "A": {
+      "item": "heliocore:compressed_aluminium"
+    },
+    "B": {
+      "item": "heliocore:small_battery"
+    },
+    "F": {
+      "item": "heliocore:fluid_tank"
+    },
+    "P": {
+      "item": "heliocore:fluid_pipe"
+    },
+    "S": {
+      "item": "heliocore:compressed_steel"
+    },
+    "W": {
+      "item": "heliocore:copper_wire"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "AFA",
+    "WBP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:fuel_manager_block"
+  }
+}

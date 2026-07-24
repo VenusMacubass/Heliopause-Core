@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_fluid_tank": {
+      "conditions": {
+        "items": [
+          {
+            "items": "heliocore:fluid_tank"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:gas_compressor_crafting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_fluid_tank"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:gas_compressor_crafting"
+    ]
+  }
+}

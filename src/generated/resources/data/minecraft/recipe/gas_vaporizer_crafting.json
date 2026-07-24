@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "A": {
+      "item": "heliocore:compressed_aluminium"
+    },
+    "G": {
+      "item": "heliocore:gas_regulator"
+    },
+    "P": {
+      "item": "heliocore:fluid_filter"
+    },
+    "S": {
+      "item": "heliocore:compressed_steel"
+    },
+    "T": {
+      "item": "heliocore:fluid_tank"
+    }
+  },
+  "pattern": [
+    "SPS",
+    "ATA",
+    "SGS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:gas_vaporizer_block"
+  }
+}

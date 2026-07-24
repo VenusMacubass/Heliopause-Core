@@ -10,9 +10,7 @@
     }
   },
   "pattern": [
-    "   ",
-    "PBP",
-    "   "
+    "PBP"
   ],
   "result": {
     "count": 1,

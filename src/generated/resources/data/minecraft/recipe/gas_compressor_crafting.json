@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "A": {
+      "item": "heliocore:compressed_aluminium"
+    },
+    "F": {
+      "item": "heliocore:air_fan"
+    },
+    "G": {
+      "item": "heliocore:gas_regulator"
+    },
+    "S": {
+      "item": "heliocore:compressed_steel"
+    },
+    "T": {
+      "item": "heliocore:fluid_tank"
+    }
+  },
+  "pattern": [
+    "SFS",
+    "ATA",
+    "SGS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:gas_compressor_block"
+  }
+}

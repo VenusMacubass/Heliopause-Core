@@ -14,10 +14,6 @@ public class HpCCuriosDataProvider extends CuriosDataProvider {
 
     @Override
     public void generate(HolderLookup.Provider registries, ExistingFileHelper fileHelper) {
-        this.createSlot("gauntlets")
-                .size(1)
-                .order(100);
-
         this.createSlot("oxygen_mask")
                 .size(1)
                 .order(200);
@@ -53,7 +49,7 @@ public class HpCCuriosDataProvider extends CuriosDataProvider {
         
         this.createEntities("player")
                 .addPlayer()
-                .addSlots("gauntlets", "oxygen_mask", "oxygen_connectors", 
+                .addSlots("oxygen_mask", "oxygen_connectors", 
                           "oxygen_tank_1", "oxygen_tank_2", "head_gear", 
                           "body_gear", "legs_gear", "hands_and_feet_gear");
         

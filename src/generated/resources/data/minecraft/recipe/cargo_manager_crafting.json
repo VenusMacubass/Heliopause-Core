@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "A": {
+      "item": "heliocore:compressed_aluminium"
+    },
+    "C": {
+      "item": "minecraft:chest"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    },
+    "S": {
+      "item": "heliocore:compressed_steel"
+    },
+    "W": {
+      "item": "heliocore:copper_wire"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "ACA",
+    "WHW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:cargo_manager_block"
+  }
+}

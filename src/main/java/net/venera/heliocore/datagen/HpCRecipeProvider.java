@@ -99,7 +99,20 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_raw_aluminium", has(HpCItems.RAW_ALUMINIUM.get()))
                 .save(recipeOutput, "raw_aluminium_block_crafting");
         //endregion
-
+        
+        //region Smelting and Blasting
+        oreSmelting(recipeOutput, TIN_SMELTABLES, RecipeCategory.MISC, HpCItems.TIN_INGOT.get(),0.5f, 400, "tin_ingot");
+        oreBlasting(recipeOutput, TIN_SMELTABLES, RecipeCategory.MISC, HpCItems.TIN_INGOT.get(),0.5f, 200, "tin_ingot");
+        oreSmelting(recipeOutput, ALUMINIUM_SMELTABLES, RecipeCategory.MISC, HpCItems.ALUMINIUM_INGOT.get(),0.7f, 400, "aluminium_ingot");
+        oreBlasting(recipeOutput, ALUMINIUM_SMELTABLES, RecipeCategory.MISC, HpCItems.ALUMINIUM_INGOT.get(),0.7f, 200, "aluminium_ingot");
+        oreSmelting(recipeOutput, HpCBlocks.IRIDIUM_ORE, RecipeCategory.MISC, HpCItems.IRIDIUM_INGOT.get(),1.8f, 400, "iridium_ingot");
+        oreBlasting(recipeOutput, HpCBlocks.IRIDIUM_ORE, RecipeCategory.MISC, HpCItems.IRIDIUM_INGOT.get(),1.8f, 200, "iridium_ingot");
+        oreSmelting(recipeOutput, HpCBlocks.MOON_TEKTITES_REGOLITH, RecipeCategory.MISC, HpCItems.TEKTITES.get(),2.5f, 400, "regolith_tektite_shards");
+        oreBlasting(recipeOutput, HpCBlocks.MOON_TEKTITES_REGOLITH, RecipeCategory.MISC, HpCItems.TEKTITES.get(),2.5f, 200, "regolith_tektite_shards");
+        oreSmelting(recipeOutput, HpCBlocks.MOON_TEKTITES, RecipeCategory.MISC, HpCItems.TEKTITES.get(),2.5f, 400, "tektite_shards");
+        oreBlasting(recipeOutput, HpCBlocks.MOON_TEKTITES, RecipeCategory.MISC, HpCItems.TEKTITES.get(),2.5f, 200, "tektite_shards");
+        //endregion
+        
         //region Ingredients
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCItems.COPPER_CANISTER.get(), 2)
                 .pattern("C C")
@@ -108,6 +121,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('C', Items.COPPER_INGOT)
                 .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
                 .save(recipeOutput, "copper_canister_crafting");
+        
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCItems.TIN_CANISTER.get(), 2)
                 .pattern("T T")
                 .pattern("T T")
@@ -115,10 +129,188 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('T', HpCItems.TIN_INGOT.get())
                 .unlockedBy("has_tin_ingot", has(HpCItems.TIN_INGOT.get()))
                 .save(recipeOutput, "tin_canister_crafting");
+        
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.HYDROCARBONS.get(), 3)
                 .requires(Items.COAL, 1)
                 .unlockedBy("has_coal", has(Items.COAL))
                 .save(recipeOutput, "hydrocarbons_from_coal_crafting");
+        
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCItems.AIR_FAN.get())
+                .pattern("I I")
+                .pattern(" S ")
+                .pattern("IRI")
+                .define('I', HpCItems.COMPRESSED_IRON.get())
+                .define('R', Items.REDSTONE)
+                .define('S', HpCItems.COMPRESSED_STEEL.get())
+                .unlockedBy("has_steel", has(HpCItems.COMPRESSED_STEEL.get()))
+                .save(recipeOutput, "air_fan_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCItems.FLUID_FILTER.get())
+                .pattern("TT")
+                .pattern("TS")
+                .define('T', HpCItems.COMPRESSED_TIN.get())
+                .define('S', HpCItems.COMPRESSED_STEEL.get())
+                .unlockedBy("has_steel", has(HpCItems.COMPRESSED_STEEL.get()))
+                .save(recipeOutput, "fluid_filter_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCItems.GAS_REGULATOR.get())
+                .pattern("STS")
+                .pattern("TCT")
+                .pattern("SFS")
+                .define('T', HpCItems.COMPRESSED_TIN.get())
+                .define('C', HpCItems.COPPER_CANISTER)
+                .define('S', HpCItems.COMPRESSED_STEEL.get())
+                .define('F', HpCItems.FLUID_FILTER.get())
+                .unlockedBy("has_fluid_filter", has(HpCItems.FLUID_FILTER.get()))
+                .save(recipeOutput, "gas_regulator_crafting");
+
+//        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCItems.ELECTROMAGNETIC_SENSORS.get())
+//                .pattern(" A ")
+//                .pattern("TS ")
+//                .pattern("TS ")
+//                .define('T', HpCItems.COMPRESSED_TIN.get())
+//                .define('S', HpCItems.COMPRESSED_STEEL.get())
+//                .unlockedBy("has_steel", has(HpCItems.COMPRESSED_STEEL.get()))
+//                .save(recipeOutput, "fluid_filter_crafting");
+        //endregion
+        
+        //region Machines
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCBlocks.COAL_COMPRESSOR.get())
+                .pattern("CXC")
+                .pattern("IFI")
+                .pattern("IAI")
+                .define('A', Items.ANVIL)
+                .define('C', Items.COPPER_INGOT)
+                .define('X', HpCItems.ALUMINIUM_INGOT.get())
+                .define('F', Items.FURNACE)
+                .define('I', Items.IRON_INGOT)
+                .unlockedBy("has_furnace", has(Items.FURNACE))
+                .save(recipeOutput, "coal_compressor_crafting");
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCBlocks.CARGO_MANAGER_BLOCK.get())
+                .pattern("SSS")
+                .pattern("ACA")
+                .pattern("WHW")
+                .define('A', HpCItems.COMPRESSED_ALUMINIUM.get())
+                .define('C', Items.CHEST)
+                .define('S', HpCItems.COMPRESSED_STEEL.get())
+                .define('W', HpCBlocks.COPPER_WIRE.get())
+                .define('H', Items.HOPPER)
+                .unlockedBy("has_chest", has(Items.CHEST))
+                .save(recipeOutput, "cargo_manager_crafting");
+        
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCBlocks.FUEL_MANAGER_BLOCK.get())
+                .pattern("SSS")
+                .pattern("AFA")
+                .pattern("WBP")
+                .define('A', HpCItems.COMPRESSED_ALUMINIUM.get())
+                .define('F', HpCBlocks.FLUID_TANK.get())
+                .define('S', HpCItems.COMPRESSED_STEEL.get())
+                .define('B', HpCItems.SMALL_BATTERY.get())
+                .define('W', HpCBlocks.COPPER_WIRE.get())
+                .define('P', HpCBlocks.FLUID_PIPE.get())
+                .unlockedBy("has_fluid_tank", has(HpCBlocks.FLUID_TANK.get()))
+                .save(recipeOutput, "fuel_manager_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCBlocks.GAS_COMPRESSOR_BLOCK.get())
+                .pattern("SFS")
+                .pattern("ATA")
+                .pattern("SGS")
+                .define('A', HpCItems.COMPRESSED_ALUMINIUM.get())
+                .define('T', HpCBlocks.FLUID_TANK.get())
+                .define('S', HpCItems.COMPRESSED_STEEL.get())
+                .define('G', HpCItems.GAS_REGULATOR.get())
+                .define('F', HpCItems.AIR_FAN.get())
+                .unlockedBy("has_fluid_tank", has(HpCBlocks.FLUID_TANK.get()))
+                .save(recipeOutput, "gas_compressor_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCBlocks.GAS_VAPORIZER_BLOCK.get())
+                .pattern("SPS")
+                .pattern("ATA")
+                .pattern("SGS")
+                .define('A', HpCItems.COMPRESSED_ALUMINIUM.get())
+                .define('T', HpCBlocks.FLUID_TANK.get())
+                .define('S', HpCItems.COMPRESSED_STEEL.get())
+                .define('G', HpCItems.GAS_REGULATOR.get())
+                .define('P', HpCItems.FLUID_FILTER.get())
+                .unlockedBy("has_fluid_tank", has(HpCBlocks.FLUID_TANK.get()))
+                .save(recipeOutput, "gas_vaporizer_crafting");
+        //endregion
+        
+        //region Low Functionality Items and Blocks
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, HpCBlocks.ARC_LAMP.get())
+                .pattern(" P ")
+                .pattern("HGH")
+                .pattern(" W ")
+                .define('H', HpCItems.HYDROCARBONS.get())
+                .define('P', Items.GLASS_PANE)
+                .define('G', Blocks.GLOWSTONE)
+                .define('W', HpCBlocks.COPPER_WIRE.get())
+                .unlockedBy("has_glowstone", has(Blocks.GLOWSTONE))
+                .save(recipeOutput, "arc_lamp_crafting");
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCBlocks.MAGNETIC_CRAFTING_TABLE.get(), 1)
+                .requires(HpCItems.COMPRESSED_IRON.get(), 1).requires(Items.CRAFTING_TABLE, 1)
+                .unlockedBy("has_compressed_iron", has(HpCItems.COMPRESSED_IRON.get()))
+                .save(recipeOutput, "magnetic_crafting_table_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.COPPER_WIRE.get(), 6)
+                .pattern("PPP")
+                .pattern("CCC")
+                .pattern("PPP")
+                .define('P', HpCItems.HYDROCARBONS.get())
+                .define('C', Items.COPPER_INGOT)
+                .unlockedBy("has_compressed_steel", has(HpCItems.COMPRESSED_STEEL.get()))
+                .save(recipeOutput, "copper_wire_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.FLUID_PIPE.get())
+                .pattern("GGG")
+                .pattern("   ")
+                .pattern("GGG")
+                .define('G', Items.GLASS_PANE)
+                .unlockedBy("has_glass_pane", has(Items.GLASS_PANE))
+                .save(recipeOutput, "fluid_pipe_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.COPPER_WIRE_BLOCK.get())
+                .pattern("WBW")
+                .define('W', HpCBlocks.COPPER_WIRE.get())
+                .define('B', HpCBlocks.BASE_BUILDING_BLACK_BLOCK.get())
+                .unlockedBy("has_wire", has(HpCBlocks.COPPER_WIRE.get()))
+                .save(recipeOutput, "copper_wire_block_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.FLUID_PIPE_BLOCK.get())
+                .pattern("PBP")
+                .define('P', HpCBlocks.FLUID_PIPE.get())
+                .define('B', HpCBlocks.BASE_BUILDING_BLACK_BLOCK.get())
+                .unlockedBy("has_fluid_pipe", has(HpCBlocks.FLUID_PIPE.get()))
+                .save(recipeOutput, "fluid_pipe_block_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.LAUNCH_PAD.get(), 9)
+                .pattern("CCC")
+                .pattern("III")
+                .define('C', HpCItems.COMPRESSED_IRON.get())
+                .define('I', Blocks.IRON_BLOCK)
+                .unlockedBy("has_compressed_iron", has(HpCItems.COMPRESSED_IRON.get()))
+                .save(recipeOutput, "launch_pad_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.AIRLOCK_FRAME_BLOCK.get(), 5)
+                .pattern("AAA")
+                .pattern("SGS")
+                .pattern("AAA")
+                .define('A', HpCItems.COMPRESSED_ALUMINIUM.get())
+                .define('S', HpCItems.COMPRESSED_STEEL.get())
+                .define('G', HpCItems.GAS_REGULATOR.get())
+                .unlockedBy("has_compressed_aluminium", has(HpCItems.COMPRESSED_ALUMINIUM.get()))
+                .save(recipeOutput, "airlock_frame_crafting");
+
+//        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.AIRLOCK_FRAME_SWITCH_BLOCK.get())
+//                .pattern("SSS")
+//                .pattern("IGI")
+//                .pattern("SSS")
+//                .define('A', HpCItems.COMPRESSED_ALUMINIUM.get())
+//                .define('S', HpCItems.COMPRESSED_STEEL.get())
+//                .define('G', HpCItems.GAS_REGULATOR.get())
+//                .unlockedBy("has_compressed_iron", has(HpCItems.COMPRESSED_IRON.get()))
+//                .save(recipeOutput, "airlock_switch_crafting");
         //endregion
 
         //region Tools
@@ -211,119 +403,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_bronze", has(HpCItems.COMPRESSED_BRONZE.get()))
                 .save(recipeOutput, "standard_wrench_crafting");
         //endregion
-
-        //region Foods
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HpCItems.DEHYDRATED_APPLE.get())
-                .pattern("CA ")
-                .pattern("A  ")
-                .define('C', HpCItems.TIN_CANISTER.get())
-                .define('A', Items.APPLE)
-                .unlockedBy("has_tin_canister", has(HpCItems.TIN_CANISTER.get()))
-                .save(recipeOutput, "dehydrated_apple_crafting");
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HpCItems.DEHYDRATED_POTATO.get())
-                .pattern("CP ")
-                .pattern("P  ")
-                .define('C', HpCItems.TIN_CANISTER.get())
-                .define('P', Items.POTATO)
-                .unlockedBy("has_tin_canister", has(HpCItems.TIN_CANISTER.get()))
-                .save(recipeOutput, "dehydrated_potato_crafting");
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HpCItems.DEHYDRATED_BEEF.get())
-                .pattern("CB ")
-                .pattern("B  ")
-                .pattern("   ")
-                .define('C', HpCItems.TIN_CANISTER.get())
-                .define('B', Items.BEEF)
-                .unlockedBy("has_tin_canister", has(HpCItems.TIN_CANISTER.get()))
-                .save(recipeOutput, "dehydrated_beef_crafting");
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HpCItems.HAMBURGER.get())
-                .pattern(" B ")
-                .pattern("CP ")
-                .pattern(" B ")
-                .define('C', HpCItems.CHEESE_SLICE.get())
-                .define('B', Items.BREAD)
-                .define('P', Items.COOKED_BEEF)
-                .unlockedBy("has_patty", has(Items.COOKED_BEEF))
-                .save(recipeOutput, "cheeseburger_crafting");
-
-        //endregion
         
-        //region Smelting and Blasting
-        oreSmelting(recipeOutput, TIN_SMELTABLES, RecipeCategory.MISC, HpCItems.TIN_INGOT.get(),0.5f, 400, "tin_ingot");
-        oreBlasting(recipeOutput, TIN_SMELTABLES, RecipeCategory.MISC, HpCItems.TIN_INGOT.get(),0.5f, 200, "tin_ingot");
-        oreSmelting(recipeOutput, ALUMINIUM_SMELTABLES, RecipeCategory.MISC, HpCItems.ALUMINIUM_INGOT.get(),0.7f, 400, "aluminium_ingot");
-        oreBlasting(recipeOutput, ALUMINIUM_SMELTABLES, RecipeCategory.MISC, HpCItems.ALUMINIUM_INGOT.get(),0.7f, 200, "aluminium_ingot");
-        oreSmelting(recipeOutput, HpCBlocks.IRIDIUM_ORE, RecipeCategory.MISC, HpCItems.IRIDIUM_INGOT.get(),1.8f, 400, "iridium_ingot");
-        oreBlasting(recipeOutput, HpCBlocks.IRIDIUM_ORE, RecipeCategory.MISC, HpCItems.IRIDIUM_INGOT.get(),1.8f, 200, "iridium_ingot");
-        oreSmelting(recipeOutput, HpCBlocks.MOON_TEKTITES_REGOLITH, RecipeCategory.MISC, HpCItems.TEKTITES.get(),2.5f, 400, "regolith_tektite_shards");
-        oreBlasting(recipeOutput, HpCBlocks.MOON_TEKTITES_REGOLITH, RecipeCategory.MISC, HpCItems.TEKTITES.get(),2.5f, 200, "regolith_tektite_shards");
-        oreSmelting(recipeOutput, HpCBlocks.MOON_TEKTITES, RecipeCategory.MISC, HpCItems.TEKTITES.get(),2.5f, 400, "tektite_shards");
-        oreBlasting(recipeOutput, HpCBlocks.MOON_TEKTITES, RecipeCategory.MISC, HpCItems.TEKTITES.get(),2.5f, 200, "tektite_shards");
-        //endregion
-        
-        //region Low Functionality Items and Blocks
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, HpCBlocks.ARC_LAMP.get())
-                .pattern(" P ")
-                .pattern("HGH")
-                .pattern(" W ")
-                .define('H', HpCItems.HYDROCARBONS.get())
-                .define('P', Items.GLASS_PANE)
-                .define('G', Blocks.GLOWSTONE)
-                .define('W', HpCBlocks.COPPER_WIRE.get())
-                .unlockedBy("has_glowstone", has(Blocks.GLOWSTONE))
-                .save(recipeOutput, "arc_lamp_crafting");
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCBlocks.MAGNETIC_CRAFTING_TABLE.get(), 1)
-                .requires(HpCItems.COMPRESSED_IRON.get(), 1).requires(Items.CRAFTING_TABLE, 1)
-                .unlockedBy("has_compressed_iron", has(HpCItems.COMPRESSED_IRON.get()))
-                .save(recipeOutput, "magnetic_crafting_table_crafting");
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.COPPER_WIRE.get(), 6)
-                .pattern("PPP")
-                .pattern("CCC")
-                .pattern("PPP")
-                .define('P', HpCItems.HYDROCARBONS.get())
-                .define('C', Items.COPPER_INGOT)
-                .unlockedBy("has_compressed_steel", has(HpCItems.COMPRESSED_STEEL.get()))
-                .save(recipeOutput, "copper_wire_crafting");
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.FLUID_PIPE.get())
-                .pattern("GGG")
-                .pattern("   ")
-                .pattern("GGG")
-                .define('G', Items.GLASS_PANE)
-                .unlockedBy("has_glass_pane", has(Items.GLASS_PANE))
-                .save(recipeOutput, "fluid_pipe_crafting");
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.COPPER_WIRE_BLOCK.get())
-                .pattern("   ")
-                .pattern("WBW")
-                .pattern("   ")
-                .define('W', HpCBlocks.COPPER_WIRE.get())
-                .define('B', HpCBlocks.BASE_BUILDING_BLACK_BLOCK.get())
-                .unlockedBy("has_wire", has(HpCBlocks.COPPER_WIRE.get()))
-                .save(recipeOutput, "copper_wire_block_crafting");
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.FLUID_PIPE_BLOCK.get())
-                .pattern("   ")
-                .pattern("PBP")
-                .pattern("   ")
-                .define('P', HpCBlocks.FLUID_PIPE.get())
-                .define('B', HpCBlocks.BASE_BUILDING_BLACK_BLOCK.get())
-                .unlockedBy("has_fluid_pipe", has(HpCBlocks.FLUID_PIPE.get()))
-                .save(recipeOutput, "fluid_pipe_block_crafting");
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.LAUNCH_PAD.get(), 9)
-                .pattern("CCC")
-                .pattern("III")
-                .define('C', HpCItems.COMPRESSED_IRON.get())
-                .define('I', Blocks.IRON_BLOCK)
-                .unlockedBy("has_compressed_iron", has(HpCItems.COMPRESSED_IRON.get()))
-                .save(recipeOutput, "launch_pad_crafting");
-        //endregion
-
         //region Building Blocks
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.PRISMATIC_GLASS.get(), 2)
                 .pattern(" TT")
@@ -426,6 +506,44 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('L', HpCBlocks.MOON_DUNGEON_BRICKS.get())
                 .unlockedBy("has_moon_dungeon_bricks", has(HpCBlocks.MOON_DUNGEON_BRICKS.get()))
                 .save(recipeOutput, "moon_dungeon_brick_slab_crafting");
+        //endregion
+
+        //region Foods
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HpCItems.DEHYDRATED_APPLE.get())
+                .pattern("CA ")
+                .pattern("A  ")
+                .define('C', HpCItems.TIN_CANISTER.get())
+                .define('A', Items.APPLE)
+                .unlockedBy("has_tin_canister", has(HpCItems.TIN_CANISTER.get()))
+                .save(recipeOutput, "dehydrated_apple_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HpCItems.DEHYDRATED_POTATO.get())
+                .pattern("CP ")
+                .pattern("P  ")
+                .define('C', HpCItems.TIN_CANISTER.get())
+                .define('P', Items.POTATO)
+                .unlockedBy("has_tin_canister", has(HpCItems.TIN_CANISTER.get()))
+                .save(recipeOutput, "dehydrated_potato_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HpCItems.DEHYDRATED_BEEF.get())
+                .pattern("CB ")
+                .pattern("B  ")
+                .pattern("   ")
+                .define('C', HpCItems.TIN_CANISTER.get())
+                .define('B', Items.BEEF)
+                .unlockedBy("has_tin_canister", has(HpCItems.TIN_CANISTER.get()))
+                .save(recipeOutput, "dehydrated_beef_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HpCItems.HAMBURGER.get())
+                .pattern(" B ")
+                .pattern("CP ")
+                .pattern(" B ")
+                .define('C', HpCItems.CHEESE_SLICE.get())
+                .define('B', Items.BREAD)
+                .define('P', Items.COOKED_BEEF)
+                .unlockedBy("has_patty", has(Items.COOKED_BEEF))
+                .save(recipeOutput, "cheeseburger_crafting");
+
         //endregion
         
         //region Compressors

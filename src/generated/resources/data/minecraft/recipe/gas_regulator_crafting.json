@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "heliocore:copper_canister"
+    },
+    "F": {
+      "item": "heliocore:fluid_filter"
+    },
+    "S": {
+      "item": "heliocore:compressed_steel"
+    },
+    "T": {
+      "item": "heliocore:compressed_tin"
+    }
+  },
+  "pattern": [
+    "STS",
+    "TCT",
+    "SFS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:gas_regulator"
+  }
+}
