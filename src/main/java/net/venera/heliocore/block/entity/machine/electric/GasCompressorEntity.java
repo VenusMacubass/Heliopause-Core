@@ -44,9 +44,9 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
     private final int BATTERY_SLOT = 2;
     private final int CONVERSION_RATE;
     private final int ENERGY_USAGE;
-    private final int maxCapacity = 6000;
+    private final int maxCapacity = 5000;
     public boolean isActive = false;
-    private final int MAX_FLOW_RATE = 10;
+    private final int maxFlowRate;
     public boolean enabled = true;
     private int conversionScore = 0;
     private final int conversionThreshold = 100;
@@ -65,7 +65,7 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
 
     };
 
-    public final FluidTank liquidTank = new FluidTank(maxCapacity/10) {
+    public final FluidTank liquidTank = new FluidTank(maxCapacity/2) {
         @Override
         protected void onContentsChanged() {
             setChanged();
@@ -80,10 +80,11 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
     };
 
     public GasCompressorEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState,
-                          int energyCapacity, int transferRate, int energyUsage, int conversionRate) {
-        super(type, pos, blockState, 3, energyCapacity, transferRate, energyUsage);
+                          int energyCapacity, int energyTransferRate, int energyUsage, int conversionRate, int maxFlowRate) {
+        super(type, pos, blockState, 3, energyCapacity, energyTransferRate, 0);
         this.CONVERSION_RATE = conversionRate;
         this.ENERGY_USAGE = energyUsage;
+        this.maxFlowRate = maxFlowRate;
     }
 
     @Override
@@ -93,14 +94,10 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
             public int get(int i) {
                 return switch (i) {
                     case 0 -> gasTank.getFluidAmount();
-                    case 1 -> BuiltInRegistries.FLUID.getId(gasTank.getFluid().getFluid());
-                    case 2 -> liquidTank.getFluidAmount();
-                    case 3 -> BuiltInRegistries.FLUID.getId(liquidTank.getFluid().getFluid()); 
-                    case 4 -> maxCapacity;
-                    case 5 -> isActive ? 1 : 0;
-                    case 6 -> energyStorage.getEnergyStored();
-                    case 7 -> energyStorage.getMaxEnergyStored();
-                    case 8 -> enabled ? 1 : 0;
+                    case 1 -> liquidTank.getFluidAmount();
+                    case 2 -> maxCapacity;
+                    case 3 -> isActive ? 1 : 0;
+                    case 4 -> enabled ? 1 : 0;
                     default -> 0;
                 };
             }
@@ -108,21 +105,13 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
             public void set(int i, int value) {
                 switch (i) {
                     case 0 -> gasTank.setFluid(new FluidStack(gasTank.getFluid().getFluid(), value));
-                    case 1 -> {
-                        Fluid fluid = BuiltInRegistries.FLUID.byId(value);
-                        gasTank.setFluid(new FluidStack(fluid == null ? Fluids.EMPTY : fluid, gasTank.getFluidAmount()));
-                    }
-                    case 2 -> liquidTank.setFluid(new FluidStack(liquidTank.getFluid().getFluid(), value));
-                    case 3 -> {
-                        Fluid fluid = BuiltInRegistries.FLUID.byId(value);
-                        liquidTank.setFluid(new FluidStack(fluid == null ? Fluids.EMPTY : fluid, liquidTank.getFluidAmount()));
-                    }
-                    case 5 -> isActive = value == 1;
-                    case 8 -> enabled = value == 1;
+                    case 1 -> liquidTank.setFluid(new FluidStack(liquidTank.getFluid().getFluid(), value));
+                    case 3 -> isActive = value == 1;
+                    case 4 -> enabled = value == 1;
                 }
             }
             @Override
-            public int getCount() { return 9; }
+            public int getCount() { return 5; }
         };
     }
 
@@ -131,7 +120,6 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
         boolean dirty = false;
 
         if (processBatterySlot(BATTERY_SLOT)) dirty = true;
-
         if (processInputs()) dirty = true;
         if (processOutputs()) dirty = true;
 
@@ -165,7 +153,7 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
             
             FluidStack drainedGas = gasTank.drain(gasAvailable, IFluidHandler.FluidAction.EXECUTE);
             if (drainedGas.getAmount() > 0) {
-                this.energyStorage.extractEnergy(this.ENERGY_USAGE, false);
+                this.energyStorage.consumeEnergy(this.ENERGY_USAGE);
                 this.conversionScore += drainedGas.getAmount();
                 
                 if (this.conversionScore >= conversionThreshold) {
@@ -239,7 +227,7 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
         if (!(level.getBlockState(pipePos).getBlock() instanceof FluidPipeBlock)) return;
 
         Set<BlockEntity> connectedMachines = PipeNetworkHelper.findConnectedInventories(level, pipePos, pos);
-        int fluidToPush = Math.min(liquidTank.getFluidAmount(), MAX_FLOW_RATE);
+        int fluidToPush = Math.min(liquidTank.getFluidAmount(), maxFlowRate);
 
         for (BlockEntity entity : connectedMachines) {
             if (entity == this) continue;
@@ -269,7 +257,7 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
         Set<BlockEntity> connectedMachines = PipeNetworkHelper.findConnectedInventories(level, pipePos, pos);
 
         int spaceAvailable = this.maxCapacity - gasTank.getFluidAmount();
-        int fluidToPull = Math.min(spaceAvailable, MAX_FLOW_RATE);
+        int fluidToPull = Math.min(spaceAvailable, maxFlowRate);
 
         for (BlockEntity entity : connectedMachines) {
             if (entity == this) continue;

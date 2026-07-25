@@ -34,8 +34,7 @@ public class CoalCompressorMenu extends AbstractContainerMenu {
         final int GRID_START_X = 9;
         final int GRID_START_Y = 17;
         final int SLOT_SPACING = 18;
-
-// Create the 3x3 grid (slots 0-8)
+        
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
                 int slotIndex = row * 3 + col;
@@ -44,15 +43,12 @@ public class CoalCompressorMenu extends AbstractContainerMenu {
                 this.addSlot(new SlotItemHandler(this.blockEntity.inventory, slotIndex, x, y));
             }
         }
-        // FUEL SLOT with restriction (Step 3)
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 9, 66, 53) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return stack.getBurnTime(null) > 0; // Only accept fuel items
             }
         });
-
-        // OUTPUT SLOT with restriction (Step 4)
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 10, 129, 35) {
             @Override
             public boolean mayPlace(ItemStack stack) {
@@ -69,11 +65,11 @@ public class CoalCompressorMenu extends AbstractContainerMenu {
     private static final int VANILLA_FIRST_SLOT_INDEX = 0;
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
     
-    private static final int TE_INVENTORY_SLOT_COUNT = 11;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 11;  //must be the number of slots
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);
-        if (sourceSlot == null || !sourceSlot.hasItem()) return ItemStack.EMPTY;  //EMPTY_ITEM
+        if (sourceSlot == null || !sourceSlot.hasItem()) return ItemStack.EMPTY;  
         ItemStack sourceStack = sourceSlot.getItem();
         ItemStack copyOfSourceStack = sourceStack.copy();
 

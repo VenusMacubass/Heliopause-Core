@@ -37,9 +37,11 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
     private final int BATTERY_SLOT = 0;
     private final int OXYGEN_GAS_SLOT = 1;
     public final int maxCapacity = 5000;
-    private final int ENERGY_USAGE = 5;
-    private final int oxygenGenerationRate = 3;
-    private int oxygenToGenerate = 0;
+    private final int ENERGY_USAGE;
+    private final int fluidFlowRate;
+    private final int oxygenGenerationRate;
+    private int oxygenToGenerate = -1;
+    private final int frequency = 2;
     public final FluidTank oxygenTank = new FluidTank(maxCapacity){
         @Override
         protected void onContentsChanged() {
@@ -56,8 +58,11 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
     public boolean isActive;
     public boolean isEnabled = true;
     
-    public OxygenGeneratorEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int capacity, int transferRate) {
-        super(type, pos, state, 2, capacity, transferRate, 2);
+    public OxygenGeneratorEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int capacity, int transferRate,int energyUsage, int oxygenGenerationRate, int fluidFlowRate) {
+        super(type, pos, state, 2, capacity, transferRate, 0);
+        this.ENERGY_USAGE = energyUsage;
+        this.oxygenGenerationRate = oxygenGenerationRate;
+        this.fluidFlowRate = fluidFlowRate;
     }
 
     @Override
@@ -66,25 +71,23 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
             @Override
             public int get(int i) {
                 return switch (i) {
-                    case 0 -> energyStorage.getEnergyStored();
-                    case 1 -> energyStorage.getMaxEnergyStored();
-                    case 2 -> oxygenTank.getFluidAmount();
-                    case 3 -> maxCapacity;
-                    case 5 -> isActive ? 1 : 0;
-                    case 6 -> isEnabled ? 1 : 0;
+                    case 0 -> oxygenTank.getFluidAmount();
+                    case 1 -> maxCapacity;
+                    case 2 -> isActive ? 1 : 0;
+                    case 3 -> isEnabled ? 1 : 0;
                     default -> 0;
                 };
             }
             @Override
             public void set(int i, int value) {
                 switch(i) {
-                    case 2 -> oxygenTank.setFluid(new FluidStack(HpCFluids.OXYGEN.get(), value));
-                    case 5 -> isActive = value == 1;
-                    case 6 -> isEnabled = value == 1;
+                    case 0 -> oxygenTank.setFluid(new FluidStack(HpCFluids.OXYGEN.get(), value));
+                    case 2 -> isActive = value == 1;
+                    case 3 -> isEnabled = value == 1;
                 }
             }
             @Override
-            public int getCount() { return 7; }
+            public int getCount() { return 4; }
         };
     }
 
@@ -94,26 +97,38 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
         boolean batteryProcessed = processBatterySlot(BATTERY_SLOT);
         boolean oxygenProcessed = processOxygenSlot(OXYGEN_GAS_SLOT);
         if (batteryProcessed || oxygenProcessed) dirty = true;
-        if (isEnabled && level.getGameTime() % 2 == 0) {
-            if (canGenerateOxygen(pos)) {
-                if(level.getGameTime() % 40 == 0){
-                    oxygenToGenerate = generateableOxygen(level, pos);
-                }
-                generateOxygen(oxygenToGenerate);
 
-                this.energyStorage.extractEnergy(ENERGY_USAGE, false);
-                this.isActive = true;
-                dirty = true;
-            } else {
-                if (this.isActive) {
-                    this.isActive = false;
-                    dirty = true;
+        if (isEnabled) {
+            if (level.getGameTime() % 40 == 0 || oxygenToGenerate == -1) {
+                oxygenToGenerate = generateableOxygen(level, pos);
+            }
+            
+            if (level.getGameTime() % frequency == 0) {
+                if (canGenerateOxygen(pos)) {
+                    generateOxygen(oxygenToGenerate);
+                    energyStorage.consumeEnergy(ENERGY_USAGE * frequency);
+
+                    if (!isActive) {
+                        isActive = true;
+                        dirty = true;
+                    }
+                } else {
+                    if (isActive) {
+                        isActive = false;
+                        dirty = true;
+                    }
                 }
             }
-            if (oxygenTank.getFluidAmount() > 0) {
-                pumpFluidOut(level, pos);
+        } else {
+            if (isActive) {
+                isActive = false;
                 dirty = true;
             }
+        }
+        
+        if (oxygenTank.getFluidAmount() > 0) {
+            pumpFluidOut(level, pos);
+            dirty = true; 
         }
 
         if (dirty) setChanged();
@@ -161,12 +176,12 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
                 passiveDimensionGenValue = 0;
             }
         }
-        BlockPos corner1 = pos.offset(-6, -6, -6);
-        BlockPos corner2 = pos.offset(6, 6, 6);
+        int cubeRange = 6;
+        BlockPos corner1 = pos.offset(-cubeRange, -cubeRange, -cubeRange);
+        BlockPos corner2 = pos.offset(cubeRange, cubeRange, cubeRange);
         int leafBonus = 0;
-
         for (BlockPos targetPos : BlockPos.betweenClosed(corner1, corner2)) {
-            if (targetPos.distSqr(pos) <= 36) { 
+            if (targetPos.distSqr(pos) <= cubeRange * cubeRange) { 
 
                 BlockState state = level.getBlockState(targetPos);
                 
@@ -175,7 +190,7 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
                 }
             }
         }
-        return  passiveDimensionGenValue + leafBonus/5;
+        return  passiveDimensionGenValue + leafBonus/cubeRange;
     }
 
     private void pumpFluidOut(Level level, BlockPos pos) {
@@ -186,7 +201,7 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
         if (!(level.getBlockState(pipePos).getBlock() instanceof FluidPipeBlock)) return;
 
         java.util.Set<BlockEntity> connectedMachines = PipeNetworkHelper.findConnectedInventories(level, pipePos, pos);
-        int fluidToPush = Math.min(oxygenTank.getFluidAmount(), 10); 
+        int fluidToPush = Math.min(oxygenTank.getFluidAmount(), fluidFlowRate); 
 
         for (BlockEntity entity : connectedMachines) {
             if (entity == this) continue;
@@ -209,7 +224,8 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
 
     private boolean canGenerateOxygen(BlockPos pos){
         boolean spaceCheck = oxygenTank.getSpace() > 0;
-        boolean energyCheck = energyStorage.getEnergyStored() >= ENERGY_USAGE;
+        boolean energyCheck = energyStorage.getEnergyStored() >= ENERGY_USAGE*frequency;
+        boolean amountCheck = oxygenToGenerate > 0; // ADD THIS!
 
         Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
         Direction rightSide = machineFacing.getClockWise();
@@ -218,11 +234,11 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
         BlockPos leftPos = pos.relative(leftSide);
         BlockState rightState = level.getBlockState(rightPos);
         BlockState leftState = level.getBlockState(leftPos);
-        
+
         boolean blockedState = rightState.isFaceSturdy(level, rightPos, rightSide.getOpposite()) ||
                 leftState.isFaceSturdy(level, leftPos, leftSide.getOpposite());
-
-        return spaceCheck && energyCheck && !blockedState;
+        
+        return spaceCheck && energyCheck && amountCheck && !blockedState;
     }
     
     @Override

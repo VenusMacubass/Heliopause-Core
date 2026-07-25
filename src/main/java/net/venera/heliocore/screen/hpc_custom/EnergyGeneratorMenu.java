@@ -126,14 +126,10 @@ public class EnergyGeneratorMenu extends AbstractContainerMenu {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 147));
         }
     }
-
-    public boolean isActive() {
-        return data.get(3) == 1;
-    }
     
     public int getBurnTimeScaled(int pixels){
-        int burnTime = this.data.get(7);
-        int maxBurnTime = this.data.get(8);
+        int burnTime = this.data.get(4);
+        int maxBurnTime = this.data.get(5);
         if (maxBurnTime == 0 || burnTime == 0) return 0;
         return Math.min((int) ((float) burnTime / maxBurnTime * pixels), pixels);
     }
@@ -144,7 +140,25 @@ public class EnergyGeneratorMenu extends AbstractContainerMenu {
     }
 
     public int getEnergyScaled(int pixels) {
-        int max = data.get(5);
-        return max == 0 ? 0 : data.get(4) * pixels / max;
+        int energy = getEnergy();
+        int capacity = getMaxEnergy();
+        if (capacity == 0) return 0;
+        return (int) ((long) energy * pixels / capacity);
+    }
+
+    public int getEnergy() {
+        return this.blockEntity.getEnergyStorage().getEnergyStored();
+    }
+
+    public int getMaxEnergy() {
+        return this.blockEntity.getEnergyStorage().getMaxEnergyStored();
+    }
+    
+    public boolean isActive() {
+        return this.data.get(2) > 0;
+    }
+
+    public boolean isEnabled() {
+        return this.data.get(3) > 0;
     }
 }

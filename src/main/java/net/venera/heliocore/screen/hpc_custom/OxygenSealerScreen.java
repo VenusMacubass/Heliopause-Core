@@ -31,7 +31,7 @@ public class OxygenSealerScreen extends AbstractContainerScreen<OxygenSealerMenu
         int y = (height - imageHeight) / 2;
 
         this.enabilitationButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.data.get(6) > 0 ? "Disable" : "Enable"),
+                        Component.literal(menu.isEnabled() ? "Disable" : "Enable"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
@@ -93,11 +93,8 @@ public class OxygenSealerScreen extends AbstractContainerScreen<OxygenSealerMenu
         }
 
         if (isMouseOver(mouseX, mouseY, energyX, energyY, energyWidth, energyHeight)) {
-            int currentEnergy = menu.data.get(2);
-            int capacity = menu.data.get(3);
-
             guiGraphics.renderTooltip(font,
-                    Component.literal("Energy: " + currentEnergy + " FE / " + capacity + " FE"),
+                    Component.literal("Energy: " + menu.getEnergy() + " FE / " + menu.getMaxEnergy() + " FE"),
                     mouseX, mouseY
             );
         }
@@ -106,7 +103,7 @@ public class OxygenSealerScreen extends AbstractContainerScreen<OxygenSealerMenu
     @Override
     protected void containerTick() {
         super.containerTick();
-        this.enabilitationButton.setMessage(Component.literal(menu.data.get(5) > 0 ? "Disable" : "Enable"));
+        this.enabilitationButton.setMessage(Component.literal(menu.isEnabled() ? "Disable" : "Enable"));
     }
 
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {

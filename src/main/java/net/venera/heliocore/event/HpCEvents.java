@@ -2,6 +2,7 @@ package net.venera.heliocore.event;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,9 +17,12 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -40,6 +44,8 @@ import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
 import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.util.*;
+
+import java.awt.*;
 
 @EventBusSubscriber
 public class HpCEvents {
@@ -209,18 +215,26 @@ public class HpCEvents {
         boolean hasOxygen = OxygenSetupHelper.checkOxygenSetup(living);
         BlockPos headPos = BlockPos.containing(event.getEntity().getX(), event.getEntity().getEyeY(), event.getEntity().getZ());
         long headLong = headPos.asLong();
-        boolean inOxygen = OxygenVolumeHelper.isPositionSealed(headLong);
+        ResourceLocation currentDimension = living.level().dimension().location();
+        
+        ResourceLocation moonDim = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon");
+        boolean inOxygen = !currentDimension.equals(moonDim);
+
         if (!inOxygen) {
-            BlockState headState = living.level().getBlockState(headPos);
-            if (headState.is(HpCBlocks.AIRLOCK_GENERATED_BLOCK.get())) { 
-                for (Direction dir : Direction.Plane.HORIZONTAL) {
-                    if (OxygenVolumeHelper.isPositionSealed(headPos.relative(dir).asLong())) {
-                        inOxygen = true;
-                        break; 
+            inOxygen = OxygenVolumeHelper.isPositionSealed(headLong);
+            if (!inOxygen) {
+                BlockState headState = living.level().getBlockState(headPos);
+                if (headState.is(HpCBlocks.AIRLOCK_GENERATED_BLOCK.get())) {
+                    for (Direction dir : Direction.Plane.HORIZONTAL) {
+                        if (OxygenVolumeHelper.isPositionSealed(headPos.relative(dir).asLong())) {
+                            inOxygen = true;
+                            break;
+                        }
                     }
                 }
             }
         }
+
         if (!hasOxygen && !inOxygen) {
             if (living.getType().is(HpCTags.Entities.DOES_NOT_BREATHE)) return;
             if (living.isInvertedHealAndHarm()) return;

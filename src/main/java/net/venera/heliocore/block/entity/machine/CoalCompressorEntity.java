@@ -56,12 +56,12 @@ public class CoalCompressorEntity extends BaseMachineEntity{
             @Override
             public int get(int i) {
                 return switch (i) {
-                    case 0 -> CoalCompressorEntity.this.progress;
-                    case 1 -> CoalCompressorEntity.this.maxProgress;
-                    case 2 -> CoalCompressorEntity.this.burnTime;
-                    case 3 -> CoalCompressorEntity.this.maxBurnTime;
-                    case 4 -> CoalCompressorEntity.this.isActive ? 1 : 0;     
-                    case 5 -> CoalCompressorEntity.this.compressing ? 1 : 0;
+                    case 0 -> progress;
+                    case 1 -> maxProgress;
+                    case 2 -> burnTime;
+                    case 3 -> maxBurnTime;
+                    case 4 -> isActive ? 1 : 0;     
+                    case 5 -> compressing ? 1 : 0;
                     default -> 0;
                 };
             }
@@ -69,10 +69,10 @@ public class CoalCompressorEntity extends BaseMachineEntity{
             @Override
             public void set(int i, int value) {
                 switch (i) {
-                    case 0 -> CoalCompressorEntity.this.progress = value;
-                    case 1 -> CoalCompressorEntity.this.maxProgress = value;
-                    case 2 -> CoalCompressorEntity.this.burnTime = value;
-                    case 3 -> CoalCompressorEntity.this.maxBurnTime = value;
+                    case 0 -> progress = value;
+                    case 1 -> maxProgress = value;
+                    case 2 -> burnTime = value;
+                    case 3 -> maxBurnTime = value;
                 }
             }
 
@@ -80,8 +80,6 @@ public class CoalCompressorEntity extends BaseMachineEntity{
             public int getCount() {
                 return 6;
             }
-            
-            
         };
     }
 
@@ -265,21 +263,6 @@ public class CoalCompressorEntity extends BaseMachineEntity{
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         return saveWithoutMetadata(registries);
-    }
-
-    public int getArrowScaled(int pixels) {
-        if (maxProgress == 0) return 0;
-        
-        int scaledProgress = (int) ((float) progress / maxProgress * pixels); 
-        
-        return Math.min(scaledProgress, pixels); 
-    }
-    public int getFireIconScaled(int pixels) {
-        if (burnTime == 0) return 0;
-        
-        int scaledFire = (int) ((float) burnTime / maxBurnTime * pixels); 
-        
-        return Math.min(scaledFire, pixels); 
     }
 
     @Override

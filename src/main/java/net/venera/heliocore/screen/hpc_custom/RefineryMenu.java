@@ -142,22 +142,36 @@ public class RefineryMenu extends AbstractContainerMenu {
         }
     }
 
-    public boolean isActive() {
-        return data.get(3) == 1;
-    }
-
     public int getOilScaled(int pixels) {
-        int max = data.get(2);
+        int max = blockEntity.oilTank.getCapacity();
         return max == 0 ? 0 : data.get(0) * pixels / max;
     }
 
     public int getFuelScaled(int pixels) {
-        int max = data.get(2);
+        int max = blockEntity.fuelTank.getCapacity();
         return max == 0 ? 0 : data.get(1) * pixels / max;
     }
-    
+
+    public int getEnergy() {
+        return this.blockEntity.getEnergyStorage().getEnergyStored();
+    }
+
+    public int getMaxEnergy() {
+        return this.blockEntity.getEnergyStorage().getMaxEnergyStored();
+    }
+
     public int getEnergyScaled(int pixels) {
-        int max = data.get(5);
-        return max == 0 ? 0 : data.get(4) * pixels / max;
+        int energy = getEnergy();
+        int capacity = getMaxEnergy();
+        if (capacity == 0) return 0;
+        return (int) ((long) energy * pixels / capacity);
+    }
+
+    public boolean isActive() {
+        return this.data.get(2) > 0;
+    }
+
+    public boolean isEnabled() {
+        return this.data.get(3) > 0;
     }
 }

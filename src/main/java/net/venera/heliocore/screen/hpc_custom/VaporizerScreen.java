@@ -33,7 +33,7 @@ public class VaporizerScreen  extends AbstractContainerScreen<VaporizerMenu> {
         int y = (height - imageHeight) / 2;
 
         this.enabilitationButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.data.get(8) > 0 ? "Disable" : "Enable"),
+                        Component.literal(menu.isEnabled() ? "Disable" : "Enable"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
@@ -97,7 +97,6 @@ public class VaporizerScreen  extends AbstractContainerScreen<VaporizerMenu> {
         if (isMouseOver(mouseX, mouseY, gasX, gasY, gasWidth, gasHeight)) {
             int currentLiquid = menu.blockEntity.liquidTank.getFluidAmount();
             int capacity = menu.blockEntity.liquidTank.getCapacity();
-
             guiGraphics.renderTooltip(font,
                     Component.literal("Liquid: " + currentLiquid + " mB / " + capacity + " mB"),
                     mouseX, mouseY
@@ -107,7 +106,6 @@ public class VaporizerScreen  extends AbstractContainerScreen<VaporizerMenu> {
         if (isMouseOver(mouseX, mouseY, liquidX, liquidY, liquidWidth, liquidHeight)) {
             int currentGas = menu.blockEntity.gasTank.getFluidAmount();
             int capacity = menu.blockEntity.gasTank.getCapacity();
-
             guiGraphics.renderTooltip(font,
                     Component.literal("Gas: " + currentGas + " mB / " + capacity + " mB"),
                     mouseX, mouseY
@@ -115,11 +113,8 @@ public class VaporizerScreen  extends AbstractContainerScreen<VaporizerMenu> {
         }
 
         if (isMouseOver(mouseX, mouseY, energyX, energyY, energyWidth, energyHeight)) {
-            int currentEnergy = menu.data.get(6);
-            int capacity = menu.data.get(7);
-
             guiGraphics.renderTooltip(font,
-                    Component.literal("Energy: " + currentEnergy + " FE / " + capacity + " FE"),
+                    Component.literal("Energy: " + menu.getEnergy() + " FE / " + menu.getMaxEnergy() + " FE"),
                     mouseX, mouseY
             );
         }
@@ -128,7 +123,7 @@ public class VaporizerScreen  extends AbstractContainerScreen<VaporizerMenu> {
     @Override
     protected void containerTick() {
         super.containerTick();
-        this.enabilitationButton.setMessage(Component.literal(menu.data.get(8) > 0 ? "Disable" : "Enable"));
+        this.enabilitationButton.setMessage(Component.literal(menu.isEnabled() ? "Disable" : "Enable"));
     }
 
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {

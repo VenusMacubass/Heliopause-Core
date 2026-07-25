@@ -44,9 +44,9 @@ public class GasVaporizerEntity extends BaseElectricMachineEntity implements IFl
     private final int BATTERY_SLOT = 2;
     private final int CONVERSION_RATE;
     private final int ENERGY_USAGE;
-    private final int maxCapacity = 6000;
+    private final int maxCapacity = 5000;
     public boolean isActive = false;
-    private final int MAX_FLOW_RATE = 10;
+    private final int MAX_FLOW_RATE;
     public boolean enabled = true;
     private int conversionScore = 0;
     private final int conversionThreshold = 100;
@@ -67,7 +67,7 @@ public class GasVaporizerEntity extends BaseElectricMachineEntity implements IFl
 
     };
 
-    public final FluidTank liquidTank = new FluidTank(maxCapacity/10) {
+    public final FluidTank liquidTank = new FluidTank(maxCapacity/2) {
         @Override
         protected void onContentsChanged() {
             setChanged();
@@ -83,10 +83,11 @@ public class GasVaporizerEntity extends BaseElectricMachineEntity implements IFl
     };
 
     public GasVaporizerEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState,
-                               int energyCapacity, int transferRate, int energyUsage, int conversionRate) {
-        super(type, pos, blockState, 3, energyCapacity, transferRate, energyUsage);
+                               int energyCapacity, int energyTransferRate, int energyUsage, int conversionRate, int maxFlowRate) {
+        super(type, pos, blockState, 3, energyCapacity, energyTransferRate, 0);
         this.CONVERSION_RATE = conversionRate;
         this.ENERGY_USAGE = energyUsage;
+        this.MAX_FLOW_RATE = maxFlowRate;
     }
 
     @Override
@@ -96,14 +97,9 @@ public class GasVaporizerEntity extends BaseElectricMachineEntity implements IFl
             public int get(int i) {
                 return switch (i) {
                     case 0 -> gasTank.getFluidAmount();
-                    case 1 -> BuiltInRegistries.FLUID.getId(gasTank.getFluid().getFluid());
-                    case 2 -> liquidTank.getFluidAmount();
-                    case 3 -> BuiltInRegistries.FLUID.getId(liquidTank.getFluid().getFluid());
-                    case 4 -> maxCapacity;
-                    case 5 -> isActive ? 1 : 0;
-                    case 6 -> energyStorage.getEnergyStored();
-                    case 7 -> energyStorage.getMaxEnergyStored();
-                    case 8 -> enabled ? 1 : 0;
+                    case 1 -> liquidTank.getFluidAmount();
+                    case 2 -> isActive ? 1 : 0;
+                    case 3 -> enabled ? 1 : 0;
                     default -> 0;
                 };
             }
@@ -111,21 +107,13 @@ public class GasVaporizerEntity extends BaseElectricMachineEntity implements IFl
             public void set(int i, int value) {
                 switch (i) {
                     case 0 -> gasTank.setFluid(new FluidStack(gasTank.getFluid().getFluid(), value));
-                    case 1 -> {
-                        Fluid fluid = BuiltInRegistries.FLUID.byId(value);
-                        gasTank.setFluid(new FluidStack(fluid == null ? Fluids.EMPTY : fluid, gasTank.getFluidAmount()));
-                    }
-                    case 2 -> liquidTank.setFluid(new FluidStack(liquidTank.getFluid().getFluid(), value));
-                    case 3 -> {
-                        Fluid fluid = BuiltInRegistries.FLUID.byId(value);
-                        liquidTank.setFluid(new FluidStack(fluid == null ? Fluids.EMPTY : fluid, liquidTank.getFluidAmount()));
-                    }
-                    case 5 -> isActive = value == 1;
-                    case 8 -> enabled = value == 1;
+                    case 1 -> liquidTank.setFluid(new FluidStack(liquidTank.getFluid().getFluid(), value));
+                    case 2 -> isActive = value == 1;
+                    case 3 -> enabled = value == 1;
                 }
             }
             @Override
-            public int getCount() { return 9; } // Updated total count
+            public int getCount() { return 5; } 
         };
     }
 
@@ -167,7 +155,7 @@ public class GasVaporizerEntity extends BaseElectricMachineEntity implements IFl
                 FluidStack drained = liquidTank.drain(1, IFluidHandler.FluidAction.EXECUTE);
 
                 if (drained.getAmount() == 1) {
-                    energyStorage.extractEnergy(ENERGY_USAGE, false);
+                    energyStorage.consumeEnergy(ENERGY_USAGE);
                     conversionScore += conversionThreshold;
                     isActive = true;
                     didWork = true;

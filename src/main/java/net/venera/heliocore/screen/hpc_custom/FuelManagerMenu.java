@@ -121,21 +121,38 @@ public class FuelManagerMenu extends AbstractContainerMenu {
 
     public int getFuelScaled(int pixels) {
         if (this.blockEntity == null) return 0;
-        int currentFuel = this.blockEntity.data.get(2);
-        int maxFuel = this.blockEntity.data.get(3);
+        int currentFuel = this.blockEntity.data.get(0);
+        int maxFuel = this.blockEntity.data.get(1);
         if (currentFuel <= 0) {
             return 0;
         }
-
         return (currentFuel * pixels) / maxFuel;
     }
 
-    public int getEnergyScaled(int pixels){
-        int energy = this.data.get(0);
-        int capacity = this.data.get(1);
-        if(capacity == 0) {
-            return 0;
-        }
-        return energy * pixels / capacity;
+    public int getEnergy() {
+        return this.blockEntity.getEnergyStorage().getEnergyStored();
+    }
+
+    public int getMaxEnergy() {
+        return this.blockEntity.getEnergyStorage().getMaxEnergyStored();
+    }
+
+    public int getEnergyScaled(int pixels) {
+        int energy = getEnergy();
+        int capacity = getMaxEnergy();
+        if (capacity == 0) return 0;
+        return (int) ((long) energy * pixels / capacity);
+    }
+
+    public boolean isActive() {
+        return this.data.get(2) > 0;
+    }
+
+    public boolean isFueling() {
+        return this.data.get(3) > 0;
+    }
+
+    public boolean isCharging() {
+        return this.data.get(4) > 0;
     }
 }

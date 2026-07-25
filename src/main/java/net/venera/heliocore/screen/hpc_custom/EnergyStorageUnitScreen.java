@@ -32,7 +32,6 @@ public class EnergyStorageUnitScreen extends AbstractContainerScreen<EnergyStora
             int startY = y + 24;
             int endX = startX + chargeLength;
             int endY = startY + 7;
-
             //(FF: opacity, FF being opaque), rest is rgb
             guiGraphics.fill(startX, startY, endX, endY, 0xFFFFE400);
         }
@@ -50,7 +49,7 @@ public class EnergyStorageUnitScreen extends AbstractContainerScreen<EnergyStora
 
         if (isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)) {
             guiGraphics.renderTooltip(font,
-                    Component.literal("Stored Energy: " + menu.data.get(0) + "."),
+                    Component.literal("Stored Energy: " + menu.getEnergy() + "/" + menu.getMaxEnergy()),
                     x, y
             );
         }

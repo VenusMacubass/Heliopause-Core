@@ -36,7 +36,7 @@ public class DeconstructorEntity extends BaseElectricMachineEntity implements Ma
     public boolean isActive = false;
     public boolean isEnabled = true;
     public DeconstructorEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState,int capacity, int transferRate, int energyUsage) {
-        super(type, pos, blockState, 11, capacity, transferRate, transferRate);
+        super(type, pos, blockState, 11, capacity, transferRate, 0);
         this.tierTransferRate = transferRate;
         this.ENERGY_USAGE = energyUsage;
     }

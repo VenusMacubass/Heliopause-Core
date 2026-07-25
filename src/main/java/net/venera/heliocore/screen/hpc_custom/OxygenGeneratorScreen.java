@@ -29,7 +29,7 @@ public class OxygenGeneratorScreen extends AbstractContainerScreen<OxygenGenerat
         int y = (height - imageHeight) / 2;
 
         this.toggleButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.data.get(6) > 0 ? "Disable" : "Enable"),
+                        Component.literal(menu.isEnabled() ? "Disable" : "Enable"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
@@ -88,16 +88,13 @@ public class OxygenGeneratorScreen extends AbstractContainerScreen<OxygenGenerat
         int oxygenHeight = 7;
 
         if(isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)){
-            int currentEnergy = menu.data.get(0);
-            int maxEnergy = menu.data.get(1);
-
             guiGraphics.renderTooltip(font, Component.literal(
-                    "Energy: " + currentEnergy + " / " + maxEnergy + " FE"), x, y);
+                    "Energy: " + menu.getEnergy() + " / " + menu.getMaxEnergy() + " FE"), x, y);
         }
 
         if(isMouseOver(x, y, oxygenX, oxygenY, oxygenWidth, oxygenHeight)) {
-            int currentOxygen = menu.data.get(2);
-            int maxOxygen = menu.data.get(3);
+            int currentOxygen = menu.data.get(0);
+            int maxOxygen = menu.data.get(1);
 
             guiGraphics.renderTooltip(font, Component.literal(
                     "Oxygen: " + currentOxygen + " / " + maxOxygen + " FO"), x, y);
@@ -107,7 +104,7 @@ public class OxygenGeneratorScreen extends AbstractContainerScreen<OxygenGenerat
     @Override
     protected void containerTick() {
         super.containerTick();
-        this.toggleButton.setMessage(Component.literal(menu.data.get(6) > 0 ? "Disable" : "Enable"));
+        this.toggleButton.setMessage(Component.literal(menu.isEnabled() ? "Disable" : "Enable"));
     }
     
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {

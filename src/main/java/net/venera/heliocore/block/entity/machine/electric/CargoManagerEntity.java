@@ -26,14 +26,14 @@ public class CargoManagerEntity extends BaseElectricMachineEntity implements Mac
     private final int[] OUTPUT_SLOTS = {9, 10, 11, 12, 13, 14, 15, 16, 17};
     private final int BATTERY_SLOT = 18;
     private final int tierTransferRate;
-    private int ENERGY_USAGE = 2;
+    private final int ENERGY_USAGE;
     public boolean isActive = false;
     public boolean isLoading = false;
     public boolean isUnloading = false;
-    public CargoManagerEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, 
-                              int capacity, int transferRate, int energyUsage) {
-        super(type, pos, blockState, 19, capacity, transferRate, transferRate);
-        this.tierTransferRate = transferRate;
+    private final int frequency = 5; 
+    public CargoManagerEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int energyCapacity, int energyTransferRate, int energyUsage) {
+        super(type, pos, blockState, 19, energyCapacity, energyTransferRate, 0);
+        this.tierTransferRate = energyTransferRate;
         this.ENERGY_USAGE = energyUsage;
     }
 
@@ -43,54 +43,67 @@ public class CargoManagerEntity extends BaseElectricMachineEntity implements Mac
             @Override
             public int get(int i) {
                 return switch (i) {
-                    case 0 -> energyStorage.getEnergyStored();
-                    case 1 -> energyStorage.getMaxEnergyStored();
-                    case 2 -> tierTransferRate;
-                    case 3 -> isActive ? 1 : 0;
-                    case 4 -> isLoading ? 1 : 0;
-                    case 5 -> isUnloading ? 1 : 0;
+                    case 0 -> isActive ? 1 : 0;
+                    case 1 -> isLoading ? 1 : 0;
+                    case 2 -> isUnloading ? 1 : 0;
                     default -> 0;
                 };
             }
             @Override
             public void set(int i, int value) {}
             @Override
-            public int getCount() { return 6; }
+            public int getCount() { return 3; }
         };
     }
 
     public void tick(Level level, BlockPos pos, BlockState state){
         if (level.isClientSide()) return;
-        Tier1RocketEntity rocketEntity = findValidRocket(level, pos);
-        boolean isCurrentlyActive = false;
-        if(processBatterySlot(BATTERY_SLOT)) isCurrentlyActive = true;
-        if(level.getGameTime() % 5 == 0) {
+        boolean dirty = false;
+        if(processBatterySlot(BATTERY_SLOT)) dirty = true;
+
+        if(level.getGameTime() % frequency == 0) {
+            boolean didWork = false;
+            Tier1RocketEntity rocketEntity = findValidRocket(level, pos);
+
             if (rocketEntity != null && hasEnergy()) {
-                if (isLoading) {
-                    if (processLoading(rocketEntity)) isCurrentlyActive = true;
-                    this.energyStorage.extractEnergy(this.ENERGY_USAGE, false);
+                if (isLoading && processLoading(rocketEntity)) {
+                    this.energyStorage.consumeEnergy(this.ENERGY_USAGE * frequency);
+                    didWork = true;
                 }
-                if (isUnloading) {
-                    if (processUnloading(rocketEntity)) isCurrentlyActive = true;
-                    this.energyStorage.extractEnergy(this.ENERGY_USAGE, false);
+                
+                if (isUnloading && hasEnergy() && processUnloading(rocketEntity)) {
+                    this.energyStorage.consumeEnergy(this.ENERGY_USAGE * frequency);
+                    didWork = true;
                 }
             }
-
+            
+            if (didWork) {
+                if (!isActive) {
+                    isActive = true;
+                    dirty = true;
+                }
+            } else {
+                if (isActive) {
+                    isActive = false;
+                    dirty = true;
+                }
+            }
         }
-        this.isActive = isCurrentlyActive;
+
+        if (dirty) setChanged();
         BaseElectricMachineEntity.tick(level, pos, state, this);
     }
     
     public boolean processLoading(Tier1RocketEntity rocketEntity){
         for (int i : INPUT_SLOTS) {
             ItemStack extracted = inventory.extractItem(i, 1, true);
-            if (extracted.isEmpty()) continue; // Slot is empty, check next slot
+            if (extracted.isEmpty()) continue; 
             
             ItemStack leftover = ItemHandlerHelper.insertItem(rocketEntity.inventory, extracted, true);
             
             if (leftover.isEmpty()) {
-                inventory.extractItem(i, 1, false); // Actually extract
-                ItemHandlerHelper.insertItem(rocketEntity.inventory, extracted, false); // Actually insert
+                inventory.extractItem(i, 1, false); 
+                ItemHandlerHelper.insertItem(rocketEntity.inventory, extracted, false); 
                 
                 return true;
             }
@@ -139,7 +152,7 @@ public class CargoManagerEntity extends BaseElectricMachineEntity implements Mac
     }
 
     private boolean hasEnergy(){
-        return energyStorage.getEnergyStored() >= ENERGY_USAGE;
+        return energyStorage.getEnergyStored() >= ENERGY_USAGE * frequency;
     }
 
     @Override

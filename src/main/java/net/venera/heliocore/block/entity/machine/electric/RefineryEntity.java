@@ -43,15 +43,15 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     private final int INPUT_SLOT = 0;
     private final int OUTPUT_SLOT = 1;
     private final int BATTERY_SLOT = 2;
-    private final int[] HYDROCARBON_SLOTS = {3, 4, 5, 6, 7};
     private final int BUCKET_CAPACITY = 1000;
     private final int CONVERSION_RATE;
     private final int ENERGY_USAGE; 
-    private final int maxCapacity = 6000;
+    private final int maxCapacity = 5000;
     public boolean isActive = false;
-    private final int MAX_FLOW_RATE = 10;
+    private final int MAX_FLOW_RATE;
     public boolean enabled = true;
     private int petroleumScore = 0;
+    private final int frequency = 2;
     public final FluidTank oilTank = new FluidTank(maxCapacity) {
         @Override
         protected void onContentsChanged() {
@@ -82,10 +82,11 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     };
 
     public RefineryEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState,
-                          int energyCapacity, int transferRate, int energyUsage, int conversionRate) {
-        super(type, pos, blockState, 8, energyCapacity, transferRate, energyUsage);
+                          int energyCapacity, int energyTransferRate, int energyUsage, int conversionRate, int fluidFlowRate) {
+        super(type, pos, blockState, 8, energyCapacity, energyTransferRate, 0);
         this.CONVERSION_RATE = conversionRate;
         this.ENERGY_USAGE = energyUsage;
+        this.MAX_FLOW_RATE = fluidFlowRate;
     }
 
     @Override
@@ -96,11 +97,8 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
                 return switch (i) {
                     case 0 -> oilTank.getFluidAmount();
                     case 1 -> fuelTank.getFluidAmount();
-                    case 2 -> maxCapacity;
-                    case 3 -> isActive ? 1 : 0;
-                    case 4 -> energyStorage.getEnergyStored();
-                    case 5 -> energyStorage.getMaxEnergyStored();
-                    case 6 -> enabled ? 1 : 0;
+                    case 2 -> isActive ? 1 : 0;
+                    case 3 -> enabled ? 1 : 0;
                     default -> 0;
                 };
             }
@@ -109,11 +107,11 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
                 switch (i) {
                     case 0 -> oilTank.setFluid(new FluidStack(HpCFluids.CRUDE_OIL.getSource(), value));
                     case 1 -> fuelTank.setFluid(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), value));
-                    case 3 -> isActive = value == 1;
+                    case 2 -> isActive = value == 1;
                 }
             }
             @Override
-            public int getCount() { return 8; }
+            public int getCount() { return 4; }
         };
     }
 
@@ -149,7 +147,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     }
 
     private void refine(Level level){
-        if((level.getGameTime() % 5) == 0){
+        if((level.getGameTime() % frequency) == 0){
             isActive = true;
             isolateHydrocarbons();
 
@@ -162,7 +160,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
             oilTank.drain((conversionAmount*2), IFluidHandler.FluidAction.EXECUTE);
             fuelTank.fill(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), conversionAmount), IFluidHandler.FluidAction.EXECUTE);
 
-            this.energyStorage.extractEnergy(this.ENERGY_USAGE, false);
+            this.energyStorage.consumeEnergy(this.ENERGY_USAGE * frequency);
         }
     }
     
@@ -290,7 +288,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     }
 
     private boolean canRefine(){
-        return oilTank.getFluidAmount() > 2 && fuelTank.getSpace() > 0 && energyStorage.getEnergyStored() >= ENERGY_USAGE;
+        return oilTank.getFluidAmount() > 2 && fuelTank.getSpace() > 0 && energyStorage.getEnergyStored() >= ENERGY_USAGE * frequency;
     }
 
     @Override

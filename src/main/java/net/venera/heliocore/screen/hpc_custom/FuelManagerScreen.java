@@ -32,7 +32,7 @@ public class FuelManagerScreen extends AbstractContainerScreen<FuelManagerMenu> 
         int y = (height - imageHeight) / 2;
 
         this.inputEnableButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.data.get(6) > 0 ? "Stop Loading" : "Load Fuel"),
+                        Component.literal(menu.isFueling() ? "Stop Loading" : "Load Fuel"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
@@ -43,7 +43,7 @@ public class FuelManagerScreen extends AbstractContainerScreen<FuelManagerMenu> 
         );
 
         this.outputEnableButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.data.get(7) > 0 ? "Stop Charging" : "Charge"),
+                        Component.literal(menu.isCharging() ? "Stop Charging" : "Charge"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 1)
@@ -107,15 +107,12 @@ public class FuelManagerScreen extends AbstractContainerScreen<FuelManagerMenu> 
         int fuelHeight = 41;
         
         if (isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)) {
-            int currentEnergy = menu.data.get(0);
-            int maxEnergy = menu.data.get(1);
-
             guiGraphics.renderTooltip(font, Component.literal(
-                    "Energy: " + currentEnergy + " / " + maxEnergy + " FE"), x, y);
+                    "Energy: " + menu.getEnergy() + " / " + menu.getMaxEnergy() + " FE"), x, y);
         }
         if (isMouseOver(x, y, fuelX, fuelY, fuelWidth, fuelHeight)) {
-            int currentFuel = menu.data.get(2);
-            int maxFuel = menu.data.get(3);
+            int currentFuel = menu.data.get(0);
+            int maxFuel = menu.data.get(1);
 
             guiGraphics.renderTooltip(font, Component.literal(
                     "Fuel: " + currentFuel + " / " + maxFuel + " mL"), x, y);
@@ -126,8 +123,8 @@ public class FuelManagerScreen extends AbstractContainerScreen<FuelManagerMenu> 
     @Override
     protected void containerTick() {
         super.containerTick();
-        this.inputEnableButton.setMessage(Component.literal(menu.data.get(6) > 0 ? "Stop Loading" : "Load Fuel"));
-        this.outputEnableButton.setMessage(Component.literal(menu.data.get(7) > 0 ? "Stop Charging" : "Charge"));
+        this.inputEnableButton.setMessage(Component.literal(menu.isFueling() ? "Stop Loading" : "Load Fuel"));
+        this.outputEnableButton.setMessage(Component.literal(menu.isCharging() ? "Stop Charging" : "Charge"));
     }
 
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {

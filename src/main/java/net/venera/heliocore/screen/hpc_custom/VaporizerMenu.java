@@ -130,22 +130,36 @@ public class VaporizerMenu extends AbstractContainerMenu {
         }
     }
 
-    public boolean isActive() {
-        return data.get(5) == 1;
-    }
-
     public int getGasScaled(int pixels) {
-        int max = data.get(4);
+        int max = this.blockEntity.gasTank.getCapacity();
         return max == 0 ? 0 : data.get(0) * pixels / max;
     }
 
     public int getLiquidScaled(int pixels) {
-        int max = data.get(4)/10;
-        return max == 0 ? 0 : data.get(2) * pixels / max;
+        int max = this.blockEntity.liquidTank.getCapacity();
+        return max == 0 ? 0 : data.get(1) * pixels / max;
+    }
+
+    public int getEnergy() {
+        return this.blockEntity.getEnergyStorage().getEnergyStored();
+    }
+
+    public int getMaxEnergy() {
+        return this.blockEntity.getEnergyStorage().getMaxEnergyStored();
     }
 
     public int getEnergyScaled(int pixels) {
-        int max = data.get(7);
-        return max == 0 ? 0 : data.get(6) * pixels / max;
+        int energy = getEnergy();
+        int capacity = getMaxEnergy();
+        if (capacity == 0) return 0;
+        return (int) ((long) energy * pixels / capacity);
+    }
+
+    public boolean isActive() {
+        return this.data.get(2) > 0;
+    }
+
+    public boolean isEnabled() {
+        return this.data.get(3) > 0;
     }
 }

@@ -47,11 +47,12 @@ public class EnergyGeneratorEntity extends BaseElectricMachineEntity implements 
     private final int BUCKET_CAPACITY = 1000;
     private final int maxLiquidFuelCapacity = 6000;
     private final int LIQUID_CONSUMPTION_RATE;
-    private final int TRANSFER_RATE;
+    private final int generationRate;
     public boolean isActive = false;
     public boolean enabled = true;
     public int burnTime = 0;
     public int maxBurnTime;
+    private final int frequency = 2;
     private final int MAX_FLOW_RATE = 10;
     public final FluidTank liquidFuelTank = new FluidTank(maxLiquidFuelCapacity) {
         @Override
@@ -67,10 +68,10 @@ public class EnergyGeneratorEntity extends BaseElectricMachineEntity implements 
         }
     };
     
-    public EnergyGeneratorEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int capacity, int transferRate, int LIQUID_CONSUMPTION_RATE) {
-        super(type, pos, state, 3, capacity, transferRate, transferRate);
-        this.LIQUID_CONSUMPTION_RATE = LIQUID_CONSUMPTION_RATE;
-        this.TRANSFER_RATE = transferRate;
+    public EnergyGeneratorEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int energyCapacity, int energyTransferRate, int liquidConsumptionRate, int generationRate) {
+        super(type, pos, state, 3, energyCapacity, 0, energyTransferRate);
+        this.LIQUID_CONSUMPTION_RATE = liquidConsumptionRate;
+        this.generationRate = generationRate;
     }
     
     
@@ -81,14 +82,11 @@ public class EnergyGeneratorEntity extends BaseElectricMachineEntity implements 
             public int get(int i) {
                 return switch (i) {
                     case 0 -> liquidFuelTank.getFluidAmount();
-                    case 1 -> liquidFuelTank.getCapacity();
-                    case 2 -> maxLiquidFuelCapacity;
-                    case 3 -> isActive ? 1 : 0;
-                    case 4 -> energyStorage.getEnergyStored();
-                    case 5 -> energyStorage.getMaxEnergyStored();
-                    case 6 -> enabled ? 1 : 0;
-                    case 7 -> burnTime;
-                    case 8 -> maxBurnTime;
+                    case 1 -> maxLiquidFuelCapacity;
+                    case 2 -> isActive ? 1 : 0;
+                    case 3 -> enabled ? 1 : 0;
+                    case 4 -> burnTime;
+                    case 5 -> maxBurnTime;
                     default -> 0;
                 };
             }
@@ -96,13 +94,13 @@ public class EnergyGeneratorEntity extends BaseElectricMachineEntity implements 
             public void set(int i, int value) {
                 switch (i) {
                     case 0 -> liquidFuelTank.setFluid(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), value));
-                    case 3 -> isActive = value == 1;
-                    case 7 -> burnTime = value;
-                    case 8 ->  maxBurnTime = value;
+                    case 2 -> isActive = value == 1;
+                    case 4 -> burnTime = value;
+                    case 5 ->  maxBurnTime = value;
                 }
             }
             @Override
-            public int getCount() { return 9; }
+            public int getCount() { return 6; }
         };
     }
 
@@ -114,7 +112,7 @@ public class EnergyGeneratorEntity extends BaseElectricMachineEntity implements 
         tickBurnTime();
         if (burnTime != oldBurnTime) dirty = true; 
 
-        if(level.getGameTime() % 2 == 0 && canGenerate()){
+        if(level.getGameTime() % frequency == 0 && canGenerate()){
             generateEnergy();
             dirty = true; 
         }
@@ -207,16 +205,17 @@ public class EnergyGeneratorEntity extends BaseElectricMachineEntity implements 
     }
 
     private boolean canGenerate(){
-        return energyStorage.canReceive() && burnTime > 0 && enabled;
+        boolean hasSpace = energyStorage.getEnergyStored() < energyStorage.getMaxEnergyStored();
+        return hasSpace && burnTime > 0 && enabled;
     }
-    
-    private boolean generateEnergy() {
-        int energyToGenerate = energyStorage.receiveEnergy(TRANSFER_RATE/2, true);
+
+    private void generateEnergy() {
+        int space = energyStorage.getMaxEnergyStored() - energyStorage.getEnergyStored();
+        int energyToGenerate = Math.min(space, generationRate * frequency);
+
         if(energyToGenerate > 0){
-            energyStorage.receiveEnergy(energyToGenerate, false);
-            return true;
+            (energyStorage).addEnergy(energyToGenerate);
         }
-        return false;
     }
     
     private void tickBurnTime() {

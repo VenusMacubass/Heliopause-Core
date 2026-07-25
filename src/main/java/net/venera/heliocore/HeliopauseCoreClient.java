@@ -11,6 +11,8 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
@@ -27,8 +29,11 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.HpCBlockEntities;
+import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
 import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.entity.HpCEntities;
 import net.venera.heliocore.entity.client.Tier1RocketLanderModel;
@@ -45,6 +50,7 @@ import net.venera.heliocore.render.FluidTankRenderer;
 import net.venera.heliocore.render.sky.MoonSkyRenderer;
 import net.venera.heliocore.screen.HpCMenuTypes;
 import net.venera.heliocore.screen.hpc_custom.*;
+import net.venera.heliocore.util.EnergySyncPayload;
 import net.venera.heliocore.util.LanderControlPayload;
 import org.joml.Matrix4f;
 
@@ -297,5 +303,23 @@ public class HeliopauseCoreClient {
         }
     }
     //endregion
+
+    @SubscribeEvent
+    public static void register(final RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar(HeliopauseCore.MOD_ID);
+        registrar.playToClient(
+                EnergySyncPayload.TYPE,
+                EnergySyncPayload.STREAM_CODEC,
+                (payload, context) -> {
+                    context.enqueueWork(() -> {
+                        Level level = context.player().level();
+                        BlockEntity be = level.getBlockEntity(payload.pos());
+                        if (be instanceof BaseElectricMachineEntity machine) {
+                            machine.setClientEnergy(payload.energy(), payload.capacity());
+                        }
+                    });
+                }
+        );
+    }
     
 }

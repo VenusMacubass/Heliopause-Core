@@ -118,12 +118,18 @@ public class EnergyStorageUnitMenu extends AbstractContainerMenu {
         }
     }
 
-    public int getEnergyScaled(int pixels){
-        int energy = this.data.get(0);
-        int capacity = this.data.get(1);
-        if(capacity == 0) {
-            return 0;
-        }
-        return energy * pixels / capacity;
+    public int getEnergyScaled(int pixels) {
+        int energy = getEnergy();
+        int capacity = getMaxEnergy();
+        if (capacity == 0) return 0;
+        return (int) ((long) energy * pixels / capacity);
+    }
+
+    public int getEnergy() {
+        return this.blockEntity.getEnergyStorage().getEnergyStored();
+    }
+
+    public int getMaxEnergy() {
+        return this.blockEntity.getEnergyStorage().getMaxEnergyStored();
     }
 }

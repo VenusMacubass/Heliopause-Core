@@ -31,7 +31,7 @@ public class CargoManagerScreen extends AbstractContainerScreen<CargoManagerMenu
         int y = (height - imageHeight) / 2;
 
         this.inputEnableButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.data.get(4) > 0 ? "Loadn't" : "Load"),
+                        Component.literal(menu.isLoading() ? "Loadn't" : "Load"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
@@ -42,7 +42,7 @@ public class CargoManagerScreen extends AbstractContainerScreen<CargoManagerMenu
         );
 
         this.outputEnableButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.data.get(5) > 0 ? "Unloadn't" : "Unload"),
+                        Component.literal(menu.isUnloading() ? "Unloadn't" : "Unload"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 1)
@@ -87,19 +87,16 @@ public class CargoManagerScreen extends AbstractContainerScreen<CargoManagerMenu
 
 
         if (isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)) {
-            int currentEnergy = menu.data.get(0);
-            int maxEnergy = menu.data.get(1);
-
             guiGraphics.renderTooltip(font, Component.literal(
-                    "Energy: " + currentEnergy + " / " + maxEnergy + " FE"), x, y);
+                    "Energy: " + menu.getEnergy() + " / " + menu.getMaxEnergy() + " FE"), x, y);
         }
     }
 
     @Override
     protected void containerTick() {
         super.containerTick();
-        this.inputEnableButton.setMessage(Component.literal(menu.data.get(4) > 0 ? "Loadn't" : "Load"));
-        this.outputEnableButton.setMessage(Component.literal(menu.data.get(5) > 0 ? "Unloadn't" : "Unload"));
+        this.inputEnableButton.setMessage(Component.literal(menu.isLoading() ? "Loadn't" : "Load"));
+        this.outputEnableButton.setMessage(Component.literal(menu.isUnloading() ? "Unloadn't" : "Unload"));
     }
 
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {

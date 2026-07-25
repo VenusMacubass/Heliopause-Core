@@ -44,9 +44,10 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
     private final int FUEL_SLOT = 1;
     private final int BUCKET_CAPACITY = 1000;
     private final int maxFuel = 6000;
-    private final int tierTransferRate;
-    private int ENERGY_USAGE = 5;
-    private int FUEL_LOAD_RATE = 2;
+    private final int energyTransferRate;
+    private final int fluidTransferRate;
+    private final int ENERGY_USAGE;
+    private final int fuelLoadRate;
     public boolean isActive;
     public boolean isFueling = false;
     public boolean isCharging = false;
@@ -63,10 +64,12 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
             return stack.getFluid().isSame(HpCFluids.REFINED_FUEL.getSource());
         }
     };
-    public FuelManagerEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int capacity, int transferRate, int energyUsage) {
-        super(type, pos, blockState, 2, capacity, transferRate, transferRate);
-        this.tierTransferRate = transferRate;
+    public FuelManagerEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int energyCapacity, int energyTransferRate, int energyUsage, int fluidTransferRate, int fuelLoadRate) {
+        super(type, pos, blockState, 2, energyCapacity, energyTransferRate, 0);
+        this.energyTransferRate = energyTransferRate;
+        this.fluidTransferRate = fluidTransferRate;
         this.ENERGY_USAGE = energyUsage;
+        this.fuelLoadRate = fuelLoadRate;
     }
 
     @Override
@@ -75,26 +78,23 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
             @Override
             public int get(int i) {
                 return switch (i) {
-                    case 0 -> energyStorage.getEnergyStored();
-                    case 1 -> energyStorage.getMaxEnergyStored();
-                    case 2 -> fuelTank.getFluidAmount();
-                    case 3 -> maxFuel;
-                    case 4 -> tierTransferRate;
-                    case 5 -> isActive ? 1 : 0;
-                    case 6 -> isFueling ? 1 : 0;
-                    case 7 -> isCharging ? 1 : 0;
+                    case 0 -> fuelTank.getFluidAmount();
+                    case 1 -> maxFuel;
+                    case 2 -> isActive ? 1 : 0;
+                    case 3 -> isFueling ? 1 : 0;
+                    case 4 -> isCharging ? 1 : 0;
                     default -> 0;
                 };
             }
             @Override
             public void set(int i, int value) {
                 switch(i) {
-                    case 2 -> fuelTank.setFluid(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), value));
-                    case 5 -> isActive = value == 1;
+                    case 0 -> fuelTank.setFluid(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), value));
+                    case 2 -> isActive = value == 1;
                 }
             }
             @Override
-            public int getCount() { return 8; }
+            public int getCount() { return 5; }
         };
     }
     
@@ -109,27 +109,26 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
                 dirty = true; 
             }
         }
-
-        // 2. Find Rocket and Push
+        
         Tier1RocketEntity rocket = findValidRocket(level, pos);
         boolean isCurrentlyWorking = false;
 
         if (rocket != null) {
             if (isFueling && fuelTank.getFluidAmount() > 0 && this.energyStorage.getEnergyStored() >= ENERGY_USAGE) {
-                int acceptedFuel = rocket.fillFuel(Math.min(fuelTank.getFluidAmount(), 5), false);
+                int acceptedFuel = rocket.fillFuel(Math.min(fuelTank.getFluidAmount(), fluidTransferRate), false);
                 FluidStack loadedFuel = fuelTank.drain(acceptedFuel, IFluidHandler.FluidAction.SIMULATE);
 
                 if (loadedFuel.getAmount() > 0) {
                     fuelTank.drain(loadedFuel, IFluidHandler.FluidAction.EXECUTE);
-                    this.energyStorage.extractEnergy(ENERGY_USAGE, false); 
+                    this.energyStorage.consumeEnergy(ENERGY_USAGE); 
                     isCurrentlyWorking = true;
                 }
             }
             
             if (isCharging && this.energyStorage.getEnergyStored() > 0) {
-                int acceptedEnergy = rocket.chargeEnergy(Math.min(this.energyStorage.getEnergyStored(), 50), false);
+                int acceptedEnergy = rocket.chargeEnergy(Math.min(this.energyStorage.getEnergyStored(), energyTransferRate), false);
                 if (acceptedEnergy > 0) {
-                    this.energyStorage.extractEnergy(acceptedEnergy, false);
+                    this.energyStorage.consumeEnergy(acceptedEnergy);
                     isCurrentlyWorking = true;
                 }
             }
@@ -197,7 +196,7 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
 
         Set<BlockEntity> connectedMachines = PipeNetworkHelper.findConnectedInventories(level, pipePos, pos);
 
-        int fluidToPull = Math.min(fuelTank.getSpace(), FUEL_LOAD_RATE);
+        int fluidToPull = Math.min(fuelTank.getSpace(), fuelLoadRate);
         boolean actuallyPulledSomething = false;
 
         for (BlockEntity entity : connectedMachines) {
@@ -221,10 +220,6 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
             }
         }
         return actuallyPulledSomething;
-    }
-    
-    public boolean canActivate(){
-        return fuelTank.getFluidAmount() > 0 && energyStorage.getEnergyStored() >= ENERGY_USAGE;
     }
 
     @Override

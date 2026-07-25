@@ -20,37 +20,28 @@ import javax.annotation.Nullable;
 public class EnergyStorageEntity extends BaseElectricMachineEntity {
     private final int INPUT_SLOT = 0;
     private final int OUTPUT_SLOT = 1;
-    private final int tierTransferRate;
+    private final int energyTransferRate;
 
-    public EnergyStorageEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int capacity, int transferRate) {
-        super(type, pos, blockState, 2, capacity, transferRate, transferRate);
-        this.tierTransferRate = transferRate;
+    public EnergyStorageEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int energyCapacity, int energyTransferRate) {
+        super(type, pos, blockState, 2, energyCapacity, energyTransferRate, energyTransferRate);
+        this.energyTransferRate = energyTransferRate;
     }
 
     @Override
     protected ContainerData initContainerData() {
         return new ContainerData() {
             @Override
-            public int get(int i) {
-                return switch (i) {
-                    case 0 -> energyStorage.getEnergyStored();
-                    case 1 -> energyStorage.getMaxEnergyStored();
-                    case 2 -> tierTransferRate; //Return the specific rate for this tier
-                    default -> 0;
-                };
-            }
+            public int get(int i) {return i;}
             @Override
             public void set(int i, int value) {}
             @Override
-            public int getCount() { return 3; }
+            public int getCount() { return 0; }
         };
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
         if (level.isClientSide) return;
-
         processBatterySlot(INPUT_SLOT);
-
         processOutputBattery();
 
         updateBlockState(level, pos, state);

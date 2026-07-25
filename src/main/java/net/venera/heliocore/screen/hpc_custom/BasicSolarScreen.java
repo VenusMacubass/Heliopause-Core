@@ -35,9 +35,9 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
         super.init();
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
-        
+
         this.toggleButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.data.get(5) > 0 ? "Disable" : "Enable"),
+                        Component.literal(menu.isEnabled() ? "Disable" : "Enable"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
@@ -58,11 +58,11 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
         guiGraphics.blit(BASIC_SOLAR_SCREEN_GUI, x, y, 0, 0, 176, 133); //Gui
         guiGraphics.blit(SUN_ICON_INACTIVE, x+15, y+22, 0, 0, 8, 8 , 8, 8); //Sun Icon (Inactive)
 
-        if(menu.data.get(0) > 0){ 
+        if(menu.getEnergy() > 0){ 
             //guiGraphics.blit(SOURCE_GUI, whereToDrawX, whereToDrawY, textureX, textureY, textureW, textureH, imageW, imageH);
             guiGraphics.blit(ENERGY_ACTIVITY_ICON, x+35, y+24, 0, 0, 9, 13 , 9, 13); //Lightning Icon
         }
-        if(menu.data.get(4) > 0) {
+        if(menu.isActive()) {
             guiGraphics.blit(SUN_ICON_ACTIVE, x+15, y+22, 0, 0, 8, 8, 8, 8); //Sun Icon  
             
         }
@@ -74,7 +74,6 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
             int startY = y + 15;
             int endX = startX + chargeLength;
             int endY = startY + 7;
-            
             //(FF: opacity, FF being opaque), rest is rgb
             guiGraphics.fill(startX, startY, endX, endY, 0xFFFFE400);
         }
@@ -94,16 +93,13 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
         int sunY = imageY + 22;
         int sunArea = 16;
         
-        if(isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)){ 
-            int currentEnergy = menu.data.get(0);
-            int maxEnergy = menu.data.get(1);
-            
+        if(isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)){
             guiGraphics.renderTooltip(font, Component.literal( 
-                    "Energy: " + currentEnergy + " / " + maxEnergy + " FE"), x, y);
+                    "Energy: " + menu.getEnergy() + " / " + menu.getMaxEnergy() + " FE"), x, y);
         }
 
         if(isMouseOver(x, y, sunX, sunY, sunArea, sunArea)) {
-            if(menu.data.get(4) > 0) {
+            if(menu.isActive()) {
                 guiGraphics.renderTooltip(font, Component.literal(
                         "Sun is visible."), x, y);
             } else {
@@ -116,7 +112,7 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
     @Override
     protected void containerTick() {
         super.containerTick();
-        this.toggleButton.setMessage(Component.literal(menu.data.get(5) > 0 ? "Disable" : "Enable"));
+        this.toggleButton.setMessage(Component.literal(menu.isEnabled() ? "Disable" : "Enable"));
     }
 
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {

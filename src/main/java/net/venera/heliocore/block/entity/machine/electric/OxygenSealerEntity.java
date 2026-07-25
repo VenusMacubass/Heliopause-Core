@@ -49,11 +49,12 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
     public final int oxygenUsage;
     public final int energyUsage;
     private final int maxOxygenCapacity = 6000;
-    private final int MAX_FLOW_RATE = 10;
+    private final int maxFlowRate;
     public boolean isActive = false;
     public boolean enabled = true;
     public boolean seal = false;
     private int currentVolumeCost = 1;
+    private final int frequency = 5;
     public final FluidTank oxygenTank = new FluidTank(maxOxygenCapacity) {
         @Override
         protected void onContentsChanged() {
@@ -69,10 +70,11 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
     };
     private final int maxVolume = 100000;
     
-    public OxygenSealerEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int capacity, int transferRate, int usagePerTick, int oxygenUsage, int energyUsage) {
-        super(type, pos, state, 3, capacity, transferRate, usagePerTick);
+    public OxygenSealerEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int energyCapacity, int energyTransferRate, int oxygenUsage, int energyUsage, int maxFlowRate) {
+        super(type, pos, state, 3, energyCapacity, energyTransferRate, 0);
         this.oxygenUsage = oxygenUsage;
         this.energyUsage = energyUsage;
+        this.maxFlowRate = maxFlowRate;
     }
 
     @Override
@@ -83,11 +85,9 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
                 return switch (i) {
                     case 0 -> oxygenTank.getFluidAmount();
                     case 1 -> oxygenTank.getCapacity();
-                    case 2 -> energyStorage.getEnergyStored();
-                    case 3 -> energyStorage.getMaxEnergyStored();
-                    case 4 -> isActive ? 1 : 0;
-                    case 5 -> enabled ? 1 : 0;
-                    case 6 -> seal ? 1 : 0;
+                    case 2 -> isActive ? 1 : 0;
+                    case 3 -> enabled ? 1 : 0;
+                    case 4 -> seal ? 1 : 0;
                     default -> 0;
                 };
             }
@@ -95,13 +95,13 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
             public void set(int i, int value) {
                 switch (i) {
                     case 0 -> oxygenTank.setFluid(new FluidStack(HpCFluids.OXYGEN.get(), value));
-                    case 4 -> isActive = value == 1;
-                    case 5 -> enabled = value == 1;
-                    case 6 -> seal = value == 1;
+                    case 2 -> isActive = value == 1;
+                    case 3 -> enabled = value == 1;
+                    case 4 -> seal = value == 1;
                 }
             }
             @Override
-            public int getCount() { return 7; }
+            public int getCount() { return 5; }
         };
     }
 
@@ -112,7 +112,7 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
         boolean oxygenProcessed = processOxygenSlot(OXYGEN_TANK_SLOT);
         if (batteryProcessed || oxygenProcessed) dirty = true;
         if (pullFluidIn(level, pos)) dirty = true;
-        boolean hasEnergy = this.energyStorage.getEnergyStored() > 0;
+        boolean hasEnergy = energyStorage.getEnergyStored() >= energyUsage * frequency;
         boolean isUnblocked = !level.getBlockState(pos.above()).isSolidRender(level, pos.above());
         ResourceKey<Level> currentDimension = level.dimension();
         boolean isInSpace = currentDimension.location().equals(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon")); //TODO: make this one based on dimension tags and not direct dimensions
@@ -122,7 +122,7 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
                 isActive = true;
                 dirty = true;
             }
-            if (level.getGameTime() % 5 == 0) {
+            if (level.getGameTime() % frequency == 0) {
                 if(!seal && isInSpace){
                     var existingRoom = OxygenVolumeHelper.getExistingRoom(pos);
 
@@ -148,7 +148,7 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
                         seal = false;
                         OxygenVolumeHelper.removeRoom(pos);
                     } else {
-                        this.energyStorage.extractEnergy(this.energyUsage, false);
+                        energyStorage.consumeEnergy(energyUsage*frequency);
                     }
                 }
             }
@@ -184,7 +184,7 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
 
             if (data != null && !data.isEmpty() && data.getFluid() != null && data.getFluid().getFluidType() == HpCFluids.OXYGEN.get().getFluidType()) {
                 
-                int amountToTry = Math.min(data.amount(), MAX_FLOW_RATE);
+                int amountToTry = Math.min(data.amount(), maxFlowRate);
                 int maxAcceptable = oxygenTank.fill(new FluidStack(data.getFluid(), amountToTry), IFluidHandler.FluidAction.SIMULATE);
 
                 if (maxAcceptable > 0) {
@@ -223,7 +223,7 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
         Set<BlockEntity> connectedMachines = PipeNetworkHelper.findConnectedInventories(level, pipePos, pos);
 
         int spaceAvailable = oxygenTank.getSpace();
-        int fluidToPull = Math.min(spaceAvailable, MAX_FLOW_RATE);
+        int fluidToPull = Math.min(spaceAvailable, maxFlowRate);
 
         String targetFluidString = HpCFluids.OXYGEN.getId().toString();
         boolean actuallyPulledSomething = false;

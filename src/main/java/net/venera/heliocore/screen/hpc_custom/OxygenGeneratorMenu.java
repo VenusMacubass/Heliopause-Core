@@ -119,24 +119,34 @@ public class OxygenGeneratorMenu extends AbstractContainerMenu {
     }
 
     public int getOxygenScaled(int pixels){
-        int oxygen = this.data.get(2);
-        int capacity = this.data.get(3);
+        int oxygen = this.data.get(0);
+        int capacity = this.data.get(1);
         if(capacity == 0) {
             return 0;
         }
         return oxygen * pixels / capacity;
     }
-    
-    public int getEnergyScaled(int pixels){
-        int energy = this.data.get(0);
-        int capacity = this.data.get(1);
-        if(capacity == 0) {
-            return 0;
-        }
-        return energy * pixels / capacity;
+
+    public int getEnergy() {
+        return this.blockEntity.getEnergyStorage().getEnergyStored();
     }
 
-    public int getCurrentEnergy() {
-        return data.get(0);
+    public int getMaxEnergy() {
+        return this.blockEntity.getEnergyStorage().getMaxEnergyStored();
+    }
+
+    public int getEnergyScaled(int pixels) {
+        int energy = getEnergy();
+        int capacity = getMaxEnergy();
+        if (capacity == 0) return 0;
+        return (int) ((long) energy * pixels / capacity);
+    }
+
+    public boolean isActive() {
+        return this.data.get(2) > 0;
+    }
+
+    public boolean isEnabled() {
+        return this.data.get(3) > 0;
     }
 }
