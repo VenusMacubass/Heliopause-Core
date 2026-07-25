@@ -118,15 +118,26 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     public void tick(Level level, BlockPos pos, BlockState state) {
         if (level.isClientSide()) return;
         boolean dirty = false;
-
         if (processBatterySlot(BATTERY_SLOT)) dirty = true;
-
         if (processInputs()) dirty = true;
         if (processOutputs()) dirty = true;
 
-        if (canRefine() && enabled) {
-            refine(level);
-            dirty = true;
+        if (enabled) {
+            if (level.getGameTime() % frequency == 0) {
+                if (canRefine()) {
+                    refine();
+
+                    if (!isActive) {
+                        isActive = true;
+                        dirty = true; 
+                    }
+                } else {
+                    if (isActive) {
+                        isActive = false;
+                        dirty = true;
+                    }
+                }
+            }
         } else {
             if (isActive) {
                 isActive = false;
@@ -136,32 +147,28 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
 
         if (fuelTank.getFluidAmount() > 0) {
             pumpFluidOut(level, pos);
-            dirty = true;
         }
         if (oilTank.getFluidAmount() < this.maxCapacity) {
             pullFluidIn(level, pos);
-            dirty = true;
         }
+
         if (dirty) setChanged();
         BaseElectricMachineEntity.tick(level, pos, state, this);
     }
 
-    private void refine(Level level){
-        if((level.getGameTime() % frequency) == 0){
-            isActive = true;
-            isolateHydrocarbons();
+    private void refine(){
+        isolateHydrocarbons();
 
-            int oilAvailable = oilTank.getFluidAmount();
-            int fuelSpace = fuelTank.getSpace();
+        int oilAvailable = oilTank.getFluidAmount();
+        int fuelSpace = fuelTank.getSpace();
 
-            int conversionAmount = Math.min(this.CONVERSION_RATE, oilAvailable);
-            conversionAmount = Math.min(conversionAmount/2, fuelSpace);
-            petroleumScore += conversionAmount;
-            oilTank.drain((conversionAmount*2), IFluidHandler.FluidAction.EXECUTE);
-            fuelTank.fill(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), conversionAmount), IFluidHandler.FluidAction.EXECUTE);
+        int conversionAmount = Math.min(this.CONVERSION_RATE, oilAvailable);
+        conversionAmount = Math.min(conversionAmount/2, fuelSpace);
+        petroleumScore += conversionAmount;
+        oilTank.drain((conversionAmount*2), IFluidHandler.FluidAction.EXECUTE);
+        fuelTank.fill(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), conversionAmount), IFluidHandler.FluidAction.EXECUTE);
 
-            this.energyStorage.consumeEnergy(this.ENERGY_USAGE * frequency);
-        }
+        this.energyStorage.consumeEnergy(this.ENERGY_USAGE * frequency);
     }
     
     private void isolateHydrocarbons() {
