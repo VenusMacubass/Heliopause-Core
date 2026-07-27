@@ -16,17 +16,14 @@ public class HpCTags {
         public static final TagKey<Item> COMPRESSIBLE_INGOTS = createTag("compressible_ingots");
         public static final TagKey<Item> OXYGEN_GEAR = TagKey.create(Registries.ITEM, 
                 ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "oxygen_gear"));
-        public static final TagKey<Item> CURIOS_OXYGEN_MASK = ItemTags.create(
-                ResourceLocation.fromNamespaceAndPath("curios", "oxygen_mask")
+        public static final TagKey<Item> OXYGEN_MASK = ItemTags.create(
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "slots/oxygen_mask")
         );
-        public static final TagKey<Item> CURIOS_OXYGEN_CONNECTORS = ItemTags.create(
-                ResourceLocation.fromNamespaceAndPath("curios", "oxygen_connectors")
+        public static final TagKey<Item> OXYGEN_CONNECTORS = ItemTags.create(
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "slots/oxygen_connectors")
         );
-        public static final TagKey<Item> CURIOS_OXYGEN_TANK_1 = ItemTags.create(
-                ResourceLocation.fromNamespaceAndPath("curios", "oxygen_tank_1")
-        );
-        public static final TagKey<Item> CURIOS_OXYGEN_TANK_2 = ItemTags.create(
-                ResourceLocation.fromNamespaceAndPath("curios", "oxygen_tank_2")
+        public static final TagKey<Item> OXYGEN_TANK = ItemTags.create(
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "slots/oxygen_tank")
         );
 
         public static final TagKey<Item> STONES = createTag("stone_variants");

@@ -3,12 +3,16 @@ package net.venera.heliocore;
 import net.minecraft.client.Camera;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -52,10 +56,11 @@ import net.venera.heliocore.screen.HpCMenuTypes;
 import net.venera.heliocore.screen.hpc_custom.*;
 import net.venera.heliocore.util.EnergySyncPayload;
 import net.venera.heliocore.util.LanderControlPayload;
+import net.venera.heliocore.util.OpenEquipmentPayload;
+import net.venera.heliocore.util.SyncEquipmentPayload;
 import org.joml.Matrix4f;
 
 import javax.annotation.Nullable;
-
 
 @EventBusSubscriber(modid = HeliopauseCore.MOD_ID, value = Dist.CLIENT)
 public class HeliopauseCoreClient {
@@ -65,7 +70,6 @@ public class HeliopauseCoreClient {
 
     @SubscribeEvent
     static void onClientSetup(final FMLClientSetupEvent event) {
-        // Some client setup code
         HeliopauseCore.LOGGER.info("HELLO FROM CLIENT SETUP");
         HeliopauseCore.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         ItemBlockRenderTypes.setRenderLayer(HpCBlocks.FLUID_TANK.get(), RenderType.translucent());
@@ -165,8 +169,6 @@ public class HeliopauseCoreClient {
         event.register(HpCMenuTypes.REFINERY_MENU.get(), RefineryScreen::new);
         event.register(HpCMenuTypes.ENERGY_STORAGE_UNIT_MENU.get(), EnergyStorageUnitScreen::new);
         event.register(HpCMenuTypes.BASIC_SOLAR_MENU.get(), BasicSolarScreen::new);
-        event.register(HpCMenuTypes.ROCKET_MENU.get(), RocketScreen::new);
-        event.register(HpCMenuTypes.LANDER_MENU.get(), LanderScreen::new);
         event.register(HpCMenuTypes.CARGO_MANAGER_MENU.get(), CargoManagerScreen::new);
         event.register(HpCMenuTypes.FUEL_MANAGER_MENU.get(), FuelManagerScreen::new);
         event.register(HpCMenuTypes.OXYGEN_GENERATOR_MENU.get(), OxygenGeneratorScreen::new);
@@ -174,8 +176,47 @@ public class HeliopauseCoreClient {
         event.register(HpCMenuTypes.VAPORIZER_MENU.get(), VaporizerScreen::new);
         event.register(HpCMenuTypes.ENERGY_GENERATOR_MENU.get(), EnergyGeneratorScreen::new);
         event.register(HpCMenuTypes.OXYGEN_SEALER_MENU.get(), OxygenSealerScreen::new);
+
+        event.register(HpCMenuTypes.ROCKET_MENU.get(), RocketScreen::new);
+        event.register(HpCMenuTypes.LANDER_MENU.get(), LanderScreen::new);
+        event.register(HpCMenuTypes.EQUIPMENT_MENU.get(), HpCEquipmentScreen::new);
     }
 
+    private static Button creativeGearButton;
+
+    @SubscribeEvent
+    public static void onScreenInit(ScreenEvent.Init.Post event) {
+        if (event.getScreen() instanceof InventoryScreen screen) {
+            int x = screen.getGuiLeft() + 126;
+            int y = screen.getGuiTop() + 61;
+
+            Button gearButton = Button.builder(Component.literal("Gear"), button -> {
+                PacketDistributor.sendToServer(new OpenEquipmentPayload());
+            }).bounds(x, y, 40, 20).build();
+
+            event.addListener(gearButton);
+        }
+        else if (event.getScreen() instanceof CreativeModeInventoryScreen creativeScreen) {
+            int x = creativeScreen.getGuiLeft() + 126;
+            int y = creativeScreen.getGuiTop() + 20;
+
+            creativeGearButton = Button.builder(Component.literal("Gear"), button -> {
+                PacketDistributor.sendToServer(new OpenEquipmentPayload());
+            }).bounds(x, y, 40, 20).build();
+
+            event.addListener(creativeGearButton);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onScreenRender(ScreenEvent.Render.Pre event) {
+        if (event.getScreen() instanceof CreativeModeInventoryScreen creativeScreen && creativeGearButton != null) {
+            boolean isInventoryTab = creativeScreen.isInventoryOpen();
+
+            creativeGearButton.visible = isInventoryTab;
+        }
+    }
+    
     @SubscribeEvent
     public static void onRenderGuiLayer(RenderGuiLayerEvent.Pre event) { //To disable the jump meter on rideable entities
         if (event.getName().equals(VanillaGuiLayers.JUMP_METER)) {
@@ -244,7 +285,7 @@ public class HeliopauseCoreClient {
         }, HpCFluids.OXYGEN_TYPE.get()); 
 
 
-        /* Example for future gases:
+        /* For future gases:
         event.registerFluidType(new IClientFluidTypeExtensions() {
             @Override public int getTintColor() { return 0x9900FF00; } // Toxic Green
             @Override public ResourceLocation getStillTexture() { return ResourceLocation.parse("minecraft:block/water_still"); }
@@ -284,6 +325,7 @@ public class HeliopauseCoreClient {
             }
         }
     }
+    
     //region Landers
     private static boolean wasJumping = false;
 
@@ -319,6 +361,18 @@ public class HeliopauseCoreClient {
                         }
                     });
                 }
+        );
+
+        registrar.playToServer(
+                OpenEquipmentPayload.TYPE,
+                OpenEquipmentPayload.CODEC,
+                OpenEquipmentPayload::handle
+        );
+
+        registrar.playToClient(
+                SyncEquipmentPayload.TYPE,
+                SyncEquipmentPayload.CODEC,
+                SyncEquipmentPayload::handle
         );
     }
     

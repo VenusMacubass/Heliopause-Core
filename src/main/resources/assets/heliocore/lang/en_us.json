@@ -179,13 +179,13 @@
 
 
 
-  "curios.identifier.gauntlets": "Gauntlets Slot",
-  "curios.identifier.oxygen_mask": "Oxygen Mask Slot",
-  "curios.identifier.oxygen_connectors": "Oxygen Connectors Slot",
-  "curios.identifier.oxygen_tank_1": "Oxygen Tank Slot",
-  "curios.identifier.oxygen_tank_2": "Oxygen Tank Slot",
-  "curios.identifier.head_gear": "Head Gear Slot",
-  "curios.identifier.body_gear": "Body Gear Slot",
-  "curios.identifier.legs_gear": "Legs Gear Slot",
-  "curios.identifier.hands_and_feet_gear": "Hands and Feet Gear Slot"
+  "accessories.identifier.gauntlets": "Gauntlets Slot",
+  "accessories.slot.oxygen_mask": "Oxygen Mask Slot",
+  "accessories.slot.oxygen_connectors": "Oxygen Connectors Slot",
+  "accessories.slot.oxygen_tank_1": "Oxygen Tank Slot",
+  "accessories.slot.oxygen_tank_2": "Oxygen Tank Slot",
+  "accessories.identifier.head_gear": "Head Gear Slot",
+  "accessories.identifier.body_gear": "Body Gear Slot",
+  "accessories.identifier.legs_gear": "Legs Gear Slot",
+  "accessories.identifier.hands_and_feet_gear": "Hands and Feet Gear Slot"
 }

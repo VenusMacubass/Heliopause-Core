@@ -41,7 +41,6 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), new HpCItemModelProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeServer(), new HpCDatapackProvider(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), new HpCBiomeTagProvider(packOutput, lookupProvider, existingFileHelper));
-        generator.addProvider(event.includeServer(), new HpCCuriosDataProvider(packOutput, existingFileHelper, lookupProvider));
 
     }
 }

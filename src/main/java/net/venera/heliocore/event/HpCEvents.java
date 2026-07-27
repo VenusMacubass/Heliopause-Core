@@ -2,8 +2,8 @@ package net.venera.heliocore.event;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -17,23 +17,24 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
 import net.neoforged.neoforge.event.level.PistonEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.venera.heliocore.HeliopauseCore;
@@ -41,6 +42,7 @@ import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.HpCBlockEntities;
 import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
 import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
+import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.util.*;
@@ -91,6 +93,67 @@ public class HpCEvents {
         if (sealerPos != null && event.getLevel().getBlockEntity(sealerPos) instanceof OxygenSealerEntity sealer) {
             sealer.seal = false;
             OxygenVolumeHelper.removeRoom(sealerPos);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onEntityDeath(LivingDeathEvent event) {
+        LivingEntity entity = event.getEntity();
+        if (entity.level().isClientSide()) return;
+        
+        if (entity instanceof Player player) {
+            if (player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
+                return;
+            }
+        }
+        
+        var inventory = entity.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+        for (int i = 0; i < inventory.getSlots(); i++) {
+            ItemStack stack = inventory.getStackInSlot(i);
+            if (!stack.isEmpty()) {
+                entity.spawnAtLocation(stack);
+                inventory.setStackInSlot(i, ItemStack.EMPTY); 
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onStartTracking(PlayerEvent.StartTracking event) {
+        if (event.getTarget() instanceof LivingEntity targetEntity && event.getEntity() instanceof ServerPlayer observer) {
+            var inventory = targetEntity.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+            PacketDistributor.sendToPlayer(observer, new SyncEquipmentPayload(targetEntity.getId(), inventory.serializeNBT(observer.registryAccess())));
+        }
+    }
+    
+    @SubscribeEvent
+    public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            var inventory = player.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+            PacketDistributor.sendToPlayer(player, new SyncEquipmentPayload(player.getId(), inventory.serializeNBT(player.registryAccess())));
+        }
+    }
+    
+    public static void syncToAllTracking(LivingEntity entity) {
+        if (entity.level().isClientSide()) return;
+        var inventory = entity.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+        
+        PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity,
+                new SyncEquipmentPayload(entity.getId(), inventory.serializeNBT(entity.registryAccess())));
+    }
+
+    @SubscribeEvent
+    public static void onPlayerClone(PlayerEvent.Clone event) {
+        Player original = event.getOriginal();
+        Player newPlayer = event.getEntity();
+        if (event.isWasDeath() && !original.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
+            return; 
+        }
+        
+        var oldInventory = original.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+        var newInventory = newPlayer.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+
+        for (int i = 0; i < oldInventory.getSlots(); i++) {
+            newInventory.setStackInSlot(i, oldInventory.getStackInSlot(i).copy());
         }
     }
 
@@ -211,15 +274,14 @@ public class HpCEvents {
         if (living instanceof Player player && (player.isCreative() || player.isSpectator())) {
             return;
         }
-
-        boolean hasOxygen = OxygenSetupHelper.checkOxygenSetup(living);
+        
         BlockPos headPos = BlockPos.containing(event.getEntity().getX(), event.getEntity().getEyeY(), event.getEntity().getZ());
         long headLong = headPos.asLong();
         ResourceLocation currentDimension = living.level().dimension().location();
-        
+
         ResourceLocation moonDim = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon");
         boolean inOxygen = !currentDimension.equals(moonDim);
-
+        
         if (!inOxygen) {
             inOxygen = OxygenVolumeHelper.isPositionSealed(headLong);
             if (!inOxygen) {
@@ -234,11 +296,15 @@ public class HpCEvents {
                 }
             }
         }
+        
+        if (!inOxygen) {
+            boolean hasOxygenGear = OxygenSetupHelper.checkOxygenSetup(living);
 
-        if (!hasOxygen && !inOxygen) {
-            if (living.getType().is(HpCTags.Entities.DOES_NOT_BREATHE)) return;
-            if (living.isInvertedHealAndHarm()) return;
-            living.hurt(living.damageSources().drown(), 2.0f);
+            if (!hasOxygenGear) {
+                if (living.getType().is(HpCTags.Entities.DOES_NOT_BREATHE)) return;
+                if (living.isInvertedHealAndHarm()) return;
+                living.hurt(living.damageSources().drown(), 2.0f);
+            }
         }
     }
     //endregion

@@ -1,6 +1,7 @@
 package net.venera.heliocore.screen;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.bus.api.IEventBus;
@@ -10,6 +11,8 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.screen.hpc_custom.*;
+
+import java.util.function.Supplier;
 
 public class HpCMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, HeliopauseCore.MOD_ID);
@@ -25,12 +28,6 @@ public class HpCMenuTypes {
     
     public static final DeferredHolder<MenuType<?>, MenuType<BasicSolarMenu>> BASIC_SOLAR_MENU =
             registerMenuType("basic_solar_menu", BasicSolarMenu::new);
-
-    public static final DeferredHolder<MenuType<?>, MenuType<RocketMenu>> ROCKET_MENU =
-            registerMenuType("rocket_menu", RocketMenu::new);
-
-    public static final DeferredHolder<MenuType<?>, MenuType<LanderMenu>> LANDER_MENU =
-            registerMenuType("lander_menu", LanderMenu::new);
 
     public static final DeferredHolder<MenuType<?>, MenuType<CargoManagerMenu>> CARGO_MANAGER_MENU =
             registerMenuType("cargo_manager_menu", CargoManagerMenu::new);
@@ -52,6 +49,17 @@ public class HpCMenuTypes {
 
     public static final DeferredHolder<MenuType<?>, MenuType<OxygenSealerMenu>> OXYGEN_SEALER_MENU =
             registerMenuType("oxygen_sealer_menu", OxygenSealerMenu::new);
+    
+    //region Entities
+    public static final DeferredHolder<MenuType<?>, MenuType<RocketMenu>> ROCKET_MENU =
+            registerMenuType("rocket_menu", RocketMenu::new);
+
+    public static final DeferredHolder<MenuType<?>, MenuType<LanderMenu>> LANDER_MENU =
+            registerMenuType("lander_menu", LanderMenu::new);
+
+    public static final DeferredHolder<MenuType<?>, MenuType<HpCEquipmentMenu>> EQUIPMENT_MENU = 
+            registerMenuType("equipment_menu", HpCEquipmentMenu::new);
+    //endregion
 
     private static <T extends AbstractContainerMenu>DeferredHolder<MenuType<?>, MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENU_TYPES.register(name, () -> IMenuTypeExtension.create(factory));

@@ -13,7 +13,6 @@ import net.venera.heliocore.util.HpCTags;
 import java.util.concurrent.CompletableFuture;
 
 public class HpCBiomeTagProvider extends BiomeTagsProvider {
-
     public HpCBiomeTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper existingFileHelper) {
         super(output, provider, HeliopauseCore.MOD_ID, existingFileHelper);
     }

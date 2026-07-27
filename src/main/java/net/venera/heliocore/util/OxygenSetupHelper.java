@@ -2,45 +2,41 @@ package net.venera.heliocore.util;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.data.component.GasTankData;
+import net.venera.heliocore.event.HpCEvents;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
-import top.theillusivec4.curios.api.CuriosApi;
 
 public class OxygenSetupHelper {
     private static final int OXYGEN_USAGE = 2;
-
     public static boolean checkOxygenSetup(LivingEntity livingEntity) {
-        var optionalCurios = CuriosApi.getCuriosInventory(livingEntity);
-        if (optionalCurios.isEmpty()) {
-            return false; 
-        }
-
-        var curios = optionalCurios.get().getCurios();
-        var maskSlot = curios.get("oxygen_mask");
-        if (maskSlot == null || maskSlot.getStacks().getStackInSlot(0).getItem() != HpCItems.OXYGEN_MASK.get()) {
+        ItemStackHandler inventory = livingEntity.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+        
+        ItemStack maskStack = inventory.getStackInSlot(0);
+        if (maskStack.isEmpty() || maskStack.getItem() != HpCItems.OXYGEN_MASK.get()) {
             return false;
         }
         
-        var connectorSlot = curios.get("oxygen_connectors");
-        if (connectorSlot == null || connectorSlot.getStacks().getStackInSlot(0).getItem() != HpCItems.OXYGEN_CONNECTORS.get()) {
+        ItemStack connectorStack = inventory.getStackInSlot(1);
+        if (connectorStack.isEmpty() || connectorStack.getItem() != HpCItems.OXYGEN_CONNECTORS.get()) {
             return false;
         }
         
-        var tank1Slot = curios.get("oxygen_tank_1");
-        var tank2Slot = curios.get("oxygen_tank_2");
-
-        ItemStack tank1Stack = tank1Slot != null ? tank1Slot.getStacks().getStackInSlot(0) : ItemStack.EMPTY;
-        ItemStack tank2Stack = tank2Slot != null ? tank2Slot.getStacks().getStackInSlot(0) : ItemStack.EMPTY;
+        ItemStack tank1Stack = inventory.getStackInSlot(2);
+        ItemStack tank2Stack = inventory.getStackInSlot(3);
         
         if (tryConsumeOxygen(tank1Stack)) {
+            HpCEvents.syncToAllTracking(livingEntity);
             return true;
         }
-        
+
         if (tryConsumeOxygen(tank2Stack)) {
+            HpCEvents.syncToAllTracking(livingEntity);
             return true;
         }
-        
+
         return false;
     }
 

@@ -53,13 +53,9 @@ public class HpCItemTagProvider extends ItemTagsProvider {
                 .add(HpCItems.IRIDIUM_INGOT.get());
         
         
-//        tag(CURIOS_BACK)
-//                .add(Items.ELYTRA);
-        
-        tag(CURIOS_OXYGEN_MASK).add(HpCItems.OXYGEN_MASK.get());
-        tag(CURIOS_OXYGEN_CONNECTORS).add(HpCItems.OXYGEN_CONNECTORS.get());
-        tag(CURIOS_OXYGEN_TANK_1).add(HpCItems.COMPRESSED_GAS_TANK.get());
-        tag(CURIOS_OXYGEN_TANK_2).add(HpCItems.COMPRESSED_GAS_TANK.get());
+        tag(OXYGEN_MASK).add(HpCItems.OXYGEN_MASK.get());
+        tag(OXYGEN_CONNECTORS).add(HpCItems.OXYGEN_CONNECTORS.get());
+        tag(OXYGEN_TANK).add(HpCItems.COMPRESSED_GAS_TANK.get());
 
         tag(HpCTags.Items.STONES)
                 .add(Blocks.STONE.asItem())
