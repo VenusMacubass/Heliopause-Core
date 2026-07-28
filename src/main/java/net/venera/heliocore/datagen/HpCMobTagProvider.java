@@ -10,7 +10,7 @@ import net.venera.heliocore.HeliopauseCore;
 import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
-import static net.venera.heliocore.util.HpCTags.Entities.OXYGEN_SLOTS_RECEIVERS;
+import static net.venera.heliocore.item.HpCTags.Entities.OXYGEN_SLOTS_RECEIVERS;
 
 public class HpCMobTagProvider extends EntityTypeTagsProvider {
     public HpCMobTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {

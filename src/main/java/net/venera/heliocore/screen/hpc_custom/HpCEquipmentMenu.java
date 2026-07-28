@@ -1,19 +1,23 @@
 package net.venera.heliocore.screen.hpc_custom;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
+import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.event.HpCEvents;
 import net.venera.heliocore.screen.HpCMenuTypes;
-import net.venera.heliocore.util.HpCTags;
+import net.venera.heliocore.item.HpCTags;
 
 public class HpCEquipmentMenu extends AbstractContainerMenu {
     public final LivingEntity targetEntity;
@@ -34,6 +38,13 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
         addCustomSlots();
         addPlayerInventory(inventory);
         addPlayerHotbar(inventory);
+
+        this.addSlot(new Slot(inventory, 40, 139, 62) {
+            @Override
+            public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+                return Pair.of(InventoryMenu.BLOCK_ATLAS, InventoryMenu.EMPTY_ARMOR_SLOT_SHIELD);
+            }
+        });
     }
 
     private void addCustomSlots() {
@@ -113,6 +124,8 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
                 HpCEvents.syncToAllTracking(targetEntity);
             }
         });
+
+        
     }
     
     private static final int CUSTOM_SLOT_COUNT = 10;
@@ -120,8 +133,8 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
     private static final int PLAYER_INVENTORY_ROW_COUNT = 3;
     private static final int PLAYER_INVENTORY_COLUMN_COUNT = 9;
     private static final int PLAYER_INVENTORY_SLOT_COUNT = PLAYER_INVENTORY_COLUMN_COUNT * PLAYER_INVENTORY_ROW_COUNT;
-    private static final int VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INVENTORY_SLOT_COUNT;
-
+    private static final int OFFHAND_SLOT_COUNT = 1;
+    private static final int VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INVENTORY_SLOT_COUNT + OFFHAND_SLOT_COUNT;
     private static final int CUSTOM_FIRST_SLOT_INDEX = 0;
     private static final int VANILLA_FIRST_SLOT_INDEX = CUSTOM_FIRST_SLOT_INDEX + CUSTOM_SLOT_COUNT;
 
@@ -138,12 +151,18 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
             }
         }
         
-        else if (pIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
+        else if (pIndex >= VANILLA_FIRST_SLOT_INDEX && pIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
             if (!moveItemStackTo(sourceStack, CUSTOM_FIRST_SLOT_INDEX, CUSTOM_FIRST_SLOT_INDEX + CUSTOM_SLOT_COUNT, false)) {
-                return ItemStack.EMPTY;
+                if (pIndex != VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT - 1) { 
+                    if (!moveItemStackTo(sourceStack, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT - 1, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else {
+                    return ItemStack.EMPTY;
+                }
             }
         } else {
-            System.out.println("Invalid slotIndex:" + pIndex);
+            HeliopauseCore.LOGGER.info("Invalid slotIndex:{}", pIndex);
             return ItemStack.EMPTY;
         }
 

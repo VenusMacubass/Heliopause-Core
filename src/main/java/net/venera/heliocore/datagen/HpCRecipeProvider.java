@@ -13,7 +13,7 @@ import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.recipe.CoalCompressorRecipeBuilder;
-import net.venera.heliocore.util.HpCTags;
+import net.venera.heliocore.item.HpCTags;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

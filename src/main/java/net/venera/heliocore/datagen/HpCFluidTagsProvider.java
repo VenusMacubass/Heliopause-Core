@@ -7,7 +7,7 @@ import net.minecraft.tags.FluidTags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.fluid.HpCFluids;
-import net.venera.heliocore.util.HpCTags;
+import net.venera.heliocore.item.HpCTags;
 import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 

@@ -19,7 +19,7 @@ import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.dimension.worldgen.feature.CraterConfig;
 import net.venera.heliocore.dimension.worldgen.feature.HpCFeatures;
 import net.venera.heliocore.fluid.HpCFluids;
-import net.venera.heliocore.util.HpCTags;
+import net.venera.heliocore.item.HpCTags;
 
 import java.util.List;
 

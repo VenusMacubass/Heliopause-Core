@@ -7,14 +7,13 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.BiomeModifiers;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.dimension.biome.HpCBiomes;
-import net.venera.heliocore.util.HpCTags;
+import net.venera.heliocore.item.HpCTags;
 
 public class HpCBiomeModifiers {  //In what biome and in what stage shall I place?
     //CF -> PF ->  BM

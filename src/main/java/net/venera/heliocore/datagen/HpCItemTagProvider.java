@@ -11,11 +11,11 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.item.HpCItems;
-import net.venera.heliocore.util.HpCTags;
+import net.venera.heliocore.item.HpCTags;
 import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
-import static net.venera.heliocore.util.HpCTags.Items.*;
+import static net.venera.heliocore.item.HpCTags.Items.*;
 
 public class HpCItemTagProvider extends ItemTagsProvider {
     public HpCItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags, @Nullable ExistingFileHelper existingFileHelper) {

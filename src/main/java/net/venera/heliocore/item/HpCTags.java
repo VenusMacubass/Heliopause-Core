@@ -1,4 +1,4 @@
-package net.venera.heliocore.util;
+package net.venera.heliocore.item;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;

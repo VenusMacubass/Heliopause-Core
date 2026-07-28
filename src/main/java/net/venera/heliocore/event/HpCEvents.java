@@ -45,9 +45,8 @@ import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
 import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
 import net.venera.heliocore.item.HpCItems;
+import net.venera.heliocore.item.HpCTags;
 import net.venera.heliocore.util.*;
-
-import java.awt.*;
 
 @EventBusSubscriber
 public class HpCEvents {
