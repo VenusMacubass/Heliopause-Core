@@ -92,23 +92,23 @@ public class HpCBlocks {
             () -> new RefineryBlock(BlockBehaviour.Properties.of().strength(2f).sound(SoundType.HEAVY_CORE)));
     public static final DeferredBlock<Block> ENERGY_STORAGE_UNIT = registerBlock("energy_storage_unit",
             () -> new EnergyStorageBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.ENERGY_STORAGE_ENTITY));
-    public static final DeferredBlock<Block> BASIC_SOLAR_BLOCK = registerBlock("basic_solar_block",
+    public static final DeferredBlock<Block> BASIC_SOLAR_PANEL = registerBlock("basic_solar_panel",
             () -> new SolarPanelBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.BASIC_SOLAR_PANEL_ENTITY));
-    public static final DeferredBlock<Block> CARGO_MANAGER_BLOCK = registerBlock("cargo_manager_block",
+    public static final DeferredBlock<Block> CARGO_MANAGER = registerBlock("cargo_manager",
             () -> new CargoManagerBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.CARGO_MANAGER_ENTITY));
-    public static final DeferredBlock<Block> FUEL_MANAGER_BLOCK = registerBlock("fuel_manager_block",
+    public static final DeferredBlock<Block> FUEL_MANAGER = registerBlock("fuel_manager",
             () -> new FuelManagerBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.FUEL_MANAGER_ENTITY));
-    public static final DeferredBlock<Block> OXYGEN_GENERATOR_BLOCK = registerBlock("oxygen_generator_block",
+    public static final DeferredBlock<Block> OXYGEN_GENERATOR = registerBlock("oxygen_generator",
             () -> new OxygenGeneratorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.OXYGEN_GENERATOR_ENTITY));
-    public static final DeferredBlock<Block> GAS_COMPRESSOR_BLOCK = registerBlock("gas_compressor_block",
+    public static final DeferredBlock<Block> GAS_COMPRESSOR = registerBlock("gas_compressor",
             () -> new GasCompressorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.GAS_COMPRESSOR_ENTITY));
-    public static final DeferredBlock<Block> GAS_VAPORIZER_BLOCK = registerBlock("gas_vaporizer_block",
+    public static final DeferredBlock<Block> GAS_VAPORIZER = registerBlock("gas_vaporizer",
             () -> new GasVaporizerBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.GAS_VAPORIZER_ENTITY));
-    public static final DeferredBlock<Block> ENERGY_GENERATOR_BLOCK = registerBlock("energy_generator_block",
+    public static final DeferredBlock<Block> ENERGY_GENERATOR = registerBlock("energy_generator",
             () -> new EnergyGeneratorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.ENERGY_GENERATOR_ENTITY));
-    public static final DeferredBlock<Block> DECONSTRUCTOR_BLOCK = registerBlock("deconstructor_block",
+    public static final DeferredBlock<Block> DECONSTRUCTOR = registerBlock("deconstructor",
             () -> new DeconstructorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.DECONSTRUCTOR_ENTITY));
-    public static final DeferredBlock<Block> OXYGEN_SEALER_BLOCK = registerBlock("oxygen_sealer_block",
+    public static final DeferredBlock<Block> OXYGEN_SEALER = registerBlock("oxygen_sealer",
             () -> new OxygenSealerBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.OXYGEN_SEALER_ENTITY));
 
     //endregion
@@ -210,10 +210,10 @@ public class HpCBlocks {
                 }
     });
 
-    public static final DeferredBlock<Block> AIRLOCK_FRAME_BLOCK = registerBlock("airlock_gate_frame",
+    public static final DeferredBlock<Block> AIRLOCK_FRAME = registerBlock("airlock_gate_frame",
             () -> new Block(BlockBehaviour.Properties.of().sound(SoundType.METAL)));
 
-    public static final DeferredBlock<Block> AIRLOCK_FRAME_SWITCH_BLOCK = registerBlock("airlock_frame_switch_block",
+    public static final DeferredBlock<Block> AIRLOCK_FRAME_SWITCH = registerBlock("airlock_frame_switch",
             () -> new AirlockFrameSwitch(BlockBehaviour.Properties.of().sound(SoundType.METAL)));
 
     public static final DeferredBlock<Block> AIRLOCK_GENERATED_BLOCK = BLOCKS.register("airlock_generated_black",
@@ -222,7 +222,7 @@ public class HpCBlocks {
     public static final DeferredBlock<Block> MAGNETIC_CRAFTING_TABLE = registerBlock("magnetic_crafting_table",
             () -> new MagneticCraftingTableBlock(BlockBehaviour.Properties.of().sound(SoundType.METAL)));
     
-    public static final DeferredBlock<Block> PIZZA_BLOCK = registerBlock("pizza_block",
+    public static final DeferredBlock<Block> DEFAULT_PIZZA = registerBlock("default_pizza",
             () -> new PizzaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE)));
     
     //region Registry 

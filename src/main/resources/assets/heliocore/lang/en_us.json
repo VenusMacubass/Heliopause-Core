@@ -49,6 +49,12 @@
   "item.heliocore.tektites": "Tektite Shards",
   "item.heliocore.hydrocarbons": "Petrochemicals",
 
+  "item.heliocore.air_fan": "Fan",
+  "item.heliocore.basic_circuit_board": "Basic Circuit Board",
+  "item.heliocore.electromagnetic_sensors": "Electromagnetic Sensors",
+  "item.heliocore.fluid_filter": "Fluid Filter",
+  "item.heliocore.gas_regulator": "Gas Regulator",
+  
   "item.heliocore.oxygen_mask": "Oxygen Mask",
   "item.heliocore.oxygen_connectors": "Oxygen Connectors",
   "item.heliocore.oxygen_tank": "Oxygen Tank",
@@ -95,7 +101,7 @@
   "block.heliocore.iridium_block": "Block of Iridium",
   "block.heliocore.sapphire_ore": "Sapphire Ore",
   "block.heliocore.cheese_block": "Cheese Block",
-  "block.heliocore.pizza_block": "Pizza",
+  "block.heliocore.default_pizza": "Pizza",
   
   
 
@@ -146,21 +152,22 @@
   "block.heliocore.rocket_bot": "Tier 1 Rocket",
   "block.heliocore.copper_wire_block": "Copper Wire Block",
   "block.heliocore.fluid_pipe": "Fluid Pipe",
+  "block.heliocore.fluid_pipe_block": "Fluid Pipe Block",
   "block.heliocore.magnetic_crafting_table": "Magnetic Crafting Table",
   "block.heliocore.airlock_gate_frame": "Airlock Gate Frame",
-  "block.heliocore.airlock_frame_switch_block": "Airlock Frame Switch",
+  "block.heliocore.airlock_frame_switch": "Airlock Frame Switch",
 
   "block.heliocore.coal_compressor": "Coal Powered Compressor",
   "block.heliocore.energy_storage_unit": "Energy Storage Unit",
   "block.heliocore.refinery": "Oil Refinery",
-  "block.heliocore.basic_solar_block": "Basic Solar Panel",
-  "block.heliocore.fuel_manager_block": "Rocket Fuel and Energy Manager",
-  "block.heliocore.cargo_manager_block": "Rocket Cargo Manager",
-  "block.heliocore.oxygen_generator_block": "Oxygen Generator",
-  "block.heliocore.gas_compressor_block": "Gas Compressor",
-  "block.heliocore.gas_vaporizer_block": "Gas Vaporizer",
-  "block.heliocore.energy_generator_block": "Energy Generator",
-  "block.heliocore.oxygen_sealer_block": "Oxygen Sealer",
+  "block.heliocore.basic_solar_panel": "Basic Solar Panel",
+  "block.heliocore.fuel_manager": "Rocket Fuel and Energy Manager",
+  "block.heliocore.cargo_manager": "Rocket Cargo Manager",
+  "block.heliocore.oxygen_generator": "Oxygen Generator",
+  "block.heliocore.gas_compressor": "Gas Compressor",
+  "block.heliocore.gas_vaporizer": "Gas Vaporizer",
+  "block.heliocore.energy_generator": "Energy Generator",
+  "block.heliocore.oxygen_sealer": "Oxygen Sealer",
 
 
   "block.heliocore.coal_compressor_menu_name": "Coal Powered Compressor",

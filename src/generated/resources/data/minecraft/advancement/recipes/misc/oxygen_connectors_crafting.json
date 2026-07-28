@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gas_regulator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "heliocore:gas_regulator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:oxygen_connectors_crafting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_gas_regulator"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:oxygen_connectors_crafting"
+    ]
+  }
+}

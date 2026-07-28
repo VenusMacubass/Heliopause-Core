@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "heliocore:basic_circuit_board"
+    },
+    "I": {
+      "item": "heliocore:compressed_iridium"
+    },
+    "S": {
+      "item": "heliocore:compressed_steel"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "IBI",
+    "SSS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:airlock_frame_switch"
+  }
+}

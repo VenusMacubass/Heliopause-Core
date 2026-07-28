@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "heliocore:tin_canister"
+    },
+    "R": {
+      "item": "minecraft:cooked_rabbit"
+    }
+  },
+  "pattern": [
+    "CR ",
+    "R  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:dehydrated_rabbit"
+  }
+}

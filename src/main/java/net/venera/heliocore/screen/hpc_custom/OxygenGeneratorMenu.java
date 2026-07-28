@@ -101,7 +101,7 @@ public class OxygenGeneratorMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                player, HpCBlocks.OXYGEN_GENERATOR_BLOCK.get());
+                player, HpCBlocks.OXYGEN_GENERATOR.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {

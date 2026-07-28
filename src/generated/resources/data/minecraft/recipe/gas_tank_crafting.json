@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "item": "heliocore:hydrocarbons"
+    },
+    "S": {
+      "item": "heliocore:compressed_steel"
+    },
+    "T": {
+      "item": "heliocore:tin_canister"
+    }
+  },
+  "pattern": [
+    " H ",
+    "STS",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:compressed_gas_tank"
+  }
+}

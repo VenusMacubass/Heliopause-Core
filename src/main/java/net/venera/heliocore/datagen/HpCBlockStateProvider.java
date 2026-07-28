@@ -126,8 +126,8 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         tintedSlabBlock(HpCBlocks.MOON_ROCK_SLAB, moonRockTex);
         tintedWallBlock(HpCBlocks.MOON_ROCK_WALL, moonRockTex);
 
-        blockWithItem(HpCBlocks.AIRLOCK_FRAME_BLOCK);
-        booleanBlock(HpCBlocks.AIRLOCK_FRAME_SWITCH_BLOCK.get(),
+        blockWithItem(HpCBlocks.AIRLOCK_FRAME);
+        booleanBlock(HpCBlocks.AIRLOCK_FRAME_SWITCH.get(),
                 AirlockFrameSwitch.ACTIVE,
                 airlockBlockTex,
                 Map.of(),
@@ -185,7 +185,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         );
 
         chargeableMachineBlock(
-                HpCBlocks.BASIC_SOLAR_BLOCK.get(),
+                HpCBlocks.BASIC_SOLAR_PANEL.get(),
                 SolarPanelBlock.CHARGE,
                 machineSide,
                 Map.of(
@@ -198,7 +198,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 Direction.EAST, Direction.WEST
         );
         
-        directionalMachineBlock(HpCBlocks.OXYGEN_GENERATOR_BLOCK.get(), 
+        directionalMachineBlock(HpCBlocks.OXYGEN_GENERATOR.get(), 
                 machineSide, 
                 Map.of(
                         Direction.NORTH, energyInPort, 
@@ -210,7 +210,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 )
         );
         
-        directionalMachineBlock(HpCBlocks.GAS_COMPRESSOR_BLOCK.get(),
+        directionalMachineBlock(HpCBlocks.GAS_COMPRESSOR.get(),
                 machineSide, 
                 Map.of(
                         Direction.NORTH, energyInPort, 
@@ -222,7 +222,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 )
         );
 
-        directionalMachineBlock(HpCBlocks.GAS_VAPORIZER_BLOCK.get(),
+        directionalMachineBlock(HpCBlocks.GAS_VAPORIZER.get(),
                 machineSide,
                 Map.of(
                         Direction.NORTH, energyInPort,
@@ -234,7 +234,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 )
         );
 
-        directionalMachineBlock(HpCBlocks.FUEL_MANAGER_BLOCK.get(),
+        directionalMachineBlock(HpCBlocks.FUEL_MANAGER.get(),
                 machineSide,
                 Map.of(
                         Direction.NORTH, energyInPort,
@@ -245,7 +245,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 )
         );
 
-        directionalMachineBlock(HpCBlocks.CARGO_MANAGER_BLOCK.get(),
+        directionalMachineBlock(HpCBlocks.CARGO_MANAGER.get(),
                 machineSide,
                 Map.of(
                         Direction.NORTH, energyInPort,
@@ -255,7 +255,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 )
         );
         
-        directionalMachineBlock(HpCBlocks.ENERGY_GENERATOR_BLOCK.get(),
+        directionalMachineBlock(HpCBlocks.ENERGY_GENERATOR.get(),
                 machineSide,
                 Map.of(
                         Direction.NORTH, energyOutPort,
@@ -265,7 +265,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 )
         );
 
-        directionalMachineBlock(HpCBlocks.OXYGEN_SEALER_BLOCK.get(),
+        directionalMachineBlock(HpCBlocks.OXYGEN_SEALER.get(),
                 machineSide,
                 Map.of(
                         Direction.NORTH, energyInPort,

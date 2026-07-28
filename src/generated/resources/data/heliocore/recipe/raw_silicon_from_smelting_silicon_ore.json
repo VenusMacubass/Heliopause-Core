@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 400,
+  "experience": 0.5,
+  "group": "silicon",
+  "ingredient": {
+    "item": "heliocore:silicon_ore"
+  },
+  "result": {
+    "count": 1,
+    "id": "heliocore:raw_silicon"
+  }
+}

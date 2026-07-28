@@ -21,22 +21,22 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class PizzaBlock extends Block {
     public static final IntegerProperty SLICES = IntegerProperty.create("slices", 0, 3);
 
-    // North-West (Top-Left)
+    //North-West (Top-Left)
     private static final VoxelShape NW_SLICE = Block.box(0.0, 0.0, 0.0, 8.0, 1.0, 8.0);
-    // North-East (Top-Right)
+    //North-East (Top-Right)
     private static final VoxelShape NE_SLICE = Block.box(8.0, 0.0, 0.0, 16.0, 1.0, 8.0);
-    // South-East (Bottom-Right)
+    //South-East (Bottom-Right)
     private static final VoxelShape SE_SLICE = Block.box(8.0, 0.0, 8.0, 16.0, 1.0, 16.0);
-    // South-West (Bottom-Left)
+    //South-West (Bottom-Left)
     private static final VoxelShape SW_SLICE = Block.box(0.0, 0.0, 8.0, 8.0, 1.0, 16.0);
     private static final VoxelShape[] SLICE_SHAPES = new VoxelShape[]{
-            // Slice 0: Full pizza (0 bites taken)
+            //Slice 0: Full pizza (0 bites taken)
             Shapes.or(NW_SLICE, NE_SLICE, SE_SLICE, SW_SLICE),
-            // Slice 1: 3/4 pizza (Bite 1 removes NE slice)
+            //Slice 1: 3/4 pizza (Bite 1 removes NE slice)
             Shapes.or(NW_SLICE, SE_SLICE, SW_SLICE),
-            // Slice 2: Half pizza (Bite 2 removes SE slice, continuing clockwise)
+            //Slice 2: Half pizza (Bite 2 removes SE slice, continuing clockwise)
             Shapes.or(NW_SLICE, SW_SLICE),
-            // Slice 3: 1/4 pizza (Bite 3 removes SW slice. NW is the last piece left!)
+            //Slice 3: 1/4 pizza (Bite 3 removes SW slice. NW is the last piece left)
             NW_SLICE
     };
     

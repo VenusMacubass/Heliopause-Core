@@ -113,7 +113,7 @@ public class GasCompressorMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                player, HpCBlocks.GAS_COMPRESSOR_BLOCK.get());
+                player, HpCBlocks.GAS_COMPRESSOR.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {

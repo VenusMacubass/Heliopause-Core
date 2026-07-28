@@ -73,7 +73,7 @@ public class AirlockGateHelper {
 
                 BlockState neighborState = level.getBlockState(neighbor);
 
-                if (neighborState.is(HpCBlocks.AIRLOCK_FRAME_BLOCK.get()) || neighborState.is(HpCBlocks.AIRLOCK_FRAME_SWITCH_BLOCK.get())) {
+                if (neighborState.is(HpCBlocks.AIRLOCK_FRAME.get()) || neighborState.is(HpCBlocks.AIRLOCK_FRAME_SWITCH.get())) {
                     continue; 
                 } else if (neighborState.isAir() || neighborState.is(HpCBlocks.AIRLOCK_GENERATED_BLOCK.get())) {
                     queue.add(neighbor);

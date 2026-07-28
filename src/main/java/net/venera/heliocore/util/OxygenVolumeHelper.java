@@ -52,8 +52,8 @@ public class OxygenVolumeHelper {
                     boolean isAirtight = state.isCollisionShapeFullBlock(level, neighborPos)
                             || state.getBlock() instanceof net.venera.heliocore.block.hpc_custom.machine.BaseMachineBlock
                             || state.is(HpCBlocks.AIRLOCK_GENERATED_BLOCK.get())
-                            || state.is(HpCBlocks.AIRLOCK_FRAME_BLOCK.get())
-                            || state.is(HpCBlocks.AIRLOCK_FRAME_SWITCH_BLOCK.get());
+                            || state.is(HpCBlocks.AIRLOCK_FRAME.get())
+                            || state.is(HpCBlocks.AIRLOCK_FRAME_SWITCH.get());
 
                     if (!isAirtight) {
                         visitedAir.add(neighborLong);

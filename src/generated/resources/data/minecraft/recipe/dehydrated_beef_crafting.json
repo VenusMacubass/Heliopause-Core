@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "B": {
-      "item": "minecraft:beef"
+      "item": "minecraft:cooked_beef"
     },
     "C": {
       "item": "heliocore:tin_canister"
@@ -11,8 +11,7 @@
   },
   "pattern": [
     "CB ",
-    "B  ",
-    "   "
+    "B  "
   ],
   "result": {
     "count": 1,

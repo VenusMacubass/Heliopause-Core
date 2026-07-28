@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "heliocore:block/gas_vaporizer",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "heliocore:block/gas_vaporizer",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "heliocore:block/gas_vaporizer"
+    },
+    "facing=south": {
+      "model": "heliocore:block/gas_vaporizer",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "heliocore:block/gas_vaporizer",
+      "x": 270
+    },
+    "facing=west": {
+      "model": "heliocore:block/gas_vaporizer",
+      "y": 270
+    }
+  }
+}

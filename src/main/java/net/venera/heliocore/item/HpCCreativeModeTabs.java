@@ -113,7 +113,7 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCBlocks.ARC_LAMP.get());
                         
                         output.accept(HpCBlocks.CHEESE_BLOCK.get());
-                        output.accept(HpCBlocks.PIZZA_BLOCK.get());
+                        output.accept(HpCBlocks.DEFAULT_PIZZA.get());
 
                         output.accept(HpCBlocks.PRISMATIC_GLASS.get());
                         output.accept(HpCBlocks.PRISMATIC_GLASS_PANE.get());
@@ -173,22 +173,22 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCBlocks.COPPER_WIRE_BLOCK.get());
                         output.accept(HpCBlocks.FLUID_PIPE.get());
                         output.accept(HpCBlocks.FLUID_PIPE_BLOCK.get());
-                        output.accept(HpCBlocks.AIRLOCK_FRAME_BLOCK.get());
-                        output.accept(HpCBlocks.AIRLOCK_FRAME_SWITCH_BLOCK.get());
+                        output.accept(HpCBlocks.AIRLOCK_FRAME.get());
+                        output.accept(HpCBlocks.AIRLOCK_FRAME_SWITCH.get());
                         
                         output.accept(HpCBlocks.FLUID_TANK.get());
                         output.accept(HpCBlocks.LAUNCH_PAD.get());
                         output.accept(HpCBlocks.COAL_COMPRESSOR.get());
-                        output.accept(HpCBlocks.ENERGY_GENERATOR_BLOCK.get());
+                        output.accept(HpCBlocks.ENERGY_GENERATOR.get());
                         output.accept(HpCBlocks.REFINERY.get());
-                        output.accept(HpCBlocks.BASIC_SOLAR_BLOCK.get());
+                        output.accept(HpCBlocks.BASIC_SOLAR_PANEL.get());
                         output.accept(HpCBlocks.ENERGY_STORAGE_UNIT.get());
-                        output.accept(HpCBlocks.CARGO_MANAGER_BLOCK.get());
-                        output.accept(HpCBlocks.FUEL_MANAGER_BLOCK.get());
-                        output.accept(HpCBlocks.OXYGEN_GENERATOR_BLOCK.get());
-                        output.accept(HpCBlocks.GAS_COMPRESSOR_BLOCK.get());
-                        output.accept(HpCBlocks.GAS_VAPORIZER_BLOCK.get());
-                        output.accept(HpCBlocks.OXYGEN_SEALER_BLOCK.get());
+                        output.accept(HpCBlocks.CARGO_MANAGER.get());
+                        output.accept(HpCBlocks.FUEL_MANAGER.get());
+                        output.accept(HpCBlocks.OXYGEN_GENERATOR.get());
+                        output.accept(HpCBlocks.GAS_COMPRESSOR.get());
+                        output.accept(HpCBlocks.GAS_VAPORIZER.get());
+                        output.accept(HpCBlocks.OXYGEN_SEALER.get());
                         
 
                     })

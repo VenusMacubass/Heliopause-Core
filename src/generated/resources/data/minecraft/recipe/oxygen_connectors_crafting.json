@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "heliocore:gas_regulator"
+    },
+    "H": {
+      "item": "heliocore:hydrocarbons"
+    },
+    "P": {
+      "item": "heliocore:fluid_pipe"
+    }
+  },
+  "pattern": [
+    " P ",
+    "PGP",
+    "H H"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:oxygen_connectors"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:glass_pane"
+    },
+    "H": [
+      {
+        "item": "minecraft:iron_helmet"
+      },
+      {
+        "item": "heliocore:steel_helmet"
+      }
+    ],
+    "P": {
+      "item": "heliocore:fluid_pipe"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "GHG",
+    "GPG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:oxygen_mask"
+  }
+}

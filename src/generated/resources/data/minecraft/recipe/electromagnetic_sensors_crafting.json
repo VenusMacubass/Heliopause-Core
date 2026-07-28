@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_pane"
+    },
+    {
+      "item": "heliocore:basic_circuit_board"
+    },
+    {
+      "item": "heliocore:copper_wire"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:electromagnetic_sensors"
+  }
+}

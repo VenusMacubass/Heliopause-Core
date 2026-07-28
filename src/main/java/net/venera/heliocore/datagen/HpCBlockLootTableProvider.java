@@ -30,7 +30,7 @@ public class HpCBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(HpCBlocks.ALUMINIUM_BLOCK.get());
         dropSelf(HpCBlocks.RADIOACTIVE_BLOCK.get());
         dropSelf(HpCBlocks.CHEESE_BLOCK.get());
-        dropSelf(HpCBlocks.PIZZA_BLOCK.get());
+        dropSelf(HpCBlocks.DEFAULT_PIZZA.get());
         dropSelf(HpCBlocks.MOON_REGOLITH.get());
         dropSelf(HpCBlocks.MOON_DIRT.get());
         dropSelf(HpCBlocks.BASE_BUILDING_WHITE_BLOCK.get());
@@ -53,15 +53,15 @@ public class HpCBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(HpCBlocks.LAUNCH_PAD.get());
         dropSelf(HpCBlocks.FLUID_TANK.get());
         dropSelf(HpCBlocks.ENERGY_STORAGE_UNIT.get());
-        dropSelf(HpCBlocks.BASIC_SOLAR_BLOCK.get());
-        dropSelf(HpCBlocks.CARGO_MANAGER_BLOCK.get());
-        dropSelf(HpCBlocks.FUEL_MANAGER_BLOCK.get());
-        dropSelf(HpCBlocks.OXYGEN_GENERATOR_BLOCK.get());
-        dropSelf(HpCBlocks.GAS_COMPRESSOR_BLOCK.get());
-        dropSelf(HpCBlocks.GAS_VAPORIZER_BLOCK.get());
-        dropSelf(HpCBlocks.ENERGY_GENERATOR_BLOCK.get());
-        dropSelf(HpCBlocks.DECONSTRUCTOR_BLOCK.get());
-        dropSelf(HpCBlocks.OXYGEN_SEALER_BLOCK.get());
+        dropSelf(HpCBlocks.BASIC_SOLAR_PANEL.get());
+        dropSelf(HpCBlocks.CARGO_MANAGER.get());
+        dropSelf(HpCBlocks.FUEL_MANAGER.get());
+        dropSelf(HpCBlocks.OXYGEN_GENERATOR.get());
+        dropSelf(HpCBlocks.GAS_COMPRESSOR.get());
+        dropSelf(HpCBlocks.GAS_VAPORIZER.get());
+        dropSelf(HpCBlocks.ENERGY_GENERATOR.get());
+        dropSelf(HpCBlocks.DECONSTRUCTOR.get());
+        dropSelf(HpCBlocks.OXYGEN_SEALER.get());
         dropSelf(HpCBlocks.COPPER_WIRE.get());
         dropSelf(HpCBlocks.FLUID_PIPE.get());
 
@@ -78,8 +78,8 @@ public class HpCBlockLootTableProvider extends BlockLootSubProvider {
         
         dropSelf(HpCBlocks.COPPER_WIRE_BLOCK.get());
         dropSelf(HpCBlocks.FLUID_PIPE_BLOCK.get());
-        dropSelf(HpCBlocks.AIRLOCK_FRAME_BLOCK.get());
-        dropSelf(HpCBlocks.AIRLOCK_FRAME_SWITCH_BLOCK.get());
+        dropSelf(HpCBlocks.AIRLOCK_FRAME.get());
+        dropSelf(HpCBlocks.AIRLOCK_FRAME_SWITCH.get());
         dropSelf(HpCBlocks.MAGNETIC_CRAFTING_TABLE.get());
 
         dropOther(HpCBlocks.MOON_ROCK.get(), HpCBlocks.MOON_COBBLESTONE.get());

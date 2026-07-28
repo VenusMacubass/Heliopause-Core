@@ -102,7 +102,7 @@ public class FuelManagerMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                player, HpCBlocks.FUEL_MANAGER_BLOCK.get());
+                player, HpCBlocks.FUEL_MANAGER.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {
