@@ -58,8 +58,8 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
     public boolean isActive;
     public boolean isEnabled = true;
     
-    public OxygenGeneratorEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int capacity, int transferRate,int energyUsage, int oxygenGenerationRate, int fluidFlowRate) {
-        super(type, pos, state, 2, capacity, transferRate, 0);
+    public OxygenGeneratorEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int energyCapacity, int energyTransferRate, int energyUsage, int oxygenGenerationRate, int fluidFlowRate) {
+        super(type, pos, state, 2, energyCapacity, energyTransferRate, 0);
         this.ENERGY_USAGE = energyUsage;
         this.oxygenGenerationRate = oxygenGenerationRate;
         this.fluidFlowRate = fluidFlowRate;
@@ -225,7 +225,7 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
     private boolean canGenerateOxygen(BlockPos pos){
         boolean spaceCheck = oxygenTank.getSpace() > 0;
         boolean energyCheck = energyStorage.getEnergyStored() >= ENERGY_USAGE*frequency;
-        boolean amountCheck = oxygenToGenerate > 0; // ADD THIS!
+        boolean amountCheck = oxygenToGenerate > 0;
 
         Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
         Direction rightSide = machineFacing.getClockWise();
@@ -258,7 +258,7 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
 
     @Override
     public int extractFluid(String fluidType, int amount, boolean simulate) {
-        if (!fluidType.equals(HeliopauseCore.MOD_ID + ":oxygen")) return 0;
+        if (!fluidType.equals(HeliopauseCore.MOD_ID + ":oxygen_gas")) return 0;
 
         IFluidHandler.FluidAction action = simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE;
         return oxygenTank.drain(amount, action).getAmount();

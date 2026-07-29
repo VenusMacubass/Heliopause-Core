@@ -268,7 +268,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         directionalMachineBlock(HpCBlocks.OXYGEN_SEALER.get(),
                 machineSide,
                 Map.of(
-                        Direction.NORTH, energyInPort,
+                        Direction.WEST, energyInPort,
                         Direction.UP, filterVent,
                         Direction.DOWN, machineBottom,
                         Direction.EAST, fluidInPort

@@ -161,4 +161,16 @@ public class OxygenSealerMenu extends AbstractContainerMenu {
     public boolean isSealed() {
         return this.data.get(4) > 0;
     }
+
+    public boolean isBlocked() {
+        return this.data.get(5) > 0;
+    }
+
+    public boolean hasEnoughEnergy() {
+        return this.data.get(6) > 0;
+    }
+
+    public boolean hasEnoughOxygen() {
+        return this.data.get(7) > 0;
+    }
 }

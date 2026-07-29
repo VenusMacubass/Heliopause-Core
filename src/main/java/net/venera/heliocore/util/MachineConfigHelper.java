@@ -43,7 +43,7 @@ public class MachineConfigHelper {
                 Direction.NORTH, false
         ));
         IO_CONFIG.put(HpCBlockEntities.OXYGEN_SEALER_ENTITY, Map.of(
-                Direction.NORTH, true
+                Direction.WEST, true
         ));
     }
     

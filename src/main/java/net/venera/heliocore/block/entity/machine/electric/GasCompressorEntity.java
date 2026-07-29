@@ -333,7 +333,7 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
 
     @Override
     public int insertFluid(String fluidType, int amount, boolean simulate) {
-        if (!fluidType.contains(HeliopauseCore.MOD_ID + "_gas")) return 0;
+        if (!(fluidType.contains(HeliopauseCore.MOD_ID) && fluidType.contains("_gas"))) return 0;
         ResourceLocation fluidLocation = ResourceLocation.parse(fluidType);
         Fluid resolvedFluid = BuiltInRegistries.FLUID.get(fluidLocation);
         if (resolvedFluid != null && resolvedFluid != Fluids.EMPTY) {

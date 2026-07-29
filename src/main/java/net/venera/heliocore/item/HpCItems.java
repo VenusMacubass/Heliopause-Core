@@ -139,8 +139,8 @@ public class HpCItems {
     
 
     public static final DeferredItem<BatteryItem> SMALL_BATTERY = ITEMS.register("small_battery", () ->
-            new BatteryItem(new Item.Properties().component(HpCDataComponents.BATTERY_COMPONENT.get(), new BatteryData(0, 500)),
-                    500, 1));
+            new BatteryItem(new Item.Properties().component(HpCDataComponents.BATTERY_COMPONENT.get(), new BatteryData(0, 10000)),
+                    10000, 20));
 
 
     public static void register(IEventBus eventBus) {

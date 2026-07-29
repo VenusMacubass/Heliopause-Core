@@ -23,7 +23,7 @@ public class HpCBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RefineryEntity>> REFINERY_ENTITY = BLOCK_ENTITIES.register("refinery", () ->
                     BlockEntityType.Builder.of(
                             (pos, state) -> new RefineryEntity(HpCBlockEntities.REFINERY_ENTITY.get(), pos, state,
-                                    50000, 50, 50, 10, 10
+                                    50000, 120, 30, 10, 10
                             ),
                             HpCBlocks.REFINERY.get()
                     ).build(null));
@@ -40,57 +40,57 @@ public class HpCBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EnergyStorageEntity>> ENERGY_STORAGE_ENTITY = BLOCK_ENTITIES.register("basic_energy_storage",
             () -> BlockEntityType.Builder.of((pos, state)
                             -> new EnergyStorageEntity(HpCBlockEntities.ENERGY_STORAGE_ENTITY.get(), pos, state, 
-                            250000, 50),
+                            250000, 2500),
                             HpCBlocks.ENERGY_STORAGE_UNIT.get()).build(null));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EnergyGeneratorEntity>> ENERGY_GENERATOR_ENTITY = BLOCK_ENTITIES.register("energy_generator_entity",
             ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
                             new EnergyGeneratorEntity(HpCBlockEntities.ENERGY_GENERATOR_ENTITY.get(), blockPos, blockState,
-                                    50000, 50, 50, 50),
+                                    50000, 120, 50, 50),
                     HpCBlocks.ENERGY_GENERATOR.get()).build(null));
 
     //----------------- Solar Panel Entities ----------------//
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarPanelEntity>> BASIC_SOLAR_PANEL_ENTITY = BLOCK_ENTITIES.register("basic_solar_panel_entity",
             ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
                     new SolarPanelEntity(HpCBlockEntities.BASIC_SOLAR_PANEL_ENTITY.get(), blockPos, blockState, 
-                            50000, 50, 50), 
+                            50000, 120, 50), 
                     HpCBlocks.BASIC_SOLAR_PANEL.get()).build(null));
     //----------------- Manager Entities ---------------------//
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CargoManagerEntity>> CARGO_MANAGER_ENTITY = BLOCK_ENTITIES.register("cargo_manager_entity",
             ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
                     new CargoManagerEntity(HpCBlockEntities.CARGO_MANAGER_ENTITY.get(), blockPos, blockState,
-                            50000, 50, 20),
+                            50000, 120, 20),
                     HpCBlocks.CARGO_MANAGER.get()).build(null));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FuelManagerEntity>> FUEL_MANAGER_ENTITY = BLOCK_ENTITIES.register("fuel_manager_entity",
             ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
                     new FuelManagerEntity(HpCBlockEntities.FUEL_MANAGER_ENTITY.get(), blockPos, blockState,
-                                    50000, 50, 20, 5, 5),
+                                    50000, 120, 20, 5, 5),
                     HpCBlocks.FUEL_MANAGER.get()).build(null));
     
     //region Gas Machines
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<OxygenGeneratorEntity>> OXYGEN_GENERATOR_ENTITY = BLOCK_ENTITIES.register("oxygen_generator_entity",
             ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
                     new OxygenGeneratorEntity(HpCBlockEntities.OXYGEN_GENERATOR_ENTITY.get(), blockPos, blockState,
-                            50000, 50, 20 , 5, 10),
+                            50000, 120, 20 , 5, 10),
                     HpCBlocks.OXYGEN_GENERATOR.get()).build(null));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GasCompressorEntity>> GAS_COMPRESSOR_ENTITY = BLOCK_ENTITIES.register("gas_compressor_entity",
             ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
                             new GasCompressorEntity(HpCBlockEntities.GAS_COMPRESSOR_ENTITY.get(), blockPos, blockState,
-                                    50000, 50, 20, 10, 10),
+                                    50000, 120, 20, 10, 10),
                     HpCBlocks.GAS_COMPRESSOR.get()).build(null));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GasVaporizerEntity>> GAS_VAPORIZER_ENTITY = BLOCK_ENTITIES.register("gas_vaporizer_entity",
             ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
                             new GasVaporizerEntity(HpCBlockEntities.GAS_VAPORIZER_ENTITY.get(), blockPos, blockState,
-                                    50000, 50, 20, 10, 10),
+                                    50000, 120, 20, 10, 10),
                     HpCBlocks.GAS_VAPORIZER.get()).build(null));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<OxygenSealerEntity>> OXYGEN_SEALER_ENTITY = BLOCK_ENTITIES.register("oxygen_sealer_entity",
             ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
                             new OxygenSealerEntity(HpCBlockEntities.OXYGEN_SEALER_ENTITY.get(), blockPos, blockState,
-                                    50000, 50, 5, 20, 10),
+                                    50000, 120, 5, 20, 10),
                     HpCBlocks.OXYGEN_SEALER.get()).build(null));
     
     //endregion
@@ -98,7 +98,7 @@ public class HpCBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DeconstructorEntity>> DECONSTRUCTOR_ENTITY = BLOCK_ENTITIES.register("deconstructor_entity",
             ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
                             new DeconstructorEntity(HpCBlockEntities.DECONSTRUCTOR_ENTITY.get(), blockPos, blockState,
-                                    50000, 50, 20),
+                                    50000, 120, 20),
                     HpCBlocks.DECONSTRUCTOR.get()).build(null));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MagneticCraftingTableEntity>> MAGNETIC_CRAFTING_TABLE_ENTITY = BLOCK_ENTITIES.register("magnetic_crafting_table_entity",

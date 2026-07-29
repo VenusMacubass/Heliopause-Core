@@ -65,10 +65,6 @@ public class BatteryItem extends Item {
         stack.set(HpCDataComponents.BATTERY_COMPONENT, data);
     }
 
-    public int getTransferRate(){
-        return transferRate;
-    }
-
     public ItemStack createFullInstance() {
         ItemStack stack = new ItemStack(this);
         setBatteryData(stack, new BatteryData(this.maxCapacity, this.maxCapacity));
@@ -78,7 +74,6 @@ public class BatteryItem extends Item {
     @Override
     public int getBarWidth(ItemStack stack) {
         BatteryData data = getBatteryData(stack);
-        // Avoid divide by zero
         if (data.capacity() == 0) return 0;
         return Math.round(13.0F * ((float)data.energy() / data.capacity()));
     }

@@ -114,6 +114,32 @@ public class OxygenSealerScreen extends AbstractContainerScreen<OxygenSealerMenu
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         guiGraphics.drawString(this.font, this.title, 7, 3, 0x404040, false);
         guiGraphics.drawString(this.font, this.playerInventoryTitle, 7, 78, 0x404040, false);
+
+        int colorGreen = 0x55FF55;
+        int colorRed = 0xFF5555;
+        
+        if (menu.isSealed()) {
+            guiGraphics.drawString(this.font, "Room Condition: Sealed", 35, 18, colorGreen, false);
+        } else {
+            guiGraphics.drawString(this.font, "Room Condition: Invalid", 35, 18, colorRed, false);
+        }
+        
+        int warningY = 28;
+
+        if (menu.isBlocked()) {
+            guiGraphics.drawString(this.font, "Sealer is blocked!", 35, warningY, colorRed, false);
+            warningY += 10;
+        }
+
+        if (!menu.hasEnoughEnergy()) {
+            guiGraphics.drawString(this.font, "Insufficient Energy", 35, warningY, colorRed, false);
+            warningY += 10;
+        }
+
+        if (!menu.hasEnoughOxygen()) {
+            guiGraphics.drawString(this.font, "Insufficient Oxygen", 35, warningY, colorRed, false);
+            warningY += 10;
+        }
     }
 
     @Override

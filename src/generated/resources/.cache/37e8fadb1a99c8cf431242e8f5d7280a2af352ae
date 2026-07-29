@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-28T21:57:24.4442032	Block States: heliocore
+// 1.21.1	2026-07-29T16:24:53.5488689	Block States: heliocore
 d59962edbb614daa7605d955b287ee61773bd2a2 assets/heliocore/blockstates/airlock_frame_switch.json
 a23ba85944456dbe50bd58319b35ee6bd730f46f assets/heliocore/blockstates/airlock_gate_frame.json
 bdf870c7e5505d6271b1fd115489f88d5a3e3959 assets/heliocore/blockstates/airlock_generated_black.json
@@ -165,7 +165,7 @@ ca05973dcdee83f08d270502053a9d32dc599d26 assets/heliocore/models/block/moon_rock
 014b83b26192a0cd758c8c22bdbc0e0cee713f90 assets/heliocore/models/block/moon_tin_ore.json
 5ee30c306683758a7392d00c11b17d74b6ee9689 assets/heliocore/models/block/oxygen_generator.json
 1aae1c9968eecbf48adebc9ae7705784751663bc assets/heliocore/models/block/oxygen_liquid.json
-3ee1235f4d703bb7b8bb1cb8ef7c19b5be761257 assets/heliocore/models/block/oxygen_sealer.json
+215574e48cbb2bbca4ad7a1d82cc1444914d4aa8 assets/heliocore/models/block/oxygen_sealer.json
 89ea74e95d498d4f312b8a6a5c38a41b22dad502 assets/heliocore/models/block/prismatic_glass.json
 b3cc1911187850997a6b6ace06d42fe95ff7db15 assets/heliocore/models/block/prismatic_glass_pane_noside.json
 7132f03506cbbefb01e0596a5f500723fe617213 assets/heliocore/models/block/prismatic_glass_pane_noside_alt.json

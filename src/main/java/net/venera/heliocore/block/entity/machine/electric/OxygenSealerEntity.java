@@ -55,6 +55,9 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
     public boolean seal = false;
     private int currentVolumeCost = 1;
     private final int frequency = 5;
+    public boolean isBlocked = false;
+    public boolean hasEnoughEnergy = false;
+    public boolean hasEnoughOxygen = false;
     public final FluidTank oxygenTank = new FluidTank(maxOxygenCapacity) {
         @Override
         protected void onContentsChanged() {
@@ -88,6 +91,9 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
                     case 2 -> isActive ? 1 : 0;
                     case 3 -> enabled ? 1 : 0;
                     case 4 -> seal ? 1 : 0;
+                    case 5 -> isBlocked ? 1 : 0;
+                    case 6 -> hasEnoughEnergy ? 1 : 0;
+                    case 7 -> hasEnoughOxygen ? 1 : 0;
                     default -> 0;
                 };
             }
@@ -98,24 +104,33 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
                     case 2 -> isActive = value == 1;
                     case 3 -> enabled = value == 1;
                     case 4 -> seal = value == 1;
+                    case 5 -> isBlocked = value == 1;
+                    case 6 -> hasEnoughEnergy = value == 1;
+                    case 7 -> hasEnoughOxygen = value == 1;
                 }
             }
             @Override
-            public int getCount() { return 5; }
+            public int getCount() { return 8; }
         };
     }
 
     public void tick(Level level, BlockPos pos, BlockState state){
         if (level.isClientSide()) return;
         boolean dirty = false;
-        boolean batteryProcessed = processBatterySlot(BATTERY_SLOT);
-        boolean oxygenProcessed = processOxygenSlot(OXYGEN_TANK_SLOT);
-        if (batteryProcessed || oxygenProcessed) dirty = true;
+
+        if (processBatterySlot(BATTERY_SLOT)) dirty = true;
+        if (processOxygenSlot(OXYGEN_TANK_SLOT)) dirty = true;
         if (pullFluidIn(level, pos)) dirty = true;
+
         boolean hasEnergy = energyStorage.getEnergyStored() >= energyUsage * frequency;
         boolean isUnblocked = !level.getBlockState(pos.above()).isSolidRender(level, pos.above());
+
+        this.isBlocked = !isUnblocked;
+        this.hasEnoughEnergy = hasEnergy;
+        this.hasEnoughOxygen = oxygenTank.getFluidAmount() >= currentVolumeCost;
+
         ResourceKey<Level> currentDimension = level.dimension();
-        boolean isInSpace = currentDimension.location().equals(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon")); //TODO: make this one based on dimension tags and not direct dimensions
+        boolean isInSpace = currentDimension.location().toString().equals(HeliopauseCore.MOD_ID + ":moon");
 
         if (enabled && hasEnergy && isUnblocked) {
             if (!isActive) {
@@ -123,32 +138,35 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
                 dirty = true;
             }
             if (level.getGameTime() % frequency == 0) {
-                if(!seal && isInSpace){
-                    var existingRoom = OxygenVolumeHelper.getExistingRoom(pos);
-
-                    if (existingRoom != null && (level.getGameTime() - existingRoom.lastScanTick()) <= 5) {
-                        seal = true;
-                        int totalCost = oxygenUsage * (1 + existingRoom.airBlocks().size() / 1000);
-                        currentVolumeCost = Math.max(1, totalCost / existingRoom.activeSealers().size());
-                    }
-                    else {
-                        var result = OxygenVolumeHelper.scanAndRegisterRoom(level, pos, maxVolume);
-                        if (result != null) {
-                            seal = true;
-                            int totalCost = oxygenUsage * (1 + result.airBlocks().size() / 1000);
-                            currentVolumeCost = Math.max(1, totalCost / result.activeSealers().size());
-                        } else {
-                            seal = false;
+                if (seal) {
+                    if (OxygenVolumeHelper.getExistingRoom(pos) == null) {
+                        seal = false;
+                        dirty = true;
+                    } else if (!spendOxygen(currentVolumeCost)) {
+                        seal = false;
+                        OxygenVolumeHelper.removeRoom(pos);
+                        dirty = true;
+                    } else {
+                        energyStorage.consumeEnergy(energyUsage * frequency);
+                        if (level.getGameTime() % 20 == 0) {
+                            if (!OxygenVolumeHelper.isPerimeterSafe(level, pos)) {
+                                seal = false;
+                                OxygenVolumeHelper.removeRoom(pos);
+                                dirty = true;
+                            }
                         }
                     }
                 }
+                if (!seal && isInSpace) {
+                    var result = OxygenVolumeHelper.scanAndRegisterRoom(level, pos, maxVolume);
 
-                if(seal) {
-                    if(!spendOxygen(currentVolumeCost)){
-                        seal = false;
-                        OxygenVolumeHelper.removeRoom(pos);
+                    if (result != null) {
+                        seal = true;
+                        int totalCost = oxygenUsage * (1 + result.airBlocks().size() / 1000);
+                        currentVolumeCost = totalCost;
+                        dirty = true;
                     } else {
-                        energyStorage.consumeEnergy(energyUsage*frequency);
+                        seal = false;
                     }
                 }
             }
