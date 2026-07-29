@@ -46,7 +46,7 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
             return this.isEmpty() || stack.getFluid().isSame(this.getFluid().getFluid());
         }
     };
-    
+
     public final ContainerData data;
 
     public FluidTankEntity(BlockPos pos, BlockState blockState) {
@@ -54,17 +54,19 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
         data = new ContainerData() {
             @Override
             public int get(int i) {
+                FluidTankEntity master = getMasterTank();
                 return switch (i) {
-                    case 0 -> fluidTank.getFluidAmount();
-                    case 1 -> FLUID_TANK_CAPACITY;
+                    case 0 -> master.fluidTank.getFluidAmount();
+                    case 1 -> master.fluidTank.getCapacity();
                     default -> 0;
                 };
             }
 
             @Override
             public void set(int i, int value) {
+                FluidTankEntity master = getMasterTank();
                 switch (i) {
-                    case 0 -> fluidTank.setFluid(new FluidStack(fluidTank.getFluid().getFluid(), value));
+                    case 0 -> master.fluidTank.setFluid(new FluidStack(master.fluidTank.getFluid().getFluid(), value));
                 }
             }
 
@@ -72,14 +74,72 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
             public int getCount() {
                 return 2;
             }
-
         };
     }
 
+    // --- MULTIBLOCK LOGIC ---
+
+    public FluidTankEntity getMasterTank() {
+        if (this.level == null) return this;
+        BlockPos checkPos = this.getBlockPos().below();
+        FluidTankEntity lastTank = this;
+
+        while (this.level.getBlockEntity(checkPos) instanceof FluidTankEntity belowTank) {
+            lastTank = belowTank;
+            checkPos = checkPos.below();
+        }
+        return lastTank;
+    }
+
+    public void updateMultiblock() {
+        if (this.level == null || this.level.isClientSide()) return;
+
+        if (getMasterTank() != this) {
+            getMasterTank().updateMultiblock();
+            return;
+        }
+
+        int height = 1;
+        int totalFluid = this.fluidTank.getFluidAmount();
+        Fluid fluidType = this.fluidTank.getFluid().getFluid();
+
+        BlockPos checkPos = this.getBlockPos().above();
+        while (this.level.getBlockEntity(checkPos) instanceof FluidTankEntity tankAbove) {
+            height++;
+            if (tankAbove.fluidTank.getFluidAmount() > 0) {
+                if (fluidType == Fluids.EMPTY) {
+                    fluidType = tankAbove.fluidTank.getFluid().getFluid();
+                }
+                if (tankAbove.fluidTank.getFluid().getFluid().isSame(fluidType)) {
+                    totalFluid += tankAbove.fluidTank.getFluidAmount();
+                }
+                tankAbove.fluidTank.setFluid(FluidStack.EMPTY);
+            }
+            checkPos = checkPos.above();
+        }
+
+        int newCapacity = FLUID_TANK_CAPACITY * height;
+        this.fluidTank.setCapacity(newCapacity);
+        
+        if (totalFluid > newCapacity) totalFluid = newCapacity;
+
+        if (fluidType != Fluids.EMPTY && totalFluid > 0) {
+            this.fluidTank.setFluid(new FluidStack(fluidType, totalFluid));
+        } else {
+            this.fluidTank.setFluid(FluidStack.EMPTY);
+        }
+
+        this.setChanged();
+    }
+
+    // --- ROUTED FLUID LOGIC ---
+
     public ItemStack handleBucket(ItemStack container, Player player){
-        if (container.getItem() == Items.BUCKET) { 
-            if (fluidTank.getFluidAmount() < BUCKET_CAPACITY) return container;                
-            if (fluidTank.getFluid().getFluid().isSame(Fluids.EMPTY)) return container;           
+        if (this != getMasterTank()) return getMasterTank().handleBucket(container, player);
+
+        if (container.getItem() == Items.BUCKET) {
+            if (fluidTank.getFluidAmount() < BUCKET_CAPACITY) return container;
+            if (fluidTank.getFluid().getFluid().isSame(Fluids.EMPTY)) return container;
 
             ItemStack filled;
             if (fluidTank.getFluid().getFluid().isSame(Fluids.WATER)) {
@@ -89,9 +149,9 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
             } else if (fluidTank.getFluid().getFluid().isSame(HpCFluids.REFINED_FUEL.getSource())) {
                 filled = new ItemStack(HpCFluids.REFINED_FUEL.getBucket());
             } else {
-                return container; 
+                return container;
             }
-            
+
             fluidTank.drain(BUCKET_CAPACITY, IFluidHandler.FluidAction.EXECUTE);
             return filled;
         }
@@ -101,21 +161,23 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
             if (container.is(Items.WATER_BUCKET)) bucketFluid = Fluids.WATER;
             else if (container.is(HpCFluids.CRUDE_OIL.getBucket())) bucketFluid = HpCFluids.CRUDE_OIL.getSource();
             else if (container.is(HpCFluids.REFINED_FUEL.getBucket())) bucketFluid = HpCFluids.REFINED_FUEL.getSource();
-            
+
             FluidStack incoming = new FluidStack(bucketFluid, BUCKET_CAPACITY);
             int accepted = fluidTank.fill(incoming, IFluidHandler.FluidAction.SIMULATE);
-            
+
             if (accepted == BUCKET_CAPACITY) {
                 fluidTank.fill(incoming, IFluidHandler.FluidAction.EXECUTE);
                 return new ItemStack(Items.BUCKET);
             }
-            return container; 
+            return container;
         }
-        
+
         return container;
     }
 
     public ItemStack handleCanister(ItemStack container, Player player){
+        if (this != getMasterTank()) return getMasterTank().handleCanister(container, player);
+
         if (!(container.getItem() instanceof CanisterItem canisterItem))
             return container;
         CanisterData data = canisterItem.getCanisterData(container);
@@ -128,7 +190,7 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
         if (!canisterIsEmpty && tankHasSpace) {
             Fluid incomingFluid = BuiltInRegistries.FLUID.get(data.fluidId());
             FluidStack incomingStack = new FluidStack(incomingFluid, data.amount());
-                
+
             int transfer = fluidTank.fill(incomingStack, IFluidHandler.FluidAction.SIMULATE);
 
             if (transfer > 0) {
@@ -137,7 +199,7 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
                 return container;
             }
         }
-       
+
         if (tankHasFluid && data.getSpace() > 0) {
             FluidStack transfer = fluidTank.drain(new FluidStack(fluidTank.getFluid().getFluid(), data.getSpace()), IFluidHandler.FluidAction.SIMULATE);
 
@@ -157,6 +219,8 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
     }
 
     public ItemStack handleGasTank(ItemStack container, Player player){
+        if (this != getMasterTank()) return getMasterTank().handleGasTank(container, player);
+
         if (!(container.getItem() instanceof GasTankItem gasTankItem))
             return container;
         GasTankData data = gasTankItem.getGasTankData(container);
@@ -164,7 +228,7 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
 
         boolean gasTankIsEmpty = data.isEmpty();
         boolean tankHasFluid = fluidTank.getFluidAmount()> 0;
-        boolean tankHasSpace = getTankSpace() > 0;
+        boolean tankHasSpace = fluidTank.getSpace() > 0;
 
         if (!gasTankIsEmpty && tankHasSpace) {
             Fluid incomingFluid = BuiltInRegistries.FLUID.get(data.fluidId());
@@ -191,14 +255,16 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
 
         return container;
     }
-    
+
     @Override
     public IFluidMachine.PortType getFluidPortType(Direction face) {
-        return IFluidMachine.PortType.CONTAINER; 
+        return IFluidMachine.PortType.CONTAINER;
     }
 
     @Override
     public @Nullable String peekFluid(Direction face) {
+        if (this != getMasterTank()) return getMasterTank().peekFluid(face);
+
         if(fluidTank.getFluidAmount() <= 0){
             return null;
         }
@@ -207,6 +273,8 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
 
     @Override
     public int insertFluid(String incomingFluidType, int amount, boolean simulate) {
+        if (this != getMasterTank()) return getMasterTank().insertFluid(incomingFluidType, amount, simulate);
+
         Fluid incomingFluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(incomingFluidType));
         if (incomingFluid == Fluids.EMPTY) return 0;
         IFluidHandler.FluidAction action = simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE;
@@ -215,6 +283,8 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
 
     @Override
     public int extractFluid(String fluidType, int amount, boolean simulate) {
+        if (this != getMasterTank()) return getMasterTank().extractFluid(fluidType, amount, simulate);
+
         Fluid requestedFluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(fluidType));
         if (!fluidTank.getFluid().getFluid().isSame(requestedFluid)) return 0;
         IFluidHandler.FluidAction action = simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE;
@@ -222,27 +292,30 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
     }
 
     public Fluid getCurrentFluid() {
+        if (this != getMasterTank()) return getMasterTank().getCurrentFluid();
         return fluidTank.getFluid().getFluid();
     }
-    
+
+    public int getTankSpace(){
+        if (this != getMasterTank()) return getMasterTank().getTankSpace();
+        return fluidTank.getSpace();
+    }
+
+    public int getFluidAmount() {
+        if (this != getMasterTank()) return getMasterTank().getFluidAmount();
+        return fluidTank.getFluidAmount();
+    }
+
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag tag = new CompoundTag();
         saveAdditional(tag, registries);
         return tag;
     }
-    
+
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
-    }
-    
-    public int getTankSpace(){
-        return fluidTank.getSpace();
-    }
-
-    public int getFluidAmount() {
-        return fluidTank.getFluidAmount();
     }
 
     @Override

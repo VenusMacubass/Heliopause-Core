@@ -17,7 +17,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.venera.heliocore.block.entity.FluidTankEntity;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
@@ -46,7 +48,7 @@ public class FluidTankBlock extends BaseEntityBlock {
                     stack.shrink(1);
                     if (!player.addItem(resultItem)) player.drop(resultItem, false);
                 }
-            } 
+            }
             else if (stack.getItem() instanceof GasTankItem) {
                 if (player.isCreative()) {
                     fluidTankEntity.handleGasTank(stack.copyWithCount(1), player);
@@ -70,11 +72,11 @@ public class FluidTankBlock extends BaseEntityBlock {
                     return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
                 }
             }
-            
-            return ItemInteractionResult.SUCCESS; //Always prevent vanilla from placing the liquid
+
+            return ItemInteractionResult.SUCCESS;
         }
-        
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION; //Let vanilla handle it
+
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
@@ -85,11 +87,13 @@ public class FluidTankBlock extends BaseEntityBlock {
     @Override
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         super.onPlace(state, level, pos, oldState, movedByPiston);
-
         if (!level.isClientSide()) {
             updateBlockState(level, pos);
             updateBlockState(level, pos.above());
             updateBlockState(level, pos.below());
+            if (level.getBlockEntity(pos) instanceof FluidTankEntity tank) {
+                tank.updateMultiblock();
+            }
         }
     }
 
@@ -123,74 +127,45 @@ public class FluidTankBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock,
-                                   BlockPos neighborPos, boolean movedByPiston) {
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
         if (!level.isClientSide()) {
-            if ((neighborPos.equals(pos.above()) || neighborPos.equals(pos.below())) && neighborBlock instanceof FluidTankBlock) {
+            if ((neighborPos.equals(pos.above()) || neighborPos.equals(pos.below()))) {
                 updateBlockState(level, pos);
+                if (level.getBlockEntity(pos) instanceof FluidTankEntity tank) {
+                    tank.updateMultiblock();
+                }
             }
         }
     }
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        super.onRemove(state, level, pos, newState, movedByPiston);
-
-        if (!level.isClientSide()) { // Update neighbors when this block is broken
-            level.updateNeighborsAt(pos.above(), this);
-            level.updateNeighborsAt(pos.below(), this);
-        }
-    }
-
-    protected BlockPos findValidTank(Level level, BlockPos pos){
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if(!(blockEntity instanceof FluidTankEntity fluidTankEntity)){return pos;}
-        if (fluidTankEntity.getTankSpace() <= 0) {
-            int offset = 1;
-            BlockPos lastTankPos = pos;
-
-            while (true) {
-                BlockPos checkPos = pos.above(offset);
-                BlockEntity checkBE = level.getBlockEntity(checkPos);
-
-                if (checkBE instanceof FluidTankEntity checkTank) {
-                    lastTankPos = checkPos;
-                    if (checkTank.getTankSpace() > 0){
-                        return checkPos;
+        if (!state.is(newState.getBlock())) {
+            if (!level.isClientSide() && level.getBlockEntity(pos) instanceof FluidTankEntity brokenTank) {
+                FluidTankEntity master = brokenTank.getMasterTank();
+                if (master != null && master.fluidTank.getFluidAmount() > 0) {
+                    Fluid fluidType = master.fluidTank.getFluid().getFluid();
+                    int totalFluid = master.fluidTank.getFluidAmount();
+                    master.fluidTank.setFluid(FluidStack.EMPTY);
+                    BlockPos currentPos = master.getBlockPos();
+                    while (totalFluid > 0 && level.getBlockEntity(currentPos) instanceof FluidTankEntity tank) {
+                        int amountToGive = Math.min(totalFluid, FluidTankEntity.FLUID_TANK_CAPACITY);
+                        tank.fluidTank.setFluid(new FluidStack(fluidType, amountToGive));
+                        totalFluid -= amountToGive;
+                        currentPos = currentPos.above();
                     }
-                    offset++;
-                    continue;
                 }
-                if(offset > 256){break;}
-                return lastTankPos;
             }
-        }else if (fluidTankEntity.getFluidAmount() <= 0) {
-            int offset = 1;
-            BlockPos lastTankPos = pos;
-            while (true) {
-                BlockPos checkPos = pos.below(offset);
-                BlockEntity checkBE = level.getBlockEntity(checkPos);
-                BlockState checkState = level.getBlockState(checkPos);
-
-                if (checkBE instanceof FluidTankEntity checkTank) {
-                    lastTankPos = checkPos;
-
-                    if (checkTank.getFluidAmount() > 0 || (checkState.getValue(CONFIGURATION) == 1)){
-                        if(checkTank.getTankSpace() <= 0){
-                            return checkPos.above();
-                        }
-                        return checkPos;
-                    }
-                    offset++;
-                    continue;
-                }
-                if(offset > 256){break;}
-                return lastTankPos;
+            
+            super.onRemove(state, level, pos, newState, movedByPiston);
+            
+            if (!level.isClientSide()) {
+                level.updateNeighborsAt(pos.above(), this);
+                level.updateNeighborsAt(pos.below(), this);
             }
-        }else{
-            return pos;
+        } else {
+            super.onRemove(state, level, pos, newState, movedByPiston);
         }
-        return pos;
     }
 
     @Override

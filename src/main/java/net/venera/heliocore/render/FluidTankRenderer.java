@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
@@ -19,21 +20,32 @@ public class FluidTankRenderer implements BlockEntityRenderer<FluidTankEntity> {
 
     @Override
     public void render(FluidTankEntity entity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        if (entity.getFluidAmount() <= 0 || entity.getCurrentFluid() == Fluids.EMPTY) {
+        FluidTankEntity master = entity.getMasterTank();
+
+        if (master.getFluidAmount() <= 0 || master.getCurrentFluid() == Fluids.EMPTY) {
             return;
         }
 
-        IClientFluidTypeExtensions fluidExt = IClientFluidTypeExtensions.of(entity.getCurrentFluid());
+        int yOffset = entity.getBlockPos().getY() - master.getBlockPos().getY();
 
-        // 1. TEXTURE CRASH FIX: Safely fallback to water if the gas has no texture
-        net.minecraft.resources.ResourceLocation textureLoc = fluidExt.getStillTexture();
+        int fluidInThisBlock = Math.max(0, Math.min(FluidTankEntity.FLUID_TANK_CAPACITY,
+                master.getFluidAmount() - (yOffset * FluidTankEntity.FLUID_TANK_CAPACITY)));
+
+        boolean isGas = master.getCurrentFluid().getFluidType().getDensity() < 0;
+
+        if (!isGas && fluidInThisBlock <= 0) {
+            return;
+        }
+
+        IClientFluidTypeExtensions fluidExt = IClientFluidTypeExtensions.of(master.getCurrentFluid());
+
+        ResourceLocation textureLoc = fluidExt.getStillTexture();
         if (textureLoc == null) {
-            textureLoc = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("minecraft", "block/water_still");
+            textureLoc = ResourceLocation.fromNamespaceAndPath("minecraft", "block/water_still");
         }
         TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(textureLoc);
 
-        int tintColor = fluidExt.getTintColor(entity.getCurrentFluid().defaultFluidState(), entity.getLevel(), entity.getBlockPos());
-
+        int tintColor = fluidExt.getTintColor(master.getCurrentFluid().defaultFluidState(), entity.getLevel(), entity.getBlockPos());
         float a = ((tintColor >> 24) & 0xFF) / 255f;
         float r = ((tintColor >> 16) & 0xFF) / 255f;
         float g = ((tintColor >> 8) & 0xFF) / 255f;
@@ -45,20 +57,19 @@ public class FluidTankRenderer implements BlockEntityRenderer<FluidTankEntity> {
         float yMin = 0.001f;
         float yMax = 0.999f;
 
-        float fillPercentage = entity.getFluidAmount() / (float) FluidTankEntity.FLUID_TANK_CAPACITY;
-        boolean isGas = entity.getCurrentFluid().getFluidType().getDensity() < 0;
-
+        float fillPercentage;
         float fluidTop;
         float vTop;
 
-        // 2. GAS VS LIQUID RENDER LOGIC
         if (isGas) {
-            // Gas: Fills the entire cube, opacity scales from 0% to 60% based on fullness
+            fillPercentage = master.getFluidAmount() / (float) master.fluidTank.getCapacity();
+            if (Float.isNaN(fillPercentage) || Float.isInfinite(fillPercentage)) fillPercentage = 0;
+
             fluidTop = yMax;
-            vTop = sprite.getV0(); // Use the full texture
+            vTop = sprite.getV0();
             a = a * (0.6f * fillPercentage);
         } else {
-            // Liquid: Scales height from bottom to top, opacity remains solid
+            fillPercentage = fluidInThisBlock / (float) FluidTankEntity.FLUID_TANK_CAPACITY;
             fluidTop = yMin + (fillPercentage * (yMax - yMin));
             vTop = sprite.getV1() - ((sprite.getV1() - sprite.getV0()) * fillPercentage);
         }
@@ -95,16 +106,29 @@ public class FluidTankRenderer implements BlockEntityRenderer<FluidTankEntity> {
         builder.addVertex(pose, xzMax, fluidTop, xzMin).setColor(r, g, b, a).setUv(u1, vTop).setLight(packedLight).setNormal(1, 0, 0);
         builder.addVertex(pose, xzMax, fluidTop, xzMax).setColor(r, g, b, a).setUv(u0, vTop).setLight(packedLight).setNormal(1, 0, 0);
 
-        //TOP FACE (+Y)
-        builder.addVertex(pose, xzMin, fluidTop, xzMax).setColor(r, g, b, a).setUv(u0, v1).setLight(packedLight).setNormal(0, 1, 0);
-        builder.addVertex(pose, xzMax, fluidTop, xzMax).setColor(r, g, b, a).setUv(u1, v1).setLight(packedLight).setNormal(0, 1, 0);
-        builder.addVertex(pose, xzMax, fluidTop, xzMin).setColor(r, g, b, a).setUv(u1, v0).setLight(packedLight).setNormal(0, 1, 0);
-        builder.addVertex(pose, xzMin, fluidTop, xzMin).setColor(r, g, b, a).setUv(u0, v0).setLight(packedLight).setNormal(0, 1, 0);
+        boolean isTopBlockOfFluid;
+        if (isGas) {
+            boolean hasTankAbove = entity.getLevel().getBlockEntity(entity.getBlockPos().above()) instanceof FluidTankEntity;
+            isTopBlockOfFluid = !hasTankAbove;
+        } else {
+            isTopBlockOfFluid = fluidInThisBlock < FluidTankEntity.FLUID_TANK_CAPACITY
+                    || master.getFluidAmount() == (yOffset + 1) * FluidTankEntity.FLUID_TANK_CAPACITY;
+        }
 
-        //BOTTOM FACE (-Y)
-        builder.addVertex(pose, xzMin, yMin, xzMin).setColor(r, g, b, a).setUv(u0, v0).setLight(packedLight).setNormal(0, -1, 0);
-        builder.addVertex(pose, xzMax, yMin, xzMin).setColor(r, g, b, a).setUv(u1, v0).setLight(packedLight).setNormal(0, -1, 0);
-        builder.addVertex(pose, xzMax, yMin, xzMax).setColor(r, g, b, a).setUv(u1, v1).setLight(packedLight).setNormal(0, -1, 0);
-        builder.addVertex(pose, xzMin, yMin, xzMax).setColor(r, g, b, a).setUv(u0, v1).setLight(packedLight).setNormal(0, -1, 0);
+        if (isTopBlockOfFluid) {
+            //TOP FACE (+Y)
+            builder.addVertex(pose, xzMin, fluidTop, xzMax).setColor(r, g, b, a).setUv(u0, v1).setLight(packedLight).setNormal(0, 1, 0);
+            builder.addVertex(pose, xzMax, fluidTop, xzMax).setColor(r, g, b, a).setUv(u1, v1).setLight(packedLight).setNormal(0, 1, 0);
+            builder.addVertex(pose, xzMax, fluidTop, xzMin).setColor(r, g, b, a).setUv(u1, v0).setLight(packedLight).setNormal(0, 1, 0);
+            builder.addVertex(pose, xzMin, fluidTop, xzMin).setColor(r, g, b, a).setUv(u0, v0).setLight(packedLight).setNormal(0, 1, 0);
+        }
+
+        if (entity == master) {
+            //BOTTOM FACE (-Y)
+            builder.addVertex(pose, xzMin, yMin, xzMin).setColor(r, g, b, a).setUv(u0, v0).setLight(packedLight).setNormal(0, -1, 0);
+            builder.addVertex(pose, xzMax, yMin, xzMin).setColor(r, g, b, a).setUv(u1, v0).setLight(packedLight).setNormal(0, -1, 0);
+            builder.addVertex(pose, xzMax, yMin, xzMax).setColor(r, g, b, a).setUv(u1, v1).setLight(packedLight).setNormal(0, -1, 0);
+            builder.addVertex(pose, xzMin, yMin, xzMax).setColor(r, g, b, a).setUv(u0, v1).setLight(packedLight).setNormal(0, -1, 0);
+        }
     }
 }
