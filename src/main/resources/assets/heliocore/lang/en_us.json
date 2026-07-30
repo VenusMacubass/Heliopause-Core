@@ -82,6 +82,7 @@
   "fluid.heliocore.crude_oil": "Crude Oil",
   "fluid.heliocore.refined_fuel": "Refined Fuel",
   "fluid.heliocore.oxygen_gas": "Compressed Oxygen Gas",
+  "fluid.heliocore.oxygen_liquid": "Liquid Oxygen",
   
   "item.heliocore.compressed_gas_tank": "Compressed Gas Tank",
   "item.heliocore.gas_tank.filled": "%s (%d %%%s)",

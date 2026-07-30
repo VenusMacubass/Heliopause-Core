@@ -1,0 +1,44 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "heliocore:item/canister_1",
+      "predicate": {
+        "heliocore:fill_level": 0.16
+      }
+    },
+    {
+      "model": "heliocore:item/canister_2",
+      "predicate": {
+        "heliocore:fill_level": 0.33
+      }
+    },
+    {
+      "model": "heliocore:item/canister_3",
+      "predicate": {
+        "heliocore:fill_level": 0.5
+      }
+    },
+    {
+      "model": "heliocore:item/canister_4",
+      "predicate": {
+        "heliocore:fill_level": 0.66
+      }
+    },
+    {
+      "model": "heliocore:item/canister_5",
+      "predicate": {
+        "heliocore:fill_level": 0.83
+      }
+    },
+    {
+      "model": "heliocore:item/canister_6",
+      "predicate": {
+        "heliocore:fill_level": 1.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "heliocore:item/canister/fluid_canister_base"
+  }
+}

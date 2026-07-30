@@ -39,6 +39,7 @@ import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.HpCBlockEntities;
 import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
 import net.venera.heliocore.data.component.CanisterData;
+import net.venera.heliocore.data.component.HpCDataComponents;
 import net.venera.heliocore.entity.HpCEntities;
 import net.venera.heliocore.entity.client.Tier1RocketLanderModel;
 import net.venera.heliocore.entity.client.Tier1RocketLanderRenderer;
@@ -76,6 +77,14 @@ public class HeliopauseCoreClient {
         ItemBlockRenderTypes.setRenderLayer(HpCBlocks.FLUID_PIPE.get(), RenderType.translucent());
         EntityRenderers.register(HpCEntities.TIER_1_ROCKET.get(), Tier1RocketRenderer::new);
         EntityRenderers.register(HpCEntities.TIER_1_ROCKET_LANDER.get(), Tier1RocketLanderRenderer::new);
+
+        event.enqueueWork(() -> ItemProperties.register(HpCItems.CANISTER.get(),
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "fill_level"),
+                (stack, level, entity, seed) -> {
+                    CanisterData data = ((CanisterItem) stack.getItem()).getCanisterData(stack);
+                    if (data == null || data.isEmpty()) return 0f;
+                    return data.amount() / (float) CanisterItem.MAX_CAPACITY;
+                }));
     }
 
     @SubscribeEvent
@@ -123,6 +132,25 @@ public class HeliopauseCoreClient {
                         .orElse(0xFFFFFFFF);
             }, itemObject.get());
         }
+
+        event.register((stack, tintIndex) -> {
+            if (tintIndex == 1) {
+                CanisterData data = stack.getOrDefault(HpCDataComponents.CANISTER_COMPONENT.get(), new CanisterData(null, 0));
+
+                if (data != null && !data.isEmpty() && data.fluidId() != null) {
+                    String fluidPath = data.fluidId().getPath();
+                    return switch (fluidPath) {
+                        case "crude_oil" -> 0xFF1f1f1f;     //Very Dark Grey/Black
+                        case "refined_fuel" -> 0xFFC9B000;  //Yellow
+                        case "oxygen_liquid" -> 0xFF0C38C7; //Cyan/Blue
+                        default -> -1;                      //Fallback White (-1 is exactly 0xFFFFFFFF)
+                    };
+                }
+            }
+            return -1;
+
+        }, HpCItems.CANISTER.get());
+        
         event.register((stack, tintIndex) -> tintIndex == 0 ? 0xFFB4D6ED : -1,
                 HpCBlocks.ALUMINIUM_ORE.get(), 
                 HpCBlocks.DEEPSLATE_ALUMINIUM_ORE.get(), 
@@ -222,7 +250,7 @@ public class HeliopauseCoreClient {
         if (event.getName().equals(VanillaGuiLayers.JUMP_METER)) {
             Player player = Minecraft.getInstance().player;
             
-            if (player != null && player.getVehicle() instanceof Tier1RocketEntity || player != null && player.getVehicle() instanceof Tier1RocketLanderEntity) {
+            if (player != null && (player.getVehicle() instanceof Tier1RocketEntity || player.getVehicle() instanceof Tier1RocketLanderEntity)) {
                 event.setCanceled(true);
             }
         }
@@ -273,7 +301,7 @@ public class HeliopauseCoreClient {
 
             @Override
             public int getTintColor() {
-                // 0x99 = 60% base opacity. 66D8FF = Airy blue color.
+                //0x99 = 60% base opacity. 66D8FF = Airy blue color.
                 return 0x9966D8FF;
             }
 
@@ -291,25 +319,6 @@ public class HeliopauseCoreClient {
             @Override public ResourceLocation getStillTexture() { return ResourceLocation.parse("minecraft:block/water_still"); }
         }, HpCFluids.CHLORINE_TYPE.get());
         */
-    }
-
-    @SubscribeEvent
-    public static void onModelEvent(ModelEvent.RegisterAdditional event) {
-        ItemProperties.register(HpCItems.CANISTER.get(),
-                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "fluid_type"),
-                (stack, level, entity, seed) -> {
-                    CanisterData data = ((CanisterItem) stack.getItem()).getCanisterData(stack);
-                    if (data == null || data.isEmpty()) return 0f;
-                    return data.isCrudeOil() ? 1f : 2f;
-                });
-
-        ItemProperties.register(HpCItems.CANISTER.get(),
-                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "fill_level"),
-                (stack, level, entity, seed) -> {
-                    CanisterData data = ((CanisterItem) stack.getItem()).getCanisterData(stack);
-                    if (data == null || data.isEmpty()) return 0f;
-                    return data.amount() / (float) CanisterItem.MAX_CAPACITY;
-                });
     }
     
     @SubscribeEvent

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "heliocore:item/canister/fluid_canister_base",
+    "layer1": "heliocore:item/canister/fluid_canister_5"
+  }
+}

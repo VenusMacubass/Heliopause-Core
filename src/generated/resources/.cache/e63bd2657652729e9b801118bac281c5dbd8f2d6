@@ -1,8 +1,15 @@
-// 1.21.1	2026-07-24T15:38:12.4262341	Item Models: heliocore
+// 1.21.1	2026-07-30T14:07:08.857096	Item Models: heliocore
 1ac96947d6d705457f38d0a1fa68a0dcb74bc592 assets/heliocore/models/item/air_fan.json
 0734313d99e1a4ca395735a0943619e787dd452a assets/heliocore/models/item/base_building_wall_black.json
 77313ec5bf2583da66c950d2ae65ff21c6eb341c assets/heliocore/models/item/base_building_wall_white.json
 c6829bb222dde1c8025676c0f19e9914d2d2b24b assets/heliocore/models/item/basic_circuit_board.json
+a214fffc15cf374e23bec336d87e6e9bbc36bab4 assets/heliocore/models/item/canister.json
+b01b7f7b661ff97df8443e9ec5b0fda52540c4b7 assets/heliocore/models/item/canister_1.json
+af6e78eac06995087aa21627f6543b6758f2654d assets/heliocore/models/item/canister_2.json
+b2b55824b52b010909f338a4632d512c545dfe4b assets/heliocore/models/item/canister_3.json
+c09afc6ae41f1034253446be96612059792980a7 assets/heliocore/models/item/canister_4.json
+022fc99d804cfdb5aeac372e9cbd6263dcb5a631 assets/heliocore/models/item/canister_5.json
+d45dc16510d3bf6917a4f79fb884d2d2f4f406a1 assets/heliocore/models/item/canister_6.json
 62c01033a4c1f12560cd7e8e0deda9ef61f67c70 assets/heliocore/models/item/cheese_slice.json
 8cc483167b9451eb7ae0dd7530e83781ecfa22ab assets/heliocore/models/item/compressed_bronze.json
 0af2591c590f42947c6a487a09f4041de52d7575 assets/heliocore/models/item/compressed_copper.json

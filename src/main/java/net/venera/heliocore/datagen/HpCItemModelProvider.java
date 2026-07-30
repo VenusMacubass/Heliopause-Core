@@ -44,6 +44,40 @@ public class HpCItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        for (int i = 1; i <= 6; i++) {
+            withExistingParent("canister_" + i, "item/generated")
+                    .texture("layer0", modLoc("item/canister/fluid_canister_base"))
+                    .texture("layer1", modLoc("item/canister/fluid_canister_" + i));
+        }
+
+        withExistingParent(HpCItems.CANISTER.getId().getPath(), "item/generated")
+                .texture("layer0", modLoc("item/canister/fluid_canister_base"))
+                .override()
+                .predicate(modLoc("fill_level"), 0.16f)
+                .model(new ModelFile.UncheckedModelFile(modLoc("item/canister_1")))
+                .end()
+                .override()
+                .predicate(modLoc("fill_level"), 0.33f)
+                .model(new ModelFile.UncheckedModelFile(modLoc("item/canister_2")))
+                .end()
+                .override()
+                .predicate(modLoc("fill_level"), 0.50f)
+                .model(new ModelFile.UncheckedModelFile(modLoc("item/canister_3")))
+                .end()
+                .override()
+                .predicate(modLoc("fill_level"), 0.66f)
+                .model(new ModelFile.UncheckedModelFile(modLoc("item/canister_4")))
+                .end()
+                .override()
+                .predicate(modLoc("fill_level"), 0.83f)
+                .model(new ModelFile.UncheckedModelFile(modLoc("item/canister_5")))
+                .end()
+                .override()
+                .predicate(modLoc("fill_level"), 1.00f)
+                .model(new ModelFile.UncheckedModelFile(modLoc("item/canister_6")))
+                .end();
+    
+        
         basicItem(HpCItems.COPPER_CANISTER.get());
         basicItem(HpCItems.TIN_CANISTER.get());
         basicItem(HpCItems.DEHYDRATED_APPLE.get());

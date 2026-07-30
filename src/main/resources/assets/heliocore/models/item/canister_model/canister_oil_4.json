@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "heliocore:item/canister/oil_canister_4"
-  }
-}
