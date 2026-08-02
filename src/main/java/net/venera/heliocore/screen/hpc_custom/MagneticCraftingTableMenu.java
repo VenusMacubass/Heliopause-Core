@@ -13,19 +13,20 @@ public class MagneticCraftingTableMenu extends CraftingMenu {
     private final MagneticCraftingTableEntity blockEntity;
     private final ContainerLevelAccess access;
     private boolean isClosing = false;
-    private boolean isLoading; 
+    private boolean isLoading;
 
     public MagneticCraftingTableMenu(int containerId, Inventory playerInv, ContainerLevelAccess access, MagneticCraftingTableEntity blockEntity) {
         super(containerId, playerInv, access);
         this.blockEntity = blockEntity;
         this.access = access;
         
+        this.isLoading = true;
+
         if (this.blockEntity != null) {
             for (int i = 0; i < 9; i++) {
                 this.getSlot(i + 1).set(blockEntity.getInventory().getStackInSlot(i).copy());
             }
         }
-        
         this.isLoading = false;
     }
 

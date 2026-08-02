@@ -1,0 +1,25 @@
+{
+  "type": "heliocore:pcb_fabricator",
+  "core": {
+    "item": "minecraft:diamond"
+  },
+  "logic_1": {
+    "item": "minecraft:redstone"
+  },
+  "logic_2": {
+    "item": "minecraft:quartz"
+  },
+  "result": {
+    "count": 1,
+    "id": "heliocore:basic_circuit_board"
+  },
+  "substrate_1": {
+    "item": "heliocore:raw_silicon"
+  },
+  "substrate_2": {
+    "item": "heliocore:raw_silicon"
+  },
+  "wire": {
+    "tag": "c:ingots/copper"
+  }
+}

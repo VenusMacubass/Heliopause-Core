@@ -169,6 +169,7 @@
   "block.heliocore.gas_vaporizer": "Gas Vaporizer",
   "block.heliocore.energy_generator": "Energy Generator",
   "block.heliocore.oxygen_sealer": "Oxygen Sealer",
+  "block.heliocore.pcb_fabricator": "PCB Fabricator",
 
 
   "block.heliocore.coal_compressor_menu_name": "Coal Powered Compressor",
@@ -183,6 +184,7 @@
   "container.heliocore.solar_panel": "Solar Panel",
   "container.heliocore.energy_generator": "Energy Generator",
   "container.heliocore.oxygen_sealer":"Oxygen Sealer",
+  "container.heliocore.pcb_fabricator":"PCB Fabricator",
 
   "container.heliocore.magnetic_crafting": "Crafting",
   

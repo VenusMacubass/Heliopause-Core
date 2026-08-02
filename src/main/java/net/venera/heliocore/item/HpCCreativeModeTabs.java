@@ -89,6 +89,9 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCItems.ELECTROMAGNETIC_SENSORS.get());
                         output.accept(HpCItems.FLUID_FILTER.get());
                         output.accept(HpCItems.GAS_REGULATOR.get());
+                        output.accept(HpCItems.SOLAR_PANEL_SEMICONDUCTOR_BASE.get());
+                        output.accept(HpCItems.SINGULAR_SOLAR_PANEL.get());
+                        output.accept(HpCItems.TIER_1_SOLAR_PANEL.get());
                         output.accept(HpCItems.COMPRESSED_ALUMINIUM.get());
                         output.accept(HpCItems.COMPRESSED_BRONZE.get());
                         output.accept(HpCItems.COMPRESSED_COPPER.get());
@@ -189,6 +192,7 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCBlocks.GAS_COMPRESSOR.get());
                         output.accept(HpCBlocks.GAS_VAPORIZER.get());
                         output.accept(HpCBlocks.OXYGEN_SEALER.get());
+                        output.accept(HpCBlocks.PCB_FABRICATOR.get());
                         
 
                     })

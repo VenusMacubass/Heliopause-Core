@@ -274,6 +274,15 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                         Direction.EAST, fluidInPort
                 )
         );
+
+        directionalMachineBlock(HpCBlocks.PCB_FABRICATOR.get(),
+                machineSide,
+                Map.of(
+                        Direction.NORTH, energyInPort,
+                        Direction.UP, machineTop,
+                        Direction.DOWN, machineBottom
+                )
+        );
         //endregion
 
         //region Ores

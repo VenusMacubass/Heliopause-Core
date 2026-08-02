@@ -45,6 +45,9 @@ public class MachineConfigHelper {
         IO_CONFIG.put(HpCBlockEntities.OXYGEN_SEALER_ENTITY, Map.of(
                 Direction.WEST, true
         ));
+        IO_CONFIG.put(HpCBlockEntities.PCB_FABRICATOR_ENTITY, Map.of(
+                Direction.NORTH, true
+        ));
     }
     
     public static Map<Direction, Boolean> getConfigFor(BlockEntityType<?> type) {

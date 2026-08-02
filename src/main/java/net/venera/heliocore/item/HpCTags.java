@@ -14,6 +14,7 @@ public class HpCTags {
     public static class Items{
         public static final TagKey<Item> CANISTER = createTag("canister");
         public static final TagKey<Item> COMPRESSIBLE_INGOTS = createTag("compressible_ingots");
+        public static final TagKey<Item> CIRCUIT_MATERIALS = createTag("circuit_materials");
         public static final TagKey<Item> OXYGEN_GEAR = TagKey.create(Registries.ITEM, 
                 ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "oxygen_gear"));
         public static final TagKey<Item> OXYGEN_MASK = ItemTags.create(

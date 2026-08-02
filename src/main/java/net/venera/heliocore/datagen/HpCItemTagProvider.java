@@ -44,6 +44,10 @@ public class HpCItemTagProvider extends ItemTagsProvider {
                 .add(HpCItems.STEEL_CHESTPLATE.get())
                 .add(HpCItems.STEEL_LEGGINGS.get())
                 .add(HpCItems.STEEL_BOOTS.get());
+        
+        tag(HpCTags.Items.CIRCUIT_MATERIALS)
+                .add(Items.QUARTZ)
+                .add(Items.LAPIS_LAZULI);
 
         tag(HpCTags.Items.COMPRESSIBLE_INGOTS)
                 .add(Items.COPPER_INGOT)

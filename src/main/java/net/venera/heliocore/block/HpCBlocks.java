@@ -110,6 +110,8 @@ public class HpCBlocks {
             () -> new DeconstructorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.DECONSTRUCTOR_ENTITY));
     public static final DeferredBlock<Block> OXYGEN_SEALER = registerBlock("oxygen_sealer",
             () -> new OxygenSealerBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.OXYGEN_SEALER_ENTITY));
+    public static final DeferredBlock<Block> PCB_FABRICATOR = registerBlock("pcb_fabricator", 
+            () -> new PCBFabricatorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.PCB_FABRICATOR_ENTITY));
 
     //endregion
     

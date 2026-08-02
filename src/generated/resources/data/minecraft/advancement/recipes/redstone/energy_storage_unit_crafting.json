@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_small_battery": {
+      "conditions": {
+        "items": [
+          {
+            "items": "heliocore:small_battery"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:energy_storage_unit_crafting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_small_battery"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:energy_storage_unit_crafting"
+    ]
+  }
+}

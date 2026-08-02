@@ -92,6 +92,10 @@ public class HpCItems {
     public static final DeferredItem<Item> ELECTROMAGNETIC_SENSORS = ITEMS.register("electromagnetic_sensors", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> FLUID_FILTER = ITEMS.register("fluid_filter", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> GAS_REGULATOR =  ITEMS.register("gas_regulator", () -> new Item(new Item.Properties()));
+    
+    public static final DeferredItem<Item> SOLAR_PANEL_SEMICONDUCTOR_BASE = ITEMS.register("solar_panel_semiconductor_base", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> SINGULAR_SOLAR_PANEL = ITEMS.register("singular_solar_panel", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> TIER_1_SOLAR_PANEL = ITEMS.register("tier_1_solar_panel", () -> new Item(new Item.Properties()));
     //endregion
 
     //region Tools

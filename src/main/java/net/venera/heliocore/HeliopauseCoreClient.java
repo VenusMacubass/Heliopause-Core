@@ -204,6 +204,7 @@ public class HeliopauseCoreClient {
         event.register(HpCMenuTypes.VAPORIZER_MENU.get(), VaporizerScreen::new);
         event.register(HpCMenuTypes.ENERGY_GENERATOR_MENU.get(), EnergyGeneratorScreen::new);
         event.register(HpCMenuTypes.OXYGEN_SEALER_MENU.get(), OxygenSealerScreen::new);
+        event.register(HpCMenuTypes.PCB_FABRICATOR_MENU.get(), PCBFabricatorScreen::new);
 
         event.register(HpCMenuTypes.ROCKET_MENU.get(), RocketScreen::new);
         event.register(HpCMenuTypes.LANDER_MENU.get(), LanderScreen::new);

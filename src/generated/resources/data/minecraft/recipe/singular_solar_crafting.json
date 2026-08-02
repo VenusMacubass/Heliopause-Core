@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "B": {
+      "item": "heliocore:solar_panel_semiconductor_base"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
+    },
+    "T": {
+      "item": "heliocore:tin_ingot"
+    },
+    "W": {
+      "item": "heliocore:copper_wire"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "BBB",
+    "WTW"
+  ],
+  "result": {
+    "count": 2,
+    "id": "heliocore:singular_solar_panel"
+  }
+}

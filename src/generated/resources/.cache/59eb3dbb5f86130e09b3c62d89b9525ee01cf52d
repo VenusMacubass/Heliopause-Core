@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-28T21:57:24.434696	Loot Tables
+// 1.21.1	2026-08-02T12:09:03.5011527	Loot Tables
 8d3485d0593ffa5c07d22187b1d1e00dd7b2de21 data/heliocore/loot_table/blocks/airlock_frame_switch.json
 ff4b0fd001180ba9d9b920b1e9c59581a4720d73 data/heliocore/loot_table/blocks/airlock_gate_frame.json
 4c6effb42af79317efc025b64a17716f1bcfaa42 data/heliocore/loot_table/blocks/aluminium_block.json
@@ -57,6 +57,7 @@ ea33085e1d656059a7ca6b153f26dd5516b1ccc6 data/heliocore/loot_table/blocks/moon_s
 0fcaceb2ddc4c18e3d475da12c300df009c7ddf5 data/heliocore/loot_table/blocks/moon_tin_ore.json
 51968762569946cdc2e7b509100797cffac3f75a data/heliocore/loot_table/blocks/oxygen_generator.json
 1bab61163192924f25115bdf2d48c131e517a693 data/heliocore/loot_table/blocks/oxygen_sealer.json
+18fa7a4b04e93d167017bdb581d46f93f9993832 data/heliocore/loot_table/blocks/pcb_fabricator.json
 2e952a5a57bdcf83b6316c4e241f38451e778342 data/heliocore/loot_table/blocks/prismatic_glass.json
 69aa2357e897190284a3d311f9784894a3900da9 data/heliocore/loot_table/blocks/prismatic_glass_pane.json
 8d40622c1ac8d5ecb50ee80237dc0056d57bfa18 data/heliocore/loot_table/blocks/radioactive_block.json

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_silicon": {
+      "conditions": {
+        "items": [
+          {
+            "items": "heliocore:raw_silicon"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "heliocore:solar_panel_base_fabrication"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_silicon"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "heliocore:solar_panel_base_fabrication"
+    ]
+  }
+}

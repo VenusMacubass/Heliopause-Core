@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "heliocore:block/pcb_fabricator",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "heliocore:block/pcb_fabricator",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "heliocore:block/pcb_fabricator"
+    },
+    "facing=south": {
+      "model": "heliocore:block/pcb_fabricator",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "heliocore:block/pcb_fabricator",
+      "x": 270
+    },
+    "facing=west": {
+      "model": "heliocore:block/pcb_fabricator",
+      "y": 270
+    }
+  }
+}

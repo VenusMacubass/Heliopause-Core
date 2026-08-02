@@ -50,6 +50,9 @@ public class HpCMenuTypes {
     public static final DeferredHolder<MenuType<?>, MenuType<OxygenSealerMenu>> OXYGEN_SEALER_MENU =
             registerMenuType("oxygen_sealer_menu", OxygenSealerMenu::new);
     
+    public static final DeferredHolder<MenuType<?>, MenuType<PCBFabricatorMenu>> PCB_FABRICATOR_MENU =
+            registerMenuType("pcb_fabricator_menu", PCBFabricatorMenu::new);
+    
     //region Entities
     public static final DeferredHolder<MenuType<?>, MenuType<RocketMenu>> ROCKET_MENU =
             registerMenuType("rocket_menu", RocketMenu::new);

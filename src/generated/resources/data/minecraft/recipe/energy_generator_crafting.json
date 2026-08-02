@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "T": {
+      "item": "heliocore:fluid_tank"
+    },
+    "X": {
+      "item": "heliocore:aluminium_ingot"
+    }
+  },
+  "pattern": [
+    "CXC",
+    "IFI",
+    "ITI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:energy_generator"
+  }
+}

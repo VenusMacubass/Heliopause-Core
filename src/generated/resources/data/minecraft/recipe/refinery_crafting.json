@@ -2,29 +2,29 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
-    "A": {
-      "item": "heliocore:compressed_aluminium"
-    },
     "F": {
-      "item": "heliocore:fluid_filter"
+      "item": "minecraft:furnace"
     },
-    "G": {
-      "item": "heliocore:gas_regulator"
+    "P": {
+      "item": "heliocore:fluid_pipe"
     },
     "S": {
       "item": "heliocore:compressed_steel"
     },
     "T": {
       "item": "heliocore:fluid_tank"
+    },
+    "X": {
+      "item": "heliocore:fluid_filter"
     }
   },
   "pattern": [
-    "SFS",
-    "ATA",
-    "SGS"
+    "PXP",
+    "TFT",
+    "SSS"
   ],
   "result": {
     "count": 1,
-    "id": "heliocore:gas_vaporizer"
+    "id": "heliocore:refinery"
   }
 }

@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "C": {
+      "item": "minecraft:coal"
+    },
+    "H": {
+      "item": "heliocore:hydrocarbons"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "T": {
+      "item": "heliocore:compressed_tin"
+    },
+    "X": {
+      "item": "heliocore:compressed_copper"
+    }
+  },
+  "pattern": [
+    "XHX",
+    "TRT",
+    "TCT"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:small_battery"
+  }
+}

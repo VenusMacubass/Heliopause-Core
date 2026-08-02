@@ -103,6 +103,9 @@ public class HpCItemModelProvider extends ItemModelProvider {
         basicItem(HpCItems.ELECTROMAGNETIC_SENSORS.get());
         basicItem(HpCItems.FLUID_FILTER.get());
         basicItem(HpCItems.GAS_REGULATOR.get());
+        basicItem(HpCItems.SOLAR_PANEL_SEMICONDUCTOR_BASE.get());
+        basicItem(HpCItems.SINGULAR_SOLAR_PANEL.get());
+        basicItem(HpCItems.TIER_1_SOLAR_PANEL.get());
         
         basicItem(HpCItems.ROCKET_ITEM.get());
 

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "B": {
+      "item": "heliocore:small_battery"
+    },
+    "S": {
+      "item": "heliocore:compressed_steel"
+    },
+    "W": {
+      "item": "heliocore:copper_wire"
+    }
+  },
+  "pattern": [
+    "SBS",
+    "WBW",
+    "SBS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:energy_storage_unit"
+  }
+}

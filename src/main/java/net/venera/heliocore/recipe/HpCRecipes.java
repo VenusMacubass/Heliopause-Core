@@ -19,6 +19,14 @@ public class HpCRecipes {
             return "coal_compressor";
         }
     });
+
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<PCBFabricatorRecipe>> PCB_FABRICATOR_SERIALIZER = RECIPE_SERIALIZERS.register("pcb_fabricator", PCBFabricatorRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<PCBFabricatorRecipe>> PCB_FABRICATOR_TYPE = RECIPE_TYPES.register("pcb_fabricator", () -> new RecipeType<>() {
+        @Override
+        public String toString() {
+            return "pcb_fabricator";
+        }
+    });
     public static void register(IEventBus eventBus){
         RECIPE_SERIALIZERS.register(eventBus);
         RECIPE_TYPES.register(eventBus);

@@ -100,6 +100,12 @@ public class HpCBlockEntities {
                             new DeconstructorEntity(HpCBlockEntities.DECONSTRUCTOR_ENTITY.get(), blockPos, blockState,
                                     50000, 120, 20),
                     HpCBlocks.DECONSTRUCTOR.get()).build(null));
+    
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PCBFabricatorEntity>> PCB_FABRICATOR_ENTITY = BLOCK_ENTITIES.register("pcb_fabricator_entity",
+            ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
+                            new PCBFabricatorEntity(HpCBlockEntities.PCB_FABRICATOR_ENTITY.get(), blockPos, blockState,
+                                    50000, 120, 20),
+                    HpCBlocks.PCB_FABRICATOR.get()).build(null));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MagneticCraftingTableEntity>> MAGNETIC_CRAFTING_TABLE_ENTITY = BLOCK_ENTITIES.register("magnetic_crafting_table_entity",
             ()-> BlockEntityType.Builder.of(MagneticCraftingTableEntity::new, HpCBlocks.MAGNETIC_CRAFTING_TABLE.get()).build(null));
