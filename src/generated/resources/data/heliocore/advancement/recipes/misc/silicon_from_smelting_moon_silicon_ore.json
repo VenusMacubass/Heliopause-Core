@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "heliocore:raw_silicon_from_blasting_moon_silicon_ore"
+        "recipe": "heliocore:silicon_from_smelting_moon_silicon_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "heliocore:raw_silicon_from_blasting_moon_silicon_ore"
+      "heliocore:silicon_from_smelting_moon_silicon_ore"
     ]
   }
 }

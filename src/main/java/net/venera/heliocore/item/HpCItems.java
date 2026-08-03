@@ -20,7 +20,7 @@ public class HpCItems {
     //region Metals
     public static final DeferredItem<Item> RAW_TIN = ITEMS.register("raw_tin", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> RAW_ALUMINIUM = ITEMS.register("raw_aluminium", () -> new Item(new Item.Properties()));
-    public static final DeferredItem<Item> RAW_SILICON = ITEMS.register("raw_silicon", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> SILICON = ITEMS.register("silicon", () -> new Item(new Item.Properties()));
     
     public static final DeferredItem<Item> ALUMINIUM_INGOT = ITEMS.register("aluminium_ingot", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> TIN_INGOT = ITEMS.register("tin_ingot", () -> new Item(new Item.Properties()));
@@ -67,8 +67,9 @@ public class HpCItems {
     public static final DeferredItem<Item> HAMBURGER = ITEMS.register("hamburger",
             () -> new Item(new Item.Properties().food(HpCFoodProperties.MODERN_FOOD)));
 
-    public static final DeferredItem<Item> RADIOACTIVE_CORE = ITEMS.register("radioactive_core",
-            () -> new FuelItem(new Item.Properties(), 20000));
+    public static final DeferredItem<BatteryItem> RADIOACTIVE_CORE = ITEMS.register("radioactive_core",
+            () -> new BatteryItem(new Item.Properties().component(HpCDataComponents.BATTERY_COMPONENT.get(), 
+                    new BatteryData(Integer.MAX_VALUE, Integer.MAX_VALUE)), Integer.MAX_VALUE, 5));
     //endregion
 
     //region Ingredients
@@ -86,13 +87,13 @@ public class HpCItems {
             HpCDataComponents.CANISTER_COMPONENT.get(), new CanisterData(null, 0)).stacksTo(1)));
     public static final DeferredItem<GasTankItem> COMPRESSED_GAS_TANK = ITEMS.register("compressed_gas_tank", () -> new GasTankItem(new Item.Properties().component(
             HpCDataComponents.GAS_TANK_COMPONENT.get(), new GasTankData(null, 0)).stacksTo(1)));
-    public static final DeferredItem<Item> HYDROCARBONS = ITEMS.register("hydrocarbons", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> PETROCHEMICALS = ITEMS.register("petrochemicals", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> AIR_FAN = ITEMS.register("air_fan", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> BASIC_CIRCUIT_BOARD = ITEMS.register("basic_circuit_board", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> ELECTROMAGNETIC_SENSORS = ITEMS.register("electromagnetic_sensors", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> FLUID_FILTER = ITEMS.register("fluid_filter", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> GAS_REGULATOR =  ITEMS.register("gas_regulator", () -> new Item(new Item.Properties()));
-    
+    public static final DeferredItem<Item> STEEL_ROD =  ITEMS.register("steel_rod", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> SOLAR_PANEL_SEMICONDUCTOR_BASE = ITEMS.register("solar_panel_semiconductor_base", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> SINGULAR_SOLAR_PANEL = ITEMS.register("singular_solar_panel", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> TIER_1_SOLAR_PANEL = ITEMS.register("tier_1_solar_panel", () -> new Item(new Item.Properties()));
@@ -143,8 +144,8 @@ public class HpCItems {
     
 
     public static final DeferredItem<BatteryItem> SMALL_BATTERY = ITEMS.register("small_battery", () ->
-            new BatteryItem(new Item.Properties().component(HpCDataComponents.BATTERY_COMPONENT.get(), new BatteryData(0, 10000)),
-                    10000, 20));
+            new BatteryItem(new Item.Properties().component(HpCDataComponents.BATTERY_COMPONENT.get(), 
+                    new BatteryData(0, 10000)), 10000, 20));
 
 
     public static void register(IEventBus eventBus) {

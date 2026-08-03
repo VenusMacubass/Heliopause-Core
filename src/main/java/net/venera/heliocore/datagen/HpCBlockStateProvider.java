@@ -646,7 +646,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
             String modelName = baseName + "_charge_" + charge;
 
             BlockModelBuilder model = models().withExistingParent(modelName, parentModelLoc)
-                    .texture(textureKey, modLoc(chargeTexturePrefix + charge));
+                    .texture(textureKey, modLoc(chargeTexturePrefix + charge)).ao(false);
 
             int x = 0;
             int y = 0;

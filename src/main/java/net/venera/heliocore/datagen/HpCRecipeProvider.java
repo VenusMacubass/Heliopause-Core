@@ -68,15 +68,15 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_iridium_ingot", has(HpCItems.IRIDIUM_INGOT.get()))
                 .save(recipeOutput, "iridium_block_from_ingots");
         
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.RAW_SILICON.get(), 9)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.SILICON.get(), 9)
                 .requires(HpCBlocks.SILICON_BLOCK.get(),    1)
                 .unlockedBy("has_silicon_block", has(HpCBlocks.SILICON_BLOCK.get()))
                 .save(recipeOutput, "raw_silicon_from_silicon_block");
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCBlocks.SILICON_BLOCK.get())
                 .pattern("SSS")
                 .pattern("SSS")
-                .pattern("SSS").define('S', HpCItems.RAW_SILICON.get())
-                .unlockedBy("has_raw_silicon", has(HpCItems.RAW_SILICON.get()))
+                .pattern("SSS").define('S', HpCItems.SILICON.get())
+                .unlockedBy("has_raw_silicon", has(HpCItems.SILICON.get()))
                 .save(recipeOutput, "silicon_block_from_raw_silicon");
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.RAW_TIN.get(), 9)
@@ -113,8 +113,8 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
         oreBlasting(recipeOutput, ALUMINIUM_SMELTABLES, RecipeCategory.MISC, HpCItems.ALUMINIUM_INGOT.get(),0.7f, 200, "aluminium_ingot");
         oreSmelting(recipeOutput, HpCBlocks.MOON_IRON_ORE, RecipeCategory.MISC, Items.IRON_INGOT,0.5f, 400, "iron_ingot");
         oreBlasting(recipeOutput, HpCBlocks.MOON_IRON_ORE, RecipeCategory.MISC, Items.IRON_INGOT,0.5f, 200, "iron_ingot");
-        oreSmelting(recipeOutput, SILICON_SMELTABLES, RecipeCategory.MISC, HpCItems.RAW_SILICON.get(),0.5f, 400, "silicon");
-        oreBlasting(recipeOutput, SILICON_SMELTABLES, RecipeCategory.MISC, HpCItems.RAW_SILICON.get(),0.5f, 200, "silicon");
+        oreSmelting(recipeOutput, SILICON_SMELTABLES, RecipeCategory.MISC, HpCItems.SILICON.get(),0.5f, 400, "silicon");
+        oreBlasting(recipeOutput, SILICON_SMELTABLES, RecipeCategory.MISC, HpCItems.SILICON.get(),0.5f, 200, "silicon");
         oreSmelting(recipeOutput, IRIDIUM_SMELTABLES, RecipeCategory.MISC, HpCItems.IRIDIUM_INGOT.get(),1.8f, 400, "iridium_ingot");
         oreBlasting(recipeOutput, IRIDIUM_SMELTABLES, RecipeCategory.MISC, HpCItems.IRIDIUM_INGOT.get(),1.8f, 200, "iridium_ingot");
         oreSmelting(recipeOutput, TEKTITES, RecipeCategory.MISC, HpCItems.TEKTITES.get(),2.5f, 400, "regolith_tektite_shards");
@@ -138,7 +138,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_tin_ingot", has(HpCItems.TIN_INGOT.get()))
                 .save(recipeOutput, "tin_canister_crafting");
         
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.HYDROCARBONS.get(), 3)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.PETROCHEMICALS.get(), 3)
                 .requires(Items.COAL, 1)
                 .unlockedBy("has_coal", has(Items.COAL))
                 .save(recipeOutput, "hydrocarbons_from_coal_crafting");
@@ -212,6 +212,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('W', HpCBlocks.COPPER_WIRE.get())
                 .unlockedBy("has_solar_semiconductor_base", has(HpCItems.SOLAR_PANEL_SEMICONDUCTOR_BASE.get()))
                 .save(recipeOutput, "singular_solar_crafting");
+        
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCItems.TIER_1_SOLAR_PANEL.get())
                 .pattern("SS")
                 .pattern("WW")
@@ -220,6 +221,14 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('W', HpCBlocks.COPPER_WIRE.get())
                 .unlockedBy("has_singular_solar_panel", has(HpCItems.SINGULAR_SOLAR_PANEL.get()))
                 .save(recipeOutput, "tier_1_solar_panel_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCItems.STEEL_ROD.get(),2)
+                .pattern("S")
+                .pattern("S")
+                .pattern("S")
+                .define('S', HpCItems.COMPRESSED_STEEL.get())
+                .unlockedBy("has_steel", has(HpCItems.COMPRESSED_STEEL.get()))
+                .save(recipeOutput, "steel_rod_crafting");
         //endregion
         
         //region Machines
@@ -234,6 +243,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('I', Items.IRON_INGOT)
                 .unlockedBy("has_furnace", has(Items.FURNACE))
                 .save(recipeOutput, "coal_compressor_crafting");
+        
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCBlocks.REFINERY.get())
                 .pattern("PXP")
                 .pattern("TFT")
@@ -257,6 +267,31 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('I', Items.IRON_INGOT)
                 .unlockedBy("has_furnace", has(Items.FURNACE))
                 .save(recipeOutput, "energy_generator_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCBlocks.PCB_FABRICATOR.get())
+                .pattern("SAS")
+                .pattern("ICI")
+                .pattern("WRW")
+                .define('A', HpCItems.COMPRESSED_ALUMINIUM.get())
+                .define('S', HpCItems.SILICON.get())
+                .define('I', HpCItems.COMPRESSED_IRON.get())
+                .define('C', Items.CRAFTING_TABLE)
+                .define('R', Items.REDSTONE)
+                .define('W', HpCBlocks.COPPER_WIRE.get())
+                .unlockedBy("has_silicon", has(HpCItems.SILICON.get()))
+                .save(recipeOutput, "pcb_fabricator_crafting");
+        
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCBlocks.BASIC_SOLAR_PANEL.get())
+                .pattern(" F ")
+                .pattern("SPS")
+                .pattern("WRW")
+                .define('F', HpCItems.TIER_1_SOLAR_PANEL.get())
+                .define('S', HpCItems.COMPRESSED_STEEL.get())
+                .define('P', HpCItems.STEEL_ROD.get())
+                .define('W', HpCBlocks.COPPER_WIRE.get())
+                .define('R', HpCItems.SILICON.get())
+                .unlockedBy("has_solar_panel_material", has(HpCItems.TIER_1_SOLAR_PANEL.get()))
+                .save(recipeOutput, "basic_solar_panel_crafting");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCBlocks.ENERGY_STORAGE_UNIT.get())
                 .pattern("SBS")
@@ -322,7 +357,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern(" G ")
                 .pattern("GHG")
                 .pattern("SGS")
-                .define('H', HpCItems.HYDROCARBONS.get())
+                .define('H', HpCItems.PETROCHEMICALS.get())
                 .define('S', Items.GLASS)
                 .define('G', HpCItems.COMPRESSED_STEEL.get())
                 .unlockedBy("has_steel", has(HpCItems.COMPRESSED_STEEL.get()))
@@ -332,7 +367,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern(" P ")
                 .pattern("HGH")
                 .pattern(" W ")
-                .define('H', HpCItems.HYDROCARBONS.get())
+                .define('H', HpCItems.PETROCHEMICALS.get())
                 .define('P', Items.GLASS_PANE)
                 .define('G', Blocks.GLOWSTONE)
                 .define('W', HpCBlocks.COPPER_WIRE.get())
@@ -348,12 +383,12 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("PPP")
                 .pattern("CCC")
                 .pattern("PPP")
-                .define('P', HpCItems.HYDROCARBONS.get())
+                .define('P', HpCItems.PETROCHEMICALS.get())
                 .define('C', Items.COPPER_INGOT)
                 .unlockedBy("has_compressed_steel", has(HpCItems.COMPRESSED_STEEL.get()))
                 .save(recipeOutput, "copper_wire_crafting");
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.FLUID_PIPE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HpCBlocks.FLUID_PIPE.get(), 3)
                 .pattern("GGG")
                 .pattern("   ")
                 .pattern("GGG")
@@ -499,7 +534,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("TRT")
                 .pattern("TCT")
                 .define('X', HpCItems.COMPRESSED_COPPER.get())
-                .define('H', HpCItems.HYDROCARBONS.get())
+                .define('H', HpCItems.PETROCHEMICALS.get())
                 .define('T', HpCItems.COMPRESSED_TIN.get())
                 .define('R', Items.REDSTONE)
                 .define('C', Items.COAL)
@@ -523,14 +558,14 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("H H")
                 .define('P', HpCBlocks.FLUID_PIPE.get())
                 .define('G', HpCItems.GAS_REGULATOR.get())
-                .define('H', HpCItems.HYDROCARBONS.get())
+                .define('H', HpCItems.PETROCHEMICALS.get())
                 .unlockedBy("has_gas_regulator", has(HpCItems.GAS_REGULATOR.get()))
                 .save(recipeOutput, "oxygen_connectors_crafting");
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCItems.COMPRESSED_GAS_TANK)
                 .pattern(" H ")
                 .pattern("STS")
                 .pattern(" S ")
-                .define('H', HpCItems.HYDROCARBONS.get())
+                .define('H', HpCItems.PETROCHEMICALS.get())
                 .define('T', HpCItems.TIN_CANISTER.get())
                 .define('S', HpCItems.COMPRESSED_STEEL.get())
                 .unlockedBy("has_tin_canister", has(HpCItems.TIN_CANISTER.get()))
@@ -804,9 +839,9 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .wire(Tags.Items.INGOTS_COPPER) 
                 .logic1(Items.REDSTONE)
                 .logic2(Items.QUARTZ)
-                .sub1(HpCItems.RAW_SILICON.get())
-                .sub2(HpCItems.RAW_SILICON.get())
-                .unlockedBy("has_silicon", has(HpCItems.RAW_SILICON.get()))
+                .sub1(HpCItems.SILICON.get())
+                .sub2(HpCItems.SILICON.get())
+                .unlockedBy("has_silicon", has(HpCItems.SILICON.get()))
                 .save(recipeOutput, HeliopauseCore.MOD_ID + ":basic_circuit_board_fabrication");
         
         PCBFabricatorRecipeBuilder.fabricate(RecipeCategory.MISC, HpCItems.SOLAR_PANEL_SEMICONDUCTOR_BASE.get(), 6)
@@ -814,9 +849,9 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .wire(Tags.Items.INGOTS_COPPER)
                 .logic1(Items.REDSTONE)
                 .logic2(Items.LAPIS_LAZULI)
-                .sub1(HpCItems.RAW_SILICON.get())
-                .sub2(HpCItems.RAW_SILICON.get())
-                .unlockedBy("has_silicon", has(HpCItems.RAW_SILICON.get()))
+                .sub1(HpCItems.SILICON.get())
+                .sub2(HpCItems.SILICON.get())
+                .unlockedBy("has_silicon", has(HpCItems.SILICON.get()))
                 .save(recipeOutput, HeliopauseCore.MOD_ID + ":solar_panel_base_fabrication");
         //endregion
 

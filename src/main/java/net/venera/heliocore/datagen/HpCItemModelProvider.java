@@ -106,14 +106,15 @@ public class HpCItemModelProvider extends ItemModelProvider {
         basicItem(HpCItems.SOLAR_PANEL_SEMICONDUCTOR_BASE.get());
         basicItem(HpCItems.SINGULAR_SOLAR_PANEL.get());
         basicItem(HpCItems.TIER_1_SOLAR_PANEL.get());
+        basicItem(HpCItems.STEEL_ROD.get());
         
         basicItem(HpCItems.ROCKET_ITEM.get());
 
         basicItem(HpCItems.RAW_ALUMINIUM.get());
         basicItem(HpCItems.RAW_TIN.get());
-        basicItem(HpCItems.RAW_SILICON.get());
+        basicItem(HpCItems.SILICON.get());
         basicItem(HpCItems.TEKTITES.get());
-        basicItem(HpCItems.HYDROCARBONS.get());
+        basicItem(HpCItems.PETROCHEMICALS.get());
         
         basicItem(HpCItems.COMPRESSED_BRONZE.get());
         basicItem(HpCItems.COMPRESSED_COPPER.get());

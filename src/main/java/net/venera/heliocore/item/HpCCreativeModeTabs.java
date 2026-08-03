@@ -59,7 +59,7 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCItems.CANISTER.get().setCanisterData(new ItemStack(HpCItems.CANISTER.get()), CanisterData.LIQUID_OXYGEN, CanisterItem.MAX_CAPACITY));
                         output.accept(HpCItems.SMALL_BATTERY.get());
                         output.accept(HpCItems.SMALL_BATTERY.get().createFullInstance());
-                        output.accept(HpCItems.RADIOACTIVE_CORE.get());
+                        output.accept(HpCItems.RADIOACTIVE_CORE.get().createFullInstance());
                         
                         output.accept(HpCItems.STANDARD_WRENCH.get());
                         output.accept(HpCItems.STEEL_SWORD.get());
@@ -78,10 +78,10 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCItems.RAW_ALUMINIUM.get());
                         output.accept(HpCItems.ALUMINIUM_INGOT.get());
                         output.accept(HpCItems.IRIDIUM_INGOT.get());
-                        output.accept(HpCItems.RAW_SILICON.get());
+                        output.accept(HpCItems.SILICON.get());
                         output.accept(HpCItems.TEKTITES.get());
                         
-                        output.accept(HpCItems.HYDROCARBONS.get());
+                        output.accept(HpCItems.PETROCHEMICALS.get());
                         output.accept(HpCItems.COPPER_CANISTER.get());
                         output.accept(HpCItems.TIN_CANISTER.get());
                         output.accept(HpCItems.AIR_FAN.get());
@@ -92,6 +92,8 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCItems.SOLAR_PANEL_SEMICONDUCTOR_BASE.get());
                         output.accept(HpCItems.SINGULAR_SOLAR_PANEL.get());
                         output.accept(HpCItems.TIER_1_SOLAR_PANEL.get());
+                        output.accept(HpCItems.STEEL_ROD.get());
+                        
                         output.accept(HpCItems.COMPRESSED_ALUMINIUM.get());
                         output.accept(HpCItems.COMPRESSED_BRONZE.get());
                         output.accept(HpCItems.COMPRESSED_COPPER.get());

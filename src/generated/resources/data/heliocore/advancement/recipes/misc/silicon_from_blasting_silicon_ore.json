@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_raw_silicon": {
+    "has_silicon_ore": {
       "conditions": {
         "items": [
           {
-            "items": "heliocore:silicon"
+            "items": "heliocore:silicon_ore"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:silicon_block_from_raw_silicon"
+        "recipe": "heliocore:silicon_from_blasting_silicon_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_raw_silicon"
+      "has_silicon_ore"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:silicon_block_from_raw_silicon"
+      "heliocore:silicon_from_blasting_silicon_ore"
     ]
   }
 }

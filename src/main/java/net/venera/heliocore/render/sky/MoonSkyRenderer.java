@@ -19,7 +19,7 @@ public class MoonSkyRenderer {
     
 
     public static void renderSky(ClientLevel level, float partialTick, Matrix4f modelViewMatrix, Camera camera, Matrix4f projectionMatrix, Runnable setupFog) {
-        final int STAR_COUNT = 2000;
+        final int STAR_COUNT = 4000;
         setupFog.run();
 
         if (starBuffer == null) {

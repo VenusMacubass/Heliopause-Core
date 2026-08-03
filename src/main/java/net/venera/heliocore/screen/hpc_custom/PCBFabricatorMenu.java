@@ -1,23 +1,18 @@
 package net.venera.heliocore.screen.hpc_custom;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.items.SlotItemHandler;
-import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.machine.electric.PCBFabricatorEntity;
 import net.venera.heliocore.item.HpCItems;
@@ -74,13 +69,13 @@ public class PCBFabricatorMenu extends AbstractContainerMenu {
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 4, 86, 34) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(HpCItems.RAW_SILICON);
+                return stack.is(HpCItems.SILICON);
             }
         });
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 5, 104, 34) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(HpCItems.RAW_SILICON);
+                return stack.is(HpCItems.SILICON);
             }
         });
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 6, 152, 34) {

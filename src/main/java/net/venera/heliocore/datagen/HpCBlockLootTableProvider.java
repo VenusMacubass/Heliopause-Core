@@ -111,13 +111,13 @@ public class HpCBlockLootTableProvider extends BlockLootSubProvider {
                 block -> createMultipleOreDrops(HpCBlocks.RADIOACTIVE_BLOCK.get(), HpCItems.RADIOACTIVE_CORE.get(), 1,2));
         
         add(HpCBlocks.SILICON_ORE.get(),
-                block -> createOreDrop(HpCBlocks.SILICON_ORE.get(), HpCItems.RAW_SILICON.get()));
+                block -> createOreDrop(HpCBlocks.SILICON_ORE.get(), HpCItems.SILICON.get()));
 
         add(HpCBlocks.MOON_SILICON_ORE.get(),
-                block -> createOreDrop(HpCBlocks.MOON_SILICON_ORE.get(), HpCItems.RAW_SILICON.get()));
+                block -> createOreDrop(HpCBlocks.MOON_SILICON_ORE.get(), HpCItems.SILICON.get()));
 
         add(HpCBlocks.DEEPSLATE_SILICON_ORE.get(),
-                block -> createOreDrop(HpCBlocks.DEEPSLATE_SILICON_ORE.get(), HpCItems.RAW_SILICON.get()));
+                block -> createOreDrop(HpCBlocks.DEEPSLATE_SILICON_ORE.get(), HpCItems.SILICON.get()));
 
         add(HpCBlocks.MOON_TIN_ORE.get(),
                 block -> createMultipleOreDrops(HpCBlocks.MOON_TIN_ORE.get(), HpCItems.RAW_TIN.get(), 1,5));

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_raw_silicon": {
+    "has_solar_panel_material": {
       "conditions": {
         "items": [
           {
-            "items": "heliocore:silicon"
+            "items": "heliocore:tier_1_solar_panel"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:silicon_block_from_raw_silicon"
+        "recipe": "minecraft:basic_solar_panel_crafting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_raw_silicon"
+      "has_solar_panel_material"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:silicon_block_from_raw_silicon"
+      "minecraft:basic_solar_panel_crafting"
     ]
   }
 }

@@ -1,4 +1,4 @@
-// 1.21.1	2026-08-02T22:53:50.0647079	Item Models: heliocore
+// 1.21.1	2026-08-03T18:09:25.7275021	Item Models: heliocore
 1ac96947d6d705457f38d0a1fa68a0dcb74bc592 assets/heliocore/models/item/air_fan.json
 0734313d99e1a4ca395735a0943619e787dd452a assets/heliocore/models/item/base_building_wall_black.json
 77313ec5bf2583da66c950d2ae65ff21c6eb341c assets/heliocore/models/item/base_building_wall_white.json
@@ -32,16 +32,16 @@ a5d460edca37824a4e26dc7a6edeeea70b8dcbec assets/heliocore/models/item/gas_regula
 1f5f611f28b823a9553c4a282c0690eb16df8ea1 assets/heliocore/models/item/glass_sword.json
 648416d890e1e258846806fa09a9afcab34f40ce assets/heliocore/models/item/hamburger.json
 d754b71e6180081a586fe7630dd92361e15d31f8 assets/heliocore/models/item/heavy_duty_plate.json
-8a10ac5f69edc5d975f0db37feccfa7fab92b6de assets/heliocore/models/item/hydrocarbons.json
 f161f4e5733fdfa637181ee0e9da9a60bf97c014 assets/heliocore/models/item/moon_dungeon_brick_wall.json
 8ba848f79f24fecc74d70c6e43e32f4a49d5ce29 assets/heliocore/models/item/moon_rock_wall.json
 f643fc074ecadea8066344fa970997e691ff0ec0 assets/heliocore/models/item/oxygen_connectors.json
+122a500f4c6fc3d03cb042beb3e80baffc05a50b assets/heliocore/models/item/petrochemicals.json
 9db10c806ab44c23453ac69ba3a416204a4c276e assets/heliocore/models/item/radioactive_core.json
 0e474d186bc7156778e29da40edfbb3d13255444 assets/heliocore/models/item/raw_aluminium.json
-e701efa9efed45d7fa802d2601dd8008f4d0afae assets/heliocore/models/item/raw_silicon.json
 77f108e44371fc59e9591afe884d3a83e5234eaa assets/heliocore/models/item/raw_tin.json
 08239fdd70f66830a31e00e96ee090a3065c76be assets/heliocore/models/item/refined_fuel_bucket.json
 95d330f52bb4aa5ac5277b98a0198f24222772db assets/heliocore/models/item/rocket_item.json
+bc6388fc02fccee547c04f967ec6f684bb1ccb9d assets/heliocore/models/item/silicon.json
 305872c2807978ee4132eecacbc6e16640ab0867 assets/heliocore/models/item/singular_solar_panel.json
 f7c018d2c2cec466ebe6e4dce2bfc7cb578d38d4 assets/heliocore/models/item/small_battery.json
 6e55161b6a96522143b00d523809871b4b6f19c2 assets/heliocore/models/item/solar_panel_semiconductor_base.json
@@ -93,6 +93,7 @@ d367bc4ada083a22a041c94a29e50617b1017f3b assets/heliocore/models/item/steel_legg
 436ac303e5b50fbd1843dd5303fc461779e1b4f8 assets/heliocore/models/item/steel_leggings_quartz_trim.json
 f8c3b38700a988e13fa1d453ad486e8a85c3f265 assets/heliocore/models/item/steel_leggings_redstone_trim.json
 b87e44ad5d125b61fdadd2f28f3dc71182490759 assets/heliocore/models/item/steel_pickaxe.json
+40db11687371006a8263ca2251ad807ee64d3d9e assets/heliocore/models/item/steel_rod.json
 e7ebfcb0462c86dcc22e377730708f2c3f096a82 assets/heliocore/models/item/steel_shovel.json
 4b71b21d1bca743224cfde6d3562508e28f7b7e5 assets/heliocore/models/item/steel_sword.json
 a900bde53a5d489a2b8ba1f4da88452d1bde67e2 assets/heliocore/models/item/tektites.json

@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "A": {
+      "item": "heliocore:compressed_aluminium"
+    },
+    "C": {
+      "item": "minecraft:crafting_table"
+    },
+    "I": {
+      "item": "heliocore:compressed_iron"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "S": {
+      "item": "heliocore:silicon"
+    },
+    "W": {
+      "item": "heliocore:copper_wire"
+    }
+  },
+  "pattern": [
+    "SAS",
+    "ICI",
+    "WRW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:pcb_fabricator"
+  }
+}

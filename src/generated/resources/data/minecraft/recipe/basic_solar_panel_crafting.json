@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "F": {
+      "item": "heliocore:tier_1_solar_panel"
+    },
+    "P": {
+      "item": "heliocore:steel_rod"
+    },
+    "R": {
+      "item": "heliocore:silicon"
+    },
+    "S": {
+      "item": "heliocore:compressed_steel"
+    },
+    "W": {
+      "item": "heliocore:copper_wire"
+    }
+  },
+  "pattern": [
+    " F ",
+    "SPS",
+    "WRW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:basic_solar_panel"
+  }
+}

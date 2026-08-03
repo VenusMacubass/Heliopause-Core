@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "heliocore:raw_silicon"
+            "items": "heliocore:silicon"
           }
         ]
       },

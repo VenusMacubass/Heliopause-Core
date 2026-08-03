@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.venera.heliocore.data.component.BatteryData;
 import net.venera.heliocore.data.component.HpCDataComponents;
+import net.venera.heliocore.item.HpCItems;
 
 import java.awt.*;
 import java.util.List;
@@ -92,7 +93,7 @@ public class BatteryItem extends Item {
 
     @Override
     public boolean isBarVisible(ItemStack stack) {
-        return getBatteryData(stack).getSpace() > 0;
+        return getBatteryData(stack).getSpace() > 0 && stack.getItem() != HpCItems.RADIOACTIVE_CORE.get();
     }
 
     @Override

@@ -14,10 +14,10 @@
     "id": "heliocore:basic_circuit_board"
   },
   "substrate_1": {
-    "item": "heliocore:raw_silicon"
+    "item": "heliocore:silicon"
   },
   "substrate_2": {
-    "item": "heliocore:raw_silicon"
+    "item": "heliocore:silicon"
   },
   "wire": {
     "tag": "c:ingots/copper"

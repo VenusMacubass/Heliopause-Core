@@ -5,10 +5,10 @@
   "experience": 0.5,
   "group": "silicon",
   "ingredient": {
-    "item": "heliocore:deepslate_silicon_ore"
+    "item": "heliocore:moon_silicon_ore"
   },
   "result": {
     "count": 1,
-    "id": "heliocore:raw_silicon"
+    "id": "heliocore:silicon"
   }
 }

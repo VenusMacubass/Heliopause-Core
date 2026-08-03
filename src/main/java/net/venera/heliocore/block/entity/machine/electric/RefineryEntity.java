@@ -173,7 +173,7 @@ public class RefineryEntity extends BaseElectricMachineEntity implements IFluidM
     
     private void isolateHydrocarbons() {
         if(petroleumScore >= CONVERSION_RATE*2){
-            ItemStack petroleumStack = new ItemStack(HpCItems.HYDROCARBONS.get(), 1);
+            ItemStack petroleumStack = new ItemStack(HpCItems.PETROCHEMICALS.get(), 1);
             for(int i = 3; i <= 7; i++){
                 if(inventory.insertItem(i, petroleumStack, true).isEmpty()){
                     inventory.insertItem(i, petroleumStack, false);

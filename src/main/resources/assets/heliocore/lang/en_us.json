@@ -47,13 +47,17 @@
   "item.heliocore.compressed_tin": "Compressed Tin",
   "item.heliocore.heavy_duty_plate": "Heavy Duty Plate",
   "item.heliocore.tektites": "Tektite Shards",
-  "item.heliocore.hydrocarbons": "Petrochemicals",
+  "item.heliocore.petrochemicals": "Petrochemicals",
 
   "item.heliocore.air_fan": "Fan",
   "item.heliocore.basic_circuit_board": "Basic Circuit Board",
   "item.heliocore.electromagnetic_sensors": "Electromagnetic Sensors",
   "item.heliocore.fluid_filter": "Fluid Filter",
   "item.heliocore.gas_regulator": "Gas Regulator",
+  "item.heliocore.solar_panel_semiconductor_base": "Solar Panel Semiconductor Base Material",
+  "item.heliocore.singular_solar_panel": "Singular Solar Panel",
+  "item.heliocore.tier_1_solar_panel": "Basic Full Solar Panel",
+  "item.heliocore.steel_rod": "Steel Rod",
   
   "item.heliocore.oxygen_mask": "Oxygen Mask",
   "item.heliocore.oxygen_connectors": "Oxygen Connectors",

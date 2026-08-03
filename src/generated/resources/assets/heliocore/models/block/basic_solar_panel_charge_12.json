@@ -1,5 +1,6 @@
 {
   "parent": "heliocore:block/basic_solar_model",
+  "ambientocclusion": false,
   "textures": {
     "indicator": "heliocore:block/machine/energy_storage_unit/energy_storage_unit_12"
   }
