@@ -1,10 +1,10 @@
 {
-  "parent": "heliocore:block/basic_solar_panel_charge_0",
+  "parent": "minecraft:block/cube",
   "display": {
     "gui": {
       "rotation": [
         30,
-        135,
+        225,
         0
       ],
       "scale": [
@@ -14,96 +14,13 @@
       ]
     }
   },
-  "overrides": [
-    {
-      "model": "heliocore:block/basic_solar_panel_charge_1",
-      "predicate": {
-        "heliocore:charge": 0.06666667
-      }
-    },
-    {
-      "model": "heliocore:block/basic_solar_panel_charge_2",
-      "predicate": {
-        "heliocore:charge": 0.13333334
-      }
-    },
-    {
-      "model": "heliocore:block/basic_solar_panel_charge_3",
-      "predicate": {
-        "heliocore:charge": 0.2
-      }
-    },
-    {
-      "model": "heliocore:block/basic_solar_panel_charge_4",
-      "predicate": {
-        "heliocore:charge": 0.26666668
-      }
-    },
-    {
-      "model": "heliocore:block/basic_solar_panel_charge_5",
-      "predicate": {
-        "heliocore:charge": 0.33333334
-      }
-    },
-    {
-      "model": "heliocore:block/basic_solar_panel_charge_6",
-      "predicate": {
-        "heliocore:charge": 0.4
-      }
-    },
-    {
-      "model": "heliocore:block/basic_solar_panel_charge_7",
-      "predicate": {
-        "heliocore:charge": 0.46666667
-      }
-    },
-    {
-      "model": "heliocore:block/basic_solar_panel_charge_8",
-      "predicate": {
-        "heliocore:charge": 0.53333336
-      }
-    },
-    {
-      "model": "heliocore:block/basic_solar_panel_charge_9",
-      "predicate": {
-        "heliocore:charge": 0.6
-      }
-    },
-    {
-      "model": "heliocore:block/basic_solar_panel_charge_10",
-      "predicate": {
-        "heliocore:charge": 0.6666667
-      }
-    },
-    {
-      "model": "heliocore:block/basic_solar_panel_charge_11",
-      "predicate": {
-        "heliocore:charge": 0.73333335
-      }
-    },
-    {
-      "model": "heliocore:block/basic_solar_panel_charge_12",
-      "predicate": {
-        "heliocore:charge": 0.8
-      }
-    },
-    {
-      "model": "heliocore:block/basic_solar_panel_charge_13",
-      "predicate": {
-        "heliocore:charge": 0.8666667
-      }
-    },
-    {
-      "model": "heliocore:block/basic_solar_panel_charge_14",
-      "predicate": {
-        "heliocore:charge": 0.93333334
-      }
-    },
-    {
-      "model": "heliocore:block/basic_solar_panel_charge_15",
-      "predicate": {
-        "heliocore:charge": 1.0
-      }
-    }
-  ]
+  "textures": {
+    "down": "heliocore:block/machine/machine_bottom",
+    "east": "heliocore:block/machine/machine_side",
+    "north": "heliocore:block/machine/machine_basic_solar_panel",
+    "particle": "heliocore:block/machine/machine_side",
+    "south": "heliocore:block/machine/machine_side",
+    "up": "heliocore:block/machine/machine",
+    "west": "heliocore:block/machine/machine_basic_solar_panel"
+  }
 }

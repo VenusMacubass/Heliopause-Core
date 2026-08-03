@@ -183,19 +183,22 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 "block/machine/energy_storage_unit/energy_storage_unit_",
                 Direction.NORTH, Direction.SOUTH 
         );
-
-        chargeableMachineBlock(
+        
+        customModelChargeableBlock(
                 HpCBlocks.BASIC_SOLAR_PANEL.get(),
                 SolarPanelBlock.CHARGE,
+                modLoc("block/basic_solar_model"),           
+                "indicator",
+                "block/machine/energy_storage_unit/energy_storage_unit_",     
                 machineSide,
                 Map.of(
-                        Direction.NORTH, energyOutPort,
-                        Direction.SOUTH, solarPanelSide,
-                        Direction.UP, solarPanelTop,
+                        Direction.NORTH, solarPanelSide,
+                        Direction.WEST, solarPanelSide,
+                        Direction.SOUTH, machineSide,
+                        Direction.EAST, machineSide,
+                        Direction.UP, machineTop,
                         Direction.DOWN, machineBottom
-                ),
-                "block/machine/energy_storage_unit/energy_storage_unit_",
-                Direction.EAST, Direction.WEST
+                )
         );
         
         directionalMachineBlock(HpCBlocks.OXYGEN_GENERATOR.get(), 
@@ -631,6 +634,53 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 .part().modelFile(sideTall).rotationY(270).addModel().condition(BlockStateProperties.AXIS, Direction.Axis.Z).end();
         
         builder.part().modelFile(flat).addModel().condition(BlockStateProperties.AXIS, Direction.Axis.Y).end();
+    }
+
+    public void customModelChargeableBlock(Block block, IntegerProperty chargeProperty, ResourceLocation parentModelLoc, String textureKey, String chargeTexturePrefix, ResourceLocation defaultItemTex, Map<Direction, ResourceLocation> itemTexOverrides) {
+        String baseName = BuiltInRegistries.BLOCK.getKey(block).getPath();
+        
+        getVariantBuilder(block).forAllStates(state -> {
+            Direction dir = state.getValue(BlockStateProperties.FACING);
+            int charge = state.getValue(chargeProperty);
+
+            String modelName = baseName + "_charge_" + charge;
+
+            BlockModelBuilder model = models().withExistingParent(modelName, parentModelLoc)
+                    .texture(textureKey, modLoc(chargeTexturePrefix + charge));
+
+            int x = 0;
+            int y = 0;
+
+            switch (dir) {
+                case NORTH -> y = 0;
+                case EAST -> y = 90;
+                case SOUTH -> y = 180;
+                case WEST -> y = 270;
+                case UP -> x = 270;
+                case DOWN -> x = 90;
+            }
+
+            return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .rotationX(x)
+                    .rotationY(y)
+                    .build();
+        });
+        
+        itemModels().withExistingParent(baseName, "minecraft:block/cube")
+                .texture("north", itemTexOverrides.getOrDefault(Direction.NORTH, defaultItemTex))
+                .texture("south", itemTexOverrides.getOrDefault(Direction.SOUTH, defaultItemTex))
+                .texture("east", itemTexOverrides.getOrDefault(Direction.EAST, defaultItemTex))
+                .texture("west", itemTexOverrides.getOrDefault(Direction.WEST, defaultItemTex))
+                .texture("up", itemTexOverrides.getOrDefault(Direction.UP, defaultItemTex))
+                .texture("down", itemTexOverrides.getOrDefault(Direction.DOWN, defaultItemTex))
+                .texture("particle", defaultItemTex)
+                .transforms()
+                .transform(ItemDisplayContext.GUI)
+                .rotation(30, 225, 0)
+                .scale(0.625f)
+                .end()
+                .end();
     }
     //endregion
 }

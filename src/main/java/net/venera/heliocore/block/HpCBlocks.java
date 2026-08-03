@@ -112,7 +112,7 @@ public class HpCBlocks {
             () -> new OxygenSealerBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.OXYGEN_SEALER_ENTITY));
     public static final DeferredBlock<Block> PCB_FABRICATOR = registerBlock("pcb_fabricator", 
             () -> new PCBFabricatorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.PCB_FABRICATOR_ENTITY));
-
+    
     //endregion
     
     //region Moon
@@ -227,6 +227,8 @@ public class HpCBlocks {
     public static final DeferredBlock<Block> DEFAULT_PIZZA = registerBlock("default_pizza",
             () -> new PizzaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE)));
     
+    public static final DeferredBlock<Block> SOLAR_PANEL_PARTS = registerBlock("solar_panel_parts",
+            () -> new SolarPanelPartBlock(BlockBehaviour.Properties.of().noLootTable().sound(SoundType.METAL)));
     //region Registry 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
