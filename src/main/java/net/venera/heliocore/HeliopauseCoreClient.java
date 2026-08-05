@@ -7,14 +7,18 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ServerboundPlayerCommandPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.FluidState;
@@ -38,6 +42,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.HpCBlockEntities;
 import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
+import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.data.component.HpCDataComponents;
 import net.venera.heliocore.entity.HpCEntities;
@@ -55,10 +60,7 @@ import net.venera.heliocore.render.FluidTankRenderer;
 import net.venera.heliocore.render.sky.MoonSkyRenderer;
 import net.venera.heliocore.screen.HpCMenuTypes;
 import net.venera.heliocore.screen.hpc_custom.*;
-import net.venera.heliocore.util.EnergySyncPayload;
-import net.venera.heliocore.util.LanderControlPayload;
-import net.venera.heliocore.util.OpenEquipmentPayload;
-import net.venera.heliocore.util.SyncEquipmentPayload;
+import net.venera.heliocore.util.*;
 import org.joml.Matrix4f;
 
 import javax.annotation.Nullable;
@@ -143,7 +145,7 @@ public class HeliopauseCoreClient {
                         case "crude_oil" -> 0xFF1f1f1f;     //Very Dark Grey/Black
                         case "refined_fuel" -> 0xFFC9B000;  //Yellow
                         case "oxygen_liquid" -> 0xFF0C38C7; //Cyan/Blue
-                        default -> -1;                      //Fallback White (-1 is exactly 0xFFFFFFFF)
+                        default -> -1;                      //Fallback White (-1 == 0xFFFFFFFF)
                     };
                 }
             }
@@ -336,25 +338,36 @@ public class HeliopauseCoreClient {
         }
     }
     
-    //region Landers
     private static boolean wasJumping = false;
-
+    private static boolean wasOnGround = true;
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
 
-        if (player != null && player.getVehicle() instanceof Tier1RocketLanderEntity) {
-            boolean isJumping = mc.options.keyJump.isDown();
+        if (player == null) return;
+
+        boolean isJumping = mc.options.keyJump.isDown();
+        boolean onGround = player.onGround(); 
+
+        if (player.getVehicle() instanceof Tier1RocketLanderEntity) {
             if (isJumping != wasJumping) {
                 PacketDistributor.sendToServer(new LanderControlPayload(isJumping));
-                wasJumping = isJumping;
             }
         } else {
-            wasJumping = false;
+            if (isJumping && !wasJumping && !onGround && !wasOnGround && !player.isFallFlying() && !player.isInWater() && !player.hasEffect(MobEffects.LEVITATION)) {
+                var inventory = player.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+                ItemStack stack = inventory.getStackInSlot(8);
+
+                if (!stack.isEmpty() && stack.canElytraFly(player)) {
+                    net.neoforged.neoforge.network.PacketDistributor.sendToServer(new ElytraSlotPayload());
+                }
+            }
         }
+
+        wasJumping = isJumping;
+        wasOnGround = onGround; 
     }
-    //endregion
 
     @SubscribeEvent
     public static void register(final RegisterPayloadHandlersEvent event) {

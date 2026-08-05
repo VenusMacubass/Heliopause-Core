@@ -1,6 +1,7 @@
 package net.venera.heliocore.screen.hpc_custom;
 
 import com.mojang.datafixers.util.Pair;
+import cpw.mods.jarhandling.impl.Jar;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,21 +17,25 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.event.HpCEvents;
+import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.screen.HpCMenuTypes;
 import net.venera.heliocore.item.HpCTags;
+
+import java.text.BreakIterator;
+import java.util.List;
 
 public class HpCEquipmentMenu extends AbstractContainerMenu {
     public final LivingEntity targetEntity;
     private final ItemStackHandler equipmentInventory;
-    
+
     public HpCEquipmentMenu(int containerId, Inventory inv, RegistryFriendlyByteBuf extraData) {
         this(containerId, inv, (LivingEntity) inv.player.level().getEntity(extraData.readInt()));
     }
-    
+
     public HpCEquipmentMenu(int containerId, Inventory inventory, LivingEntity targetEntity) {
         super(HpCMenuTypes.EQUIPMENT_MENU.get(), containerId);
         this.targetEntity = targetEntity;
-        
+
         this.equipmentInventory = (this.targetEntity != null) ?
                 this.targetEntity.getData(HpCAttachments.EQUIPMENT_INVENTORY) :
                 new ItemStackHandler(10);
@@ -50,27 +55,36 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
     private void addCustomSlots() {
         this.addSlot(new SlotItemHandler(equipmentInventory, 0, 18, 22) {
             @Override
-            public boolean mayPlace(ItemStack stack) { return stack.is(HpCTags.Items.OXYGEN_MASK); }
+            public boolean mayPlace(ItemStack stack) {
+                return stack.is(HpCTags.Items.OXYGEN_MASK);
+            }
+
             @Override
             public void setChanged() {
                 super.setChanged();
                 HpCEvents.syncToAllTracking(targetEntity);
             }
         });
-        
+
         this.addSlot(new SlotItemHandler(equipmentInventory, 1, 18, 42) {
             @Override
-            public boolean mayPlace(ItemStack stack) { return stack.is(HpCTags.Items.OXYGEN_CONNECTORS); }
+            public boolean mayPlace(ItemStack stack) {
+                return stack.is(HpCTags.Items.OXYGEN_CONNECTORS);
+            }
+
             @Override
             public void setChanged() {
                 super.setChanged();
                 HpCEvents.syncToAllTracking(targetEntity);
             }
         });
-        
+
         this.addSlot(new SlotItemHandler(equipmentInventory, 2, 8, 62) {
             @Override
-            public boolean mayPlace(ItemStack stack) { return stack.is(HpCTags.Items.OXYGEN_TANK); }
+            public boolean mayPlace(ItemStack stack) {
+                return stack.is(HpCTags.Items.OXYGEN_TANK);
+            }
+
             @Override
             public void setChanged() {
                 super.setChanged();
@@ -80,32 +94,46 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
 
         this.addSlot(new SlotItemHandler(equipmentInventory, 3, 28, 62) {
             @Override
-            public boolean mayPlace(ItemStack stack) { return stack.is(HpCTags.Items.OXYGEN_TANK); }
+            public boolean mayPlace(ItemStack stack) {
+                return stack.is(HpCTags.Items.OXYGEN_TANK);
+            }
+
             @Override
             public void setChanged() {
                 super.setChanged();
                 HpCEvents.syncToAllTracking(targetEntity);
             }
         });
-        
+
         for (int i = 0; i < 4; i++) {
-            this.addSlot(new SlotItemHandler(equipmentInventory, i+4, 97, 8 + (i * 18)){
+            int j = i;
+            this.addSlot(new SlotItemHandler(equipmentInventory, j + 4, 97, 8 + (j * 18)) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
-                    return false; //Reserved for thermal suit items
+                    return switch(j){
+                        case 0-> stack.is(HpCTags.Items.THERMAL_GEAR_HEAD);
+                        case 1-> stack.is(HpCTags.Items.THERMAL_GEAR_TORSO);
+                        case 2-> stack.is(HpCTags.Items.THERMAL_GEAR_LEGS);
+                        case 3-> stack.is(HpCTags.Items.THERMAL_GEAR_HANDS_AND_FEET);
+                        default -> false;
+                    };
                 }
+
                 @Override
                 public void setChanged() {
                     super.setChanged();
                     HpCEvents.syncToAllTracking(targetEntity);
                 }
             });
-            
+
         }
 
         this.addSlot(new SlotItemHandler(equipmentInventory, 8, 118, 26) {
             @Override
-            public boolean mayPlace(ItemStack stack) { return stack.is(Items.ELYTRA );}
+            public boolean mayPlace(ItemStack stack) {
+                return stack.is(Items.ELYTRA);
+            }
+
             @Override
             public void setChanged() {
                 super.setChanged();
@@ -116,18 +144,17 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
         this.addSlot(new SlotItemHandler(equipmentInventory, 9, 118, 44) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return false; //Reserved for Mass Belt
+                return stack.is(HpCItems.MASS_BELT.get());
             }
+
             @Override
             public void setChanged() {
                 super.setChanged();
                 HpCEvents.syncToAllTracking(targetEntity);
             }
         });
-
-        
     }
-    
+
     private static final int CUSTOM_SLOT_COUNT = 10;
     private static final int HOTBAR_SLOT_COUNT = 9;
     private static final int PLAYER_INVENTORY_ROW_COUNT = 3;
@@ -144,16 +171,14 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
         if (sourceSlot == null || !sourceSlot.hasItem()) return ItemStack.EMPTY;
         ItemStack sourceStack = sourceSlot.getItem();
         ItemStack copyOfSourceStack = sourceStack.copy();
-        
+
         if (pIndex < CUSTOM_FIRST_SLOT_INDEX + CUSTOM_SLOT_COUNT) {
             if (!moveItemStackTo(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)) {
                 return ItemStack.EMPTY;
             }
-        }
-        
-        else if (pIndex >= VANILLA_FIRST_SLOT_INDEX && pIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
+        } else if (pIndex >= VANILLA_FIRST_SLOT_INDEX && pIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
             if (!moveItemStackTo(sourceStack, CUSTOM_FIRST_SLOT_INDEX, CUSTOM_FIRST_SLOT_INDEX + CUSTOM_SLOT_COUNT, false)) {
-                if (pIndex != VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT - 1) { 
+                if (pIndex != VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT - 1) {
                     if (!moveItemStackTo(sourceStack, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT - 1, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -196,4 +221,5 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
         }
         return this.targetEntity.isAlive() && player.distanceToSqr(this.targetEntity) < 64.0D;
     }
+    
 }

@@ -1,4 +1,4 @@
-// 1.21.1	2026-08-02T12:09:03.501812	Tags for minecraft:item mod id heliocore
+// 1.21.1	2026-08-05T15:14:54.0138753	Tags for minecraft:item mod id heliocore
 e0bfc26d31f2a836e943fe7930590f71e8a3e74c data/heliocore/tags/item/canister.json
 7adee3a6cf4e8d524b666c4a096c32f02b18f5db data/heliocore/tags/item/circuit_materials.json
 6db9722aa3e98cc50f72ac4c0a991f901f7309c6 data/heliocore/tags/item/compressible_ingots.json
@@ -6,6 +6,11 @@ d78dea7881ff6c4bce8bb1760d7d5d5ab868168e data/heliocore/tags/item/slots/oxygen_c
 96ac74fc3ae79a5bbc1fc47a30a7a0d7c40e70b3 data/heliocore/tags/item/slots/oxygen_mask.json
 660304c1431a89599c3470290ddb23ba64b6500e data/heliocore/tags/item/slots/oxygen_tank.json
 a8fc9d94364118c7246e368d4f418652158d0d34 data/heliocore/tags/item/stone_variants.json
+3e92a9f0dd006835f0dabc9d590d23f15bb3b686 data/heliocore/tags/item/thermal_gear.json
+bb83361d93fb378549d6c8f830cf39d9e71bd240 data/heliocore/tags/item/thermal_gear_hands_and_feet.json
+f588e191c8cf2e47600d9f77c6baf1dea42d401c data/heliocore/tags/item/thermal_gear_head.json
+28cc6c80aa263fae90c8f073dfbb0e00fb4bd96e data/heliocore/tags/item/thermal_gear_legs.json
+5bb2b00b6d304e1c8e353c3bcfc2a2cab1b097fd data/heliocore/tags/item/thermal_gear_torso.json
 af79c9c489a78edac75a3387f25c4a1234d24420 data/minecraft/tags/item/axes.json
 eadf612e9df9ecf7e01f5542ffd0cb673bb233a9 data/minecraft/tags/item/hoes.json
 e5f462893a4978290ef49dbdfcb5cfcff431f332 data/minecraft/tags/item/pickaxes.json

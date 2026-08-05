@@ -1,0 +1,8 @@
+{
+  "values": [
+    "heliocore:t1_thermal_insulation_head",
+    "heliocore:t1_thermal_insulation_torso",
+    "heliocore:t1_thermal_insulation_leggings",
+    "heliocore:t1_thermal_insulation_hands_and_feet"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "minecraft:leather_chestplate"
+    },
+    "T": {
+      "item": "heliocore:thermal_isolator"
+    }
+  },
+  "pattern": [
+    "TCT",
+    "TTT",
+    "TTT"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:t1_thermal_insulation_torso"
+  }
+}

@@ -61,6 +61,19 @@ public class HpCItemTagProvider extends ItemTagsProvider {
         tag(OXYGEN_CONNECTORS).add(HpCItems.OXYGEN_CONNECTORS.get());
         tag(OXYGEN_TANK).add(HpCItems.COMPRESSED_GAS_TANK.get());
 
+        tag(THERMAL_GEAR_T1)
+                .add(HpCItems.T1_THERMAL_INSULATION_HEAD.get())
+                .add(HpCItems.T1_THERMAL_INSULATION_TORSO.get())
+                .add(HpCItems.T1_THERMAL_INSULATION_LEGGINGS.get())
+                .add(HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.get());
+        
+        tag(THERMAL_GEAR_HEAD).add(HpCItems.T1_THERMAL_INSULATION_HEAD.get());
+        tag(THERMAL_GEAR_TORSO).add(HpCItems.T1_THERMAL_INSULATION_TORSO.get());
+        tag(THERMAL_GEAR_LEGS).add(HpCItems.T1_THERMAL_INSULATION_LEGGINGS.get());
+        tag(THERMAL_GEAR_HANDS_AND_FEET).add(HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.get());
+        
+        
+        
         tag(HpCTags.Items.STONES)
                 .add(Blocks.STONE.asItem())
                 .add(Blocks.SMOOTH_STONE.asItem())

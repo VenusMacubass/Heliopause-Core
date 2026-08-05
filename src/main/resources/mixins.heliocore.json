@@ -6,9 +6,12 @@
   "mixins": [
     "MixinChangeOverTimeBlock",
     "MixinLiquidBlock",
-    "MixinIceBlock"
+    "MixinIceBlock",
+    "MixinLivingEntity"
   ],
-  "client": [],
+  "client": [
+    "MixinElytraLayer"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

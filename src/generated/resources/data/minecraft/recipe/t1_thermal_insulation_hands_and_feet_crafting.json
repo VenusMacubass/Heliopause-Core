@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "minecraft:leather_boots"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "T": {
+      "item": "heliocore:thermal_isolator"
+    }
+  },
+  "pattern": [
+    "LTL",
+    "TTT",
+    "TBT"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:t1_thermal_insulation_hands_and_feet"
+  }
+}

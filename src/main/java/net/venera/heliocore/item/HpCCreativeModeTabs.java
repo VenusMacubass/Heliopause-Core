@@ -71,6 +71,11 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCItems.STEEL_CHESTPLATE.get());
                         output.accept(HpCItems.STEEL_LEGGINGS.get());
                         output.accept(HpCItems.STEEL_BOOTS.get());
+                        output.accept(HpCItems.T1_THERMAL_INSULATION_HEAD.get());
+                        output.accept(HpCItems.T1_THERMAL_INSULATION_TORSO.get());
+                        output.accept(HpCItems.T1_THERMAL_INSULATION_LEGGINGS.get());
+                        output.accept(HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.get());
+                        output.accept(HpCItems.MASS_BELT.get());
                         output.accept(HpCItems.GLASS_SWORD.get());
                         
                         output.accept(HpCItems.RAW_TIN.get());
@@ -89,11 +94,12 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCItems.ELECTROMAGNETIC_SENSORS.get());
                         output.accept(HpCItems.FLUID_FILTER.get());
                         output.accept(HpCItems.GAS_REGULATOR.get());
+                        output.accept(HpCItems.THERMAL_REGULATOR.get());
                         output.accept(HpCItems.SOLAR_PANEL_SEMICONDUCTOR_BASE.get());
                         output.accept(HpCItems.SINGULAR_SOLAR_PANEL.get());
                         output.accept(HpCItems.TIER_1_SOLAR_PANEL.get());
                         output.accept(HpCItems.STEEL_ROD.get());
-                        
+                        output.accept(HpCItems.THERMAL_ISOLATOR.get());
                         output.accept(HpCItems.COMPRESSED_ALUMINIUM.get());
                         output.accept(HpCItems.COMPRESSED_BRONZE.get());
                         output.accept(HpCItems.COMPRESSED_COPPER.get());

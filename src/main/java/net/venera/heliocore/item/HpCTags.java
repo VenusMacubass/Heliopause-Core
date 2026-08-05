@@ -15,8 +15,24 @@ public class HpCTags {
         public static final TagKey<Item> CANISTER = createTag("canister");
         public static final TagKey<Item> COMPRESSIBLE_INGOTS = createTag("compressible_ingots");
         public static final TagKey<Item> CIRCUIT_MATERIALS = createTag("circuit_materials");
-        public static final TagKey<Item> OXYGEN_GEAR = TagKey.create(Registries.ITEM, 
-                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "oxygen_gear"));
+        public static final TagKey<Item> THERMAL_GEAR_T1 = TagKey.create(Registries.ITEM, 
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "thermal_gear"));
+
+        public static final TagKey<Item> THERMAL_GEAR_HEAD = TagKey.create(Registries.ITEM,
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "thermal_gear_head"));
+
+        public static final TagKey<Item> THERMAL_GEAR_TORSO = TagKey.create(Registries.ITEM,
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "thermal_gear_torso"));
+
+        public static final TagKey<Item> THERMAL_GEAR_LEGS = TagKey.create(Registries.ITEM,
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "thermal_gear_legs"));
+
+        public static final TagKey<Item> THERMAL_GEAR_HANDS_AND_FEET = TagKey.create(Registries.ITEM,
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "thermal_gear_hands_and_feet"));
+        
+        
+        
+        
         public static final TagKey<Item> OXYGEN_MASK = ItemTags.create(
                 ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "slots/oxygen_mask")
         );

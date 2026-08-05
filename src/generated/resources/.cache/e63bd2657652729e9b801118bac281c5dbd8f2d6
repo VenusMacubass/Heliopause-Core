@@ -1,4 +1,4 @@
-// 1.21.1	2026-08-03T18:09:25.7275021	Item Models: heliocore
+// 1.21.1	2026-08-05T15:48:13.5222923	Item Models: heliocore
 1ac96947d6d705457f38d0a1fa68a0dcb74bc592 assets/heliocore/models/item/air_fan.json
 0734313d99e1a4ca395735a0943619e787dd452a assets/heliocore/models/item/base_building_wall_black.json
 77313ec5bf2583da66c950d2ae65ff21c6eb341c assets/heliocore/models/item/base_building_wall_white.json
@@ -32,6 +32,7 @@ a5d460edca37824a4e26dc7a6edeeea70b8dcbec assets/heliocore/models/item/gas_regula
 1f5f611f28b823a9553c4a282c0690eb16df8ea1 assets/heliocore/models/item/glass_sword.json
 648416d890e1e258846806fa09a9afcab34f40ce assets/heliocore/models/item/hamburger.json
 d754b71e6180081a586fe7630dd92361e15d31f8 assets/heliocore/models/item/heavy_duty_plate.json
+9c25b320400f8a2f03099d0ba1a2db2984f34b1d assets/heliocore/models/item/mass_belt.json
 f161f4e5733fdfa637181ee0e9da9a60bf97c014 assets/heliocore/models/item/moon_dungeon_brick_wall.json
 8ba848f79f24fecc74d70c6e43e32f4a49d5ce29 assets/heliocore/models/item/moon_rock_wall.json
 f643fc074ecadea8066344fa970997e691ff0ec0 assets/heliocore/models/item/oxygen_connectors.json
@@ -96,6 +97,12 @@ b87e44ad5d125b61fdadd2f28f3dc71182490759 assets/heliocore/models/item/steel_pick
 40db11687371006a8263ca2251ad807ee64d3d9e assets/heliocore/models/item/steel_rod.json
 e7ebfcb0462c86dcc22e377730708f2c3f096a82 assets/heliocore/models/item/steel_shovel.json
 4b71b21d1bca743224cfde6d3562508e28f7b7e5 assets/heliocore/models/item/steel_sword.json
+42b7798e54512184ff23c7d10e23200a1b7c8a15 assets/heliocore/models/item/t1_thermal_insulation_hands_and_feet.json
+0d5f3ac9bca6a45e8ad11e3ad843906a757c8096 assets/heliocore/models/item/t1_thermal_insulation_head.json
+7570e505e71628c677187a29754f00167b80a825 assets/heliocore/models/item/t1_thermal_insulation_leggings.json
+1baa38883acafe3efa10215eedddbca4a42fc263 assets/heliocore/models/item/t1_thermal_insulation_torso.json
 a900bde53a5d489a2b8ba1f4da88452d1bde67e2 assets/heliocore/models/item/tektites.json
+9743389a58b58e14bc907c353c2224de3db54e9d assets/heliocore/models/item/thermal_isolator.json
+c4a1fffa789a0c1c784b73b4f8db68fc83bb55eb assets/heliocore/models/item/thermal_regulator.json
 9e04aee0352d41a0ec1dece97afc9a09cb3e640a assets/heliocore/models/item/tier_1_solar_panel.json
 6fd8a87b2a85618f369419c444839dadff10afce assets/heliocore/models/item/tin_canister.json

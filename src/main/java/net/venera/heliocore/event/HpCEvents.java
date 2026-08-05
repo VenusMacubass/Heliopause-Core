@@ -2,8 +2,11 @@ package net.venera.heliocore.event;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -18,6 +21,8 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -34,6 +39,7 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
 import net.neoforged.neoforge.event.level.PistonEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -43,6 +49,7 @@ import net.venera.heliocore.block.entity.HpCBlockEntities;
 import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
 import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
 import net.venera.heliocore.data.HpCAttachments;
+import net.venera.heliocore.data.temperature.EnvironmentalTemperature;
 import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.item.HpCTags;
@@ -50,6 +57,7 @@ import net.venera.heliocore.util.*;
 
 @EventBusSubscriber
 public class HpCEvents {
+    private static final ResourceLocation CUSTOM_ELYTRA_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "custom_elytra_flight");
     
     @SubscribeEvent
     public static void onGlassSwordUsage(LivingDamageEvent.Pre event) {
@@ -205,6 +213,26 @@ public class HpCEvents {
                     });
                 }
         );
+
+        registrar.playToServer(
+                ElytraSlotPayload.TYPE,
+                ElytraSlotPayload.CODEC,
+                (payload, context) -> {
+                    context.enqueueWork(() -> {
+                        Player player = context.player();
+                        if (player != null && !player.onGround() && !player.isInWater() && !player.hasEffect(MobEffects.LEVITATION)) {
+                            var inventory = player.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+                            if (inventory != null) {
+                                ItemStack stack = inventory.getStackInSlot(8);
+                                
+                                if (!stack.isEmpty() && stack.canElytraFly(player)) {
+                                    player.startFallFlying();
+                                }
+                            }
+                        }
+                    });
+                }
+        );
     }
     //endregion
     
@@ -238,30 +266,68 @@ public class HpCEvents {
         if (!(event.getEntity() instanceof LivingEntity living) || living.level().isClientSide) {
             return;
         }
-        if (living.tickCount % 40 != 0) {
+        if (living.tickCount % 20 != 0) {
             return;
         }
         if (living instanceof Player player && player.isCreative()) {
             return;
         }
 
-//        Level level = living.level();
-//        var biome = level.getBiome(living.blockPosition());
-//
-//        double currentTemp = EnvironmentalTemperature.getEnvironmentalTemperature(level, biome);
-//
-//        if (currentTemp >= 55.0) {
-//            living.hurt(level.damageSources().onFire(), 1.0f);
-//
-//            if (currentTemp >= 60.0 && !living.isOnFire()) {
-//                living.setRemainingFireTicks(2);
-//            }
-//        }
-//        else if (currentTemp <= -50.0) {
-//            living.hurt(level.damageSources().freeze(), 1.0f);
-//
-//            living.setTicksFrozen(150);
-//        }
+        Level level = living.level();
+        Holder<Biome> biome = level.getBiome(living.blockPosition());
+
+        double currentTemp = EnvironmentalTemperature.getEnvironmentalTemperature(level, biome);
+        int thermalProtectionScore = SpaceGearSetupHelper.checkThermalSetup(living);
+        
+        //Future T2/T3 mechanics will be injected here to check if currentTemp exceeds T1's max rating.
+        if (thermalProtectionScore == 4) {
+            if (living.getTicksFrozen() > 0) {
+                living.setTicksFrozen(Math.max(0, living.getTicksFrozen() - 10));
+            }
+            return;
+        }
+        
+        float exposureMultiplier = (4 - thermalProtectionScore) / 4.0f;
+        
+        if (currentTemp > 40.0) {
+            living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0, false, false, true));
+
+            if (currentTemp > 400.0) {
+                living.setRemainingFireTicks((int)(60 * exposureMultiplier));
+                living.hurt(living.damageSources().onFire(), 4.0f * exposureMultiplier);
+            } else if (currentTemp > 150.0) {
+                living.setRemainingFireTicks((int)(40 * exposureMultiplier));
+                living.hurt(living.damageSources().onFire(), 2.0f * exposureMultiplier);
+            } else if (currentTemp > 80.0) {
+                living.setRemainingFireTicks((int)(40 * exposureMultiplier));
+                living.hurt(living.damageSources().onFire(), exposureMultiplier);
+            } else if (currentTemp > 60.0) {
+                living.hurt(living.damageSources().hotFloor(), 0.5f * exposureMultiplier);
+            }
+        }
+        
+        else if (currentTemp < -15.0) {
+            living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 40, 0, false, false, true));
+
+            if (currentTemp < -60.0) {
+                int currentFreeze = living.getTicksFrozen();
+                living.setTicksFrozen(currentFreeze + (int)(20 * exposureMultiplier));
+            }
+
+            if (currentTemp < -250.0) {
+                living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 40, 2, false, false, true));
+                living.hurt(living.damageSources().freeze(), 4.0f * exposureMultiplier);
+            } else if (currentTemp < -150.0) {
+                living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 40, 1, false, false, true));
+                living.hurt(living.damageSources().freeze(), 2.0f * exposureMultiplier);
+            } else if (currentTemp < -80.0) {
+                living.hurt(living.damageSources().freeze(), exposureMultiplier);
+            }
+        } else {
+            if (living.getTicksFrozen() > 0) {
+                living.setTicksFrozen(Math.max(0, living.getTicksFrozen() - 10));
+            }
+        }
     }
 
     @SubscribeEvent
@@ -297,7 +363,7 @@ public class HpCEvents {
         }
         
         if (!inOxygen) {
-            boolean hasOxygenGear = OxygenSetupHelper.checkOxygenSetup(living);
+            boolean hasOxygenGear = SpaceGearSetupHelper.checkOxygenSetup(living);
 
             if (!hasOxygenGear) {
                 if (living.getType().is(HpCTags.Entities.DOES_NOT_BREATHE)) return;
@@ -331,9 +397,11 @@ public class HpCEvents {
         if (entity instanceof LivingEntity livingEntity) {
             AttributeInstance gravityAttribute = livingEntity.getAttribute(Attributes.GRAVITY);
             AttributeInstance safeFallAttribute = livingEntity.getAttribute(Attributes.SAFE_FALL_DISTANCE);
+            ItemStackHandler inventory = livingEntity.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+            ItemStack beltItem = inventory.getStackInSlot(9);
 
             if (gravityAttribute != null && safeFallAttribute != null) {
-                if (isOnMoon) {
+                if (isOnMoon && !(beltItem.is(HpCItems.MASS_BELT.get()))) {
                     if (!gravityAttribute.hasModifier(MOON_GRAVITY_ID)) {
                         gravityAttribute.addTransientModifier(new AttributeModifier(MOON_GRAVITY_ID, -0.83, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
                     }

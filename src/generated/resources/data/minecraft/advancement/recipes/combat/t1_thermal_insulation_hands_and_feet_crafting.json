@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:t1_thermal_insulation_hands_and_feet_crafting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_thermal_isolator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "heliocore:thermal_isolator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_thermal_isolator"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:t1_thermal_insulation_hands_and_feet_crafting"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "L": {
+      "item": "minecraft:leather_leggings"
+    },
+    "T": {
+      "item": "heliocore:thermal_isolator"
+    }
+  },
+  "pattern": [
+    "TTT",
+    "TLT",
+    "T T"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:t1_thermal_insulation_leggings"
+  }
+}

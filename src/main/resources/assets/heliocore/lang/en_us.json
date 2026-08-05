@@ -33,7 +33,7 @@
 
   "item.heliocore.raw_aluminium": "Raw Aluminium",
   "item.heliocore.raw_tin": "Raw Tin",
-  "item.heliocore.raw_silicon": "Raw Silicon",
+  "item.heliocore.silicon": "Silicon",
   "item.heliocore.tin_ingot": "Tin Ingot",
   "item.heliocore.raw_iridium": "Raw Iridium",
   "item.heliocore.lunar_sapphire": "Lunar Sapphire",
@@ -54,10 +54,12 @@
   "item.heliocore.electromagnetic_sensors": "Electromagnetic Sensors",
   "item.heliocore.fluid_filter": "Fluid Filter",
   "item.heliocore.gas_regulator": "Gas Regulator",
+  "item.heliocore.thermal_regulator": "Thermal Regulator",
   "item.heliocore.solar_panel_semiconductor_base": "Solar Panel Semiconductor Base Material",
   "item.heliocore.singular_solar_panel": "Singular Solar Panel",
   "item.heliocore.tier_1_solar_panel": "Basic Full Solar Panel",
   "item.heliocore.steel_rod": "Steel Rod",
+  "item.heliocore.thermal_isolator": "Thermal Isolator",
   
   "item.heliocore.oxygen_mask": "Oxygen Mask",
   "item.heliocore.oxygen_connectors": "Oxygen Connectors",
@@ -77,6 +79,11 @@
   "item.heliocore.steel_chestplate": "Steel Chestplate",
   "item.heliocore.steel_leggings": "Steel Leggings",
   "item.heliocore.steel_boots": "Steel Boots",
+  "item.heliocore.t1_thermal_insulation_head": "Thermal Insulation Helmet",
+  "item.heliocore.t1_thermal_insulation_torso": "Thermal Jacket",
+  "item.heliocore.t1_thermal_insulation_leggings": "Thermal Leggings",
+  "item.heliocore.t1_thermal_insulation_hands_and_feet": "Thermal Socks and Gloves",
+  "item.heliocore.mass_belt": "Mass Belt",
   "item.heliocore.crude_oil_bucket": "Crude Oil Bucket",
   "item.heliocore.refined_fuel_bucket": "Refined Fuel Bucket",
   

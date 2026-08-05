@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "heliocore:item/t1_thermal_insulation_hands_and_feet"
+  }
+}

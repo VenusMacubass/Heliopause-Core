@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "item": "minecraft:leather_helmet"
+    },
+    "T": {
+      "item": "heliocore:thermal_isolator"
+    }
+  },
+  "pattern": [
+    "TTT",
+    "THT"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:t1_thermal_insulation_head"
+  }
+}

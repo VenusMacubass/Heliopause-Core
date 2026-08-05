@@ -93,7 +93,9 @@ public class HpCItems {
     public static final DeferredItem<Item> ELECTROMAGNETIC_SENSORS = ITEMS.register("electromagnetic_sensors", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> FLUID_FILTER = ITEMS.register("fluid_filter", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> GAS_REGULATOR =  ITEMS.register("gas_regulator", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> THERMAL_REGULATOR =  ITEMS.register("thermal_regulator", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> STEEL_ROD =  ITEMS.register("steel_rod", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> THERMAL_ISOLATOR =  ITEMS.register("thermal_isolator", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> SOLAR_PANEL_SEMICONDUCTOR_BASE = ITEMS.register("solar_panel_semiconductor_base", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> SINGULAR_SOLAR_PANEL = ITEMS.register("singular_solar_panel", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> TIER_1_SOLAR_PANEL = ITEMS.register("tier_1_solar_panel", () -> new Item(new Item.Properties()));
@@ -128,12 +130,18 @@ public class HpCItems {
     public static final DeferredItem<ArmorItem> STEEL_BOOTS = ITEMS.register("steel_boots", () ->
             new ArmorItem(HpCArmorMaterials.STEEL_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
                     new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(18))));
-    //endregion
-
-    public static final DeferredItem<ArmorItem> OXYGEN_MASK = ITEMS.register("oxygen_mask", () -> 
+    public static final DeferredItem<ArmorItem> OXYGEN_MASK = ITEMS.register("oxygen_mask", () ->
             new ArmorItem(HpCArmorMaterials.SPACE_GEAR_MATERIAL, ArmorItem.Type.HELMET, new  Item.Properties()));
     public static final DeferredItem<ArmorItem> OXYGEN_CONNECTORS = ITEMS.register("oxygen_connectors", () ->
             new ArmorItem(HpCArmorMaterials.SPACE_GEAR_MATERIAL, ArmorItem.Type.BODY, new  Item.Properties()));
+    public static final DeferredItem<Item> MASS_BELT = ITEMS.register("mass_belt", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> T1_THERMAL_INSULATION_HEAD = ITEMS.register("t1_thermal_insulation_head", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> T1_THERMAL_INSULATION_TORSO = ITEMS.register("t1_thermal_insulation_torso", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> T1_THERMAL_INSULATION_LEGGINGS = ITEMS.register("t1_thermal_insulation_leggings", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> T1_THERMAL_INSULATION_HANDS_AND_FEET = ITEMS.register("t1_thermal_insulation_hands_and_feet", () -> new Item(new Item.Properties()));
+    //endregion
+
+    
     
     public static final DeferredItem<Item> ROCKET_ITEM = ITEMS.register("rocket_item", () -> 
             new RocketItem(new Item.Properties()));

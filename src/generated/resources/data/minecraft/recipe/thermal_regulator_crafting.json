@@ -5,8 +5,8 @@
     "B": {
       "item": "heliocore:basic_circuit_board"
     },
-    "F": {
-      "item": "heliocore:fluid_filter"
+    "E": {
+      "item": "heliocore:electromagnetic_sensors"
     },
     "S": {
       "item": "heliocore:compressed_steel"
@@ -18,10 +18,10 @@
   "pattern": [
     "S S",
     "TBT",
-    " F "
+    " E "
   ],
   "result": {
     "count": 1,
-    "id": "heliocore:gas_regulator"
+    "id": "heliocore:thermal_regulator"
   }
 }

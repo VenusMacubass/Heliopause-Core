@@ -3,6 +3,7 @@ package net.venera.heliocore.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
@@ -162,15 +163,26 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput, "fluid_filter_crafting");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCItems.GAS_REGULATOR.get())
-                .pattern("STS")
-                .pattern("TCT")
-                .pattern("SFS")
+                .pattern("S S")
+                .pattern("TBT")
+                .pattern(" F ")
                 .define('T', HpCItems.COMPRESSED_TIN.get())
-                .define('C', HpCItems.COPPER_CANISTER)
+                .define('B', HpCItems.BASIC_CIRCUIT_BOARD.get())
                 .define('S', HpCItems.COMPRESSED_STEEL.get())
                 .define('F', HpCItems.FLUID_FILTER.get())
                 .unlockedBy("has_fluid_filter", has(HpCItems.FLUID_FILTER.get()))
                 .save(recipeOutput, "gas_regulator_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCItems.THERMAL_REGULATOR.get())
+                .pattern("S S")
+                .pattern("TBT")
+                .pattern(" E ")
+                .define('T', HpCItems.COMPRESSED_TIN.get())
+                .define('B', HpCItems.BASIC_CIRCUIT_BOARD.get())
+                .define('S', HpCItems.COMPRESSED_STEEL.get())
+                .define('E', HpCItems.ELECTROMAGNETIC_SENSORS.get())
+                .unlockedBy("has_electromagnetic_sonsors", has(HpCItems.ELECTROMAGNETIC_SENSORS.get()))
+                .save(recipeOutput, "thermal_regulator_crafting");
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.ELECTROMAGNETIC_SENSORS.get())
                 .requires(Items.GLASS_PANE)
@@ -229,6 +241,16 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', HpCItems.COMPRESSED_STEEL.get())
                 .unlockedBy("has_steel", has(HpCItems.COMPRESSED_STEEL.get()))
                 .save(recipeOutput, "steel_rod_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCItems.THERMAL_ISOLATOR.get(), 4)
+                .pattern(" W ")
+                .pattern("WRW")
+                .pattern("F F")
+                .define('W', Ingredient.of(ItemTags.WOOL))
+                .define('F', Items.FEATHER)
+                .define('R', Items.REDSTONE)
+                .unlockedBy("has_wool", has(ItemTags.WOOL))
+                .save(recipeOutput, "thermal_isolator_crafting");
         //endregion
         
         //region Machines
@@ -517,6 +539,42 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', HpCItems.COMPRESSED_STEEL.get())
                 .unlockedBy("has_compressed_steel", has(HpCItems.COMPRESSED_STEEL.get()))
                 .save(recipeOutput, "steel_boots_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCItems.T1_THERMAL_INSULATION_HEAD.get())
+                .pattern("TTT")
+                .pattern("THT")
+                .define('T', HpCItems.THERMAL_ISOLATOR.get())
+                .define('H', Items.LEATHER_HELMET)
+                .unlockedBy("has_thermal_isolator", has(HpCItems.THERMAL_ISOLATOR.get()))
+                .save(recipeOutput, "t1_thermal_insulation_head_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, HpCItems.T1_THERMAL_INSULATION_TORSO.get())
+                .pattern("TCT")
+                .pattern("TTT")
+                .pattern("TTT")
+                .define('T', HpCItems.THERMAL_ISOLATOR.get())
+                .define('C', Items.LEATHER_CHESTPLATE)
+                .unlockedBy("has_thermal_isolator", has(HpCItems.THERMAL_ISOLATOR.get()))
+                .save(recipeOutput, "t1_thermal_insulation_torso_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, HpCItems.T1_THERMAL_INSULATION_LEGGINGS.get())
+                .pattern("TTT")
+                .pattern("TLT")
+                .pattern("T T")
+                .define('T', HpCItems.THERMAL_ISOLATOR.get())
+                .define('L', Items.LEATHER_LEGGINGS)
+                .unlockedBy("has_thermal_isolator", has(HpCItems.THERMAL_ISOLATOR.get()))
+                .save(recipeOutput, "t1_thermal_insulation_leggings_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.get())
+                .pattern("LTL")
+                .pattern("TTT")
+                .pattern("TBT")
+                .define('T', HpCItems.THERMAL_ISOLATOR.get())
+                .define('L', Items.LEATHER)
+                .define('B', Items.LEATHER_BOOTS)
+                .unlockedBy("has_thermal_isolator", has(HpCItems.THERMAL_ISOLATOR.get()))
+                .save(recipeOutput, "t1_thermal_insulation_hands_and_feet_crafting");
         //endregion
 
         //region Special Functionality Items

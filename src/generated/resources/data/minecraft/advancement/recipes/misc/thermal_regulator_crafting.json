@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_electromagnetic_sonsors": {
+      "conditions": {
+        "items": [
+          {
+            "items": "heliocore:electromagnetic_sensors"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:thermal_regulator_crafting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_electromagnetic_sonsors"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:thermal_regulator_crafting"
+    ]
+  }
+}

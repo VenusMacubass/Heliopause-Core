@@ -103,11 +103,12 @@ public class HpCItemModelProvider extends ItemModelProvider {
         basicItem(HpCItems.ELECTROMAGNETIC_SENSORS.get());
         basicItem(HpCItems.FLUID_FILTER.get());
         basicItem(HpCItems.GAS_REGULATOR.get());
+        basicItem(HpCItems.THERMAL_REGULATOR.get());
         basicItem(HpCItems.SOLAR_PANEL_SEMICONDUCTOR_BASE.get());
         basicItem(HpCItems.SINGULAR_SOLAR_PANEL.get());
         basicItem(HpCItems.TIER_1_SOLAR_PANEL.get());
         basicItem(HpCItems.STEEL_ROD.get());
-        
+        basicItem(HpCItems.MASS_BELT.get());
         basicItem(HpCItems.ROCKET_ITEM.get());
 
         basicItem(HpCItems.RAW_ALUMINIUM.get());
@@ -115,6 +116,7 @@ public class HpCItemModelProvider extends ItemModelProvider {
         basicItem(HpCItems.SILICON.get());
         basicItem(HpCItems.TEKTITES.get());
         basicItem(HpCItems.PETROCHEMICALS.get());
+        basicItem(HpCItems.THERMAL_ISOLATOR.get());
         
         basicItem(HpCItems.COMPRESSED_BRONZE.get());
         basicItem(HpCItems.COMPRESSED_COPPER.get());
@@ -140,6 +142,10 @@ public class HpCItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(HpCItems.STEEL_CHESTPLATE);
         trimmedArmorItem(HpCItems.STEEL_LEGGINGS);
         trimmedArmorItem(HpCItems.STEEL_BOOTS);
+        basicItem(HpCItems.T1_THERMAL_INSULATION_HEAD.get());
+        basicItem(HpCItems.T1_THERMAL_INSULATION_TORSO.get());
+        basicItem(HpCItems.T1_THERMAL_INSULATION_LEGGINGS.get());
+        basicItem(HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.get());
 
         handheldItem(HpCItems.GLASS_SWORD.get());
 

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "F": {
+      "item": "minecraft:feather"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "pattern": [
+    " W ",
+    "WRW",
+    "F F"
+  ],
+  "result": {
+    "count": 4,
+    "id": "heliocore:thermal_isolator"
+  }
+}
