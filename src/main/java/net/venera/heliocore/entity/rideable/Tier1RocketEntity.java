@@ -23,7 +23,7 @@ import net.venera.heliocore.screen.hpc_custom.RocketMenu;
 import org.jetbrains.annotations.Nullable;
 
 public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
-    public final ItemStackHandler inventory = new ItemStackHandler(28);
+    public final ItemStackHandler inventory = new ItemStackHandler(27);
     public Tier1RocketEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
     }
@@ -35,8 +35,8 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
     public final int MAX_ENERGY = 5000;
     public final int ENERGY_USAGE = 2;
     public final int FUEL_USAGE = 1;
-    public static int maxFuel = 1000;
-    public static int maxEnergy = 5000;
+    public static final int maxFuel = 1000;
+    public static final int maxEnergy = 5000;
 
     @Override
     public void tick() {
@@ -290,14 +290,6 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
 
     public void setEnergyAmount(int amount) {
         this.entityData.set(ENERGY_AMOUNT, Math.max(0, Math.min(amount, MAX_ENERGY)));
-    }
-    public int getMaxFuelAmount() {
-        maxFuel = this.MAX_FUEL;
-        return maxFuel;
-    }
-    public int getMaxEnergyAmount() {
-        maxEnergy = this.MAX_ENERGY;
-        return maxEnergy;
     }
     
     public int chargeEnergy(int amount, boolean simulate) {

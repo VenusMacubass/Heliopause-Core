@@ -5,10 +5,10 @@
 		"0": "heliocore:block/machine/machine_energy_output",
 		"1": "heliocore:block/machine/machine",
 		"2": "heliocore:block/machine/machine_bottom",
-		"3": "heliocore:block/machine/machine_side",
 		"4": "heliocore:block/machine/machine_basic_solar_panel",
 		"5": "heliocore:item/tier_1_solar_panel",
-		"particle": "heliocore:block/machine/machine_energy_output"
+		"particle": "heliocore:block/machine/machine_energy_output",
+		"indicator": "heliocore:block/machine/machine_side"
 	},
 	"elements": [
 		{
@@ -68,9 +68,9 @@
 			"to": [16, 16, 16],
 			"faces": {
 				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"east": {"uv": [0, 0, 16, 16], "texture": "#3"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#indicator"},
 				"south": {"uv": [0, 0, 16, 16], "texture": "#4"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#3"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#indicator"},
 				"up": {"uv": [0, 0, 16, 16], "texture": "#1"},
 				"down": {"uv": [0, 0, 16, 16], "texture": "#2"}
 			}

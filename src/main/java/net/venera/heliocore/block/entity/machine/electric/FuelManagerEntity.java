@@ -126,7 +126,7 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
             }
             
             if (isCharging && this.energyStorage.getEnergyStored() > 0) {
-                int acceptedEnergy = rocket.chargeEnergy(Math.min(this.energyStorage.getEnergyStored(), energyTransferRate), false);
+                int acceptedEnergy = rocket.chargeEnergy(Math.min(this.energyStorage.getEnergyStored(), energyTransferRate/12), false);
                 if (acceptedEnergy > 0) {
                     this.energyStorage.consumeEnergy(acceptedEnergy);
                     isCurrentlyWorking = true;

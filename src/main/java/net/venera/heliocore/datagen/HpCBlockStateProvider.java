@@ -71,7 +71,6 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     ResourceLocation refineryTop =  modLoc("block/machine/refinery_energy_input");
     ResourceLocation refinerySide =  modLoc("block/machine/refinery_side");
     ResourceLocation solarPanelSide = modLoc("block/machine/machine_basic_solar_panel");
-    ResourceLocation solarPanelTop = modLoc("block/machine/machine_solar_top");
     ResourceLocation cargoManagerSide = modLoc("block/machine/cargo_manager_side");
     ResourceLocation fuelManagerLoader = modLoc("block/machine/fuel_loader_side");
     ResourceLocation gasCompressor = modLoc("block/machine/gas_compressor");
@@ -184,8 +183,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 Direction.NORTH, Direction.SOUTH 
         );
         
-        customModelChargeableBlock(
-                HpCBlocks.BASIC_SOLAR_PANEL.get(),
+        customModelChargeableBlock(HpCBlocks.BASIC_SOLAR_PANEL.get(),
                 SolarPanelBlock.CHARGE,
                 modLoc("block/basic_solar_model"),           
                 "indicator",

@@ -22,24 +22,12 @@ public class RocketMenu extends AbstractContainerMenu{
     public RocketMenu(int containerId, Inventory inventory, Tier1RocketEntity rocket) {
         super(HpCMenuTypes.ROCKET_MENU.get(), containerId);
         this.rocket = rocket;
-        IItemHandler handler = (this.rocket != null) ? this.rocket.inventory : new ItemStackHandler(28);
         int slotIndex = 0;
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
                 this.addSlot(new SlotItemHandler(this.rocket.inventory, slotIndex++, 8 + col * 18, 64 + row * 18));
             }
         }
-        this.addSlot(new SlotItemHandler(this.rocket.inventory, 27, 130, 42) {
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                return  stack.getItem() instanceof BatteryItem;
-            }
-
-            @Override
-            public int getMaxStackSize(ItemStack stack) {
-                return 1;
-            }
-        });
     }
     
     @Override
