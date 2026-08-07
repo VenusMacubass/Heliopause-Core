@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_circuit_board": {
+    "has_air_fan": {
       "conditions": {
         "items": [
           {
-            "items": "heliocore:basic_circuit_board"
+            "items": "heliocore:air_fan"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:thermal_controller_crafting"
+        "recipe": "minecraft:oxygen_generator_crafting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_circuit_board"
+      "has_air_fan"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:thermal_controller_crafting"
+      "minecraft:oxygen_generator_crafting"
     ]
   }
 }

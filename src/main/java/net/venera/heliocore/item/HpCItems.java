@@ -145,9 +145,6 @@ public class HpCItems {
     
     public static final DeferredItem<Item> ROCKET_ITEM = ITEMS.register("rocket_item", () -> 
             new RocketItem(new Item.Properties()));
-    
-    public static final DeferredItem<Item> THERMAL_CONTROLLER = ITEMS.register("thermal_controller", () ->
-            new Item(new Item.Properties()));
 
     
 

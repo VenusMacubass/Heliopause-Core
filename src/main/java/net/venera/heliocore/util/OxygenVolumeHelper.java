@@ -111,13 +111,23 @@ public class OxygenVolumeHelper {
         return null;
     }
 
-    public static BlockPos getSealerForAir(long airPosLong) {
+    public static BlockPos getSealerForAir(long airPosLong, Level level) {
+        BlockPos fallbackSealer = null;
+
         for (Map.Entry<BlockPos, SealedVolumeResult> entry : ACTIVE_ROOMS.entrySet()) {
             if (entry.getValue().airBlocks().contains(airPosLong)) {
-                return entry.getKey();
+                BlockPos foundSealerPos = entry.getKey();
+
+                // Prioritize a sealer that is actively thermally regulating
+                if (level.getBlockEntity(foundSealerPos) instanceof net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity sealer) {
+                    if (sealer.isThermallyRegulating()) {
+                        return foundSealerPos;
+                    }
+                }
+                fallbackSealer = foundSealerPos;
             }
         }
-        return null;
+        return fallbackSealer;
     }
 }
 

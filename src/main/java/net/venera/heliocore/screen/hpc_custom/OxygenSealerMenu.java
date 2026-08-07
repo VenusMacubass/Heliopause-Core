@@ -39,7 +39,7 @@ public class OxygenSealerMenu extends AbstractContainerMenu {
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 0, 8, 15) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.getItem() == HpCItems.COMPRESSED_GAS_TANK.get();
+                return stack.is(HpCItems.COMPRESSED_GAS_TANK.get());
             }
 
             @Override
@@ -51,7 +51,7 @@ public class OxygenSealerMenu extends AbstractContainerMenu {
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 1, 44, 60) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.getItem() == HpCItems.THERMAL_CONTROLLER.get();
+                return stack.is(HpCItems.THERMAL_REGULATOR.get());
             }
             @Override
             public int getMaxStackSize(ItemStack stack) {

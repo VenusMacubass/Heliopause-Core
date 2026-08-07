@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "A": {
+      "item": "heliocore:air_fan"
+    },
+    "F": {
+      "item": "heliocore:fluid_filter"
+    },
+    "G": {
+      "item": "heliocore:gas_regulator"
+    },
+    "S": {
+      "item": "heliocore:compressed_steel"
+    },
+    "T": {
+      "item": "heliocore:fluid_tank"
+    }
+  },
+  "pattern": [
+    "SFS",
+    "ATA",
+    "SGS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:oxygen_generator"
+  }
+}

@@ -95,6 +95,7 @@ public class EnergyGeneratorEntity extends BaseElectricMachineEntity implements 
                 switch (i) {
                     case 0 -> liquidFuelTank.setFluid(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), value));
                     case 2 -> isActive = value == 1;
+                    case 3 -> enabled = value == 1;
                     case 4 -> burnTime = value;
                     case 5 ->  maxBurnTime = value;
                 }

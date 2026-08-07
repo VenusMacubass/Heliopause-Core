@@ -49,7 +49,7 @@ public class AirlockFrameSwitch extends Block {
 
                     if (frontSealed != backSealed) {
                         BlockPos sealedAirPos = frontSealed ? front : back;
-                        BlockPos sealerToBreak = OxygenVolumeHelper.getSealerForAir(sealedAirPos.asLong());
+                        BlockPos sealerToBreak = OxygenVolumeHelper.getSealerForAir(sealedAirPos.asLong(), level);
                         if (sealerToBreak != null && level.getBlockEntity(sealerToBreak) instanceof OxygenSealerEntity sealer) {
                             sealer.seal = false;
                             OxygenVolumeHelper.removeRoom(sealerToBreak);

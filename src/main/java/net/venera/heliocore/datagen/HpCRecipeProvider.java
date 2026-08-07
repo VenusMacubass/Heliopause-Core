@@ -201,19 +201,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('G', Items.GLASS_PANE)
                 .unlockedBy("has_tin_canister", has(HpCItems.TIN_CANISTER.get()))
                 .save(recipeOutput, "liquid_canister_crafting");
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCItems.THERMAL_CONTROLLER.get())
-                .pattern("WFR")
-                .pattern("BCB")
-                .pattern("BAB")
-                .define('W', HpCBlocks.COPPER_WIRE.get())
-                .define('F', HpCItems.FLUID_FILTER.get())
-                .define('R', Items.REDSTONE)
-                .define('C', HpCItems.BASIC_CIRCUIT_BOARD.get())
-                .define('B', HpCItems.COMPRESSED_BRONZE.get())
-                .define('A', HpCItems.COMPRESSED_ALUMINIUM.get())
-                .unlockedBy("has_circuit_board", has(HpCItems.BASIC_CIRCUIT_BOARD.get()))
-                .save(recipeOutput, "thermal_controller_crafting");
+        
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCItems.SINGULAR_SOLAR_PANEL.get(),2)
                 .pattern("GGG")
                 .pattern("BBB")
@@ -372,6 +360,31 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('F', HpCItems.FLUID_FILTER.get())
                 .unlockedBy("has_fluid_tank", has(HpCBlocks.FLUID_TANK.get()))
                 .save(recipeOutput, "gas_vaporizer_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCBlocks.OXYGEN_GENERATOR.get())
+                .pattern("SFS")
+                .pattern("ATA")
+                .pattern("SGS")
+                .define('A', HpCItems.AIR_FAN.get())
+                .define('T', HpCBlocks.FLUID_TANK.get())
+                .define('S', HpCItems.COMPRESSED_STEEL.get())
+                .define('G', HpCItems.GAS_REGULATOR.get())
+                .define('F', HpCItems.FLUID_FILTER.get())
+                .unlockedBy("has_air_fan", has(HpCItems.AIR_FAN.get()))
+                .save(recipeOutput, "oxygen_generator_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCBlocks.OXYGEN_SEALER.get())
+                .pattern("SFS")
+                .pattern("ATC")
+                .pattern("SGS")
+                .define('A', HpCItems.AIR_FAN.get())
+                .define('T', HpCBlocks.FLUID_TANK.get())
+                .define('S', HpCItems.COMPRESSED_STEEL.get())
+                .define('G', HpCItems.GAS_REGULATOR.get())
+                .define('F', HpCItems.FLUID_FILTER.get())
+                .define('C', HpCItems.COMPRESSED_ALUMINIUM.get())
+                .unlockedBy("has_air_fan", has(HpCItems.AIR_FAN.get()))
+                .save(recipeOutput, "oxygen_sealer_crafting");
         //endregion
         
         //region Low Functionality Items and Blocks
@@ -457,7 +470,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', HpCItems.COMPRESSED_STEEL.get())
                 .define('B', HpCItems.BASIC_CIRCUIT_BOARD.get())
                 .define('I', HpCItems.COMPRESSED_IRIDIUM.get())
-                .unlockedBy("has_compressed_iron", has(HpCItems.COMPRESSED_IRON.get()))
+                .unlockedBy("has_compressed_iridium", has(HpCItems.COMPRESSED_IRIDIUM.get()))
                 .save(recipeOutput, "airlock_switch_crafting");
         //endregion
 
@@ -575,6 +588,13 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('B', Items.LEATHER_BOOTS)
                 .unlockedBy("has_thermal_isolator", has(HpCItems.THERMAL_ISOLATOR.get()))
                 .save(recipeOutput, "t1_thermal_insulation_hands_and_feet_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, HpCItems.MASS_BELT.get())
+                .pattern("IGI")
+                .define('G', Items.GOLD_BLOCK)
+                .define('I', Items.IRON_INGOT)
+                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+                .save(recipeOutput, "mass_belt_crafting");
         //endregion
 
         //region Special Functionality Items

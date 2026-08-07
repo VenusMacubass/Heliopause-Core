@@ -260,9 +260,9 @@ public class HpCEvents {
             }
         }
     }
-    
+
     @SubscribeEvent
-    public static void onEntityTick(EntityTickEvent.Post event) {
+    public static void onEntityThermalTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof LivingEntity living) || living.level().isClientSide) {
             return;
         }
@@ -274,21 +274,58 @@ public class HpCEvents {
         }
 
         Level level = living.level();
-        Holder<Biome> biome = level.getBiome(living.blockPosition());
+        
+        BlockPos headPos = BlockPos.containing(living.getX(), living.getEyeY(), living.getZ());
+        long headLong = headPos.asLong();
+        boolean inRegulatedRoom = false;
+        BlockPos targetSealedPos = null;
+        
+        if (OxygenVolumeHelper.isPositionSealed(headLong)) {
+            targetSealedPos = headPos;
+        }
+       
+        else {
+            BlockState headState = level.getBlockState(headPos);
+            if (headState.is(HpCBlocks.AIRLOCK_GENERATED_BLOCK.get())) {
+                for (Direction dir : Direction.Plane.HORIZONTAL) {
+                    BlockPos neighborPos = headPos.relative(dir);
+                    if (OxygenVolumeHelper.isPositionSealed(neighborPos.asLong())) {
+                        targetSealedPos = neighborPos;
+                        break;
+                    }
+                }
+            }
+        }
+        
+        if (targetSealedPos != null) {
+            BlockPos sealerPos = OxygenVolumeHelper.getSealerForAir(targetSealedPos.asLong(), level);
+            if (sealerPos != null && level.getBlockEntity(sealerPos) instanceof OxygenSealerEntity sealer) {
+                if (sealer.isThermallyRegulating()) {
+                    inRegulatedRoom = true;
+                }
+            }
+        }
+        
+        if (inRegulatedRoom) {
+            if (living.getTicksFrozen() > 0) {
+                living.setTicksFrozen(Math.max(0, living.getTicksFrozen() - 10));
+            }
+            return;
+        }
 
+        Holder<Biome> biome = level.getBiome(living.blockPosition());
         double currentTemp = EnvironmentalTemperature.getEnvironmentalTemperature(level, biome);
         int thermalProtectionScore = SpaceGearSetupHelper.checkThermalSetup(living);
         
-        //Future T2/T3 mechanics will be injected here to check if currentTemp exceeds T1's max rating.
         if (thermalProtectionScore == 4) {
             if (living.getTicksFrozen() > 0) {
                 living.setTicksFrozen(Math.max(0, living.getTicksFrozen() - 10));
             }
             return;
         }
-        
+
         float exposureMultiplier = (4 - thermalProtectionScore) / 4.0f;
-        
+
         if (currentTemp > 40.0) {
             living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0, false, false, true));
 
@@ -305,7 +342,7 @@ public class HpCEvents {
                 living.hurt(living.damageSources().hotFloor(), 0.5f * exposureMultiplier);
             }
         }
-        
+
         else if (currentTemp < -15.0) {
             living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 40, 0, false, false, true));
 

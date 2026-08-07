@@ -31,6 +31,7 @@ import net.venera.heliocore.data.component.GasTankData;
 import net.venera.heliocore.dimension.HpCDimensions;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.fluid.IFluidMachine;
+import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
 import net.venera.heliocore.screen.hpc_custom.GasCompressorMenu;
 import net.venera.heliocore.screen.hpc_custom.OxygenSealerMenu;
@@ -217,6 +218,15 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
             }
         }
         return false;
+    }
+
+    public boolean isThermallyRegulating() {
+        if (!this.isActive || !this.seal) {
+            return false;
+        }
+
+        ItemStack thermalStack = this.inventory.getStackInSlot(THERMAL_EQUIPMENT_SLOT);
+        return thermalStack.is(HpCItems.THERMAL_REGULATOR.get());
     }
     
     @Override
