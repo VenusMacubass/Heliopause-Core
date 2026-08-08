@@ -50,8 +50,8 @@ public class PCBFabricatorScreen extends AbstractContainerScreen<PCBFabricatorMe
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
         
-        int energyX = x + 94;
-        int energyY = y + 69;
+        int energyX = x + 114;
+        int energyY = y + 72;
         int energyWidth = 54;
         int energyHeight = 7;
 

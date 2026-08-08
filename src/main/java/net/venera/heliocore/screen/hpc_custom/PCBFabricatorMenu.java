@@ -45,21 +45,18 @@ public class PCBFabricatorMenu extends AbstractContainerMenu {
                 return stack.getItem() == Items.DIAMOND;
             }
         });
-
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 1, 26, 34) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return stack.is(Tags.Items.INGOTS);
             }
         });
-
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 2, 47, 19) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return stack.getItem() == Items.REDSTONE;
             }
         });
-
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 3, 55, 49) {
             @Override
             public boolean mayPlace(ItemStack stack) {

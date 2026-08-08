@@ -6,9 +6,8 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.*;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -25,7 +24,7 @@ import net.venera.heliocore.screen.hpc_custom.LanderMenu;
 import javax.annotation.Nullable;
 
 public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJumping {
-    public final ItemStackHandler inventory = new ItemStackHandler(30);
+    public final ItemStackHandler inventory = new ItemStackHandler(29);
     public Tier1RocketLanderEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
     }
@@ -45,7 +44,6 @@ public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJum
         previousYVelocity = this.getDeltaMovement().y;
         super.tick();
         if (!this.level().isClientSide()) {
-            processOutputBattery();
             processFuelOutput();
             if (this.isThrusting) {
                 this.applyThrust();
@@ -90,6 +88,23 @@ public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJum
         }
     }
 
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (this.isInvulnerableTo(source)) {
+            return false;
+        }
+        if (!this.level().isClientSide() && !this.isRemoved()) {
+            SimpleContainer inv = new SimpleContainer(inventory.getSlots());
+            for(int i = 0; i < inventory.getSlots(); i++){
+                inv.setItem(i, inventory.getStackInSlot(i));
+            }
+            Containers.dropContents(this.level(), this, inv);
+            this.discard();
+            return true;
+        }
+        return false;
+    }
+
     private void explode() {
         this.clearInventory();
         this.level().explode(this, this.getX(), this.getY(), this.getZ(), 5.0F, Level.ExplosionInteraction.MOB);
@@ -101,23 +116,9 @@ public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJum
             inventory.setStackInSlot(i, ItemStack.EMPTY);
         }
     }
-    
-    private void processOutputBattery(){
-        ItemStack battery = inventory.getStackInSlot(27);
-        if(battery.getItem() instanceof BatteryItem batteryItem){
-            BatteryData batteryData = batteryItem.getBatteryData(battery);
-            int transferable = Math.min(entityData.get(ENERGY_AMOUNT), batteryData.getSpace());
-            if (transferable > 0) {
-                entityData.set(ENERGY_AMOUNT, entityData.get(ENERGY_AMOUNT) - transferable);
-                batteryItem.receiveEnergy(battery, transferable, false);
-
-                inventory.setStackInSlot(27, battery);
-            }
-        }
-    }
 
     private void processFuelOutput(){
-        ItemStack canister = inventory.getStackInSlot(28);
+        ItemStack canister = inventory.getStackInSlot(27);
         if(canister.getItem() instanceof CanisterItem canisterItem){
             CanisterData canisterData = canisterItem.getCanisterData(canister);
             int transferable = Math.min(entityData.get(FUEL_AMOUNT), canisterData.getSpace());
@@ -125,7 +126,7 @@ public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJum
                 entityData.set(FUEL_AMOUNT, entityData.get(FUEL_AMOUNT) - transferable);
                 canisterItem.fill(canister, HpCFluids.REFINED_FUEL.getFluidType().getId(), transferable);
 
-                inventory.setStackInSlot(28, canister);
+                inventory.setStackInSlot(27, canister);
             }
         }
     }

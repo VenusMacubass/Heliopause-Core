@@ -57,7 +57,6 @@ import net.venera.heliocore.util.*;
 
 @EventBusSubscriber
 public class HpCEvents {
-    private static final ResourceLocation CUSTOM_ELYTRA_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "custom_elytra_flight");
     
     @SubscribeEvent
     public static void onGlassSwordUsage(LivingDamageEvent.Pre event) {
@@ -176,6 +175,9 @@ public class HpCEvents {
         registerElectric(event, HpCBlockEntities.ENERGY_GENERATOR_ENTITY.get());
         registerElectric(event, HpCBlockEntities.GAS_COMPRESSOR_ENTITY.get());
         registerElectric(event, HpCBlockEntities.GAS_VAPORIZER_ENTITY.get());
+        registerElectric(event, HpCBlockEntities.OXYGEN_SEALER_ENTITY.get());
+        registerElectric(event, HpCBlockEntities.DECONSTRUCTOR_ENTITY.get());
+        registerElectric(event, HpCBlockEntities.PCB_FABRICATOR_ENTITY.get());
     }
     
     private static void registerElectric(RegisterCapabilitiesEvent event, BlockEntityType<? extends BaseElectricMachineEntity> type) {
@@ -198,7 +200,7 @@ public class HpCEvents {
     }
     
     @SubscribeEvent
-    public static void register(final RegisterPayloadHandlersEvent event) {
+    public static void register(final RegisterPayloadHandlersEvent event) { //For elytra slot
         final PayloadRegistrar registrar = event.registrar(HeliopauseCore.MOD_ID);
 
         registrar.playToServer(

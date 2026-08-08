@@ -143,7 +143,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
             int fuel = this.getFuelAmount();
             int energy = this.getEnergyAmount();
             CompoundTag invTag = this.inventory.serializeNBT(this.registryAccess());
-
+        
             DimensionTransition transition = new DimensionTransition(
                     earthLevel,
                     new Vec3(dropX, dropY, dropZ),
@@ -160,7 +160,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
                         for (int i = 0; i < this.inventory.getSlots(); i++) {
                             lander.inventory.setStackInSlot(i, this.inventory.getStackInSlot(i).copy());
                         }
-                        lander.inventory.setStackInSlot(29, new ItemStack(HpCItems.ROCKET_ITEM.get()));
+                        lander.inventory.setStackInSlot(28, new ItemStack(HpCItems.ROCKET_ITEM.get()));
                         lander.setDeltaMovement(new Vec3(0.0D, -2.5D, 0.0D));
                         earthLevel.addFreshEntity(lander);
 
@@ -204,7 +204,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
                     (teleportedEntity) -> {
                         Tier1RocketLanderEntity lander = new Tier1RocketLanderEntity(HpCEntities.TIER_1_ROCKET_LANDER.get(), moonLevel);
                         lander.setPos(dropX, dropY, dropZ);
-                        lander.inventory.setStackInSlot(29, new ItemStack(HpCItems.ROCKET_ITEM.get()));
+                        lander.inventory.setStackInSlot(28, new ItemStack(HpCItems.ROCKET_ITEM.get()));
                         lander.setFuelAmount(fuel);
                         lander.setEnergyAmount(energy);
                         for (int i = 0; i < this.inventory.getSlots(); i++) {
