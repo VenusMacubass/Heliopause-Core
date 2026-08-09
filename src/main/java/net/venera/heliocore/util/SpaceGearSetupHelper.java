@@ -10,7 +10,7 @@ import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
 
 public class SpaceGearSetupHelper {
-    private static final int OXYGEN_USAGE = 2;
+    private static final int OXYGEN_USAGE = 1;
     public static boolean checkOxygenSetup(LivingEntity livingEntity) {
         ItemStackHandler inventory = livingEntity.getData(HpCAttachments.EQUIPMENT_INVENTORY);
         

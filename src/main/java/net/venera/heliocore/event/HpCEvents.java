@@ -3,8 +3,11 @@ package net.venera.heliocore.event;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -53,10 +56,29 @@ import net.venera.heliocore.data.temperature.EnvironmentalTemperature;
 import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.item.HpCTags;
+import net.venera.heliocore.screen.hpc_custom.HpCEquipmentMenu;
 import net.venera.heliocore.util.*;
 
 @EventBusSubscriber
 public class HpCEvents {
+
+    @SubscribeEvent
+    public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
+        Player player = event.getEntity();
+        ItemStack stack = event.getItemStack();
+        Entity target = event.getTarget();
+        if (stack.is(HpCItems.DEBUG_STICK.get()) && target instanceof LivingEntity livingTarget) {
+
+            if (!player.level().isClientSide() && player instanceof ServerPlayer serverPlayer) {
+                serverPlayer.openMenu(new SimpleMenuProvider(
+                        (id, playerInv, p) -> new HpCEquipmentMenu(id, playerInv, livingTarget),
+                        Component.literal("Entity Gear Debug")
+                ), buf -> buf.writeInt(livingTarget.getId()));
+            }
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.sidedSuccess(player.level().isClientSide()));
+        }
+    }
     
     @SubscribeEvent
     public static void onGlassSwordUsage(LivingDamageEvent.Pre event) {

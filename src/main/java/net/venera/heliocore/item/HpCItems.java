@@ -99,6 +99,11 @@ public class HpCItems {
     public static final DeferredItem<Item> SOLAR_PANEL_SEMICONDUCTOR_BASE = ITEMS.register("solar_panel_semiconductor_base", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> SINGULAR_SOLAR_PANEL = ITEMS.register("singular_solar_panel", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> TIER_1_SOLAR_PANEL = ITEMS.register("tier_1_solar_panel", () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> T1_ROCKET_BASE =  ITEMS.register("t1_rocket_base", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> T1_ROCKET_ENGINE =  ITEMS.register("t1_rocket_engine", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> T1_ROCKET_FIN =  ITEMS.register("t1_rocket_fin", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> T1_ROCKET_NOSE_CONE =  ITEMS.register("t1_rocket_nose_cone", () -> new Item(new Item.Properties()));
     //endregion
 
     //region Tools
@@ -115,6 +120,7 @@ public class HpCItems {
     public static final DeferredItem<Item> STANDARD_WRENCH = ITEMS.register("standard_wrench", () -> new StandardWrench(new Item.Properties().durability(125)));
     public static final DeferredItem<SwordItem> GLASS_SWORD = ITEMS.register("glass_sword", () ->
             new SwordItem(HpCToolTiers.GLASS, (new Item.Properties().attributes(SwordItem.createAttributes(HpCToolTiers.GLASS, 64, 1.8f)))));
+    public static final DeferredItem<Item> DEBUG_STICK = ITEMS.register("debug_stick", () -> new HpCDebugStickItem(new Item.Properties()));
     //endregion
 
     //region Armors

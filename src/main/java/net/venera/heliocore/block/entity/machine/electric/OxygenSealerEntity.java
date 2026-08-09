@@ -243,6 +243,7 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
         if (oxygenTank.getFluidAmount() >= maxOxygenCapacity) return false;
 
         Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
+        if (machineFacing.getAxis().isVertical()) return false;
         Direction inputFace = machineFacing.getClockWise();
 
         BlockPos pipePos = pos.relative(inputFace);
@@ -282,6 +283,7 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
     @Override
     public PortType getFluidPortType(Direction face) {
         Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
+        if (machineFacing.getAxis().isVertical()) return PortType.NONE;
         if (face == machineFacing.getClockWise()) {
             return PortType.INPUT;
         }

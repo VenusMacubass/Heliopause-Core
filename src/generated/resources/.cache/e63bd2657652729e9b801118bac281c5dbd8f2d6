@@ -1,4 +1,4 @@
-// 1.21.1	2026-08-05T15:48:13.5222923	Item Models: heliocore
+// 1.21.1	2026-08-09T15:16:07.2876245	Item Models: heliocore
 1ac96947d6d705457f38d0a1fa68a0dcb74bc592 assets/heliocore/models/item/air_fan.json
 0734313d99e1a4ca395735a0943619e787dd452a assets/heliocore/models/item/base_building_wall_black.json
 77313ec5bf2583da66c950d2ae65ff21c6eb341c assets/heliocore/models/item/base_building_wall_white.json
@@ -18,6 +18,7 @@ bfaf5cd1e163da2e52bcf07e99765b580fc27810 assets/heliocore/models/item/compressed
 b4a1f66332feceb0a7fb3fcf590d59a7db262afd assets/heliocore/models/item/compressed_steel.json
 0417f489f449fcb7d1342be1657d5ce3922f1cb4 assets/heliocore/models/item/copper_canister.json
 1ee2bb539809b66aca3f6bdf83c7a88600803b4f assets/heliocore/models/item/crude_oil_bucket.json
+0ef900a83d883b09b3fb48d586c6f989e5001f03 assets/heliocore/models/item/debug_stick.json
 78450b101ccb277811e0fe94e48ab69b940d3f41 assets/heliocore/models/item/dehydrated_apple.json
 5f7ae5894fcb2ee80c988c27888064fcb538182e assets/heliocore/models/item/dehydrated_beef.json
 9c1557ee652911a0d6f99bca6299faade7074499 assets/heliocore/models/item/dehydrated_berries.json
@@ -97,6 +98,10 @@ b87e44ad5d125b61fdadd2f28f3dc71182490759 assets/heliocore/models/item/steel_pick
 40db11687371006a8263ca2251ad807ee64d3d9e assets/heliocore/models/item/steel_rod.json
 e7ebfcb0462c86dcc22e377730708f2c3f096a82 assets/heliocore/models/item/steel_shovel.json
 4b71b21d1bca743224cfde6d3562508e28f7b7e5 assets/heliocore/models/item/steel_sword.json
+6cf594783e180f397c03bc73fdd0d73cde76658d assets/heliocore/models/item/t1_rocket_base.json
+4edcddad12ec9863949241f69140bd64f23a4c76 assets/heliocore/models/item/t1_rocket_engine.json
+766edb40df5197330cf2bd8fe0751dfeb8a78776 assets/heliocore/models/item/t1_rocket_fin.json
+e77d2a4b7f1340d9b3e2bee1b95779dc02b1782c assets/heliocore/models/item/t1_rocket_nose_cone.json
 42b7798e54512184ff23c7d10e23200a1b7c8a15 assets/heliocore/models/item/t1_thermal_insulation_hands_and_feet.json
 0d5f3ac9bca6a45e8ad11e3ad843906a757c8096 assets/heliocore/models/item/t1_thermal_insulation_head.json
 7570e505e71628c677187a29754f00167b80a825 assets/heliocore/models/item/t1_thermal_insulation_leggings.json

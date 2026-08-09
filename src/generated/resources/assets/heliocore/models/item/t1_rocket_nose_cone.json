@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "heliocore:item/t1_rocket_nose_cone"
+  }
+}

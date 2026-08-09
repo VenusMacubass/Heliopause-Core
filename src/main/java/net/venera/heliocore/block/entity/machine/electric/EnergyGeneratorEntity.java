@@ -233,6 +233,7 @@ public class EnergyGeneratorEntity extends BaseElectricMachineEntity implements 
         if (liquidFuelTank.getFluidAmount() >= maxLiquidFuelCapacity) return false;
 
         Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
+        if (machineFacing.getAxis().isVertical()) return false;
         Direction inputFace = machineFacing.getClockWise();
 
         BlockPos pipePos = pos.relative(inputFace);
@@ -298,6 +299,7 @@ public class EnergyGeneratorEntity extends BaseElectricMachineEntity implements 
     @Override
     public PortType getFluidPortType(Direction face) {
         Direction machineFacing = this.getBlockState().getValue(BaseMachineBlock.FACING);
+        if (machineFacing.getAxis().isVertical()) return PortType.NONE;
         if (face == machineFacing.getClockWise()) {
             return PortType.INPUT;
         }

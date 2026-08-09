@@ -108,7 +108,10 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCItems.COMPRESSED_STEEL.get());
                         output.accept(HpCItems.COMPRESSED_TIN.get());
                         output.accept(HpCItems.COMPRESSED_HD_PLATE.get());
-                        
+                        output.accept(HpCItems.T1_ROCKET_BASE.get());
+                        output.accept(HpCItems.T1_ROCKET_ENGINE.get());
+                        output.accept(HpCItems.T1_ROCKET_FIN.get());
+                        output.accept(HpCItems.T1_ROCKET_NOSE_CONE.get());
                     })
                     .build()
     );

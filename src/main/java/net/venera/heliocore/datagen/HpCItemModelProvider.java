@@ -97,6 +97,7 @@ public class HpCItemModelProvider extends ItemModelProvider {
 
         basicItem(HpCItems.RADIOACTIVE_CORE.get());
         handheldItem(HpCItems.STANDARD_WRENCH.get());
+        handheldItem(HpCItems.DEBUG_STICK.get());
         basicItem(HpCItems.OXYGEN_CONNECTORS.get());
         basicItem(HpCItems.AIR_FAN.get());
         basicItem(HpCItems.BASIC_CIRCUIT_BOARD.get());
@@ -123,6 +124,11 @@ public class HpCItemModelProvider extends ItemModelProvider {
         basicItem(HpCItems.COMPRESSED_IRON.get());
         basicItem(HpCItems.COMPRESSED_STEEL.get());
         basicItem(HpCItems.COMPRESSED_HD_PLATE.get());
+        
+        basicItem(HpCItems.T1_ROCKET_BASE.get());
+        basicItem(HpCItems.T1_ROCKET_ENGINE.get());
+        basicItem(HpCItems.T1_ROCKET_FIN.get());
+        basicItem(HpCItems.T1_ROCKET_NOSE_CONE.get());
         
         basicItem(HpCItems.SMALL_BATTERY.get());
 
