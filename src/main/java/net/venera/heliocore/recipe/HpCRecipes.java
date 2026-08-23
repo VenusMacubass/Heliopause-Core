@@ -27,6 +27,15 @@ public class HpCRecipes {
             return "pcb_fabricator";
         }
     });
+
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<MagneticAssemblyPlatformRecipe>> MAGNETIC_ASSEMBLY_SERIALIZER = RECIPE_SERIALIZERS.register("magnetic_assembly_platform", MagneticAssemblyPlatformRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<MagneticAssemblyPlatformRecipe>> MAGNETIC_ASSEMBLY_TYPE = RECIPE_TYPES.register("magnetic_assembly_platform", () -> new RecipeType<>() {
+        @Override
+        public String toString() {
+            return "magnetic_assembly_platform";
+        }
+    });
+    
     public static void register(IEventBus eventBus){
         RECIPE_SERIALIZERS.register(eventBus);
         RECIPE_TYPES.register(eventBus);

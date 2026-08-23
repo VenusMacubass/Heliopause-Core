@@ -15,6 +15,8 @@ import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.recipe.CoalCompressorRecipeBuilder;
 import net.venera.heliocore.item.HpCTags;
+import net.venera.heliocore.recipe.MagneticAssemblyPlatformRecipe;
+import net.venera.heliocore.recipe.MagneticAssemblyPlatformRecipeBuilder;
 import net.venera.heliocore.recipe.PCBFabricatorRecipeBuilder;
 
 import java.util.List;
@@ -933,7 +935,26 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput, HeliopauseCore.MOD_ID + ":solar_panel_base_fabrication");
         //endregion
 
-        
+        //region Rockets
+        MagneticAssemblyPlatformRecipeBuilder.fabricate(RecipeCategory.MISC, HpCItems.ROCKET_ITEM.get())
+                .nose(HpCTags.Items.NOSES)
+                .addHull(HpCTags.Items.HULLS)
+                .addHull(HpCTags.Items.HULLS)
+                .addHull(HpCTags.Items.HULLS)
+                .addHull(HpCTags.Items.HULLS)
+                .addHull(HpCTags.Items.HULLS)
+                .addHull(HpCTags.Items.HULLS)
+                .addHull(HpCTags.Items.HULLS)
+                .addHull(HpCTags.Items.HULLS)
+                .addFin(HpCTags.Items.FINS)
+                .addFin(HpCTags.Items.FINS)
+                .addFin(HpCTags.Items.FINS)
+                .addFin(HpCTags.Items.FINS)
+                .base(HpCTags.Items.BASE)
+                .engine(HpCTags.Items.ENGINES)
+                .unlockedBy("has_rocket_engine", has(HpCItems.T1_ROCKET_ENGINE.get()))
+                .save(recipeOutput, HeliopauseCore.MOD_ID + ":t1_rocket_assembly");
+        //endregion
 
     }
     

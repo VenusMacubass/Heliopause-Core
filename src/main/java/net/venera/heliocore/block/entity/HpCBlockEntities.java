@@ -8,6 +8,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.machine.CoalCompressorEntity;
+import net.venera.heliocore.block.entity.machine.MagneticAssemblyPlatformEntity;
 import net.venera.heliocore.block.entity.machine.electric.*;
 
 import java.util.function.Supplier;
@@ -110,6 +111,8 @@ public class HpCBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MagneticCraftingTableEntity>> MAGNETIC_CRAFTING_TABLE_ENTITY = BLOCK_ENTITIES.register("magnetic_crafting_table_entity",
             ()-> BlockEntityType.Builder.of(MagneticCraftingTableEntity::new, HpCBlocks.MAGNETIC_CRAFTING_TABLE.get()).build(null));
 
+    public static final Supplier<BlockEntityType<MagneticAssemblyPlatformEntity>> MAGNETIC_ASSEMBLY_PLATFORM_ENTITY = BLOCK_ENTITIES.register("magnetic_assembly_platform_entity",
+            () -> BlockEntityType.Builder.of(MagneticAssemblyPlatformEntity::new, HpCBlocks.MAGNETIC_ASSEMBLY_PLATFORM.get()).build(null));
 
     public static void register(IEventBus eventBus){
         BLOCK_ENTITIES.register(eventBus);

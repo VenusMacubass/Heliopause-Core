@@ -75,6 +75,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     ResourceLocation fuelManagerLoader = modLoc("block/machine/fuel_loader_side");
     ResourceLocation gasCompressor = modLoc("block/machine/gas_compressor");
     ResourceLocation gasVaporizer = modLoc("block/machine/gas_vaporizer");
+    ResourceLocation magnetic_assembly = modLoc("block/machine/magnetic_assembly");
     //endregion
     
     @Override
@@ -281,6 +282,14 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 Map.of(
                         Direction.NORTH, energyInPort,
                         Direction.UP, machineTop,
+                        Direction.DOWN, machineBottom
+                )
+        );
+
+        directionalMachineBlock(HpCBlocks.MAGNETIC_ASSEMBLY_PLATFORM.get(),
+                machineSide,
+                Map.of(
+                        Direction.UP, magnetic_assembly,
                         Direction.DOWN, machineBottom
                 )
         );

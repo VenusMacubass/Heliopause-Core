@@ -1,0 +1,56 @@
+{
+  "type": "heliocore:magnetic_assembly_platform",
+  "base": {
+    "tag": "heliocore:slots/base"
+  },
+  "engine": {
+    "tag": "heliocore:slots/engines"
+  },
+  "fins": [
+    {
+      "tag": "heliocore:slots/fins"
+    },
+    {
+      "tag": "heliocore:slots/fins"
+    },
+    {
+      "tag": "heliocore:slots/fins"
+    },
+    {
+      "tag": "heliocore:slots/fins"
+    }
+  ],
+  "hulls": [
+    {
+      "tag": "heliocore:slots/hulls"
+    },
+    {
+      "tag": "heliocore:slots/hulls"
+    },
+    {
+      "tag": "heliocore:slots/hulls"
+    },
+    {
+      "tag": "heliocore:slots/hulls"
+    },
+    {
+      "tag": "heliocore:slots/hulls"
+    },
+    {
+      "tag": "heliocore:slots/hulls"
+    },
+    {
+      "tag": "heliocore:slots/hulls"
+    },
+    {
+      "tag": "heliocore:slots/hulls"
+    }
+  ],
+  "nose": {
+    "tag": "heliocore:slots/noses"
+  },
+  "result": {
+    "count": 1,
+    "id": "heliocore:rocket_item"
+  }
+}

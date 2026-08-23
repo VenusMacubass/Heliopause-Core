@@ -43,6 +43,27 @@ public class HpCTags {
                 ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "slots/oxygen_tank")
         );
 
+
+        public static final TagKey<Item> NOSES = ItemTags.create(
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "slots/noses")
+        );
+        public static final TagKey<Item> BOOSTERS = ItemTags.create(
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "slots/boosters")
+        );
+        public static final TagKey<Item> HULLS = ItemTags.create(
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "slots/hulls")
+        );
+        public static final TagKey<Item> FINS = ItemTags.create(
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "slots/fins")
+        );
+        public static final TagKey<Item> BASE = ItemTags.create(
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "slots/base")
+        );
+        public static final TagKey<Item> ENGINES = ItemTags.create(
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "slots/engines")
+        );
+        
+        
         public static final TagKey<Item> STONES = createTag("stone_variants");
 
         private static TagKey<Item> createTag(String name){

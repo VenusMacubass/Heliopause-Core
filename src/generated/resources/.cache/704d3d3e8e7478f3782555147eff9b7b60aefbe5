@@ -1,7 +1,12 @@
-// 1.21.1	2026-08-05T15:14:54.0138753	Tags for minecraft:item mod id heliocore
+// 1.21.1	2026-08-23T21:39:26.0374391	Tags for minecraft:item mod id heliocore
 e0bfc26d31f2a836e943fe7930590f71e8a3e74c data/heliocore/tags/item/canister.json
 7adee3a6cf4e8d524b666c4a096c32f02b18f5db data/heliocore/tags/item/circuit_materials.json
 6db9722aa3e98cc50f72ac4c0a991f901f7309c6 data/heliocore/tags/item/compressible_ingots.json
+98a70b1a03f2c0ebbaf891639e6b30d0d824765e data/heliocore/tags/item/slots/base.json
+32548834d03c8b686736cb59c3ce160a000fd7cd data/heliocore/tags/item/slots/engines.json
+ebbb547b09f25f281fc42190ebb354ba0aee7e19 data/heliocore/tags/item/slots/fins.json
+2a4db15fc73f2db18647c81a37f5cea850aa8735 data/heliocore/tags/item/slots/hulls.json
+9ecc95145ec44f84a6eb4f78d8ea3c295af6a66c data/heliocore/tags/item/slots/noses.json
 d78dea7881ff6c4bce8bb1760d7d5d5ab868168e data/heliocore/tags/item/slots/oxygen_connectors.json
 96ac74fc3ae79a5bbc1fc47a30a7a0d7c40e70b3 data/heliocore/tags/item/slots/oxygen_mask.json
 660304c1431a89599c3470290ddb23ba64b6500e data/heliocore/tags/item/slots/oxygen_tank.json

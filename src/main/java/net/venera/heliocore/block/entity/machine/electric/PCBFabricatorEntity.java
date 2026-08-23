@@ -101,7 +101,6 @@ public class PCBFabricatorEntity extends BaseElectricMachineEntity{
                     this.energyStorage.consumeEnergy(ENERGY_USAGE);
 
                     if (this.progress >= this.maxProgress) {
-                        // Actually insert the item (simulate = false)
                         this.inventory.insertItem(OUTPUT_SLOT, result.copy(), false);
 
                         for (int i = 0; i < INPUT_SLOTS.length; i++) {
@@ -112,11 +111,9 @@ public class PCBFabricatorEntity extends BaseElectricMachineEntity{
                     }
                     dirty = true;
                 } else {
-                    // Recipe is valid, but the output slot is too full to accept the items
                     this.progress = 0;
                 }
             } else {
-                // No valid recipe exists for the current inputs
                 this.progress = 0;
             }
         } else {

@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "heliocore:block/magnetic_assembly_platform",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "heliocore:block/magnetic_assembly_platform",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "heliocore:block/magnetic_assembly_platform"
+    },
+    "facing=south": {
+      "model": "heliocore:block/magnetic_assembly_platform",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "heliocore:block/magnetic_assembly_platform",
+      "x": 270
+    },
+    "facing=west": {
+      "model": "heliocore:block/magnetic_assembly_platform",
+      "y": 270
+    }
+  }
+}

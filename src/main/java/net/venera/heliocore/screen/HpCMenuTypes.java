@@ -52,7 +52,9 @@ public class HpCMenuTypes {
     
     public static final DeferredHolder<MenuType<?>, MenuType<PCBFabricatorMenu>> PCB_FABRICATOR_MENU =
             registerMenuType("pcb_fabricator_menu", PCBFabricatorMenu::new);
-    
+
+    public static final DeferredHolder<MenuType<?>, MenuType<MagneticAssemblyPlatformMenu>> MAGNETIC_ASSEMBLY_PLATFORM_MENU =
+            registerMenuType("magnetic_assembly_platform_menu", MagneticAssemblyPlatformMenu::new);
     //region Entities
     public static final DeferredHolder<MenuType<?>, MenuType<RocketMenu>> ROCKET_MENU =
             registerMenuType("rocket_menu", RocketMenu::new);

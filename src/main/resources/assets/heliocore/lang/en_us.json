@@ -181,7 +181,7 @@
   "block.heliocore.energy_generator": "Energy Generator",
   "block.heliocore.oxygen_sealer": "Oxygen Sealer",
   "block.heliocore.pcb_fabricator": "PCB Fabricator",
-
+  "block.minecraft.magnetic_assembly_platform": "Magnetic Assembly Platform",
 
   "block.heliocore.coal_compressor_menu_name": "Coal Powered Compressor",
   "block.minecraft.coal_compressor": "Coal Compressor",
@@ -196,6 +196,7 @@
   "container.heliocore.energy_generator": "Energy Generator",
   "container.heliocore.oxygen_sealer":"Oxygen Sealer",
   "container.heliocore.pcb_fabricator":"PCB Fabricator",
+  
 
   "container.heliocore.magnetic_crafting": "Crafting",
   

@@ -72,7 +72,12 @@ public class HpCItemTagProvider extends ItemTagsProvider {
         tag(THERMAL_GEAR_LEGS).add(HpCItems.T1_THERMAL_INSULATION_LEGGINGS.get());
         tag(THERMAL_GEAR_HANDS_AND_FEET).add(HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.get());
         
-        
+        tag(NOSES).add(HpCItems.T1_ROCKET_NOSE_CONE.get());
+//        tag(BOOSTERS).add(HpCItems..get());
+        tag(HULLS).add(HpCItems.COMPRESSED_HD_PLATE.get());
+        tag(FINS).add(HpCItems.T1_ROCKET_FIN.get());
+        tag(BASE).add(HpCItems.T1_ROCKET_BASE.get());
+        tag(ENGINES).add(HpCItems.T1_ROCKET_ENGINE.get());
         
         tag(HpCTags.Items.STONES)
                 .add(Blocks.STONE.asItem())

@@ -204,7 +204,7 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCBlocks.GAS_VAPORIZER.get());
                         output.accept(HpCBlocks.OXYGEN_SEALER.get());
                         output.accept(HpCBlocks.PCB_FABRICATOR.get());
-                        
+                        output.accept(HpCBlocks.MAGNETIC_ASSEMBLY_PLATFORM.get());
 
                     })
                     .build()
