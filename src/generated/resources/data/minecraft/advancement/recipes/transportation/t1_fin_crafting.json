@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_compressed_hd_plate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "heliocore:heavy_duty_plate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:t1_fin_crafting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_compressed_hd_plate"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:t1_fin_crafting"
+    ]
+  }
+}

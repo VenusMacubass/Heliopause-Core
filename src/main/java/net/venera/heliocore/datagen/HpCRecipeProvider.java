@@ -15,7 +15,6 @@ import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.recipe.CoalCompressorRecipeBuilder;
 import net.venera.heliocore.item.HpCTags;
-import net.venera.heliocore.recipe.MagneticAssemblyPlatformRecipe;
 import net.venera.heliocore.recipe.MagneticAssemblyPlatformRecipeBuilder;
 import net.venera.heliocore.recipe.PCBFabricatorRecipeBuilder;
 
@@ -235,12 +234,60 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCItems.THERMAL_ISOLATOR.get(), 4)
                 .pattern(" W ")
                 .pattern("WRW")
-                .pattern("F F")
+                .pattern(" F ")
                 .define('W', Ingredient.of(ItemTags.WOOL))
                 .define('F', Items.FEATHER)
                 .define('R', Items.REDSTONE)
                 .unlockedBy("has_wool", has(ItemTags.WOOL))
                 .save(recipeOutput, "thermal_isolator_crafting");
+        //endregion
+        
+        //region Rocket Parts
+        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, HpCItems.T1_ROCKET_NOSE_CONE.get())
+                .pattern(" R ")
+                .pattern(" H ")
+                .pattern("HHH")
+                .define('R', HpCItems.STEEL_ROD.get())
+                .define('H', HpCItems.COMPRESSED_HD_PLATE.get())
+                .unlockedBy("has_steel_rod", has(ItemTags.WOOL))
+                .save(recipeOutput, "t1_nose_cone_crafting");
+//        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCItems.T1_ROCKET_NOSE_CONE.get())
+//                .pattern(" R ")
+//                .pattern(" H ")
+//                .pattern("HHH")
+//                .define('R', HpCItems.STEEL_ROD.get())
+//                .define('H', HpCItems.COMPRESSED_HD_PLATE.get())
+//                .unlockedBy("has_steel_rod", has(ItemTags.WOOL))
+//                .save(recipeOutput, "t1_nose_cone_crafting");
+        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, HpCItems.T1_ROCKET_BASE.get())
+                .pattern("HCH")
+                .pattern("HBH")
+                .pattern("PHW")
+                .define('P', HpCBlocks.FLUID_PIPE.get())
+                .define('W', HpCBlocks.COPPER_WIRE.get())
+                .define('C', Items.CHEST)
+                .define('B', HpCItems.BASIC_CIRCUIT_BOARD.get())
+                .define('H', HpCItems.COMPRESSED_HD_PLATE.get())
+                .unlockedBy("has_steel_rod", has(ItemTags.WOOL))
+                .save(recipeOutput, "t1_base_crafting");
+        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, HpCItems.T1_ROCKET_FIN.get())
+                .pattern("A  ")
+                .pattern("HA ")
+                .pattern("HHA")
+                .define('A', HpCItems.COMPRESSED_ALUMINIUM.get())
+                .define('H', HpCItems.COMPRESSED_HD_PLATE.get())
+                .unlockedBy("has_compressed_hd_plate", has(HpCItems.COMPRESSED_HD_PLATE.get()))
+                .save(recipeOutput, "t1_fin_crafting");
+        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, HpCItems.T1_ROCKET_ENGINE.get())
+                .pattern("PHW")
+                .pattern("HFH")
+                .pattern("H H")
+                .define('P', HpCBlocks.FLUID_PIPE.get())
+                .define('W', HpCBlocks.COPPER_WIRE.get())
+                .define('F', Items.FLINT_AND_STEEL)
+                .define('H', HpCItems.COMPRESSED_HD_PLATE.get())
+                .unlockedBy("has_compressed_hd_plate", has(HpCItems.COMPRESSED_HD_PLATE.get()))
+                .save(recipeOutput, "t1_engine_crafting");
         //endregion
         
         //region Machines
@@ -936,7 +983,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
         //endregion
 
         //region Rockets
-        MagneticAssemblyPlatformRecipeBuilder.fabricate(RecipeCategory.MISC, HpCItems.ROCKET_ITEM.get())
+        MagneticAssemblyPlatformRecipeBuilder.fabricate(RecipeCategory.TRANSPORTATION, HpCItems.ROCKET_ITEM.get())
                 .nose(HpCTags.Items.NOSES)
                 .addHull(HpCTags.Items.HULLS)
                 .addHull(HpCTags.Items.HULLS)

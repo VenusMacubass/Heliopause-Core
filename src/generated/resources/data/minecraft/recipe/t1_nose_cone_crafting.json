@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "item": "heliocore:heavy_duty_plate"
+    },
+    "R": {
+      "item": "heliocore:steel_rod"
+    }
+  },
+  "pattern": [
+    " R ",
+    " H ",
+    "HHH"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:t1_rocket_nose_cone"
+  }
+}

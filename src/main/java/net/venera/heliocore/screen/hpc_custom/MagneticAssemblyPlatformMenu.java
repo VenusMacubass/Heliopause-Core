@@ -114,39 +114,30 @@ public class MagneticAssemblyPlatformMenu  extends AbstractContainerMenu {
 
         ItemStack sourceStack = sourceSlot.getItem();
         ItemStack copyOfSourceStack = sourceStack.copy();
-        
+
         if (pIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
             if (sourceStack.is(HpCTags.Items.NOSES)) {
-                if (!moveItemStackTo(sourceStack, 36, 37, false)) {
+                if (!moveItemStackTo(sourceStack, 37, 38, false)) {
                     return ItemStack.EMPTY;
                 }
             }
             else if (sourceStack.is(HpCTags.Items.HULLS)) {
-                if (!moveItemStackTo(sourceStack, 39, 47, false)) {
+                if (!moveItemStackTo(sourceStack, 40, 48, false)) {
                     return ItemStack.EMPTY;
                 }
             }
             else if (sourceStack.is(HpCTags.Items.FINS)) {
-                if (!moveItemStackTo(sourceStack, 47, 51, false)) {
+                if (!moveItemStackTo(sourceStack, 48, 52, false)) {
                     return ItemStack.EMPTY;
                 }
             }
             else if (sourceStack.is(HpCTags.Items.BASE)) {
-                if (!moveItemStackTo(sourceStack, 51, 52, false)) {
-                    return ItemStack.EMPTY;
-                }
-            }
-            else if (sourceStack.is(HpCTags.Items.ENGINES)) {
                 if (!moveItemStackTo(sourceStack, 52, 53, false)) {
                     return ItemStack.EMPTY;
                 }
             }
-            else if (pIndex < VANILLA_FIRST_SLOT_INDEX + PLAYER_INVENTORY_SLOT_COUNT) {
-                if (!moveItemStackTo(sourceStack, VANILLA_FIRST_SLOT_INDEX + PLAYER_INVENTORY_SLOT_COUNT, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)) {
-                    return ItemStack.EMPTY;
-                }
-            } else {
-                if (!moveItemStackTo(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + PLAYER_INVENTORY_SLOT_COUNT, false)) {
+            else if (sourceStack.is(HpCTags.Items.ENGINES)) {
+                if (!moveItemStackTo(sourceStack, 53, 54, false)) {
                     return ItemStack.EMPTY;
                 }
             }

@@ -68,6 +68,10 @@
   "item.heliocore.small_battery": "Small Battery",
   
   "item.heliocore.rocket_item": "Tier 1 Rocket",
+  "item.heliocore.t1_rocket_nose_cone": "Tier 1 Rocket Nose",
+  "item.heliocore.t1_rocket_fin": "Tier 1 Rocket Fin",
+  "item.heliocore.t1_rocket_base": "Tier 1 Rocket Base",
+  "item.heliocore.t1_rocket_engine": "Tier 1 Rocket Engine",
 
   "item.heliocore.glass_sword": "Glass Sword",
   "item.heliocore.steel_sword": "Steel Sword",

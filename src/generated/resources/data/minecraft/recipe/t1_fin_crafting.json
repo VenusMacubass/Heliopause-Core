@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "heliocore:compressed_aluminium"
+    },
+    "H": {
+      "item": "heliocore:heavy_duty_plate"
+    }
+  },
+  "pattern": [
+    "A  ",
+    "HA ",
+    "HHA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:t1_rocket_fin"
+  }
+}
