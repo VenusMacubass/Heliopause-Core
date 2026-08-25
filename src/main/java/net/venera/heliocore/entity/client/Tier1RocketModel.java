@@ -14,20 +14,20 @@ import net.venera.heliocore.HeliopauseCore;
 public class Tier1RocketModel<T extends Entity> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation ROCKET_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "tier_1_rocket"), "main");
-	private final ModelPart engine;
-	private final ModelPart upper_wings;
-	private final ModelPart upperwings_1;
-	private final ModelPart upper_wings_2;
-	private final ModelPart upper_wings_3;
-	private final ModelPart upper_wings_4;
-	private final ModelPart wings;
-	private final ModelPart wing_1;
-	private final ModelPart wing_2;
-	private final ModelPart wing_3;
-	private final ModelPart wing_4;
-	private final ModelPart walls;
-	private final ModelPart top;
-	private final ModelPart bb_main;
+	public final ModelPart engine;
+	public final ModelPart upper_wings;
+	public final ModelPart upperwings_1;
+	public final ModelPart upper_wings_2;
+	public final ModelPart upper_wings_3;
+	public final ModelPart upper_wings_4;
+	public final ModelPart wings;
+	public final ModelPart wing_1;
+	public final ModelPart wing_2;
+	public final ModelPart wing_3;
+	public final ModelPart wing_4;
+	public final ModelPart walls;
+	public final ModelPart top;
+	public final ModelPart bb_main;
 
 	public Tier1RocketModel(ModelPart root) {
 		this.engine = root.getChild("engine");

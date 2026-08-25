@@ -17,6 +17,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundPlayerCommandPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -57,6 +58,8 @@ import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import net.venera.heliocore.render.FluidTankRenderer;
+import net.venera.heliocore.render.MagneticAssemblyPlatformRenderer;
+import net.venera.heliocore.render.MagneticCraftingTableRenderer;
 import net.venera.heliocore.render.sky.MoonSkyRenderer;
 import net.venera.heliocore.screen.HpCMenuTypes;
 import net.venera.heliocore.screen.hpc_custom.*;
@@ -79,6 +82,7 @@ public class HeliopauseCoreClient {
         ItemBlockRenderTypes.setRenderLayer(HpCBlocks.FLUID_PIPE.get(), RenderType.translucent());
         EntityRenderers.register(HpCEntities.TIER_1_ROCKET.get(), Tier1RocketRenderer::new);
         EntityRenderers.register(HpCEntities.TIER_1_ROCKET_LANDER.get(), Tier1RocketLanderRenderer::new);
+        
 
         event.enqueueWork(() -> ItemProperties.register(HpCItems.CANISTER.get(),
                 ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "fill_level"),
@@ -191,6 +195,8 @@ public class HeliopauseCoreClient {
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) { //Renderers for entities
         event.registerEntityRenderer(HpCEntities.SPACE_ZOMBIE.get(), SpaceZombieRenderer::new);
         event.registerBlockEntityRenderer(HpCBlockEntities.FLUID_TANK_ENTITY.get(), FluidTankRenderer::new);
+        event.registerBlockEntityRenderer(HpCBlockEntities.MAGNETIC_ASSEMBLY_PLATFORM_ENTITY.get(), MagneticAssemblyPlatformRenderer::new);
+        event.registerBlockEntityRenderer(HpCBlockEntities.MAGNETIC_CRAFTING_TABLE_ENTITY.get(), MagneticCraftingTableRenderer::new);
     }
 
     @SubscribeEvent
@@ -294,6 +300,7 @@ public class HeliopauseCoreClient {
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(Tier1RocketModel.ROCKET_LOCATION, Tier1RocketModel::createBodyLayer);
         event.registerLayerDefinition(Tier1RocketLanderModel.LANDER_LOCATION, Tier1RocketLanderModel::createBodyLayer);
+        
     }
 
     @SubscribeEvent
