@@ -113,7 +113,6 @@ public class HpCBlocks {
             () -> new OxygenSealerBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.OXYGEN_SEALER_ENTITY));
     public static final DeferredBlock<Block> PCB_FABRICATOR = registerBlock("pcb_fabricator", 
             () -> new PCBFabricatorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.PCB_FABRICATOR_ENTITY));
-
     public static final DeferredBlock<Block> MAGNETIC_ASSEMBLY_PLATFORM = registerBlock("magnetic_assembly_platform",
             () -> new MagneticAssemblyPlatformBlock(BlockBehaviour.Properties.of().strength(2f)));
     //endregion

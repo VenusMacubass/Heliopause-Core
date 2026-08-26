@@ -8,11 +8,14 @@ import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.dimension.HpCDimensions;
+import net.venera.heliocore.dimension.HpCStructures;
 import net.venera.heliocore.dimension.biome.HpCBiomes;
 import net.venera.heliocore.dimension.worldgen.HpCBiomeModifiers;
 import net.venera.heliocore.dimension.worldgen.HpCConfiguredFeatures;
 import net.venera.heliocore.dimension.worldgen.HpCNoiseSettings;
 import net.venera.heliocore.dimension.worldgen.HpCPlacedFeatures;
+import net.venera.heliocore.util.HpCStructurePools;
+import net.venera.heliocore.util.HpCStructureSets;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -25,7 +28,10 @@ public class HpCDatapackProvider extends DatapackBuiltinEntriesProvider {
             .add(Registries.BIOME, HpCBiomes::bootstrap)
             .add(Registries.DIMENSION_TYPE, HpCDimensions::typeBootstrap)
             .add(Registries.NOISE_SETTINGS, HpCNoiseSettings::bootstrap)
-            .add(Registries.LEVEL_STEM, HpCDimensions::bootstrap);
+            .add(Registries.LEVEL_STEM, HpCDimensions::bootstrap)
+            .add(Registries.TEMPLATE_POOL, HpCStructurePools::bootstrap)
+            .add(Registries.STRUCTURE, HpCStructures::bootstrap)
+            .add(Registries.STRUCTURE_SET, HpCStructureSets::bootstrap);
     
     public HpCDatapackProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, Set.of(HeliopauseCore.MOD_ID));
