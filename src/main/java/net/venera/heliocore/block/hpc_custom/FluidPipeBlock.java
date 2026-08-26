@@ -9,7 +9,9 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.PipeBlock;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -89,6 +91,41 @@ public class FluidPipeBlock extends PipeBlock{
         super.setPlacedBy(level, pos, state, placer, stack);
         if (!level.isClientSide) {
         }
+    }
+
+    @Override
+    protected BlockState rotate(BlockState state, Rotation rot) {
+        return switch (rot) {
+            case CLOCKWISE_180 -> state.setValue(NORTH, state.getValue(SOUTH))
+                    .setValue(EAST, state.getValue(WEST))
+                    .setValue(SOUTH, state.getValue(NORTH))
+                    .setValue(WEST, state.getValue(EAST));
+
+            case CLOCKWISE_90 -> state.setValue(NORTH, state.getValue(WEST))
+                    .setValue(EAST, state.getValue(NORTH))
+                    .setValue(SOUTH, state.getValue(EAST))
+                    .setValue(WEST, state.getValue(SOUTH));
+
+            case COUNTERCLOCKWISE_90 -> state.setValue(NORTH, state.getValue(EAST))
+                    .setValue(EAST, state.getValue(SOUTH))
+                    .setValue(SOUTH, state.getValue(WEST))
+                    .setValue(WEST, state.getValue(NORTH));
+
+            default -> state;
+        };
+    }
+
+    @Override
+    protected BlockState mirror(BlockState state, Mirror mirror) {
+        return switch (mirror) {
+            case LEFT_RIGHT -> state.setValue(NORTH, state.getValue(SOUTH))
+                    .setValue(SOUTH, state.getValue(NORTH));
+
+            case FRONT_BACK -> state.setValue(EAST, state.getValue(WEST))
+                    .setValue(WEST, state.getValue(EAST));
+
+            default -> super.mirror(state, mirror);
+        };
     }
 
     @Override
