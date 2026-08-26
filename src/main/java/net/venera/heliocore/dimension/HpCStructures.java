@@ -29,16 +29,16 @@ public class HpCStructures {
 
         context.register(MOON_VILLAGE, new JigsawStructure(
                 new Structure.StructureSettings(
-                        biomes.getOrThrow(HpCTags.Biomes.LUNAR_HIGHLANDS), // Restricts spawn to your specific biome!
-                        Map.of(), // Optional: Add mob spawns here later
+                        biomes.getOrThrow(HpCTags.Biomes.LUNAR_MARIA), 
+                        Map.of(), //Add mob spawns here later
                         GenerationStep.Decoration.SURFACE_STRUCTURES,
-                        TerrainAdjustment.BEARD_THIN // Blends the terrain nicely around the buildings
+                        TerrainAdjustment.BEARD_BOX 
                 ),
-                templatePools.getOrThrow(HpCStructurePools.START), // Starts the puzzle at your Centerpiece
-                7, // Max size/depth of the village chain
-                ConstantHeight.of(VerticalAnchor.absolute(0)),
-                true, // project_start_to_heightmap: Forces it to snap perfectly to the surface ground
-                Heightmap.Types.WORLD_SURFACE_WG
+                templatePools.getOrThrow(HpCStructurePools.START), 
+                10, // Max size/depth of the village chain
+                ConstantHeight.of(VerticalAnchor.absolute(-5)),
+                true, 
+                Heightmap.Types.WORLD_SURFACE
         ));
     }
 }

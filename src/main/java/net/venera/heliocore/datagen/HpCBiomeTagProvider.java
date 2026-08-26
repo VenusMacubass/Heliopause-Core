@@ -24,8 +24,8 @@ public class HpCBiomeTagProvider extends BiomeTagsProvider {
                 .addTag(BiomeTags.HAS_DESERT_PYRAMID);       
         
         this.tag(HpCTags.Biomes.LUNAR_HIGHLANDS)
-                .addOptional(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon_highlands"));
+                .addOptional(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "lunar_highlands"));
         this.tag(HpCTags.Biomes.LUNAR_MARIA)
-                .addOptional(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon_maria"));
+                .addOptional(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "lunar_maria"));
     }
 }

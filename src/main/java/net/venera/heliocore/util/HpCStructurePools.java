@@ -40,7 +40,10 @@ public class HpCStructurePools {
                 Pair.of(HeliopauseCore.MOD_ID + ":moon_village_small_house", 1)
         ));
         
-        register(context, ROAD_TURNS, List.of(Pair.of(HeliopauseCore.MOD_ID + ":moon_village_road_turn", 1)));
+        register(context, ROAD_TURNS, List.of(
+                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_road_turn", 2),
+                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_junction", 1)
+        ));
         
         register(context, CORNER_BUILDINGS, List.of(
                 Pair.of(HeliopauseCore.MOD_ID + ":moon_village_small_house", 2),
@@ -48,8 +51,8 @@ public class HpCStructurePools {
         ));
         
         register(context, SOLAR_FIELDS, List.of(
-                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_solar_field", 4),
-                Pair.of("minecraft:empty", 1)
+                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_solar_field", 1),
+                Pair.of("minecraft:empty", 3)
         ));
     }
 

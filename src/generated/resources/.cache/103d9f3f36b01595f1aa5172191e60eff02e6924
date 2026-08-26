@@ -1,4 +1,4 @@
-// 1.21.1	2026-08-26T18:56:36.6200738	Registries
+// 1.21.1	2026-08-26T23:54:37.9494518	Registries
 8bc25e86fc4e155a7d31c7733f9635befea3399e data/heliocore/dimension/moon.json
 5c3ab2456f3347149c033961f5e622ea563ef7ed data/heliocore/dimension_type/moon.json
 b1557ee736b85234ad2fda7d2e3c6710150509a9 data/heliocore/neoforge/biome_modifier/add_aluminium_ore.json
@@ -47,12 +47,12 @@ a93e52cd3fa64ea0c610ca2738c5c45252616b75 data/heliocore/worldgen/placed_feature/
 80ea273cd3ffe6a647888a70244b2b4c86ab4ccb data/heliocore/worldgen/placed_feature/moon_tin_ore_placed.json
 ecef4e75cd7750891576e1ecba25684eab3eee65 data/heliocore/worldgen/placed_feature/silicon_ore_placed.json
 4950fe6ce82ddbbbd6191c1b9ae0f659d2aba3bb data/heliocore/worldgen/placed_feature/tin_ore_placed.json
-833e27f60055592187ad7beb35bc12127b606a76 data/heliocore/worldgen/structure/moon_village.json
-a9357c1c3e5de814e4f6b980c0836bba6d198755 data/heliocore/worldgen/structure_set/moon_village.json
+9bdf6c5ba92768e49d819a052e73b337654f2d09 data/heliocore/worldgen/structure/moon_village.json
+a2ef20dda76cb4668f7f9e3b385ee5cfa3984e68 data/heliocore/worldgen/structure_set/moon_village.json
 870f57c11f57eeae5c12f19274160c5acd429a72 data/heliocore/worldgen/template_pool/moon_village/corner_buildings.json
 2ca85d9a0670d9896ee5ebe390e8c56eb48b561d data/heliocore/worldgen/template_pool/moon_village/houses.json
 9272062936e2f93e7344de5454b5822e9ec2f157 data/heliocore/worldgen/template_pool/moon_village/pathways.json
-2c6cb02d09b7e79286a86a6d79f7b425322ef477 data/heliocore/worldgen/template_pool/moon_village/road_turns.json
-0c50472ae4e8c0813e1a0ef49042a938a4ff788c data/heliocore/worldgen/template_pool/moon_village/solar_fields.json
+a5e9f264f80dfdb0b66e539993a3161f9695707a data/heliocore/worldgen/template_pool/moon_village/road_turns.json
+52f65ee52f3093b9b629e2077dae4946fb6995a9 data/heliocore/worldgen/template_pool/moon_village/solar_fields.json
 a0ecdda5062231bc253cd799c2c3fe6a6bfd43f5 data/heliocore/worldgen/template_pool/moon_village/start.json
 7d4bcb59f9f4b06b475ddcab5c28b9edac2756fe data/heliocore/worldgen/template_pool/moon_village/streets.json
