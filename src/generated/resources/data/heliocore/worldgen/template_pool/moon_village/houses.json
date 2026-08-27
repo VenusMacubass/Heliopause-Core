@@ -9,6 +9,17 @@
         },
         "projection": "rigid"
       },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "heliocore:moon_village_square",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
       "weight": 1
     }
   ],

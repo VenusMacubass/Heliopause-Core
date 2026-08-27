@@ -27,6 +27,24 @@ public class AirlockGeneratedBlock extends Block {
     }
 
     @Override
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        switch (rotation) {
+            case COUNTERCLOCKWISE_90:
+            case CLOCKWISE_90:
+                switch (state.getValue(AXIS)) {
+                    case X:
+                        return state.setValue(AXIS, Direction.Axis.Z);
+                    case Z:
+                        return state.setValue(AXIS, Direction.Axis.X);
+                    default:
+                        return state; 
+                }
+            default:
+                return state;
+        }
+    }
+    
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(AXIS);
     }

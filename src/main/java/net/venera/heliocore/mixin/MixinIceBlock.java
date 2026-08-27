@@ -10,7 +10,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.IceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.venera.heliocore.HeliopauseCore;
+import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
 import net.venera.heliocore.data.temperature.EnvironmentalTemperature;
+import net.venera.heliocore.util.OxygenVolumeHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -21,16 +23,28 @@ public class MixinIceBlock {
     @Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
     protected void heliocore$moonIceMelt(BlockState state, ServerLevel level, BlockPos pos, RandomSource random, CallbackInfo ci) {
         if (level.dimension().location().getNamespace().equals(HeliopauseCore.MOD_ID)) {
+            long posLong = pos.asLong();
+            boolean isSealed = OxygenVolumeHelper.isPositionSealed(posLong);
+            boolean inRegulatedRoom = false;
+            
+            if (isSealed) {
+                BlockPos sealerPos = OxygenVolumeHelper.getSealerForAir(posLong, level);
+                if (sealerPos != null && level.getBlockEntity(sealerPos) instanceof OxygenSealerEntity sealer) {
+                    inRegulatedRoom = sealer.isThermallyRegulating();
+                }
+            }
+            if (inRegulatedRoom) {
+                return;
+            }
+            
             double temp = EnvironmentalTemperature.getEnvironmentalTemperature(level, level.getBiome(pos));
-
+            
             if (temp >= 100.0) {
-                // Above boiling point: Ice sublimates directly into vapor!
                 level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                 level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (level.random.nextFloat() - level.random.nextFloat()) * 0.8F);
                 level.sendParticles(ParticleTypes.CLOUD, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.2, 0.2, 0.2, 0.05);
             }
             else if (temp > 0.0) {
-                // Above freezing, but below boiling: Melts into liquid water
                 level.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
                 level.neighborChanged(pos, Blocks.WATER, pos);
             }

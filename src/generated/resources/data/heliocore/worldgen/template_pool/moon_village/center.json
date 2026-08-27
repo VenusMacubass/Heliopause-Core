@@ -3,7 +3,7 @@
     {
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "heliocore:moon_village_anchor",
+        "location": "heliocore:moon_village_center",
         "processors": {
           "processors": []
         },

@@ -9,7 +9,18 @@
         },
         "projection": "rigid"
       },
-      "weight": 1
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "heliocore:moon_village_street_long",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 2
     }
   ],
   "fallback": "minecraft:empty"

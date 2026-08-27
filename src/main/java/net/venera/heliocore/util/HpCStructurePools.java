@@ -18,6 +18,7 @@ import java.util.function.Function;
 
 public class HpCStructurePools {
     public static final ResourceKey<StructureTemplatePool> START = createKey("moon_village/start");
+    public static final ResourceKey<StructureTemplatePool> CENTER = createKey("moon_village/center");
     public static final ResourceKey<StructureTemplatePool> PATHWAYS = createKey("moon_village/pathways");
     public static final ResourceKey<StructureTemplatePool> STREETS = createKey("moon_village/streets");
     public static final ResourceKey<StructureTemplatePool> HOUSES = createKey("moon_village/houses");
@@ -30,14 +31,19 @@ public class HpCStructurePools {
     }
 
     public static void bootstrap(BootstrapContext<StructureTemplatePool> context) {
-        register(context, START, List.of(Pair.of(HeliopauseCore.MOD_ID + ":moon_village_center", 1)));
+        register(context, START, List.of(Pair.of(HeliopauseCore.MOD_ID + ":moon_village_anchor", 1)));
+        register(context, CENTER, List.of(Pair.of(HeliopauseCore.MOD_ID + ":moon_village_center", 1)));
         
         register(context, PATHWAYS, List.of(Pair.of(HeliopauseCore.MOD_ID + ":moon_village_small_pathway", 1)));
         
-        register(context, STREETS, List.of(Pair.of(HeliopauseCore.MOD_ID + ":moon_village_street", 1)));
+        register(context, STREETS, List.of(
+                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_street", 2),
+                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_street_long", 2)
+        ));
 
         register(context, HOUSES, List.of(
-                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_small_house", 1)
+                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_small_house", 5),
+                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_square", 1)
         ));
         
         register(context, ROAD_TURNS, List.of(

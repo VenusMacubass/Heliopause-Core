@@ -23,10 +23,31 @@ public class CraterFeature extends Feature<CraterConfig> {
 
         CraterConfig config = context.config();
 
+        // === START DIFFERENCE: Structure Avoidance ===
+        net.minecraft.world.level.StructureManager structureManager = level.getLevel().structureManager();
+        int maxRadius = config.maxRadius();
+
+        // We check the center, plus the 4 furthest edges of the crater's blast zone
+        BlockPos[] checkPoints = {
+                origin,
+                origin.offset(maxRadius, 0, 0),
+                origin.offset(-maxRadius, 0, 0),
+                origin.offset(0, 0, maxRadius),
+                origin.offset(0, 0, -maxRadius)
+        };
+
+        for (BlockPos pos : checkPoints) {
+            // If any of these points touch a village's bounding box, abort the crater entirely!
+            if (structureManager.hasAnyStructureAt(pos)) {
+                return false;
+            }
+        }
+        // === END DIFFERENCE ===
+
         if (level.isEmptyBlock(origin.below())) {
             return false;
         }
-        
+
         int radius = random.nextInt(config.maxRadius() - config.minRadius() + 1) + config.minRadius();
         double squish = config.squish();
         boolean placedAny = false;

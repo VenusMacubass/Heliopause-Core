@@ -32,11 +32,11 @@ public class HpCStructures {
                         biomes.getOrThrow(HpCTags.Biomes.LUNAR_MARIA), 
                         Map.of(), //Add mob spawns here later
                         GenerationStep.Decoration.SURFACE_STRUCTURES,
-                        TerrainAdjustment.BEARD_BOX 
+                        TerrainAdjustment.BEARD_BOX
                 ),
                 templatePools.getOrThrow(HpCStructurePools.START), 
-                10, // Max size/depth of the village chain
-                ConstantHeight.of(VerticalAnchor.absolute(-5)),
+                9, // Max size/depth of the village chain
+                ConstantHeight.of(VerticalAnchor.absolute(0)),
                 true, 
                 Heightmap.Types.WORLD_SURFACE
         ));

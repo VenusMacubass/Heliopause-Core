@@ -117,8 +117,7 @@ public class OxygenVolumeHelper {
         for (Map.Entry<BlockPos, SealedVolumeResult> entry : ACTIVE_ROOMS.entrySet()) {
             if (entry.getValue().airBlocks().contains(airPosLong)) {
                 BlockPos foundSealerPos = entry.getKey();
-
-                // Prioritize a sealer that is actively thermally regulating
+                
                 if (level.getBlockEntity(foundSealerPos) instanceof net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity sealer) {
                     if (sealer.isThermallyRegulating()) {
                         return foundSealerPos;

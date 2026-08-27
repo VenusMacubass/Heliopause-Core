@@ -14,7 +14,9 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.venera.heliocore.HeliopauseCore;
+import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
 import net.venera.heliocore.data.temperature.EnvironmentalTemperature;
+import net.venera.heliocore.util.OxygenVolumeHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -27,32 +29,51 @@ public class MixinLiquidBlock {
     protected void heliocore$forceRandomTickOnMoon(BlockState state, CallbackInfoReturnable<Boolean> cir) {
         cir.setReturnValue(true);
     }
-    
+
     @Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
     protected void heliocore$moonAtmosphereTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random, CallbackInfo ci) {
 
         if (level.dimension().location().getNamespace().equals(HeliopauseCore.MOD_ID)) {
+            long posLong = pos.asLong();
+            boolean isSealed = OxygenVolumeHelper.isPositionSealed(posLong);
+            boolean inRegulatedRoom = false;
+
+            // Find the Oxygen Sealer to check if thermal regulation is active
+            if (isSealed) {
+                BlockPos sealerPos = OxygenVolumeHelper.getSealerForAir(posLong, level);
+                if (sealerPos != null && level.getBlockEntity(sealerPos) instanceof OxygenSealerEntity sealer) {
+                    inRegulatedRoom = sealer.isThermallyRegulating();
+                }
+            }
+
+            // If inside a fully powered, regulated base, allow vanilla fluid mechanics to operate normally
+            if (inRegulatedRoom) {
+                return;
+            }
+
             FluidState fluidState = state.getFluidState();
-            
             double temp = EnvironmentalTemperature.getEnvironmentalTemperature(level, level.getBiome(pos));
 
             // === WATER LOGIC ===
             if (fluidState.is(FluidTags.WATER)) {
                 if (temp <= 0.0) {
+                    // Freezes in cold temperatures regardless of pressure
                     level.setBlockAndUpdate(pos, Blocks.ICE.defaultBlockState());
                     level.playSound(null, pos, SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    ci.cancel();
-                } else{
+                } else if (!isSealed || temp >= 100.0) {
+                    // Flash-boils if exposed to vacuum (!isSealed), OR if the room is sealed but the heater broke and it reached 100 C
                     level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                     level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (level.random.nextFloat() - level.random.nextFloat()) * 0.8F);
                     level.sendParticles(ParticleTypes.CLOUD, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.2, 0.2, 0.2, 0.05);
-                    ci.cancel();
                 }
+                // If it is Sealed, NOT regulated, and between 1 C and 99 C, it stays liquid!
+                ci.cancel();
             }
 
             // === LAVA LOGIC ===
             else if (fluidState.is(FluidTags.LAVA)) {
                 if (temp <= 0.0) {
+                    // Lava cools rapidly into rock on the freezing side of the moon
                     BlockState newState = fluidState.isSource() ? Blocks.OBSIDIAN.defaultBlockState() : Blocks.COBBLESTONE.defaultBlockState();
                     level.setBlockAndUpdate(pos, newState);
                     level.playSound(null, pos, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (level.random.nextFloat() - level.random.nextFloat()) * 0.8F);
