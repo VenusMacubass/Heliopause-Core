@@ -22,6 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.venera.heliocore.block.entity.machine.BaseMachineEntity;
 import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
 import net.venera.heliocore.data.energy.GridManager;
+import net.venera.heliocore.util.OxygenVolumeHelper;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
@@ -74,19 +75,10 @@ public abstract class BaseMachineBlock<T extends BaseMachineEntity> extends Base
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (state.getBlock() != newState.getBlock()) {
-            
-            if (level.getBlockEntity(pos) instanceof BaseMachineEntity blockEntity) {
-                blockEntity.drops();
-                level.updateNeighbourForOutputSignal(pos, this);
-            }
-            
-            super.onRemove(state, level, pos, newState, movedByPiston);
-
-            if (!level.isClientSide) {
-                GridManager.get(level).onMachineBroken(level, pos);
-            }
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!state.is(newState.getBlock())) {
+            OxygenVolumeHelper.removeRoom(pos, level);
+            super.onRemove(state, level, pos, newState, isMoving);
         }
     }
     

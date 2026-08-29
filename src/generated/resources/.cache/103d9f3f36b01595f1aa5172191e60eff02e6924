@@ -1,4 +1,4 @@
-// 1.21.1	2026-08-27T16:00:40.0393411	Registries
+// 1.21.1	2026-08-29T16:18:26.2078112	Registries
 8bc25e86fc4e155a7d31c7733f9635befea3399e data/heliocore/dimension/moon.json
 5c3ab2456f3347149c033961f5e622ea563ef7ed data/heliocore/dimension_type/moon.json
 b1557ee736b85234ad2fda7d2e3c6710150509a9 data/heliocore/neoforge/biome_modifier/add_aluminium_ore.json
@@ -47,11 +47,13 @@ a93e52cd3fa64ea0c610ca2738c5c45252616b75 data/heliocore/worldgen/placed_feature/
 80ea273cd3ffe6a647888a70244b2b4c86ab4ccb data/heliocore/worldgen/placed_feature/moon_tin_ore_placed.json
 ecef4e75cd7750891576e1ecba25684eab3eee65 data/heliocore/worldgen/placed_feature/silicon_ore_placed.json
 4950fe6ce82ddbbbd6191c1b9ae0f659d2aba3bb data/heliocore/worldgen/placed_feature/tin_ore_placed.json
-df55ce519ea4318f3dbaafb46a000530d0273879 data/heliocore/worldgen/structure/moon_village.json
+a2b85c8409e19e7ced7d89ce1e5b5c223aaee8f1 data/heliocore/worldgen/structure/moon_village.json
 4b48f425fac7c62e25099ddfafd391f03b99c0a9 data/heliocore/worldgen/structure_set/moon_village.json
+06e213d77f4b4d9e811be6d9baedc07a033ac316 data/heliocore/worldgen/template_pool/moon_village/beds.json
 a0ecdda5062231bc253cd799c2c3fe6a6bfd43f5 data/heliocore/worldgen/template_pool/moon_village/center.json
 870f57c11f57eeae5c12f19274160c5acd429a72 data/heliocore/worldgen/template_pool/moon_village/corner_buildings.json
 27aa2e04c1be9053b76af064b37a47961d075159 data/heliocore/worldgen/template_pool/moon_village/houses.json
+42bf674e053d2fcb880621f2ebaf6865de0e9ed8 data/heliocore/worldgen/template_pool/moon_village/job_blocks.json
 9272062936e2f93e7344de5454b5822e9ec2f157 data/heliocore/worldgen/template_pool/moon_village/pathways.json
 a5e9f264f80dfdb0b66e539993a3161f9695707a data/heliocore/worldgen/template_pool/moon_village/road_turns.json
 52f65ee52f3093b9b629e2077dae4946fb6995a9 data/heliocore/worldgen/template_pool/moon_village/solar_fields.json

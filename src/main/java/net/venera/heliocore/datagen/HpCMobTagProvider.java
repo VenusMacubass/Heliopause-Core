@@ -10,7 +10,7 @@ import net.venera.heliocore.HeliopauseCore;
 import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
-import static net.venera.heliocore.item.HpCTags.Entities.OXYGEN_SLOTS_RECEIVERS;
+import static net.venera.heliocore.item.HpCTags.Entities.*;
 
 public class HpCMobTagProvider extends EntityTypeTagsProvider {
     public HpCMobTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
@@ -33,6 +33,11 @@ public class HpCMobTagProvider extends EntityTypeTagsProvider {
         tag(OXYGEN_SLOTS_RECEIVERS)
                 .add(EntityType.PIG, EntityType.COW, EntityType.SHEEP, EntityType.CHICKEN, EntityType.HORSE)
                 .add(EntityType.VILLAGER, EntityType.WANDERING_TRADER);
+        
+        tag(DOES_NOT_BREATHE)
+                .add(EntityType.IRON_GOLEM);
+        tag(THERMALLY_IMMUNE)
+                .add(EntityType.IRON_GOLEM);
     }
   
 }

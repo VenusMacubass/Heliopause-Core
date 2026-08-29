@@ -5,12 +5,18 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride;
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
@@ -30,9 +36,17 @@ public class HpCStructures {
         context.register(MOON_VILLAGE, new JigsawStructure(
                 new Structure.StructureSettings(
                         biomes.getOrThrow(HpCTags.Biomes.LUNAR_MARIA), 
-                        Map.of(), //Add mob spawns here later
+                        Map.of(
+                                MobCategory.MISC, new StructureSpawnOverride(
+                                        StructureSpawnOverride.BoundingBoxType.PIECE, 
+                                        WeightedRandomList.create(
+                                                new MobSpawnSettings.SpawnerData(EntityType.VILLAGER, 100, 1, 12),
+                                                new MobSpawnSettings.SpawnerData(EntityType.IRON_GOLEM, 50, 1, 2)
+                                        )
+                                )
+                        ), 
                         GenerationStep.Decoration.SURFACE_STRUCTURES,
-                        TerrainAdjustment.BEARD_BOX
+                        TerrainAdjustment.BEARD_THIN
                 ),
                 templatePools.getOrThrow(HpCStructurePools.START), 
                 9, // Max size/depth of the village chain

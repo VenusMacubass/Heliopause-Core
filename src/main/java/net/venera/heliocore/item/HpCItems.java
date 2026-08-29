@@ -1,11 +1,13 @@
 package net.venera.heliocore.item;
 
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.heliocore.HeliopauseCore;
+import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.data.component.BatteryData;
 import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.data.component.GasTankData;
@@ -147,7 +149,8 @@ public class HpCItems {
     public static final DeferredItem<Item> T1_THERMAL_INSULATION_HANDS_AND_FEET = ITEMS.register("t1_thermal_insulation_hands_and_feet", () -> new Item(new Item.Properties()));
     //endregion
 
-    
+    public static final DeferredItem<Item> EXTINGUISHED_TORCH_ITEM = ITEMS.register("extinguished_torch",
+            () -> new StandingAndWallBlockItem(HpCBlocks.EXTINGUISHED_TORCH.get(), HpCBlocks.EXTINGUISHED_WALL_TORCH.get(), new Item.Properties(), Direction.DOWN));
     
     public static final DeferredItem<Item> ROCKET_ITEM = ITEMS.register("rocket_item", () -> 
             new RocketItem(new Item.Properties()));

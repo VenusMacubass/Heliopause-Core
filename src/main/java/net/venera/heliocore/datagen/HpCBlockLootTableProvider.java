@@ -84,6 +84,10 @@ public class HpCBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(HpCBlocks.AIRLOCK_FRAME_SWITCH.get());
         dropSelf(HpCBlocks.MAGNETIC_CRAFTING_TABLE.get());
 
+        dropSelf(HpCBlocks.EXTINGUISHED_LANTERN.get());
+        dropSelf(HpCBlocks.EXTINGUISHED_SOUL_LANTERN.get());
+        dropSelf(HpCBlocks.EXTINGUISHED_TORCH.get());
+        dropOther(HpCBlocks.EXTINGUISHED_WALL_TORCH.get(), HpCBlocks.EXTINGUISHED_TORCH.get());
         dropOther(HpCBlocks.MOON_ROCK.get(), HpCBlocks.MOON_COBBLESTONE.get());
         
         dropWhenSilkTouch(HpCBlocks.PRISMATIC_GLASS_PANE.get());

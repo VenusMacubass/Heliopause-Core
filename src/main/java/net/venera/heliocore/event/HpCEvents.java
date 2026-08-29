@@ -11,12 +11,15 @@ import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -29,13 +32,17 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
@@ -52,10 +59,13 @@ import net.venera.heliocore.block.entity.HpCBlockEntities;
 import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
 import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
 import net.venera.heliocore.data.HpCAttachments;
+import net.venera.heliocore.data.component.GasTankData;
 import net.venera.heliocore.data.temperature.EnvironmentalTemperature;
+import net.venera.heliocore.entity.ai.goal.OpenAirlockGoal;
 import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.item.HpCTags;
+import net.venera.heliocore.item.hpc_custom.GasTankItem;
 import net.venera.heliocore.screen.hpc_custom.HpCEquipmentMenu;
 import net.venera.heliocore.util.*;
 
@@ -98,7 +108,7 @@ public class HpCEvents {
         BlockPos sealerPos = OxygenVolumeHelper.getSealerForWall(event.getPos().asLong());
         if (sealerPos != null && event.getLevel().getBlockEntity(sealerPos) instanceof OxygenSealerEntity sealer) {
             sealer.seal = false;
-            OxygenVolumeHelper.removeRoom(sealerPos);
+            OxygenVolumeHelper.removeRoom(sealerPos, (Level)event.getLevel());
         }
     }
 
@@ -109,7 +119,7 @@ public class HpCEvents {
             BlockPos sealerPos = OxygenVolumeHelper.getSealerForWall(pos.asLong());
             if (sealerPos != null && event.getLevel().getBlockEntity(sealerPos) instanceof OxygenSealerEntity sealer) {
                 sealer.seal = false;
-                OxygenVolumeHelper.removeRoom(sealerPos);
+                OxygenVolumeHelper.removeRoom(sealerPos, event.getLevel());
             }
         }
     }
@@ -120,28 +130,7 @@ public class HpCEvents {
         BlockPos sealerPos = OxygenVolumeHelper.getSealerForWall(event.getPos().asLong());
         if (sealerPos != null && event.getLevel().getBlockEntity(sealerPos) instanceof OxygenSealerEntity sealer) {
             sealer.seal = false;
-            OxygenVolumeHelper.removeRoom(sealerPos);
-        }
-    }
-
-    @SubscribeEvent
-    public static void onEntityDeath(LivingDeathEvent event) {
-        LivingEntity entity = event.getEntity();
-        if (entity.level().isClientSide()) return;
-        
-        if (entity instanceof Player player) {
-            if (player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
-                return;
-            }
-        }
-        
-        var inventory = entity.getData(HpCAttachments.EQUIPMENT_INVENTORY);
-        for (int i = 0; i < inventory.getSlots(); i++) {
-            ItemStack stack = inventory.getStackInSlot(i);
-            if (!stack.isEmpty()) {
-                entity.spawnAtLocation(stack);
-                inventory.setStackInSlot(i, ItemStack.EMPTY); 
-            }
+            OxygenVolumeHelper.removeRoom(sealerPos, (Level)event.getLevel());
         }
     }
 
@@ -167,22 +156,6 @@ public class HpCEvents {
         
         PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity,
                 new SyncEquipmentPayload(entity.getId(), inventory.serializeNBT(entity.registryAccess())));
-    }
-
-    @SubscribeEvent
-    public static void onPlayerClone(PlayerEvent.Clone event) {
-        Player original = event.getOriginal();
-        Player newPlayer = event.getEntity();
-        if (event.isWasDeath() && !original.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
-            return; 
-        }
-        
-        var oldInventory = original.getData(HpCAttachments.EQUIPMENT_INVENTORY);
-        var newInventory = newPlayer.getData(HpCAttachments.EQUIPMENT_INVENTORY);
-
-        for (int i = 0; i < oldInventory.getSlots(); i++) {
-            newInventory.setStackInSlot(i, oldInventory.getStackInSlot(i).copy());
-        }
     }
 
     //region Registries
@@ -261,26 +234,49 @@ public class HpCEvents {
     //endregion
     
     //region Atmospherics
-
     @SubscribeEvent
     public static void onFlintAndSteel(PlayerInteractEvent.RightClickBlock event) {
         if (event.getLevel().isClientSide()) return;
-
-        if (event.getItemStack().is(Items.FLINT_AND_STEEL) || event.getItemStack().is(Items.FIRE_CHARGE)) {
-            BlockPos targetPos = event.getPos().relative(event.getFace());
-            if (!OxygenVolumeHelper.isPositionSealed(targetPos.asLong())) {
-                event.setCanceled(true);
+        Level level = event.getLevel();
+        if (OxygenVolumeHelper.isVacuumDimension(level)) {
+            if (event.getItemStack().is(Items.FLINT_AND_STEEL) || event.getItemStack().is(Items.FIRE_CHARGE)) {
+                BlockPos targetPos = event.getPos().relative(event.getFace());
+                if (!OxygenVolumeHelper.isPositionSealed(targetPos.asLong())) {
+                    event.setCanceled(true);
+                }
             }
         }
     }
-    
+
     @SubscribeEvent
     public static void onFirePlace(BlockEvent.EntityPlaceEvent event) {
         if (event.getLevel().isClientSide()) return;
+        Level level = (Level) event.getLevel();
+        if (!OxygenVolumeHelper.isVacuumDimension(level)) return;
+
         BlockState placedState = event.getPlacedBlock();
-        if (placedState.is(Blocks.FIRE) || placedState.is(Blocks.SOUL_FIRE)) {
-            if (!OxygenVolumeHelper.isPositionSealed(event.getPos().asLong())) {
+        BlockPos pos = event.getPos();
+        if (!OxygenVolumeHelper.isPositionSealed(pos.asLong())) {
+            if (placedState.is(Blocks.FIRE) || placedState.is(Blocks.SOUL_FIRE)) {
                 event.setCanceled(true);
+                return;
+            }
+
+            if (placedState.is(Blocks.TORCH) || placedState.is(Blocks.SOUL_TORCH)) {
+                level.setBlockAndUpdate(pos, HpCBlocks.EXTINGUISHED_TORCH.get().defaultBlockState());
+            } else if (placedState.is(Blocks.WALL_TORCH) || placedState.is(Blocks.SOUL_WALL_TORCH)) {
+                level.setBlockAndUpdate(pos, HpCBlocks.EXTINGUISHED_WALL_TORCH.get().defaultBlockState()
+                        .setValue(BlockStateProperties.HORIZONTAL_FACING, placedState.getValue(BlockStateProperties.HORIZONTAL_FACING)));
+            } else if (placedState.is(Blocks.LANTERN)) {
+                level.setBlockAndUpdate(pos, HpCBlocks.EXTINGUISHED_LANTERN.get().defaultBlockState()
+                        .setValue(BlockStateProperties.HANGING, placedState.getValue(BlockStateProperties.HANGING))
+                        .setValue(BlockStateProperties.WATERLOGGED, placedState.getValue(BlockStateProperties.WATERLOGGED)));
+            } else if (placedState.is(Blocks.SOUL_LANTERN)) {
+                level.setBlockAndUpdate(pos, HpCBlocks.EXTINGUISHED_SOUL_LANTERN.get().defaultBlockState()
+                        .setValue(BlockStateProperties.HANGING, placedState.getValue(BlockStateProperties.HANGING))
+                        .setValue(BlockStateProperties.WATERLOGGED, placedState.getValue(BlockStateProperties.WATERLOGGED)));
+            } else if (placedState.is(Blocks.CAMPFIRE) || placedState.is(Blocks.SOUL_CAMPFIRE)) {
+                level.setBlockAndUpdate(pos, placedState.setValue(BlockStateProperties.LIT, false));
             }
         }
     }
@@ -297,6 +293,10 @@ public class HpCEvents {
             return;
         }
 
+        if (living.getType().is(HpCTags.Entities.THERMALLY_IMMUNE)) {
+            return;
+        }
+        
         Level level = living.level();
         
         BlockPos headPos = BlockPos.containing(living.getX(), living.getEyeY(), living.getZ());
@@ -403,10 +403,7 @@ public class HpCEvents {
         
         BlockPos headPos = BlockPos.containing(event.getEntity().getX(), event.getEntity().getEyeY(), event.getEntity().getZ());
         long headLong = headPos.asLong();
-        ResourceLocation currentDimension = living.level().dimension().location();
-
-        ResourceLocation moonDim = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon");
-        boolean inOxygen = !currentDimension.equals(moonDim);
+        boolean inOxygen = !OxygenVolumeHelper.isVacuumDimension(living.level());
         
         if (!inOxygen) {
             inOxygen = OxygenVolumeHelper.isPositionSealed(headLong);
@@ -442,13 +439,12 @@ public class HpCEvents {
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Pre event) { //Gravity Manager
         Entity entity = event.getEntity();
-        boolean isOnMoon = entity.level().dimension().location().equals(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon"));
+        boolean isOnMoon = OxygenVolumeHelper.isVacuumDimension(entity.level());
 
         if (isOnMoon) {
             if (entity.isOnFire()) {
                 entity.clearFire();
             }
-            if (entity.isOnFire()) entity.clearFire();
 
             if (entity instanceof LivingEntity living && living.isFallFlying()) {
                 living.setSharedFlag(7, false);
@@ -507,6 +503,86 @@ public class HpCEvents {
         }
     }
     //endregion
+    
+    //region Spawns
+    @SubscribeEvent
+    public static void onEntityDeath(LivingDeathEvent event) {
+        LivingEntity entity = event.getEntity();
+        if (entity.level().isClientSide()) return;
+
+        boolean isPlayer = entity instanceof Player;
+
+        if (isPlayer) {
+            Player player = (Player) entity;
+            if (player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
+                return;
+            }
+        }
+
+        var inventory = entity.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+        for (int i = 0; i < inventory.getSlots(); i++) {
+            if (!isPlayer && i <= 7) {
+                inventory.setStackInSlot(i, ItemStack.EMPTY);
+                continue;
+            }
+
+            ItemStack stack = inventory.getStackInSlot(i);
+            if (!stack.isEmpty()) {
+                entity.spawnAtLocation(stack);
+                inventory.setStackInSlot(i, ItemStack.EMPTY);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerClone(PlayerEvent.Clone event) {
+        Player original = event.getOriginal();
+        Player newPlayer = event.getEntity();
+        if (event.isWasDeath() && !original.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
+            return;
+        }
+
+        var oldInventory = original.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+        var newInventory = newPlayer.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+
+        for (int i = 0; i < oldInventory.getSlots(); i++) {
+            newInventory.setStackInSlot(i, oldInventory.getStackInSlot(i).copy());
+        }
+    }
+    
+    @SubscribeEvent
+    public static void onMobSpawn(FinalizeSpawnEvent event) {
+        LivingEntity entity = event.getEntity();
+        Level level = entity.level();
+        if (level.isClientSide() || event.getSpawnType() == MobSpawnType.SPAWN_EGG) return;
+        
+        if (OxygenVolumeHelper.isVacuumDimension(level)) {
+            if (entity instanceof Villager villager) {
+                ItemStackHandler inventory = villager.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+
+                inventory.setStackInSlot(0, HpCItems.OXYGEN_MASK.asItem().getDefaultInstance()); //Oxygen Mask
+                inventory.setStackInSlot(1, HpCItems.OXYGEN_CONNECTORS.asItem().getDefaultInstance()); //Oxygen Connectors
+                inventory.setStackInSlot(2, HpCItems.COMPRESSED_GAS_TANK.get().setGasTankData(new ItemStack(HpCItems.COMPRESSED_GAS_TANK.get()), GasTankData.OXYGEN_GAS, GasTankItem.MAX_CAPACITY)); //Oxygen Tank 1
+                inventory.setStackInSlot(3, HpCItems.COMPRESSED_GAS_TANK.get().setGasTankData(new ItemStack(HpCItems.COMPRESSED_GAS_TANK.get()), GasTankData.OXYGEN_GAS, GasTankItem.MAX_CAPACITY)); //Oxygen Tank 2
+                
+                inventory.setStackInSlot(4, HpCItems.T1_THERMAL_INSULATION_HEAD.asItem().getDefaultInstance()); //Head thermal
+                inventory.setStackInSlot(5, HpCItems.T1_THERMAL_INSULATION_TORSO.asItem().getDefaultInstance()); //Torso
+                inventory.setStackInSlot(6, HpCItems.T1_THERMAL_INSULATION_LEGGINGS.asItem().getDefaultInstance()); //Legs
+                inventory.setStackInSlot(7, HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.asItem().getDefaultInstance()); //Hands
+            }
+        }
+    }
+    
+    @SubscribeEvent
+    public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
+        if (event.getLevel().isClientSide) return;
+        
+        if (event.getEntity() instanceof Villager villager) {
+            villager.goalSelector.addGoal(2, new OpenAirlockGoal(villager));
+        }
+    }
+    //endregion
+    
     
     // region Machine Button Helper
     @SubscribeEvent

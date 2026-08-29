@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "heliocore:block/extinguished_soul_lantern"
+    },
+    "hanging=true": {
+      "model": "heliocore:block/extinguished_soul_lantern_hanging"
+    }
+  }
+}

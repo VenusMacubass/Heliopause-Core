@@ -206,6 +206,10 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCBlocks.PCB_FABRICATOR.get());
                         output.accept(HpCBlocks.MAGNETIC_ASSEMBLY_PLATFORM.get());
 
+
+                        output.accept(HpCBlocks.EXTINGUISHED_LANTERN.get());
+                        output.accept(HpCBlocks.EXTINGUISHED_SOUL_LANTERN.get());
+                        output.accept(HpCBlocks.EXTINGUISHED_TORCH.get());
                     })
                     .build()
     );

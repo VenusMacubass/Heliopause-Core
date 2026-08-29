@@ -21,11 +21,6 @@ public class HpCItemTagProvider extends ItemTagsProvider {
     public HpCItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags, @Nullable ExistingFileHelper existingFileHelper) {
         super(output, lookupProvider, blockTags, HeliopauseCore.MOD_ID, existingFileHelper);
     }
-    
-//    private static final TagKey<Item> CURIOS_BACK = ItemTags.create(
-//            ResourceLocation.fromNamespaceAndPath("curios", "back")
-//    );
-    
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {

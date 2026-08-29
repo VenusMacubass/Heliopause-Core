@@ -26,6 +26,9 @@ public class HpCStructurePools {
     public static final ResourceKey<StructureTemplatePool> CORNER_BUILDINGS = createKey("moon_village/corner_buildings");
     public static final ResourceKey<StructureTemplatePool> SOLAR_FIELDS = createKey("moon_village/solar_fields");
 
+    public static final ResourceKey<StructureTemplatePool> BEDS = createKey("moon_village/beds");
+    public static final ResourceKey<StructureTemplatePool> JOB_BLOCKS = createKey("moon_village/job_blocks");
+
     private static ResourceKey<StructureTemplatePool> createKey(String name) {
         return ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, name));
     }
@@ -59,6 +62,18 @@ public class HpCStructurePools {
         register(context, SOLAR_FIELDS, List.of(
                 Pair.of(HeliopauseCore.MOD_ID + ":moon_village_solar_field", 1),
                 Pair.of("minecraft:empty", 3)
+        ));
+        
+        
+        
+        register(context, BEDS, List.of(
+                Pair.of(HeliopauseCore.MOD_ID + ":bed_white", 1),
+                Pair.of(HeliopauseCore.MOD_ID + ":bed_black", 1)
+        ));
+
+        register(context, JOB_BLOCKS, List.of(
+                Pair.of(HeliopauseCore.MOD_ID + ":smithing_table", 1),
+                Pair.of(HeliopauseCore.MOD_ID + ":grindstone", 1)
         ));
     }
 

@@ -91,6 +91,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         blockWithItem(HpCBlocks.MOON_COBBLESTONE);
         blockWithItem(HpCBlocks.COPPER_WIRE_BLOCK);
         blockWithItem(HpCBlocks.FLUID_PIPE_BLOCK);
+        
 
         fluidBlock(HpCFluids.CRUDE_OIL.getFluidBlockRegistry(), crudeOilStill);
         fluidBlock(HpCFluids.REFINED_FUEL.getFluidBlockRegistry(), refinedFuelStill);
@@ -146,6 +147,17 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                         Direction.NORTH, mcLoc("block/crafting_table_front")
                 )
         );
+
+        torchBlock(HpCBlocks.EXTINGUISHED_TORCH.get(), HpCBlocks.EXTINGUISHED_WALL_TORCH.get(),
+                "extinguished_torch",
+                modLoc("block/extinguished_torch") 
+        );
+        lanternBlock(HpCBlocks.EXTINGUISHED_LANTERN.get(), "extinguished_lantern",
+                modLoc("block/extinguished_lantern"),
+                modLoc("item/extinguished_lantern"));
+        lanternBlock(HpCBlocks.EXTINGUISHED_SOUL_LANTERN.get(), "extinguished_soul_lantern",
+                modLoc("block/extinguished_soul_lantern"),
+                modLoc("item/extinguished_soul_lantern"));
         //endregion
 
         //region Machines
@@ -688,6 +700,50 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                 .scale(0.625f)
                 .end()
                 .end();
+    }
+
+    public void torchBlock(Block torch, Block wallTorch, String name, ResourceLocation texture) {
+        ModelFile torchModel = models().withExistingParent(name, "minecraft:block/template_torch")
+                .texture("torch", texture)
+                .renderType("cutout");
+
+        simpleBlock(torch, torchModel);
+        ModelFile wallTorchModel = models().withExistingParent(name + "_wall", "minecraft:block/template_torch_wall")
+                .texture("torch", texture)
+                .renderType("cutout");
+        
+        getVariantBuilder(wallTorch)
+                .partialState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
+                .addModels(new ConfiguredModel(wallTorchModel, 0, 0, false))
+                .partialState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH)
+                .addModels(new ConfiguredModel(wallTorchModel, 0, 90, false))
+                .partialState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
+                .addModels(new ConfiguredModel(wallTorchModel, 0, 180, false))
+                .partialState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+                .addModels(new ConfiguredModel(wallTorchModel, 0, 270, false));
+
+        // 4. 2D Inventory Item
+        itemModels().withExistingParent(name, "minecraft:item/generated")
+                .texture("layer0", texture);
+    }
+
+    public void lanternBlock(Block block, String name, ResourceLocation blockTexture, ResourceLocation itemTexture) {
+        ModelFile lantern = models().withExistingParent(name, "minecraft:block/template_lantern")
+                .texture("lantern", blockTexture)
+                .texture("particle", blockTexture)
+                .renderType("cutout");
+
+        ModelFile hangingLantern = models().withExistingParent(name + "_hanging", "minecraft:block/template_hanging_lantern")
+                .texture("lantern", blockTexture)
+                .texture("particle", blockTexture)
+                .renderType("cutout");
+
+        getVariantBuilder(block)
+                .partialState().with(BlockStateProperties.HANGING, false).addModels(new ConfiguredModel(lantern))
+                .partialState().with(BlockStateProperties.HANGING, true).addModels(new ConfiguredModel(hangingLantern));
+
+        itemModels().withExistingParent(name, "minecraft:item/generated")
+                .texture("layer0", itemTexture);
     }
     //endregion
 }

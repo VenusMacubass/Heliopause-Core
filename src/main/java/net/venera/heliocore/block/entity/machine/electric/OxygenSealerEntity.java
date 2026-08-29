@@ -130,8 +130,7 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
         this.hasEnoughEnergy = hasEnergy;
         this.hasEnoughOxygen = oxygenTank.getFluidAmount() >= currentVolumeCost;
 
-        ResourceKey<Level> currentDimension = level.dimension();
-        boolean isInSpace = currentDimension.location().toString().equals(HeliopauseCore.MOD_ID + ":moon");
+        boolean isInSpace = OxygenVolumeHelper.isVacuumDimension(level);
 
         if (enabled && hasEnergy && isUnblocked) {
             if (!isActive) {
@@ -145,14 +144,14 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
                         dirty = true;
                     } else if (!spendOxygen(currentVolumeCost)) {
                         seal = false;
-                        OxygenVolumeHelper.removeRoom(pos);
+                        OxygenVolumeHelper.removeRoom(pos, level);
                         dirty = true;
                     } else {
                         energyStorage.consumeEnergy(energyUsage * frequency);
                         if (level.getGameTime() % 20 == 0) {
                             if (!OxygenVolumeHelper.isPerimeterSafe(level, pos)) {
                                 seal = false;
-                                OxygenVolumeHelper.removeRoom(pos);
+                                OxygenVolumeHelper.removeRoom(pos, level);
                                 dirty = true;
                             }
                         }
@@ -176,7 +175,7 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
             if (isActive || seal) {
                 isActive = false;
                 seal = false;
-                OxygenVolumeHelper.removeRoom(pos);
+                OxygenVolumeHelper.removeRoom(pos, level);
                 dirty = true;
             }
         }
@@ -330,7 +329,7 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
     @Override
     public void setRemoved() {
         super.setRemoved();
-        OxygenVolumeHelper.removeRoom(this.getBlockPos());
+        OxygenVolumeHelper.clearRoomCacheOnly(this.getBlockPos());
     }
 
     @Override

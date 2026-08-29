@@ -1,9 +1,12 @@
 package net.venera.heliocore.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -231,6 +234,22 @@ public class HpCBlocks {
     
     public static final DeferredBlock<Block> SOLAR_PANEL_PARTS = registerBlock("solar_panel_parts",
             () -> new SolarPanelPartBlock(BlockBehaviour.Properties.of().noLootTable().sound(SoundType.METAL)));
+
+    public static final DeferredBlock<LanternBlock> EXTINGUISHED_LANTERN = registerBlock("extinguished_lantern",
+            () -> new LanternBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.LANTERN).lightLevel(state -> 0)));
+    public static final DeferredBlock<LanternBlock> EXTINGUISHED_SOUL_LANTERN = registerBlock("extinguished_soul_lantern",
+            () -> new LanternBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_LANTERN).lightLevel(state -> 0)));
+    public static final DeferredBlock<Block> EXTINGUISHED_TORCH = BLOCKS.register("extinguished_torch",
+            () -> new TorchBlock(ParticleTypes.SMOKE, BlockBehaviour.Properties.ofFullCopy(Blocks.TORCH).lightLevel(state -> 0)) {
+                @Override
+                public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {}
+            });
+
+    public static final DeferredBlock<Block> EXTINGUISHED_WALL_TORCH = BLOCKS.register("extinguished_wall_torch",
+            () -> new WallTorchBlock(ParticleTypes.SMOKE, BlockBehaviour.Properties.ofFullCopy(Blocks.WALL_TORCH).lightLevel(state -> 0).lootFrom(EXTINGUISHED_TORCH)) {
+                @Override
+                public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {}
+            });
     //region Registry 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

@@ -4,10 +4,14 @@ import it.unimi.dsi.fastutil.longs.LongArrayFIFOQueue;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
+import net.venera.heliocore.item.HpCTags;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -62,10 +66,20 @@ public class OxygenVolumeHelper {
 
         SealedVolumeResult result = new SealedVolumeResult(visitedAir, walls, level.getGameTime());
         ACTIVE_ROOMS.put(sealerPos, result);
+        
+        FireSourceAtmosphericHandler.onRoomSealed(level, visitedAir);
         return result;
     }
 
-    public static void removeRoom(BlockPos sealerPos) {
+    public static void removeRoom(BlockPos sealerPos, Level level) {
+        SealedVolumeResult room = ACTIVE_ROOMS.get(sealerPos);
+        if (room != null) {
+            FireSourceAtmosphericHandler.onRoomDepressurized(level, room.airBlocks());
+            ACTIVE_ROOMS.remove(sealerPos);
+        }
+    }
+
+    public static void clearRoomCacheOnly(BlockPos sealerPos) {
         ACTIVE_ROOMS.remove(sealerPos);
     }
 
@@ -127,6 +141,15 @@ public class OxygenVolumeHelper {
             }
         }
         return fallbackSealer;
+    }
+
+    public static final Set<net.minecraft.resources.ResourceLocation> VACUUM_DIMENSIONS = Set.of(
+            ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon")
+    );
+
+    public static boolean isVacuumDimension(Level level) {
+        
+        return VACUUM_DIMENSIONS.contains(level.dimension().location());
     }
 }
 

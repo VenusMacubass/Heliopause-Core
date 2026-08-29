@@ -36,32 +36,35 @@ public class AirlockFrameSwitch extends Block {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide) {
-            boolean isActive = state.getValue(ACTIVE);
-            Direction doorFacing = state.getValue(FACING);
-            
-            boolean isOpening = !isActive;
-            boolean success = AirlockGateHelper.toggleAirlockBlocks(level, pos, doorFacing, isOpening);
-            if (success) {
-                if (isOpening) {
-                    BlockPos front = pos.relative(doorFacing);
-                    BlockPos back = pos.relative(doorFacing.getOpposite());
-
-                    boolean frontSealed = OxygenVolumeHelper.isPositionSealed(front.asLong());
-                    boolean backSealed = OxygenVolumeHelper.isPositionSealed(back.asLong());
-
-                    if (frontSealed != backSealed) {
-                        BlockPos sealedAirPos = frontSealed ? front : back;
-                        BlockPos sealerToBreak = OxygenVolumeHelper.getSealerForAir(sealedAirPos.asLong(), level);
-                        if (sealerToBreak != null && level.getBlockEntity(sealerToBreak) instanceof OxygenSealerEntity sealer) {
-                            sealer.seal = false;
-                            OxygenVolumeHelper.removeRoom(sealerToBreak);
-                        }
-                    }
-                }
-                level.setBlockAndUpdate(pos, state.setValue(ACTIVE, !isActive));
-            }
+            boolean isOpening = !state.getValue(ACTIVE);
+            this.toggleDoor(level, pos, state, isOpening);
         }
         return InteractionResult.SUCCESS;
+    }
+
+    public void toggleDoor(Level level, BlockPos pos, BlockState state, boolean isOpening) {
+        Direction doorFacing = state.getValue(FACING);
+
+        boolean success = AirlockGateHelper.toggleAirlockBlocks(level, pos, doorFacing, isOpening);
+        if (success) {
+            if (isOpening) {
+                BlockPos front = pos.relative(doorFacing);
+                BlockPos back = pos.relative(doorFacing.getOpposite());
+
+                boolean frontSealed = OxygenVolumeHelper.isPositionSealed(front.asLong());
+                boolean backSealed = OxygenVolumeHelper.isPositionSealed(back.asLong());
+
+                if (frontSealed != backSealed) {
+                    BlockPos sealedAirPos = frontSealed ? front : back;
+                    BlockPos sealerToBreak = OxygenVolumeHelper.getSealerForAir(sealedAirPos.asLong(), level);
+                    if (sealerToBreak != null && level.getBlockEntity(sealerToBreak) instanceof OxygenSealerEntity sealer) {
+                        sealer.seal = false;
+                        OxygenVolumeHelper.removeRoom(sealerToBreak, level);
+                    }
+                }
+            }
+            level.setBlockAndUpdate(pos, state.setValue(ACTIVE, isOpening));
+        }
     }
 
     @Override
