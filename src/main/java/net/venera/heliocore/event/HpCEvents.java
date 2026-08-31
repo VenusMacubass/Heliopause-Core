@@ -62,6 +62,7 @@ import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.data.component.GasTankData;
 import net.venera.heliocore.data.temperature.EnvironmentalTemperature;
 import net.venera.heliocore.entity.ai.goal.OpenAirlockGoal;
+import net.venera.heliocore.entity.ai.goal.RefillOxygenGoal;
 import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.item.HpCTags;
@@ -579,6 +580,7 @@ public class HpCEvents {
         
         if (event.getEntity() instanceof Villager villager) {
             villager.goalSelector.addGoal(2, new OpenAirlockGoal(villager));
+            villager.goalSelector.addGoal(4, new RefillOxygenGoal(villager, 1, 48));
         }
     }
     //endregion

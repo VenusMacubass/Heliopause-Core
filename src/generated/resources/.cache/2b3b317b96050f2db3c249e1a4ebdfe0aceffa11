@@ -1,4 +1,5 @@
-// 1.21.1	2026-08-29T16:51:46.6564064	Tags for minecraft:entity_type mod id heliocore
+// 1.21.1	2026-08-31T12:45:11.0644923	Tags for minecraft:entity_type mod id heliocore
 29671cfa11d074462c259806e9d60468451e3cdb data/heliocore/tags/entity_type/entity/does_not_breathe.json
 29671cfa11d074462c259806e9d60468451e3cdb data/heliocore/tags/entity_type/entity/thermally_immune.json
+ea77d03852b5433503323a0234dfb7c9c06ef10a data/heliocore/tags/entity_type/has_oxygen_blessing.json
 e0846c89f907eb3214a050a146d6a3f1adf5c646 data/heliocore/tags/entity_type/oxygen_slots_receivers.json

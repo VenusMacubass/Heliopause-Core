@@ -6,18 +6,24 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.model.CatModel;
+import net.minecraft.client.model.WolfModel;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundPlayerCommandPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -47,10 +53,7 @@ import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.data.component.HpCDataComponents;
 import net.venera.heliocore.entity.HpCEntities;
-import net.venera.heliocore.entity.client.Tier1RocketLanderModel;
-import net.venera.heliocore.entity.client.Tier1RocketLanderRenderer;
-import net.venera.heliocore.entity.client.Tier1RocketModel;
-import net.venera.heliocore.entity.client.Tier1RocketRenderer;
+import net.venera.heliocore.entity.client.*;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
 import net.venera.heliocore.entity.zombie.SpaceZombieRenderer;
@@ -300,6 +303,31 @@ public class HeliopauseCoreClient {
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(Tier1RocketModel.ROCKET_LOCATION, Tier1RocketModel::createBodyLayer);
         event.registerLayerDefinition(Tier1RocketLanderModel.LANDER_LOCATION, Tier1RocketLanderModel::createBodyLayer);
+        
+    }
+
+    @SubscribeEvent
+    public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(CatOxygenGear.LAYER_LOCATION, CatOxygenGear::createBodyLayer);
+        event.registerLayerDefinition(WolfOxygenGear.LAYER_LOCATION, WolfOxygenGear::createBodyLayer);
+    }
+
+    @SubscribeEvent
+    public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
+        var rawRenderer = event.getRenderer(EntityType.CAT);
+        if (rawRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+
+            @SuppressWarnings("unchecked")
+            LivingEntityRenderer<Cat, CatModel<Cat>> catRenderer = (LivingEntityRenderer<Cat, CatModel<Cat>>) livingRenderer;
+            catRenderer.addLayer(new CatOxygenGearLayer(catRenderer, event.getEntityModels()));
+        }
+        
+        var rawWolfRenderer = event.getRenderer(EntityType.WOLF);
+        if (rawWolfRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+            @SuppressWarnings("unchecked")
+            LivingEntityRenderer<Wolf, WolfModel<Wolf>> wolfRenderer = (LivingEntityRenderer<Wolf, WolfModel<Wolf>>) livingRenderer;
+            wolfRenderer.addLayer(new WolfOxygenGearLayer(wolfRenderer, event.getEntityModels()));
+        }
         
     }
 

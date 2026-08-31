@@ -7,6 +7,7 @@ import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.data.component.GasTankData;
 import net.venera.heliocore.event.HpCEvents;
 import net.venera.heliocore.item.HpCItems;
+import net.venera.heliocore.item.HpCTags;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
 
 public class SpaceGearSetupHelper {
@@ -27,12 +28,12 @@ public class SpaceGearSetupHelper {
         ItemStack tank1Stack = inventory.getStackInSlot(2);
         ItemStack tank2Stack = inventory.getStackInSlot(3);
         
-        if (tryConsumeOxygen(tank1Stack)) {
+        if (tryConsumeOxygen(tank1Stack, livingEntity)) {
             HpCEvents.syncToAllTracking(livingEntity);
             return true;
         }
 
-        if (tryConsumeOxygen(tank2Stack)) {
+        if (tryConsumeOxygen(tank2Stack, livingEntity)) {
             HpCEvents.syncToAllTracking(livingEntity);
             return true;
         }
@@ -70,11 +71,13 @@ public class SpaceGearSetupHelper {
         return thermalProtectionScore;
     }
 
-    private static boolean tryConsumeOxygen(ItemStack stack) {
+    private static boolean tryConsumeOxygen(ItemStack stack, LivingEntity livingEntity) {
         if (stack.isEmpty() || !(stack.getItem() instanceof GasTankItem gasTankItem)) {
             return false;
         }
 
+        if(livingEntity.getType().is(HpCTags.Entities.HAS_OXYGEN_BLESSING)){return true;}
+        
         GasTankData data = gasTankItem.getGasTankData(stack);
 
         if (data != null && data.isOxygen() && data.amount() >= OXYGEN_USAGE) {

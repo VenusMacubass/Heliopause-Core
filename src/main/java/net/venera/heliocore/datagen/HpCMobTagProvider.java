@@ -28,16 +28,24 @@ public class HpCMobTagProvider extends EntityTypeTagsProvider {
                 .addTag(EntityTypeTags.FROG_FOOD); 
         
         tag(OXYGEN_SLOTS_RECEIVERS)
-                .add(EntityType.CREEPER, EntityType.ENDERMAN, EntityType.GHAST, EntityType.BLAZE, EntityType.GUARDIAN, EntityType.ELDER_GUARDIAN);
-        
-        tag(OXYGEN_SLOTS_RECEIVERS)
+                .add(EntityType.CREEPER, 
+                        EntityType.ENDERMAN, 
+                        EntityType.GHAST, 
+                        EntityType.BLAZE, 
+                        EntityType.GUARDIAN, 
+                        EntityType.ELDER_GUARDIAN)
+
                 .add(EntityType.PIG, EntityType.COW, EntityType.SHEEP, EntityType.CHICKEN, EntityType.HORSE)
                 .add(EntityType.VILLAGER, EntityType.WANDERING_TRADER);
+                
         
         tag(DOES_NOT_BREATHE)
                 .add(EntityType.IRON_GOLEM);
         tag(THERMALLY_IMMUNE)
                 .add(EntityType.IRON_GOLEM);
+        tag(HAS_OXYGEN_BLESSING)
+                .add(EntityType.CAT)
+                .add(EntityType.WOLF);
     }
   
 }

@@ -149,8 +149,10 @@ public class HpCItems {
     public static final DeferredItem<Item> T1_THERMAL_INSULATION_HANDS_AND_FEET = ITEMS.register("t1_thermal_insulation_hands_and_feet", () -> new Item(new Item.Properties()));
     //endregion
 
-    public static final DeferredItem<Item> EXTINGUISHED_TORCH_ITEM = ITEMS.register("extinguished_torch",
+    public static final DeferredItem<Item> EXTINGUISHED_TORCH_ITEM = ITEMS.register("extinguished_torch", //don't delete
             () -> new StandingAndWallBlockItem(HpCBlocks.EXTINGUISHED_TORCH.get(), HpCBlocks.EXTINGUISHED_WALL_TORCH.get(), new Item.Properties(), Direction.DOWN));
+    
+    
     
     public static final DeferredItem<Item> ROCKET_ITEM = ITEMS.register("rocket_item", () -> 
             new RocketItem(new Item.Properties()));

@@ -21,7 +21,6 @@ public class Tier1RocketRenderer extends EntityRenderer<Tier1RocketEntity> {
 
     @Override
     public ResourceLocation getTextureLocation(Tier1RocketEntity entity) {
-        // 3. Point to your newly saved 2D Texture Atlas
         return ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/entity/tier_1_rocket.png");
     }
 
@@ -37,11 +36,9 @@ public class Tier1RocketRenderer extends EntityRenderer<Tier1RocketEntity> {
         
          poseStack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(180f));
          poseStack.translate(0, -1.5f, 0);
-
-        // 4. Grab the rendering "brush" and apply your texture
+         
         VertexConsumer vertexConsumer = buffer.getBuffer(this.model.renderType(this.getTextureLocation(entity)));
-
-        // 5. Draw the entire model at once! (0xFFFFFFFF is the standard 1.21 default white tint)
+        
         this.model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
 
         poseStack.popPose();

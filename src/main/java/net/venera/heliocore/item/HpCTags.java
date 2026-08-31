@@ -125,6 +125,8 @@ public class HpCTags {
                 ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "entity/thermally_immune"));
         public static final TagKey<EntityType<?>> OXYGEN_SLOTS_RECEIVERS = TagKey.create(Registries.ENTITY_TYPE,
                 ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "oxygen_slots_receivers"));
+        public static final TagKey<EntityType<?>> HAS_OXYGEN_BLESSING = TagKey.create(Registries.ENTITY_TYPE,
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "has_oxygen_blessing"));
 
         
        

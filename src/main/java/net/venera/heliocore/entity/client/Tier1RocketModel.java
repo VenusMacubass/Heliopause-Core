@@ -12,7 +12,6 @@ import net.minecraft.world.entity.Entity;
 import net.venera.heliocore.HeliopauseCore;
 
 public class Tier1RocketModel<T extends Entity> extends EntityModel<T> {
-	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation ROCKET_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "tier_1_rocket"), "main");
 	public final ModelPart engine;
 	public final ModelPart upper_wings;
