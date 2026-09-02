@@ -132,7 +132,7 @@ public class OxygenVolumeHelper {
             if (entry.getValue().airBlocks().contains(airPosLong)) {
                 BlockPos foundSealerPos = entry.getKey();
                 
-                if (level.getBlockEntity(foundSealerPos) instanceof net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity sealer) {
+                if (level.getBlockEntity(foundSealerPos) instanceof OxygenSealerEntity sealer) {
                     if (sealer.isThermallyRegulating()) {
                         return foundSealerPos;
                     }
@@ -143,7 +143,7 @@ public class OxygenVolumeHelper {
         return fallbackSealer;
     }
 
-    public static final Set<net.minecraft.resources.ResourceLocation> VACUUM_DIMENSIONS = Set.of(
+    public static final Set<ResourceLocation> VACUUM_DIMENSIONS = Set.of(
             ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon")
     );
 

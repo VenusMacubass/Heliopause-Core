@@ -12,12 +12,10 @@ import net.venera.heliocore.HeliopauseCore;
 import org.joml.Matrix4f;
 
 public class MoonSkyRenderer {
-
     private static final ResourceLocation EARTH_TEXTURE = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/environment/earth_from_moon.png");
     private static final ResourceLocation SUN_TEXTURE = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/environment/sun_from_space.png");
     private static VertexBuffer starBuffer;
     
-
     public static void renderSky(ClientLevel level, float partialTick, Matrix4f modelViewMatrix, Camera camera, Matrix4f projectionMatrix, Runnable setupFog) {
         final int STAR_COUNT = 4000;
         setupFog.run();
@@ -27,7 +25,6 @@ public class MoonSkyRenderer {
         }
 
         RenderSystem.depthMask(false);
-        
         RenderSystem.disableCull();
 
         RenderSystem.enableBlend();
@@ -59,7 +56,7 @@ public class MoonSkyRenderer {
         RenderSystem.enableBlend();
         RenderSystem.blendFuncSeparate(
                 GlStateManager.SourceFactor.SRC_ALPHA,
-                GlStateManager.DestFactor.ONE,
+                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
                 GlStateManager.SourceFactor.ONE,
                 GlStateManager.DestFactor.ZERO
         );

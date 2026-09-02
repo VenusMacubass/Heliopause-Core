@@ -19,6 +19,7 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundPlayerCommandPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -49,6 +50,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.HpCBlockEntities;
 import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
+import net.venera.heliocore.controls.HpCKeybinds;
 import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.data.component.HpCDataComponents;
@@ -433,5 +435,12 @@ public class HeliopauseCoreClient {
                 SyncEquipmentPayload::handle
         );
     }
-    
+
+    private static float currentZoom = 1.0F;
+    @SubscribeEvent
+    public static void onComputeFov(ComputeFovModifierEvent event) {
+        float targetZoom = HpCKeybinds.ZOOM_KEY.isDown() ? 0.1F : 1.0F; //lower value more zoom
+        currentZoom = Mth.lerp(0.6F, currentZoom, targetZoom); //delta is zoom speed
+        event.setNewFovModifier(event.getNewFovModifier() * currentZoom);
+    }
 }
