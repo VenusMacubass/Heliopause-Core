@@ -11,7 +11,6 @@ import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -42,7 +41,6 @@ import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
-import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
@@ -59,6 +57,7 @@ import net.venera.heliocore.block.entity.HpCBlockEntities;
 import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
 import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
 import net.venera.heliocore.data.HpCAttachments;
+import net.venera.heliocore.data.SpaceGearSetupController;
 import net.venera.heliocore.data.component.GasTankData;
 import net.venera.heliocore.data.temperature.EnvironmentalTemperature;
 import net.venera.heliocore.entity.ai.goal.OpenAirlockGoal;
@@ -340,7 +339,7 @@ public class HpCEvents {
 
         Holder<Biome> biome = level.getBiome(living.blockPosition());
         double currentTemp = EnvironmentalTemperature.getEnvironmentalTemperature(level, biome);
-        int thermalProtectionScore = SpaceGearSetupHelper.checkThermalSetup(living);
+        int thermalProtectionScore = SpaceGearSetupController.checkThermalSetup(living);
         
         if (thermalProtectionScore == 4) {
             if (living.getTicksFrozen() > 0) {
@@ -422,7 +421,7 @@ public class HpCEvents {
         }
         
         if (!inOxygen) {
-            boolean hasOxygenGear = SpaceGearSetupHelper.checkOxygenSetup(living);
+            boolean hasOxygenGear = SpaceGearSetupController.checkOxygenSetup(living);
 
             if (!hasOxygenGear) {
                 if (living.getType().is(HpCTags.Entities.DOES_NOT_BREATHE)) return;

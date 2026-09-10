@@ -65,7 +65,6 @@ public class HpCTags {
                 ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "slots/engines")
         );
         
-        
         public static final TagKey<Item> STONES = createTag("stone_variants");
 
         private static TagKey<Item> createTag(String name){

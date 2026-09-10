@@ -34,11 +34,12 @@ public class HpCItemTagProvider extends ItemTagsProvider {
         tag(ItemTags.SHOVELS).add(HpCItems.STEEL_SHOVEL.get());
         tag(ItemTags.HOES).add(HpCItems.STEEL_HOE.get());
 
-        this.tag(ItemTags.TRIMMABLE_ARMOR)
+        tag(ItemTags.TRIMMABLE_ARMOR)
                 .add(HpCItems.STEEL_HELMET.get())
                 .add(HpCItems.STEEL_CHESTPLATE.get())
                 .add(HpCItems.STEEL_LEGGINGS.get())
                 .add(HpCItems.STEEL_BOOTS.get());
+                
         
         tag(HpCTags.Items.CIRCUIT_MATERIALS)
                 .add(Items.QUARTZ)
@@ -84,5 +85,6 @@ public class HpCItemTagProvider extends ItemTagsProvider {
                 .add(Blocks.BASALT.asItem())
                 .add(Blocks.SANDSTONE.asItem())
                 .add(HpCBlocks.MOON_ROCK.get().asItem());
+        
     }
 }

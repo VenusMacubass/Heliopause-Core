@@ -7,6 +7,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.heliocore.HeliopauseCore;
+import net.venera.heliocore.recipe.item.SpaceSuitRecipe;
+import net.venera.heliocore.recipe.item.SpaceSuitRecipeSerializer;
 
 public class HpCRecipes {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, HeliopauseCore.MOD_ID);
@@ -35,6 +37,15 @@ public class HpCRecipes {
             return "magnetic_assembly_platform";
         }
     });
+
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<?>> SPACE_SUIT_SERIALIZER = RECIPE_SERIALIZERS.register("space_suit", SpaceSuitRecipeSerializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<SpaceSuitRecipe>> SPACE_SUIT_TYPE = RECIPE_TYPES.register("space_suit", () -> new RecipeType<>() {
+        @Override
+        public String toString() {
+            return "space_suit";
+        }
+    });
+    
     
     public static void register(IEventBus eventBus){
         RECIPE_SERIALIZERS.register(eventBus);

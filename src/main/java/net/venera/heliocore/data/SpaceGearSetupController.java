@@ -1,16 +1,15 @@
-package net.venera.heliocore.util;
+package net.venera.heliocore.data;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.data.component.GasTankData;
 import net.venera.heliocore.event.HpCEvents;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.item.HpCTags;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
 
-public class SpaceGearSetupHelper {
+public class SpaceGearSetupController {
     private static final int OXYGEN_USAGE = 1;
     public static boolean checkOxygenSetup(LivingEntity livingEntity) {
         ItemStackHandler inventory = livingEntity.getData(HpCAttachments.EQUIPMENT_INVENTORY);

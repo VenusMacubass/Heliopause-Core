@@ -16,7 +16,7 @@ import java.util.List;
 
 public record MagneticAssemblyPlatformRecipe(
         Ingredient engine,
-        Ingredient base, // Renamed from storage
+        Ingredient base, 
         List<Ingredient> fins,
         List<Ingredient> hulls,
         List<Ingredient> boosters,
@@ -25,13 +25,12 @@ public record MagneticAssemblyPlatformRecipe(
 
     @Override
     public boolean matches(MagneticAssemblyPlatformInput input, Level level) {
-        // Must always have engine, base, and nose
         if (!this.engine.test(input.getItem(0))) return false;
         if (!this.base.test(input.getItem(1))) return false;
         if (!this.nose.test(input.getItem(16))) return false;
 
-        // Check Fins (Indices 2 to 5)
-        for (int i = 0; i < 4; i++) {
+        
+        for (int i = 0; i < 4; i++) {  //Fins (Indices 2 to 5)
             ItemStack stack = input.getItem(i + 2);
             if (i < this.fins.size()) {
                 if (!this.fins.get(i).test(stack)) return false;
@@ -40,8 +39,8 @@ public record MagneticAssemblyPlatformRecipe(
             }
         }
 
-        // Check Hulls (Indices 6 to 13)
-        for (int i = 0; i < 8; i++) {
+        
+        for (int i = 0; i < 8; i++) {  //Hulls (Indices 6 to 13)
             ItemStack stack = input.getItem(i + 6);
             if (i < this.hulls.size()) {
                 if (!this.hulls.get(i).test(stack)) return false;
@@ -49,9 +48,8 @@ public record MagneticAssemblyPlatformRecipe(
                 if (!stack.isEmpty()) return false;
             }
         }
-
-        // Check Boosters (Indices 14 to 15)
-        for (int i = 0; i < 2; i++) {
+        
+        for (int i = 0; i < 2; i++) {  //Boosters (Indices 14 to 15)
             ItemStack stack = input.getItem(i + 14);
             if (i < this.boosters.size()) {
                 if (!this.boosters.get(i).test(stack)) return false;
@@ -92,8 +90,7 @@ public record MagneticAssemblyPlatformRecipe(
         public static final MapCodec<MagneticAssemblyPlatformRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
                 Ingredient.CODEC_NONEMPTY.fieldOf("engine").forGetter(r -> r.engine()),
                 Ingredient.CODEC_NONEMPTY.fieldOf("base").forGetter(r -> r.base()),
-
-                // Using optionalFieldOf allows you to completely omit these from the JSON if not needed
+                
                 Ingredient.CODEC_NONEMPTY.listOf().optionalFieldOf("fins", List.of()).forGetter(r -> r.fins()),
                 Ingredient.CODEC_NONEMPTY.listOf().optionalFieldOf("hulls", List.of()).forGetter(r -> r.hulls()),
                 Ingredient.CODEC_NONEMPTY.listOf().optionalFieldOf("boosters", List.of()).forGetter(r -> r.boosters()),

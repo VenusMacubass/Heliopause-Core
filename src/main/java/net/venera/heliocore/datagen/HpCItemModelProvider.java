@@ -117,7 +117,9 @@ public class HpCItemModelProvider extends ItemModelProvider {
         basicItem(HpCItems.SILICON.get());
         basicItem(HpCItems.TEKTITES.get());
         basicItem(HpCItems.PETROCHEMICALS.get());
-        basicItem(HpCItems.THERMAL_ISOLATOR.get());
+        basicItem(HpCItems.THERMAL_INSULATION_MATERIAL.get());
+        basicItem(HpCItems.RADIATION_PROTECTION_MATERIAL.get());
+        basicItem(HpCItems.PRESSURE_PROTECTION_MATERIAL.get());
         
         basicItem(HpCItems.COMPRESSED_BRONZE.get());
         basicItem(HpCItems.COMPRESSED_COPPER.get());
@@ -148,6 +150,11 @@ public class HpCItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(HpCItems.STEEL_CHESTPLATE);
         trimmedArmorItem(HpCItems.STEEL_LEGGINGS);
         trimmedArmorItem(HpCItems.STEEL_BOOTS);
+
+        trimmedArmorItem(HpCItems.T1_SPACE_SUIT_HELMET);
+        trimmedArmorItem(HpCItems.T1_SPACE_SUIT_CHESTPLATE);
+        trimmedArmorItem(HpCItems.T1_SPACE_SUIT_LEGGINGS);
+        trimmedArmorItem(HpCItems.T1_SPACE_SUIT_BOOTS);
         basicItem(HpCItems.T1_THERMAL_INSULATION_HEAD.get());
         basicItem(HpCItems.T1_THERMAL_INSULATION_TORSO.get());
         basicItem(HpCItems.T1_THERMAL_INSULATION_LEGGINGS.get());
@@ -176,18 +183,16 @@ public class HpCItemModelProvider extends ItemModelProvider {
                 String trimPath = "trims/items/" + armorType + "_trim_" + trimMaterial.location().getPath();
                 String currentTrimName = armorItemPath + "_" + trimMaterial.location().getPath() + "_trim";
                 ResourceLocation armorItemResLoc = ResourceLocation.parse(armorItemPath);
-                ResourceLocation trimResLoc = ResourceLocation.parse(trimPath); // minecraft namespace
+                ResourceLocation trimResLoc = ResourceLocation.parse(trimPath); 
                 ResourceLocation trimNameResLoc = ResourceLocation.parse(currentTrimName);
                 
                 existingFileHelper.trackGenerated(trimResLoc, PackType.CLIENT_RESOURCES, ".png", "textures");
-
-                // Trimmed armorItem files
+                
                 getBuilder(currentTrimName)
                         .parent(new ModelFile.UncheckedModelFile("item/generated"))
                         .texture("layer0", armorItemResLoc.getNamespace() + ":item/" + armorItemResLoc.getPath())
                         .texture("layer1", trimResLoc);
-
-                // Non-trimmed armorItem file 
+                
                 this.withExistingParent(itemDeferredItem.getId().getPath(),
                                 mcLoc("item/generated"))
                         .override()

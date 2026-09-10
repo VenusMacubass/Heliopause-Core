@@ -1,0 +1,35 @@
+{
+  "type": "heliocore:space_suit",
+  "category": "equipment",
+  "key": {
+    "B": [
+      {
+        "item": "minecraft:iron_boots"
+      },
+      {
+        "item": "heliocore:steel_boots"
+      }
+    ],
+    "E": {
+      "item": "heliocore:small_battery"
+    },
+    "H": {
+      "item": "heliocore:petrochemicals"
+    },
+    "P": {
+      "item": "heliocore:pressure_protection_material"
+    },
+    "R": {
+      "item": "heliocore:radiation_protection_material"
+    }
+  },
+  "pattern": [
+    "REP",
+    "RBP",
+    "RHP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:t1_space_suit_boots"
+  }
+}

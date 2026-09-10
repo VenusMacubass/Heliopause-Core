@@ -9,7 +9,7 @@
       "item": "minecraft:leather"
     },
     "T": {
-      "item": "heliocore:thermal_isolator"
+      "item": "heliocore:thermal_insulation_material"
     }
   },
   "pattern": [

@@ -1,0 +1,35 @@
+{
+  "type": "heliocore:space_suit",
+  "category": "equipment",
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "H": [
+      {
+        "item": "minecraft:iron_helmet"
+      },
+      {
+        "item": "heliocore:steel_helmet"
+      }
+    ],
+    "P": {
+      "item": "heliocore:pressure_protection_material"
+    },
+    "R": {
+      "item": "heliocore:radiation_protection_material"
+    },
+    "S": {
+      "item": "heliocore:electromagnetic_sensors"
+    }
+  },
+  "pattern": [
+    "RSP",
+    "RHP",
+    "RGP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:t1_space_suit_helmet"
+  }
+}

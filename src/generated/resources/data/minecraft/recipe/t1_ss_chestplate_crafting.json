@@ -1,0 +1,32 @@
+{
+  "type": "heliocore:space_suit",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "heliocore:basic_circuit_board"
+    },
+    "C": [
+      {
+        "item": "minecraft:iron_chestplate"
+      },
+      {
+        "item": "heliocore:steel_chestplate"
+      }
+    ],
+    "P": {
+      "item": "heliocore:pressure_protection_material"
+    },
+    "R": {
+      "item": "heliocore:radiation_protection_material"
+    }
+  },
+  "pattern": [
+    "RBP",
+    "RCP",
+    "R P"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:t1_space_suit_chestplate"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_petrochemicals": {
+      "conditions": {
+        "items": [
+          {
+            "items": "heliocore:petrochemicals"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:pressure_protection_crafting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_petrochemicals"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:pressure_protection_crafting"
+    ]
+  }
+}

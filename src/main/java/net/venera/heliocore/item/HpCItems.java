@@ -97,7 +97,10 @@ public class HpCItems {
     public static final DeferredItem<Item> GAS_REGULATOR =  ITEMS.register("gas_regulator", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> THERMAL_REGULATOR =  ITEMS.register("thermal_regulator", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> STEEL_ROD =  ITEMS.register("steel_rod", () -> new Item(new Item.Properties()));
-    public static final DeferredItem<Item> THERMAL_ISOLATOR =  ITEMS.register("thermal_isolator", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> THERMAL_INSULATION_MATERIAL =  ITEMS.register("thermal_insulation_material", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> RADIATION_PROTECTION_MATERIAL =  ITEMS.register("radiation_protection_material", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> PRESSURE_PROTECTION_MATERIAL =  ITEMS.register("pressure_protection_material", () -> new Item(new Item.Properties()));
+    
     public static final DeferredItem<Item> SOLAR_PANEL_SEMICONDUCTOR_BASE = ITEMS.register("solar_panel_semiconductor_base", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> SINGULAR_SOLAR_PANEL = ITEMS.register("singular_solar_panel", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> TIER_1_SOLAR_PANEL = ITEMS.register("tier_1_solar_panel", () -> new Item(new Item.Properties()));
@@ -139,14 +142,23 @@ public class HpCItems {
             new ArmorItem(HpCArmorMaterials.STEEL_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
                     new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(18))));
     public static final DeferredItem<ArmorItem> OXYGEN_MASK = ITEMS.register("oxygen_mask", () ->
-            new ArmorItem(HpCArmorMaterials.SPACE_GEAR_MATERIAL, ArmorItem.Type.HELMET, new  Item.Properties()));
+            new ArmorItem(HpCArmorMaterials.SPACE_SUIT_MATERIAL, ArmorItem.Type.HELMET, new  Item.Properties()));
     public static final DeferredItem<ArmorItem> OXYGEN_CONNECTORS = ITEMS.register("oxygen_connectors", () ->
-            new ArmorItem(HpCArmorMaterials.SPACE_GEAR_MATERIAL, ArmorItem.Type.BODY, new  Item.Properties()));
+            new ArmorItem(HpCArmorMaterials.SPACE_SUIT_MATERIAL, ArmorItem.Type.BODY, new  Item.Properties()));
     public static final DeferredItem<Item> MASS_BELT = ITEMS.register("mass_belt", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> T1_THERMAL_INSULATION_HEAD = ITEMS.register("t1_thermal_insulation_head", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> T1_THERMAL_INSULATION_TORSO = ITEMS.register("t1_thermal_insulation_torso", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> T1_THERMAL_INSULATION_LEGGINGS = ITEMS.register("t1_thermal_insulation_leggings", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> T1_THERMAL_INSULATION_HANDS_AND_FEET = ITEMS.register("t1_thermal_insulation_hands_and_feet", () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<ArmorItem> T1_SPACE_SUIT_HELMET = ITEMS.register("t1_space_suit_helmet", () ->
+            new ArmorItem(HpCArmorMaterials.SPACE_SUIT_MATERIAL, ArmorItem.Type.HELMET, new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(18))));
+    public static final DeferredItem<ArmorItem> T1_SPACE_SUIT_CHESTPLATE = ITEMS.register("t1_space_suit_chestplate", () ->
+            new ArmorItem(HpCArmorMaterials.SPACE_SUIT_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(18))));
+    public static final DeferredItem<ArmorItem> T1_SPACE_SUIT_LEGGINGS = ITEMS.register("t1_space_suit_leggings", () ->
+            new ArmorItem(HpCArmorMaterials.SPACE_SUIT_MATERIAL, ArmorItem.Type.LEGGINGS, new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(18))));
+    public static final DeferredItem<ArmorItem> T1_SPACE_SUIT_BOOTS = ITEMS.register("t1_space_suit_boots", () ->
+            new ArmorItem(HpCArmorMaterials.SPACE_SUIT_MATERIAL, ArmorItem.Type.BOOTS, new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(18))));
     //endregion
 
     public static final DeferredItem<Item> EXTINGUISHED_TORCH_ITEM = ITEMS.register("extinguished_torch", //don't delete

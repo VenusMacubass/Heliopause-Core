@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "F": {
+      "item": "heliocore:fluid_pipe"
+    },
+    "P": {
+      "item": "heliocore:petrochemicals"
+    },
+    "R": {
+      "tag": "minecraft:wool"
+    },
+    "W": {
+      "item": "heliocore:copper_wire"
+    }
+  },
+  "pattern": [
+    "PFP",
+    "PRP",
+    "PWP"
+  ],
+  "result": {
+    "count": 2,
+    "id": "heliocore:pressure_protection_material"
+  }
+}

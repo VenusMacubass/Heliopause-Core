@@ -71,10 +71,17 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCItems.STEEL_CHESTPLATE.get());
                         output.accept(HpCItems.STEEL_LEGGINGS.get());
                         output.accept(HpCItems.STEEL_BOOTS.get());
+                        
                         output.accept(HpCItems.T1_THERMAL_INSULATION_HEAD.get());
                         output.accept(HpCItems.T1_THERMAL_INSULATION_TORSO.get());
                         output.accept(HpCItems.T1_THERMAL_INSULATION_LEGGINGS.get());
                         output.accept(HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.get());
+                        
+                        output.accept(HpCItems.T1_SPACE_SUIT_HELMET.get());
+                        output.accept(HpCItems.T1_SPACE_SUIT_CHESTPLATE.get());
+                        output.accept(HpCItems.T1_SPACE_SUIT_LEGGINGS.get());
+                        output.accept(HpCItems.T1_SPACE_SUIT_BOOTS.get());
+                        
                         output.accept(HpCItems.MASS_BELT.get());
                         output.accept(HpCItems.GLASS_SWORD.get());
                         
@@ -99,7 +106,9 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCItems.SINGULAR_SOLAR_PANEL.get());
                         output.accept(HpCItems.TIER_1_SOLAR_PANEL.get());
                         output.accept(HpCItems.STEEL_ROD.get());
-                        output.accept(HpCItems.THERMAL_ISOLATOR.get());
+                        output.accept(HpCItems.THERMAL_INSULATION_MATERIAL.get());
+                        output.accept(HpCItems.RADIATION_PROTECTION_MATERIAL.get());
+                        output.accept(HpCItems.PRESSURE_PROTECTION_MATERIAL.get());
                         output.accept(HpCItems.COMPRESSED_ALUMINIUM.get());
                         output.accept(HpCItems.COMPRESSED_BRONZE.get());
                         output.accept(HpCItems.COMPRESSED_COPPER.get());

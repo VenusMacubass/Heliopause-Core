@@ -1,0 +1,32 @@
+{
+  "type": "heliocore:space_suit",
+  "category": "equipment",
+  "key": {
+    "G": {
+      "item": "heliocore:gas_regulator"
+    },
+    "L": [
+      {
+        "item": "minecraft:iron_leggings"
+      },
+      {
+        "item": "heliocore:steel_leggings"
+      }
+    ],
+    "P": {
+      "item": "heliocore:pressure_protection_material"
+    },
+    "R": {
+      "item": "heliocore:radiation_protection_material"
+    }
+  },
+  "pattern": [
+    "RGP",
+    "RLP",
+    "R P"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:t1_space_suit_leggings"
+  }
+}

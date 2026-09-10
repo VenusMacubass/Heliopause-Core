@@ -45,23 +45,23 @@ public class HpCDimensions {
 
         MultiNoiseBiomeSource moonBiomeSource = MultiNoiseBiomeSource.createFromList(
                 new Climate.ParameterList<>(List.of(
-                        // LUNAR MARIA (High Erosion = Flat)
+                        //LUNAR MARIA (High Erosion = Flat)
                         Pair.of(Climate.parameters(
                                 Climate.Parameter.span(-1.0F, 1.0F), // Temperature 
                                 Climate.Parameter.span(-1.0F, 1.0F), // Humidity 
                                 Climate.Parameter.span(-1.0F, 1.0F), // Continentalness 
-                                Climate.Parameter.point(0.8F),       // Erosion 
+                                Climate.Parameter.point(0.8F), // Erosion 
                                 Climate.Parameter.span(-1.0F, 1.0F), // Depth 
                                 Climate.Parameter.span(-1.0F, 1.0F), // Weirdness 
                                 0.0F
                         ), biomeRegistry.getOrThrow(HpCBiomes.LUNAR_MARIA)), 
 
-                        // LUNAR HIGHLANDS (Low Erosion = Jagged)
+                        //LUNAR HIGHLANDS (Low Erosion = Jagged)
                         Pair.of(Climate.parameters(
                                 Climate.Parameter.span(-1.0F, 1.0F), // Temperature 
                                 Climate.Parameter.span(-1.0F, 1.0F), // Humidity 
                                 Climate.Parameter.span(-1.0F, 1.0F), // Continentalness 
-                                Climate.Parameter.point(-0.8F),      // Erosion
+                                Climate.Parameter.point(-0.8F),// Erosion
                                 Climate.Parameter.span(-1.0F, 1.0F), // Depth 
                                 Climate.Parameter.span(-1.0F, 1.0F), // Weirdness 
                                 0.0F

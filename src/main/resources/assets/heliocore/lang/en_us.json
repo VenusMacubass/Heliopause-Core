@@ -36,7 +36,6 @@
   "item.heliocore.silicon": "Silicon",
   "item.heliocore.tin_ingot": "Tin Ingot",
   "item.heliocore.raw_iridium": "Raw Iridium",
-  "item.heliocore.lunar_sapphire": "Lunar Sapphire",
 
   "item.heliocore.compressed_aluminium": "Compressed Aluminium",
   "item.heliocore.compressed_bronze": "Compressed Bronze",
@@ -59,7 +58,9 @@
   "item.heliocore.singular_solar_panel": "Singular Solar Panel",
   "item.heliocore.tier_1_solar_panel": "Basic Full Solar Panel",
   "item.heliocore.steel_rod": "Steel Rod",
-  "item.heliocore.thermal_isolator": "Thermal Isolator",
+  "item.heliocore.thermal_insulation_material": "Thermal Insulation Material",
+  "item.heliocore.radiation_protection_material": "Radiation Protection Material",
+  "item.heliocore.pressure_protection_material": "Pressure Protection Material",
   
   "item.heliocore.oxygen_mask": "Oxygen Mask",
   "item.heliocore.oxygen_connectors": "Oxygen Connectors",
@@ -83,6 +84,11 @@
   "item.heliocore.steel_chestplate": "Steel Chestplate",
   "item.heliocore.steel_leggings": "Steel Leggings",
   "item.heliocore.steel_boots": "Steel Boots",
+  "item.heliocore.t1_space_suit_helmet": "Tier 1 Space Suit Helmet",
+  "item.heliocore.t1_space_suit_chestplate": "Tier 1 Space Suit Chestplate",
+  "item.heliocore.t1_space_suit_leggings": "Tier 1 Space Suit Leggings",
+  "item.heliocore.t1_space_suit_boots": "Tier 1 Space Suit Boots",
+  
   "item.heliocore.t1_thermal_insulation_head": "Thermal Insulation Helmet",
   "item.heliocore.t1_thermal_insulation_torso": "Thermal Jacket",
   "item.heliocore.t1_thermal_insulation_leggings": "Thermal Leggings",
@@ -115,7 +121,6 @@
   "block.heliocore.deepslate_iridium_ore": "Deepslate Iridium Ore",
   "block.heliocore.moon_iridium_ore": "Moon Iridium Ore",
   "block.heliocore.iridium_block": "Block of Iridium",
-  "block.heliocore.sapphire_ore": "Sapphire Ore",
   "block.heliocore.cheese_block": "Cheese Block",
   "block.heliocore.default_pizza": "Pizza",
   "block.heliocore.extinguished_torch": "Extinguished Torch",
@@ -188,7 +193,7 @@
   "block.heliocore.energy_generator": "Energy Generator",
   "block.heliocore.oxygen_sealer": "Oxygen Sealer",
   "block.heliocore.pcb_fabricator": "PCB Fabricator",
-  "block.minecraft.magnetic_assembly_platform": "Magnetic Assembly Platform",
+  "block.heliocore.magnetic_assembly_platform": "Magnetic Assembly Platform",
 
   "block.heliocore.coal_compressor_menu_name": "Coal Powered Compressor",
   "block.minecraft.coal_compressor": "Coal Compressor",

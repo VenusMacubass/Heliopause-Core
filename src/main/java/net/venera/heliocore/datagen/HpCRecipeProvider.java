@@ -17,6 +17,7 @@ import net.venera.heliocore.recipe.CoalCompressorRecipeBuilder;
 import net.venera.heliocore.item.HpCTags;
 import net.venera.heliocore.recipe.MagneticAssemblyPlatformRecipeBuilder;
 import net.venera.heliocore.recipe.PCBFabricatorRecipeBuilder;
+import net.venera.heliocore.recipe.item.SpaceSuitRecipeBuilder;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -231,7 +232,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_steel", has(HpCItems.COMPRESSED_STEEL.get()))
                 .save(recipeOutput, "steel_rod_crafting");
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCItems.THERMAL_ISOLATOR.get(), 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCItems.THERMAL_INSULATION_MATERIAL.get(), 4)
                 .pattern(" W ")
                 .pattern("WRW")
                 .pattern(" F ")
@@ -239,7 +240,27 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('F', Items.FEATHER)
                 .define('R', Items.REDSTONE)
                 .unlockedBy("has_wool", has(ItemTags.WOOL))
-                .save(recipeOutput, "thermal_isolator_crafting");
+                .save(recipeOutput, "thermal_insulation_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCItems.RADIATION_PROTECTION_MATERIAL.get(), 2)
+                .pattern("PAP")
+                .pattern("PAP")
+                .pattern("PAP")
+                .define('P', HpCItems.PETROCHEMICALS.get())
+                .define('A', HpCItems.COMPRESSED_ALUMINIUM.get())
+                .unlockedBy("has_compressed_aluminium", has(HpCItems.COMPRESSED_ALUMINIUM.get()))
+                .save(recipeOutput, "radiation_protection_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCItems.PRESSURE_PROTECTION_MATERIAL.get(), 2)
+                .pattern("PFP")
+                .pattern("PRP")
+                .pattern("PWP")
+                .define('P', HpCItems.PETROCHEMICALS.get())
+                .define('W', HpCBlocks.COPPER_WIRE.get())
+                .define('R', ItemTags.WOOL)
+                .define('F', HpCBlocks.FLUID_PIPE.get())
+                .unlockedBy("has_petrochemicals", has(HpCItems.PETROCHEMICALS.get()))
+                .save(recipeOutput, "pressure_protection_crafting");
         //endregion
         
         //region Rocket Parts
@@ -605,37 +626,37 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, HpCItems.T1_THERMAL_INSULATION_HEAD.get())
                 .pattern("TTT")
                 .pattern("THT")
-                .define('T', HpCItems.THERMAL_ISOLATOR.get())
+                .define('T', HpCItems.THERMAL_INSULATION_MATERIAL.get())
                 .define('H', Items.LEATHER_HELMET)
-                .unlockedBy("has_thermal_isolator", has(HpCItems.THERMAL_ISOLATOR.get()))
+                .unlockedBy("has_thermal_isolator", has(HpCItems.THERMAL_INSULATION_MATERIAL.get()))
                 .save(recipeOutput, "t1_thermal_insulation_head_crafting");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, HpCItems.T1_THERMAL_INSULATION_TORSO.get())
                 .pattern("TCT")
                 .pattern("TTT")
                 .pattern("TTT")
-                .define('T', HpCItems.THERMAL_ISOLATOR.get())
+                .define('T', HpCItems.THERMAL_INSULATION_MATERIAL.get())
                 .define('C', Items.LEATHER_CHESTPLATE)
-                .unlockedBy("has_thermal_isolator", has(HpCItems.THERMAL_ISOLATOR.get()))
+                .unlockedBy("has_thermal_isolator", has(HpCItems.THERMAL_INSULATION_MATERIAL.get()))
                 .save(recipeOutput, "t1_thermal_insulation_torso_crafting");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, HpCItems.T1_THERMAL_INSULATION_LEGGINGS.get())
                 .pattern("TTT")
                 .pattern("TLT")
                 .pattern("T T")
-                .define('T', HpCItems.THERMAL_ISOLATOR.get())
+                .define('T', HpCItems.THERMAL_INSULATION_MATERIAL.get())
                 .define('L', Items.LEATHER_LEGGINGS)
-                .unlockedBy("has_thermal_isolator", has(HpCItems.THERMAL_ISOLATOR.get()))
+                .unlockedBy("has_thermal_isolator", has(HpCItems.THERMAL_INSULATION_MATERIAL.get()))
                 .save(recipeOutput, "t1_thermal_insulation_leggings_crafting");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.get())
                 .pattern("LTL")
                 .pattern("TTT")
                 .pattern("TBT")
-                .define('T', HpCItems.THERMAL_ISOLATOR.get())
+                .define('T', HpCItems.THERMAL_INSULATION_MATERIAL.get())
                 .define('L', Items.LEATHER)
                 .define('B', Items.LEATHER_BOOTS)
-                .unlockedBy("has_thermal_isolator", has(HpCItems.THERMAL_ISOLATOR.get()))
+                .unlockedBy("has_thermal_isolator", has(HpCItems.THERMAL_INSULATION_MATERIAL.get()))
                 .save(recipeOutput, "t1_thermal_insulation_hands_and_feet_crafting");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, HpCItems.MASS_BELT.get())
@@ -903,6 +924,59 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_patty", has(Items.COOKED_BEEF))
                 .save(recipeOutput, "cheeseburger_crafting");
 
+        //endregion
+        
+        //region Space Suits
+        SpaceSuitRecipeBuilder.upgrade(RecipeCategory.COMBAT, HpCItems.T1_SPACE_SUIT_HELMET.get())
+                .pattern("RSP")
+                .pattern("RHP")
+                .pattern("RGP")
+                .define('H', Ingredient.of(Items.IRON_HELMET, HpCItems.STEEL_HELMET.get()))
+                .define('S', HpCItems.ELECTROMAGNETIC_SENSORS.get()) 
+                .define('G', Items.GLASS)
+                .define('R', HpCItems.RADIATION_PROTECTION_MATERIAL.get())
+                .define('P', HpCItems.PRESSURE_PROTECTION_MATERIAL.get())
+                .unlockedBy("has_sensors", has(HpCItems.ELECTROMAGNETIC_SENSORS.get()))
+                .unlockedBy("has_radiation_protection", has(HpCItems.RADIATION_PROTECTION_MATERIAL.get()))
+                .unlockedBy("has_pressure_protection", has(HpCItems.PRESSURE_PROTECTION_MATERIAL.get()))
+                .save(recipeOutput, "t1_ss_helmet_crafting");
+        SpaceSuitRecipeBuilder.upgrade(RecipeCategory.COMBAT, HpCItems.T1_SPACE_SUIT_CHESTPLATE.get())
+                .pattern("RBP")
+                .pattern("RCP")
+                .pattern("R P")
+                .define('C', Ingredient.of(Items.IRON_CHESTPLATE, HpCItems.STEEL_CHESTPLATE.get()))
+                .define('B', HpCItems.BASIC_CIRCUIT_BOARD.get())
+                .define('R', HpCItems.RADIATION_PROTECTION_MATERIAL.get())
+                .define('P', HpCItems.PRESSURE_PROTECTION_MATERIAL.get())
+                .unlockedBy("has_board", has(HpCItems.BASIC_CIRCUIT_BOARD.get()))
+                .unlockedBy("has_radiation_protection", has(HpCItems.RADIATION_PROTECTION_MATERIAL.get()))
+                .unlockedBy("has_pressure_protection", has(HpCItems.PRESSURE_PROTECTION_MATERIAL.get()))
+                .save(recipeOutput, "t1_ss_chestplate_crafting");
+        SpaceSuitRecipeBuilder.upgrade(RecipeCategory.COMBAT, HpCItems.T1_SPACE_SUIT_LEGGINGS.get())
+                .pattern("RGP")
+                .pattern("RLP")
+                .pattern("R P")
+                .define('L', Ingredient.of(Items.IRON_LEGGINGS, HpCItems.STEEL_LEGGINGS.get()))
+                .define('G', HpCItems.GAS_REGULATOR.get())
+                .define('R', HpCItems.RADIATION_PROTECTION_MATERIAL.get())
+                .define('P', HpCItems.PRESSURE_PROTECTION_MATERIAL.get())
+                .unlockedBy("has_gas_regulator", has(HpCItems.GAS_REGULATOR.get()))
+                .unlockedBy("has_radiation_protection", has(HpCItems.RADIATION_PROTECTION_MATERIAL.get()))
+                .unlockedBy("has_pressure_protection", has(HpCItems.PRESSURE_PROTECTION_MATERIAL.get()))
+                .save(recipeOutput, "t1_ss_leggings_crafting");
+        SpaceSuitRecipeBuilder.upgrade(RecipeCategory.COMBAT, HpCItems.T1_SPACE_SUIT_BOOTS.get())
+                .pattern("REP")
+                .pattern("RBP")
+                .pattern("RHP")
+                .define('B', Ingredient.of(Items.IRON_BOOTS, HpCItems.STEEL_BOOTS.get()))
+                .define('E', HpCItems.SMALL_BATTERY.get())
+                .define('R', HpCItems.RADIATION_PROTECTION_MATERIAL.get())
+                .define('P', HpCItems.PRESSURE_PROTECTION_MATERIAL.get())
+                .define('H', HpCItems.PETROCHEMICALS.get())
+                .unlockedBy("has_small_battery", has(HpCItems.SMALL_BATTERY.get()))
+                .unlockedBy("has_radiation_protection", has(HpCItems.RADIATION_PROTECTION_MATERIAL.get()))
+                .unlockedBy("has_pressure_protection", has(HpCItems.PRESSURE_PROTECTION_MATERIAL.get()))
+                .save(recipeOutput, "t1_ss_boots_crafting");
         //endregion
         
         //region Compressors
