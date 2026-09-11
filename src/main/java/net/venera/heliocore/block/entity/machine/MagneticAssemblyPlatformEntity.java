@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.venera.heliocore.block.entity.HpCBlockEntities;
 import net.venera.heliocore.recipe.*;
-import net.venera.heliocore.screen.hpc_custom.MagneticAssemblyPlatformMenu;
+import net.venera.heliocore.screen.block_entity.MagneticAssemblyPlatformMenu;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;

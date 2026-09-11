@@ -33,7 +33,7 @@ import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.fluid.IFluidMachine;
 import net.venera.heliocore.item.hpc_custom.BatteryItem;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
-import net.venera.heliocore.screen.hpc_custom.EnergyGeneratorMenu;
+import net.venera.heliocore.screen.block_entity.EnergyGeneratorMenu;
 import net.venera.heliocore.util.MachineConfigHelper;
 import net.venera.heliocore.util.PipeNetworkHelper;
 import org.jetbrains.annotations.Nullable;

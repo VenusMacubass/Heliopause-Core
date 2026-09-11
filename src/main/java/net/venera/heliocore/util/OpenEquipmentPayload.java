@@ -9,7 +9,7 @@ import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.venera.heliocore.HeliopauseCore;
-import net.venera.heliocore.screen.hpc_custom.HpCEquipmentMenu;
+import net.venera.heliocore.screen.entity.HpCEquipmentMenu;
 
 public record OpenEquipmentPayload() implements CustomPacketPayload {
     public static final Type<OpenEquipmentPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "open_equipment"));

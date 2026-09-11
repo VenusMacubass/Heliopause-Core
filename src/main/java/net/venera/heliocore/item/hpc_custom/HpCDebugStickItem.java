@@ -9,7 +9,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.venera.heliocore.screen.hpc_custom.HpCEquipmentMenu;
+import net.venera.heliocore.screen.entity.HpCEquipmentMenu;
 
 public class HpCDebugStickItem extends Item {
     public HpCDebugStickItem(Properties properties) {

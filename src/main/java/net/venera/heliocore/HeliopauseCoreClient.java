@@ -9,7 +9,6 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.model.CatModel;
 import net.minecraft.client.model.WolfModel;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -17,11 +16,9 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ServerboundPlayerCommandPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.Wolf;
@@ -67,7 +64,11 @@ import net.venera.heliocore.render.MagneticAssemblyPlatformRenderer;
 import net.venera.heliocore.render.MagneticCraftingTableRenderer;
 import net.venera.heliocore.render.sky.MoonSkyRenderer;
 import net.venera.heliocore.screen.HpCMenuTypes;
-import net.venera.heliocore.screen.hpc_custom.*;
+import net.venera.heliocore.screen.block_entity.*;
+import net.venera.heliocore.screen.entity.HpCEquipmentScreen;
+import net.venera.heliocore.screen.entity.LanderScreen;
+import net.venera.heliocore.screen.entity.RocketScreen;
+import net.venera.heliocore.screen.hud.LanderHudOverlay;
 import net.venera.heliocore.util.*;
 import org.joml.Matrix4f;
 
@@ -387,7 +388,8 @@ public class HeliopauseCoreClient {
         boolean isJumping = mc.options.keyJump.isDown();
         boolean onGround = player.onGround(); 
 
-        if (player.getVehicle() instanceof Tier1RocketLanderEntity) {
+        if (player.getVehicle() instanceof Tier1RocketLanderEntity lander) {
+            lander.isThrusting = isJumping;
             if (isJumping != wasJumping) {
                 PacketDistributor.sendToServer(new LanderControlPayload(isJumping));
             }
@@ -442,5 +444,13 @@ public class HeliopauseCoreClient {
         float targetZoom = HpCKeybinds.ZOOM_KEY.isDown() ? 0.1F : 1.0F; //lower value more zoom
         currentZoom = Mth.lerp(0.6F, currentZoom, targetZoom); //delta is zoom speed
         event.setNewFovModifier(event.getNewFovModifier() * currentZoom);
+    }
+
+    @SubscribeEvent
+    public static void registerGuiLayers(RegisterGuiLayersEvent event) {
+        event.registerAboveAll(
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "lander_hud"),
+                LanderHudOverlay.INSTANCE
+        );
     }
 }

@@ -28,7 +28,7 @@ import net.venera.heliocore.data.component.GasTankData;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.fluid.IFluidMachine;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
-import net.venera.heliocore.screen.hpc_custom.OxygenGeneratorMenu;
+import net.venera.heliocore.screen.block_entity.OxygenGeneratorMenu;
 import net.venera.heliocore.util.MachineConfigHelper;
 import net.venera.heliocore.util.PipeNetworkHelper;
 import org.jetbrains.annotations.Nullable;

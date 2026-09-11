@@ -66,7 +66,7 @@ import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.item.HpCTags;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
-import net.venera.heliocore.screen.hpc_custom.HpCEquipmentMenu;
+import net.venera.heliocore.screen.entity.HpCEquipmentMenu;
 import net.venera.heliocore.util.*;
 
 @EventBusSubscriber

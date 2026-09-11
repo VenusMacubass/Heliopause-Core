@@ -4,10 +4,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -28,19 +26,16 @@ import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.hpc_custom.FluidPipeBlock;
 import net.venera.heliocore.block.hpc_custom.machine.BaseMachineBlock;
 import net.venera.heliocore.data.component.GasTankData;
-import net.venera.heliocore.dimension.HpCDimensions;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.fluid.IFluidMachine;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
-import net.venera.heliocore.screen.hpc_custom.GasCompressorMenu;
-import net.venera.heliocore.screen.hpc_custom.OxygenSealerMenu;
+import net.venera.heliocore.screen.block_entity.OxygenSealerMenu;
 import net.venera.heliocore.util.MachineConfigHelper;
 import net.venera.heliocore.util.OxygenVolumeHelper;
 import net.venera.heliocore.util.PipeNetworkHelper;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.*;
 import java.util.Set;
 
 public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFluidMachine, MachineConfigHelper.IToggleableMachine{

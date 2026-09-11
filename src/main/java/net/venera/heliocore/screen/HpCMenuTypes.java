@@ -1,7 +1,6 @@
 package net.venera.heliocore.screen;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.bus.api.IEventBus;
@@ -10,9 +9,10 @@ import net.neoforged.neoforge.network.IContainerFactory;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.heliocore.HeliopauseCore;
-import net.venera.heliocore.screen.hpc_custom.*;
-
-import java.util.function.Supplier;
+import net.venera.heliocore.screen.block_entity.*;
+import net.venera.heliocore.screen.entity.HpCEquipmentMenu;
+import net.venera.heliocore.screen.entity.LanderMenu;
+import net.venera.heliocore.screen.entity.RocketMenu;
 
 public class HpCMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, HeliopauseCore.MOD_ID);

@@ -19,7 +19,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.venera.heliocore.dimension.HpCDimensions;
 import net.venera.heliocore.entity.HpCEntities;
 import net.venera.heliocore.item.HpCItems;
-import net.venera.heliocore.screen.hpc_custom.RocketMenu;
+import net.venera.heliocore.screen.entity.RocketMenu;
 import org.jetbrains.annotations.Nullable;
 
 public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {

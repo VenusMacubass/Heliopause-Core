@@ -14,12 +14,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import net.venera.heliocore.data.component.BatteryData;
 import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.fluid.HpCFluids;
-import net.venera.heliocore.item.hpc_custom.BatteryItem;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
-import net.venera.heliocore.screen.hpc_custom.LanderMenu;
+import net.venera.heliocore.screen.entity.LanderMenu;
 
 import javax.annotation.Nullable;
 
@@ -45,22 +43,23 @@ public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJum
         super.tick();
         if (!this.level().isClientSide()) {
             processFuelOutput();
-            if (this.isThrusting) {
-                this.applyThrust();
-            }
+        }
+
+        if (this.isThrusting) {
+            this.applyThrust();
         }
         
         Vec3 currentMove = this.getDeltaMovement();
 
-        double newY = currentMove.y - 0.015D;
-        if (newY < -3.0D) {
-            newY = -3.0D;
+        double newY = currentMove.y - 0.015D; 
+        if (newY < -6.0D) {
+            newY = -6.0D;
         }
         this.setDeltaMovement(0.0D, newY, 0.0D);
         this.move(MoverType.SELF, this.getDeltaMovement());
 
-        if (this.onGround() && this.previousYVelocity < -0.7D) { 
-            explode();
+        if (this.onGround() && this.previousYVelocity < -2.0D) { //2.0 explosion threshold
+            explode(Math.abs(previousYVelocity*20D));
         } 
         else if (this.onGround() && this.getFirstPassenger() != null) {
             this.getFirstPassenger().fallDistance = 0.0F;
@@ -82,9 +81,13 @@ public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJum
     public void applyThrust() {
         if (getFuelAmount() > 0 &&  getEnergyAmount() > 0) {
             Vec3 currentMove = this.getDeltaMovement();
-            
-            this.setDeltaMovement(currentMove.add(0.0D, 0.05D, 0.0D));
-            this.setFuelAmount(getFuelAmount() - FUEL_USAGE);
+
+            double newY = Math.min(currentMove.y + 0.05D, - 1.2D); //braking power, terminal speed: engine on
+
+            this.setDeltaMovement(currentMove.x, newY, currentMove.z);
+            if (!this.level().isClientSide()) {
+                this.setFuelAmount(getFuelAmount() - FUEL_USAGE);
+            }
         }
     }
 
@@ -105,9 +108,10 @@ public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJum
         return false;
     }
 
-    private void explode() {
+    private void explode(double speed) {
         this.clearInventory();
-        this.level().explode(this, this.getX(), this.getY(), this.getZ(), 5.0F, Level.ExplosionInteraction.MOB);
+        float explosionCoefficient =  1 + (getFuelAmount()/(float)MAX_FUEL) + ((float)speed/100.0F);
+        this.level().explode(this, this.getX(), this.getY(), this.getZ(), 4.0F * explosionCoefficient, Level.ExplosionInteraction.MOB);
         this.discard();
     }
     
@@ -167,7 +171,7 @@ public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJum
 
     @Override
     public boolean canJump() {
-        return true;
+        return false;
     }
 
     @Override
@@ -208,14 +212,6 @@ public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJum
             this.setEnergyAmount(this.getEnergyAmount() - discharged);
         }
         return discharged;
-    }
-
-    public int drainFuel(int amount, boolean simulate) {
-        int drained = Math.max(0, amount);
-        if (!simulate && drained > 0) {
-            this.setFuelAmount(this.getFuelAmount() - drained);
-        }
-        return drained;
     }
     
     public int getEnergyAmount(){
