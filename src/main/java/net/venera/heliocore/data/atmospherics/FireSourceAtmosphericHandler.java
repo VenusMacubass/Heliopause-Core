@@ -1,4 +1,4 @@
-package net.venera.heliocore.util;
+package net.venera.heliocore.data.atmospherics;
 
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
@@ -13,7 +13,6 @@ public class FireSourceAtmosphericHandler {
         for (long posLong : airBlocks) {
             BlockPos pos = BlockPos.of(posLong);
             BlockState state = level.getBlockState(pos);
-
             //Extinguished Torch -> Torch
             if (state.is(HpCBlocks.EXTINGUISHED_TORCH.get())) {
                 level.setBlockAndUpdate(pos, Blocks.TORCH.defaultBlockState());

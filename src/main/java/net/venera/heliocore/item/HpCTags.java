@@ -5,10 +5,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.material.Fluid;
 import net.venera.heliocore.HeliopauseCore;
 
@@ -65,6 +63,10 @@ public class HpCTags {
                 ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "slots/engines")
         );
         
+        public static final TagKey<Item> T1_PRESSURE_PROTECTORS = createTag("t1_pressure_protectors");
+        public static final TagKey<Item> T2_PRESSURE_PROTECTORS = createTag("t2_pressure_protectors");
+        public static final TagKey<Item> T3_PRESSURE_PROTECTORS = createTag("t3_pressure_protectors");
+        
         public static final TagKey<Item> STONES = createTag("stone_variants");
 
         private static TagKey<Item> createTag(String name){
@@ -120,14 +122,16 @@ public class HpCTags {
     public static class Entities{
         public static final TagKey<EntityType<?>> DOES_NOT_BREATHE = TagKey.create(Registries.ENTITY_TYPE, 
                 ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "entity/does_not_breathe"));
-        public static final TagKey<EntityType<?>> THERMALLY_IMMUNE = TagKey.create(Registries.ENTITY_TYPE,
-                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "entity/thermally_immune"));
         public static final TagKey<EntityType<?>> OXYGEN_SLOTS_RECEIVERS = TagKey.create(Registries.ENTITY_TYPE,
                 ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "oxygen_slots_receivers"));
         public static final TagKey<EntityType<?>> HAS_OXYGEN_BLESSING = TagKey.create(Registries.ENTITY_TYPE,
                 ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "has_oxygen_blessing"));
-
+        public static final TagKey<EntityType<?>> HAS_THERMAL_BLESSING = TagKey.create(Registries.ENTITY_TYPE,
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "entity/has_thermal_blessing"));
+        public static final TagKey<EntityType<?>> HAS_RADIATION_BLESSING = TagKey.create(Registries.ENTITY_TYPE,
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "has_radiation_blessing"));
+        public static final TagKey<EntityType<?>> HAS_PRESSURE_BLESSING = TagKey.create(Registries.ENTITY_TYPE,
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "has_pressure_blessing"));
         
-       
     }
 }

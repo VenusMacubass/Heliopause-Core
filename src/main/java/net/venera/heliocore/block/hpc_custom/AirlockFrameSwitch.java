@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
 import net.venera.heliocore.util.AirlockGateHelper;
-import net.venera.heliocore.util.OxygenVolumeHelper;
+import net.venera.heliocore.data.atmospherics.OxygenVolumeHelper;
 
 public class AirlockFrameSwitch extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;

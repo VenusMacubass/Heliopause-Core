@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -24,31 +25,26 @@ import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
-import net.neoforged.neoforge.client.gui.ConfigurationScreen;
-import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.HpCBlockEntities;
-import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
 import net.venera.heliocore.controls.HpCKeybinds;
 import net.venera.heliocore.data.HpCAttachments;
+import net.venera.heliocore.data.atmospherics.AtmosphericProperty;
+import net.venera.heliocore.data.atmospherics.OxygenVolumeHelper;
+import net.venera.heliocore.data.atmospherics.SpaceGearSetupController;
 import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.data.component.HpCDataComponents;
 import net.venera.heliocore.entity.HpCEntities;
@@ -58,7 +54,9 @@ import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
 import net.venera.heliocore.entity.zombie.SpaceZombieRenderer;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.item.HpCItems;
+import net.venera.heliocore.item.HpCTags;
 import net.venera.heliocore.item.hpc_custom.CanisterItem;
+import net.venera.heliocore.item.hpc_custom.GasTankItem;
 import net.venera.heliocore.render.FluidTankRenderer;
 import net.venera.heliocore.render.MagneticAssemblyPlatformRenderer;
 import net.venera.heliocore.render.MagneticCraftingTableRenderer;
@@ -68,7 +66,9 @@ import net.venera.heliocore.screen.block_entity.*;
 import net.venera.heliocore.screen.entity.HpCEquipmentScreen;
 import net.venera.heliocore.screen.entity.LanderScreen;
 import net.venera.heliocore.screen.entity.RocketScreen;
+import net.venera.heliocore.screen.hud.HazardWarningHudOverlay;
 import net.venera.heliocore.screen.hud.LanderHudOverlay;
+import net.venera.heliocore.screen.hud.SpaceSuitHudOverlay;
 import net.venera.heliocore.util.*;
 import org.joml.Matrix4f;
 
@@ -76,9 +76,6 @@ import javax.annotation.Nullable;
 
 @EventBusSubscriber(modid = HeliopauseCore.MOD_ID, value = Dist.CLIENT)
 public class HeliopauseCoreClient {
-    public HeliopauseCoreClient(ModContainer container) {
-        container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
-    }
 
     @SubscribeEvent
     static void onClientSetup(final FMLClientSetupEvent event) {
@@ -226,18 +223,18 @@ public class HeliopauseCoreClient {
     }
 
     private static Button creativeGearButton;
-
+    private static Button survivalGearButton;
     @SubscribeEvent
     public static void onScreenInit(ScreenEvent.Init.Post event) {
         if (event.getScreen() instanceof InventoryScreen screen) {
             int x = screen.getGuiLeft() + 126;
             int y = screen.getGuiTop() + 61;
 
-            Button gearButton = Button.builder(Component.literal("Gear"), button -> {
+            survivalGearButton = Button.builder(Component.literal("Gear"), button -> {
                 PacketDistributor.sendToServer(new OpenEquipmentPayload());
             }).bounds(x, y, 40, 20).build();
 
-            event.addListener(gearButton);
+            event.addListener(survivalGearButton);
         }
         else if (event.getScreen() instanceof CreativeModeInventoryScreen creativeScreen) {
             int x = creativeScreen.getGuiLeft() + 126;
@@ -253,10 +250,15 @@ public class HeliopauseCoreClient {
 
     @SubscribeEvent
     public static void onScreenRender(ScreenEvent.Render.Pre event) {
-        if (event.getScreen() instanceof CreativeModeInventoryScreen creativeScreen && creativeGearButton != null) {
+        if (event.getScreen() instanceof InventoryScreen screen && survivalGearButton != null) {
+            survivalGearButton.setX(screen.getGuiLeft() + 126);
+            survivalGearButton.setY(screen.getGuiTop() + 61);
+        }
+        else if (event.getScreen() instanceof CreativeModeInventoryScreen creativeScreen && creativeGearButton != null) {
             boolean isInventoryTab = creativeScreen.isInventoryOpen();
-
             creativeGearButton.visible = isInventoryTab;
+            creativeGearButton.setX(creativeScreen.getGuiLeft() + 126);
+            creativeGearButton.setY(creativeScreen.getGuiTop() + 20);
         }
     }
     
@@ -306,11 +308,6 @@ public class HeliopauseCoreClient {
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(Tier1RocketModel.ROCKET_LOCATION, Tier1RocketModel::createBodyLayer);
         event.registerLayerDefinition(Tier1RocketLanderModel.LANDER_LOCATION, Tier1RocketLanderModel::createBodyLayer);
-        
-    }
-
-    @SubscribeEvent
-    public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(CatOxygenGear.LAYER_LOCATION, CatOxygenGear::createBodyLayer);
         event.registerLayerDefinition(WolfOxygenGear.LAYER_LOCATION, WolfOxygenGear::createBodyLayer);
     }
@@ -399,43 +396,79 @@ public class HeliopauseCoreClient {
                 ItemStack stack = inventory.getStackInSlot(8);
 
                 if (!stack.isEmpty() && stack.canElytraFly(player)) {
-                    net.neoforged.neoforge.network.PacketDistributor.sendToServer(new ElytraSlotPayload());
+                    PacketDistributor.sendToServer(new ElytraSlotPayload());
                 }
             }
         }
-
         wasJumping = isJumping;
-        wasOnGround = onGround; 
-    }
+        wasOnGround = onGround;
 
-    @SubscribeEvent
-    public static void register(final RegisterPayloadHandlersEvent event) {
-        final PayloadRegistrar registrar = event.registrar(HeliopauseCore.MOD_ID);
-        registrar.playToClient(
-                EnergySyncPayload.TYPE,
-                EnergySyncPayload.STREAM_CODEC,
-                (payload, context) -> {
-                    context.enqueueWork(() -> {
-                        Level level = context.player().level();
-                        BlockEntity be = level.getBlockEntity(payload.pos());
-                        if (be instanceof BaseElectricMachineEntity machine) {
-                            machine.setClientEnergy(payload.energy(), payload.capacity());
-                        }
-                    });
-                }
-        );
+        if (player.tickCount % 20 != 0) return;
+        if (mc.level == null || mc.gameMode == null) return;
 
-        registrar.playToServer(
-                OpenEquipmentPayload.TYPE,
-                OpenEquipmentPayload.CODEC,
-                OpenEquipmentPayload::handle
-        );
+        long headPos = BlockPos.containing(player.getX(), player.getEyeY(), player.getZ()).asLong();
+        boolean isSealed = OxygenVolumeHelper.isPositionSealed(headPos);
 
-        registrar.playToClient(
-                SyncEquipmentPayload.TYPE,
-                SyncEquipmentPayload.CODEC,
-                SyncEquipmentPayload::handle
-        );
+        var radData = player.getData(HpCAttachments.RADIATION_DATA);
+        SpaceSuitHudOverlay.radiationAmount = radData.getRadiation();
+
+        int pressure = AtmosphericProperty.getDimensionalPressure(mc.level);
+        if (pressure < 228 && isSealed) pressure = 760;
+        SpaceSuitHudOverlay.pressureAmount = pressure;
+        
+        boolean isCreative = mc.gameMode.getPlayerMode().isCreative() || player.isSpectator();
+
+        if (isCreative) {
+            HazardWarningHudOverlay.showRadiationWarning = false;
+            HazardWarningHudOverlay.showPressureWarning = false;
+            HazardWarningHudOverlay.showOxygenWarning = false;
+        } else {
+            HazardWarningHudOverlay.showRadiationWarning = radData.getRadiation() > 200;
+
+            boolean pressureProtected = true;
+            if (pressure > 7600) {
+                pressureProtected = SpaceGearSetupController.checkBaricSetup(player, 2);
+            } else if (pressure > 2280 || pressure < 228) {
+                pressureProtected = SpaceGearSetupController.checkBaricSetup(player, 1) ||
+                        SpaceGearSetupController.checkBaricSetup(player, 2);
+            }
+
+            HazardWarningHudOverlay.showPressureWarning = !pressureProtected && !player.getType().is(HpCTags.Entities.DOES_NOT_BREATHE);
+
+            boolean inVacuum = OxygenVolumeHelper.isVacuumDimension(mc.level) && !isSealed;
+            HazardWarningHudOverlay.showOxygenWarning = inVacuum
+                    && !SpaceGearSetupController.hasSufficientOxygenClientSafe(player)
+                    && !player.getType().is(HpCTags.Entities.DOES_NOT_BREATHE);
+        }
+        
+        var inventory = player.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+
+        ItemStack tank1 = inventory.getStackInSlot(2);
+        if (!tank1.isEmpty() && tank1.getItem() instanceof GasTankItem gasTankItem1) {
+            var data1 = gasTankItem1.getGasTankData(tank1);
+            if (data1 != null && data1.isOxygen()) {
+                SpaceSuitHudOverlay.oxygenAmount1 = data1.amount();
+                SpaceSuitHudOverlay.oxygenCapacity1 = data1.getCapacity();
+            } else {
+                SpaceSuitHudOverlay.oxygenAmount1 = 0;
+            }
+        } else {
+            SpaceSuitHudOverlay.oxygenAmount1 = 0;
+            SpaceSuitHudOverlay.oxygenCapacity1 = 1; 
+        }
+        ItemStack tank2 = inventory.getStackInSlot(3);
+        if (!tank2.isEmpty() && tank2.getItem() instanceof GasTankItem gasTankItem2) {
+            var data2 = gasTankItem2.getGasTankData(tank2);
+            if (data2 != null && data2.isOxygen()) {
+                SpaceSuitHudOverlay.oxygenAmount2 = data2.amount();
+                SpaceSuitHudOverlay.oxygenCapacity2 = data2.getCapacity();
+            } else {
+                SpaceSuitHudOverlay.oxygenAmount2 = 0;
+            }
+        } else {
+            SpaceSuitHudOverlay.oxygenAmount2 = 0;
+            SpaceSuitHudOverlay.oxygenCapacity2 = 1;
+        }
     }
 
     private static float currentZoom = 1.0F;
@@ -451,6 +484,13 @@ public class HeliopauseCoreClient {
         event.registerAboveAll(
                 ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "lander_hud"),
                 LanderHudOverlay.INSTANCE
+        );
+        event.registerAboveAll(
+                ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "warning_hud"),
+                HazardWarningHudOverlay.INSTANCE
+        );
+        event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "space_suit_hud"),
+                SpaceSuitHudOverlay.INSTANCE
         );
     }
 }

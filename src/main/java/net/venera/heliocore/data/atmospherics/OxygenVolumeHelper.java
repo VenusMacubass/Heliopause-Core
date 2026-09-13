@@ -1,19 +1,16 @@
-package net.venera.heliocore.util;
+package net.venera.heliocore.data.atmospherics;
 
 import it.unimi.dsi.fastutil.longs.LongArrayFIFOQueue;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
-import net.venera.heliocore.item.HpCTags;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;

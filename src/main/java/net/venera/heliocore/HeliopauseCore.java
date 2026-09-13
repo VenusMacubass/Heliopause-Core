@@ -3,6 +3,8 @@ package net.venera.heliocore;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.venera.heliocore.block.HpCBlocks;
@@ -40,21 +42,11 @@ public class HeliopauseCore {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public HeliopauseCore(IEventBus modEventBus, Dist modDist, ModContainer modContainer) {
-        modEventBus.addListener(HeliopauseCoreClient::onClientSetup);
         modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(HeliopauseCoreClient::onRegisterRenderers);
         modEventBus.addListener(this::onEntityCreation);
+        modEventBus.addListener(this::addCreative);
         NeoForge.EVENT_BUS.addListener(this::onServerTick);
-
-        if (modDist.isClient()) {
-            modEventBus.addListener(HeliopauseCoreClient::registerBlockColors);
-            modEventBus.addListener(HeliopauseCoreClient::registerItemColors);
-        }
-
-        //NeoForge.EVENT_BUS.register(this);
-        NeoForge.EVENT_BUS.register(RadiationHandler.class);
-
-
+        
         HpCCreativeModeTabs.register(modEventBus);
         HpCItems.register(modEventBus);
         HpCBlocks.register(modEventBus);
@@ -67,9 +59,9 @@ public class HeliopauseCore {
         HpCEntities.register(modEventBus);
         HpCVillagers.register(modEventBus);
         HpCFeatures.register(modEventBus);
-
-        modEventBus.addListener(this::addCreative);
-
+        if (modDist.isClient()) {
+            modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+        }
         modContainer.registerConfig(ModConfig.Type.COMMON, HeliopauseConfig.SPEC);
     }
 

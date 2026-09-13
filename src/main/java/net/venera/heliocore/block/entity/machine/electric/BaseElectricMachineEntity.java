@@ -17,7 +17,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.venera.heliocore.block.entity.machine.BaseMachineEntity;
 import net.venera.heliocore.data.energy.GridManager;
 import net.venera.heliocore.item.hpc_custom.BatteryItem;
-import net.venera.heliocore.util.EnergySyncPayload;
+import net.venera.heliocore.util.SyncEnergyPayload;
 import net.venera.heliocore.util.MachineConfigHelper;
 
 public abstract class BaseElectricMachineEntity extends BaseMachineEntity {
@@ -147,7 +147,7 @@ public abstract class BaseElectricMachineEntity extends BaseMachineEntity {
                 PacketDistributor.sendToPlayersTrackingChunk(
                         (ServerLevel) machine.level,
                         new ChunkPos(machine.getBlockPos()),
-                        new EnergySyncPayload(machine.getBlockPos(), this.energy, this.capacity)
+                        new SyncEnergyPayload(machine.getBlockPos(), this.energy, this.capacity)
                 );
             }
         }

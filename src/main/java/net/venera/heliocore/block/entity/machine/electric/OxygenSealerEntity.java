@@ -32,7 +32,7 @@ import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
 import net.venera.heliocore.screen.block_entity.OxygenSealerMenu;
 import net.venera.heliocore.util.MachineConfigHelper;
-import net.venera.heliocore.util.OxygenVolumeHelper;
+import net.venera.heliocore.data.atmospherics.OxygenVolumeHelper;
 import net.venera.heliocore.util.PipeNetworkHelper;
 import org.jetbrains.annotations.Nullable;
 

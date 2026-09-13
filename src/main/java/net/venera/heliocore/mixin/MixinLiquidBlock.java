@@ -7,16 +7,14 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
-import net.venera.heliocore.data.temperature.EnvironmentalTemperature;
-import net.venera.heliocore.util.OxygenVolumeHelper;
+import net.venera.heliocore.data.atmospherics.AtmosphericProperty;
+import net.venera.heliocore.data.atmospherics.OxygenVolumeHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -52,7 +50,7 @@ public class MixinLiquidBlock {
             }
 
             FluidState fluidState = state.getFluidState();
-            double temp = EnvironmentalTemperature.getEnvironmentalTemperature(level, level.getBiome(pos));
+            double temp = AtmosphericProperty.getEnvironmentalTemperature(level, level.getBiome(pos));
 
             // === WATER LOGIC ===
             if (fluidState.is(FluidTags.WATER)) {

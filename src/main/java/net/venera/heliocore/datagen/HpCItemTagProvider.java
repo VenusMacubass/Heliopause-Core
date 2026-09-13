@@ -68,6 +68,12 @@ public class HpCItemTagProvider extends ItemTagsProvider {
         tag(THERMAL_GEAR_LEGS).add(HpCItems.T1_THERMAL_INSULATION_LEGGINGS.get());
         tag(THERMAL_GEAR_HANDS_AND_FEET).add(HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.get());
         
+        tag(T1_PRESSURE_PROTECTORS)
+                .add(HpCItems.T1_SPACE_SUIT_HELMET.get())
+                .add(HpCItems.T1_SPACE_SUIT_CHESTPLATE.get())
+                .add(HpCItems.T1_SPACE_SUIT_LEGGINGS.get())
+                .add(HpCItems.T1_SPACE_SUIT_BOOTS.get());
+        
         tag(NOSES).add(HpCItems.T1_ROCKET_NOSE_CONE.get());
 //        tag(BOOSTERS).add(HpCItems..get());
         tag(HULLS).add(HpCItems.COMPRESSED_HD_PLATE.get());

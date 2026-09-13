@@ -29,6 +29,7 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -57,9 +58,10 @@ import net.venera.heliocore.block.entity.HpCBlockEntities;
 import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
 import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
 import net.venera.heliocore.data.HpCAttachments;
-import net.venera.heliocore.data.SpaceGearSetupController;
+import net.venera.heliocore.data.atmospherics.SpaceGearSetupController;
+import net.venera.heliocore.data.atmospherics.OxygenVolumeHelper;
 import net.venera.heliocore.data.component.GasTankData;
-import net.venera.heliocore.data.temperature.EnvironmentalTemperature;
+import net.venera.heliocore.data.atmospherics.AtmosphericProperty;
 import net.venera.heliocore.entity.ai.goal.OpenAirlockGoal;
 import net.venera.heliocore.entity.ai.goal.RefillOxygenGoal;
 import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
@@ -197,7 +199,6 @@ public class HpCEvents {
     @SubscribeEvent
     public static void register(final RegisterPayloadHandlersEvent event) { //For elytra slot
         final PayloadRegistrar registrar = event.registrar(HeliopauseCore.MOD_ID);
-
         registrar.playToServer(
                 LanderControlPayload.TYPE,
                 LanderControlPayload.STREAM_CODEC,
@@ -229,6 +230,44 @@ public class HpCEvents {
                         }
                     });
                 }
+        );
+        registrar.playToClient(
+                SyncEnergyPayload.TYPE,
+                SyncEnergyPayload.STREAM_CODEC,
+                (payload, context) -> {
+                    context.enqueueWork(() -> {
+                        Level level = context.player().level();
+                        BlockEntity be = level.getBlockEntity(payload.pos());
+                        if (be instanceof BaseElectricMachineEntity machine) {
+                            machine.setClientEnergy(payload.energy(), payload.capacity());
+                        }
+                    });
+                }
+        );
+
+        registrar.playToClient(
+                SyncRadiationPayload.TYPE,
+                SyncRadiationPayload.STREAM_CODEC,
+                (payload, context) -> {
+                    context.enqueueWork(() -> {
+                        Player player = context.player();
+                        if (player != null) {
+                            player.getData(HpCAttachments.RADIATION_DATA).setRadiation(payload.radiation());
+                        }
+                    });
+                }
+        );
+
+        registrar.playToServer(
+                OpenEquipmentPayload.TYPE,
+                OpenEquipmentPayload.CODEC,
+                OpenEquipmentPayload::handle
+        );
+
+        registrar.playToClient(
+                SyncEquipmentPayload.TYPE,
+                SyncEquipmentPayload.CODEC,
+                SyncEquipmentPayload::handle
         );
     }
     //endregion
@@ -293,7 +332,7 @@ public class HpCEvents {
             return;
         }
 
-        if (living.getType().is(HpCTags.Entities.THERMALLY_IMMUNE)) {
+        if (living.getType().is(HpCTags.Entities.HAS_THERMAL_BLESSING)) {
             return;
         }
         
@@ -338,7 +377,7 @@ public class HpCEvents {
         }
 
         Holder<Biome> biome = level.getBiome(living.blockPosition());
-        double currentTemp = EnvironmentalTemperature.getEnvironmentalTemperature(level, biome);
+        double currentTemp = AtmosphericProperty.getEnvironmentalTemperature(level, biome);
         int thermalProtectionScore = SpaceGearSetupController.checkThermalSetup(living);
         
         if (thermalProtectionScore == 4) {
@@ -400,6 +439,7 @@ public class HpCEvents {
         if (living instanceof Player player && (player.isCreative() || player.isSpectator())) {
             return;
         }
+        if (living.getType().is(HpCTags.Entities.DOES_NOT_BREATHE)) return;
         
         BlockPos headPos = BlockPos.containing(event.getEntity().getX(), event.getEntity().getEyeY(), event.getEntity().getZ());
         long headLong = headPos.asLong();
@@ -424,10 +464,46 @@ public class HpCEvents {
             boolean hasOxygenGear = SpaceGearSetupController.checkOxygenSetup(living);
 
             if (!hasOxygenGear) {
-                if (living.getType().is(HpCTags.Entities.DOES_NOT_BREATHE)) return;
                 if (living.isInvertedHealAndHarm()) return;
                 living.hurt(living.damageSources().drown(), 2.0f);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onBaricTick(EntityTickEvent.Post event) {
+        if (!(event.getEntity() instanceof LivingEntity living) || living.level().isClientSide) {
+            return;
+        }
+        if (living.tickCount % 20 != 0) return;
+        if (living instanceof Player player && (player.isCreative() || player.isSpectator())) {
+            return;
+        }
+
+        Level level = living.level();
+        int dimensionalPressure = AtmosphericProperty.getDimensionalPressure(level);
+        
+        if (dimensionalPressure < 228) {
+            long headPos = BlockPos.containing(living.getX(), living.getEyeY(), living.getZ()).asLong();
+            if (OxygenVolumeHelper.isPositionSealed(headPos)) {
+                dimensionalPressure = 760;
+            }
+        }
+
+        boolean isPressureProtected = true;
+        
+        if (dimensionalPressure > 7600) {
+            isPressureProtected = SpaceGearSetupController.checkBaricSetup(living, 2);
+        }
+        else if (dimensionalPressure > 2280 || dimensionalPressure < 228) {
+            isPressureProtected = SpaceGearSetupController.checkBaricSetup(living, 1) ||
+                    SpaceGearSetupController.checkBaricSetup(living, 2);
+        }
+
+        if (!isPressureProtected) {
+            if (living.getType().is(HpCTags.Entities.DOES_NOT_BREATHE)) return;
+
+            living.hurt(living.damageSources().cramming(), 1.0f);
         }
     }
     //endregion

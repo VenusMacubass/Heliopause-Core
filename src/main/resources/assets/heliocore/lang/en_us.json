@@ -214,9 +214,10 @@
   
   "death.attack.radiation_damage": "%1$s succumbed to radiation poisoning.",
 
-
-
-
+  "hud.heliocore.lander_descent_speed": "Descent Speed: %s m/s",
+  "hud.heliocore.warning.radiation": "WARNING: LETHAL RADIATION",
+  "hud.heliocore.warning.pressure": "WARNING: LETHAL PRESSURE",
+  "hud.heliocore.warning.oxygen": "WARNING: OXYGEN DEPLETION",
 
   "category.heliocore.keys": "Heliopause Core",
   "key.heliocore.zoom": "Suit Zoom"

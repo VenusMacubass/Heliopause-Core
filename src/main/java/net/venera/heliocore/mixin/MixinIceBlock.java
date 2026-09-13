@@ -11,8 +11,8 @@ import net.minecraft.world.level.block.IceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.entity.machine.electric.OxygenSealerEntity;
-import net.venera.heliocore.data.temperature.EnvironmentalTemperature;
-import net.venera.heliocore.util.OxygenVolumeHelper;
+import net.venera.heliocore.data.atmospherics.AtmosphericProperty;
+import net.venera.heliocore.data.atmospherics.OxygenVolumeHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -37,7 +37,7 @@ public class MixinIceBlock {
                 return;
             }
             
-            double temp = EnvironmentalTemperature.getEnvironmentalTemperature(level, level.getBiome(pos));
+            double temp = AtmosphericProperty.getEnvironmentalTemperature(level, level.getBiome(pos));
             
             if (temp >= 100.0) {
                 level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());

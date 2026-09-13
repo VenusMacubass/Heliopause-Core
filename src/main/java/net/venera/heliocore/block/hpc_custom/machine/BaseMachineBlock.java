@@ -22,7 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.venera.heliocore.block.entity.machine.BaseMachineEntity;
 import net.venera.heliocore.block.entity.machine.electric.BaseElectricMachineEntity;
 import net.venera.heliocore.data.energy.GridManager;
-import net.venera.heliocore.util.OxygenVolumeHelper;
+import net.venera.heliocore.data.atmospherics.OxygenVolumeHelper;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;

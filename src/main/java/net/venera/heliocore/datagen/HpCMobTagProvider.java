@@ -41,9 +41,16 @@ public class HpCMobTagProvider extends EntityTypeTagsProvider {
         
         tag(DOES_NOT_BREATHE)
                 .add(EntityType.IRON_GOLEM);
-        tag(THERMALLY_IMMUNE)
+        
+        tag(HAS_THERMAL_BLESSING)
                 .add(EntityType.IRON_GOLEM);
         tag(HAS_OXYGEN_BLESSING)
+                .add(EntityType.CAT)
+                .add(EntityType.WOLF);
+        tag(HAS_RADIATION_BLESSING)
+                .add(EntityType.CAT)
+                .add(EntityType.WOLF);
+        tag(HAS_PRESSURE_BLESSING)
                 .add(EntityType.CAT)
                 .add(EntityType.WOLF);
     }

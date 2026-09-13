@@ -1,8 +1,11 @@
-package net.venera.heliocore.data;
+package net.venera.heliocore.data.atmospherics;
 
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.data.component.GasTankData;
 import net.venera.heliocore.event.HpCEvents;
 import net.venera.heliocore.item.HpCItems;
@@ -33,6 +36,7 @@ public class SpaceGearSetupController {
         }
 
         if (tryConsumeOxygen(tank2Stack, livingEntity)) {
+            
             HpCEvents.syncToAllTracking(livingEntity);
             return true;
         }
@@ -69,21 +73,56 @@ public class SpaceGearSetupController {
         
         return thermalProtectionScore;
     }
+    
+    public static boolean checkBaricSetup(LivingEntity livingEntity, int tier) {
+        TagKey<Item> pressureProtector;
+        switch (tier) {
+            case 1 -> pressureProtector = HpCTags.Items.T1_PRESSURE_PROTECTORS;
+            case 2 -> pressureProtector = HpCTags.Items.T2_PRESSURE_PROTECTORS;
+            case 3 -> pressureProtector = HpCTags.Items.T3_PRESSURE_PROTECTORS;
+            default -> throw new IllegalArgumentException("Invalid tier: " + tier);
+        }
+        for (ItemStack armorPiece : livingEntity.getArmorSlots()) {
+            if (!armorPiece.is(pressureProtector)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     private static boolean tryConsumeOxygen(ItemStack stack, LivingEntity livingEntity) {
         if (stack.isEmpty() || !(stack.getItem() instanceof GasTankItem gasTankItem)) {
             return false;
         }
-
-        if(livingEntity.getType().is(HpCTags.Entities.HAS_OXYGEN_BLESSING)){return true;}
         
         GasTankData data = gasTankItem.getGasTankData(stack);
-
+        if(livingEntity.getType().is(HpCTags.Entities.HAS_OXYGEN_BLESSING)){return true;}
+        
         if (data != null && data.isOxygen() && data.amount() >= OXYGEN_USAGE) {
             gasTankItem.drain(stack, OXYGEN_USAGE);
             return true;
         }
 
+        return false;
+    }
+
+    public static boolean hasSufficientOxygenClientSafe(LivingEntity livingEntity) {
+        ItemStackHandler inventory = livingEntity.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+
+        if (!inventory.getStackInSlot(0).is(HpCItems.OXYGEN_MASK.get())) return false;
+        if (!inventory.getStackInSlot(1).is(HpCItems.OXYGEN_CONNECTORS.get())) return false;
+
+        for (int i = 2; i <= 3; i++) {
+            ItemStack tank = inventory.getStackInSlot(i);
+            if (!tank.isEmpty() && tank.getItem() instanceof GasTankItem gasTankItem) {
+                if (livingEntity.getType().is(HpCTags.Entities.HAS_OXYGEN_BLESSING)) return true;
+
+                GasTankData data = gasTankItem.getGasTankData(tank);
+                if (data != null && data.isOxygen() && data.amount() >= OXYGEN_USAGE) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 }

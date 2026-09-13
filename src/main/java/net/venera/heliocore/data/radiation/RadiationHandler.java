@@ -1,5 +1,6 @@
 package net.venera.heliocore.data.radiation;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -9,9 +10,11 @@ import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.dimension.HpCDimensions;
+import net.venera.heliocore.util.SyncRadiationPayload;
 
 @EventBusSubscriber(modid = HeliopauseCore.MOD_ID)
 public class RadiationHandler {
@@ -30,12 +33,11 @@ public class RadiationHandler {
 
         radiationChange(aliveEntity, radiationData);
         applyRadiationEffects(aliveEntity, radiationData);
-        if (aliveEntity.tickCount % (radiationData.getRadiation() >= 400 ? 40:100) != 0) {
+        if (aliveEntity.tickCount % (radiationData.getRadiation() >= 400 ? 40:100) == 0) {
             applyRadiationDamage(aliveEntity, radiationData);
         }
-        if(aliveEntity instanceof Player player){
-            radiationData.setRadiation(0);
-        
+        if (aliveEntity instanceof ServerPlayer serverPlayer) {
+            PacketDistributor.sendToPlayer(serverPlayer, new SyncRadiationPayload(radiationData.getRadiation()));
         }
     }
 
@@ -88,9 +90,6 @@ public class RadiationHandler {
         if (radLevel > 200) {
             entity.hurt(damageSource, radLevel > 600 ? 2f : 1f);
         }
-//        if (radLevel > 400) {
-//
-//        }
         if (radLevel > 800) {
             entity.hurt(damageSource, 2f);
         }
