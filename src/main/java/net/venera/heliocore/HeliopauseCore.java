@@ -22,6 +22,8 @@ import net.venera.heliocore.item.HpCCreativeModeTabs;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.recipe.HpCRecipes;
 import net.venera.heliocore.screen.HpCMenuTypes;
+import net.venera.heliocore.screen.hud.HpCMainConfigScreen;
+import net.venera.heliocore.screen.hud.HudSettingsScreen;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -66,7 +68,7 @@ public class HeliopauseCore {
         modContainer.registerConfig(ModConfig.Type.CLIENT, HeliopauseClientConfig.SPEC);
 
         modContainer.registerExtensionPoint(IConfigScreenFactory.class,
-                (container, parentScreen) -> new net.venera.heliocore.screen.hud.HudSettingsScreen(parentScreen)
+                (container, parentScreen) -> new HpCMainConfigScreen(parentScreen)
         );
     }
 
