@@ -12,16 +12,15 @@ public class HeliopauseConfig {
     static {
         BUILDER.push("Life Support Systems");
     }
-
     public static final ModConfigSpec.IntValue MAX_CHAMBER_VOLUME = BUILDER
             .comment("Maximum amount of air blocks a single Oxygen Sealer can flood-fill.")
             .defineInRange("maxChamberVolume", 2000, 100, 50000);
-
     
-
     static {
         BUILDER.pop(); //Closes the category
     }
     
     public static final ModConfigSpec SPEC = BUILDER.build();
+    
+    
 }

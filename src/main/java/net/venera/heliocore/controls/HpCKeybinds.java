@@ -21,5 +21,6 @@ public class HpCKeybinds {
     @SubscribeEvent
     public static void registerKeybinds(RegisterKeyMappingsEvent event) {
         event.register(ZOOM_KEY);
+        
     }
 }

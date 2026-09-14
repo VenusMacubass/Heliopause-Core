@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.gui.screens.options.OptionsScreen;
 import net.minecraft.client.model.CatModel;
 import net.minecraft.client.model.WolfModel;
 import net.minecraft.client.multiplayer.ClientLevel;

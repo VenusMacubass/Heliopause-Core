@@ -6,9 +6,13 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
+import net.venera.heliocore.HeliopauseClientConfig;
+import net.venera.heliocore.HeliopauseConfig;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.data.HpCAttachments;
+import net.venera.heliocore.item.HpCTags;
 
 public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
     public static final SpaceSuitHudOverlay INSTANCE = new SpaceSuitHudOverlay();
@@ -36,77 +40,143 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) return;
 
-        float scale = 2.5f;
+        if (!HeliopauseClientConfig.HUD_ENABLED.get()) return;
+        var head = mc.player.getItemBySlot(EquipmentSlot.HEAD);
+        var chest = mc.player.getItemBySlot(EquipmentSlot.CHEST);
 
-        // 1. DIMENSIONS
-        // Background height increased to 50 to fit the new text and bars
-        int bgWidth = (int) (20 * scale);
-        int bgHeight = (int) (46 * scale);
+        boolean hasHelmet = head.is(HpCTags.Items.T1_PRESSURE_PROTECTORS) || head.is(HpCTags.Items.T2_PRESSURE_PROTECTORS);
+        boolean hasChestplate = chest.is(HpCTags.Items.T1_PRESSURE_PROTECTORS) || chest.is(HpCTags.Items.T2_PRESSURE_PROTECTORS);
+
+        if (!hasHelmet || !hasChestplate) {
+            return;
+        }
+
+        float scale = HeliopauseClientConfig.HUD_SCALE.get().floatValue();
+        int hudX = HeliopauseClientConfig.HUD_X.get();
+        int hudY = HeliopauseClientConfig.HUD_Y.get();
+
+        boolean isHorizontal = HeliopauseClientConfig.HUD_HORIZONTAL.get();
+
+        // 1. DYNAMIC BACKGROUND SIZING (Much shorter and tighter!)
+        int bgWidth = (int) ((isHorizontal ? 52 : 20) * scale);
+        int bgHeight = (int) ((isHorizontal ? 23 : 46) * scale);
 
         int tankWidth = (int) (16 * scale);
         int tankHeight = (int) (16 * scale);
-        
+
         int hazardWidth = (int) (16 * scale);
         int hazardHeight = (int) (4 * scale);
 
-        // 2. THE MASTER ANCHOR
-        int hudX = 10;
-        int hudY = 10;
+        // --- NEW: DYNAMIC COORDINATE ROUTER ---
+        int tankX, tankY, oxyTextY;
+        int radBarX, radBarY, radTextY;
+        int pressBarX, pressBarY, pressTextY;
 
-        // tankX is the universal X coordinate for EVERYTHING (Tanks, Bars, and Text)
-        int tankX = hudX + (int)(2 * scale);
+        if (isHorizontal) {
+            // PART 1: Oxygen (Left)
+            // Moved up to Y=2 so it doesn't push the bottom edge down
+            tankX = hudX + (int) (2 * scale);
+            oxyTextY = hudY + (int) (2 * scale);
+            tankY = hudY + (int) (5 * scale);
+
+            // PART 2: Hazards (Middle)
+            // Moved closer to the tanks (X=20) and squished the vertical gaps
+            radBarX = hudX + (int) (20 * scale);
+            radTextY = hudY + (int) (2 * scale);
+            radBarY = hudY + (int) (5 * scale);
+
+            pressBarX = hudX + (int) (20 * scale);
+            pressTextY = hudY + (int) (11 * scale);
+            pressBarY = hudY + (int) (14 * scale);
+        } else {
+            // VERTICAL LAYOUT (Your exact numbers remain untouched)
+            tankX = hudX + (int)(2 * scale);
+            radBarX = tankX;
+            pressBarX = tankX;
+
+            radTextY   = hudY + (int) (11 * scale);
+            radBarY    = hudY + (int) (14 * scale);
+
+            pressTextY = hudY + (int) (18 * scale);
+            pressBarY  = hudY + (int) (21 * scale);
+
+            oxyTextY   = hudY + (int) (25 * scale);
+            tankY      = hudY + bgHeight - tankHeight - (int)(2 * scale);
+        }
 
         // Draw Background
         guiGraphics.fill(hudX, hudY, hudX + bgWidth, hudY + bgHeight, 0x80000000);
 
-        // 3. TOP-DOWN Y-COORDINATES
-        // We space everything out mathematically from the top!
-        int radTextY   = hudY + (int) (11 * scale);
-        int radBarY    = hudY + (int) (14 * scale);
-
-        int pressTextY = hudY + (int) (18 * scale);
-        int pressBarY  = hudY + (int) (21 * scale);
-
-        int oxyTextY   = hudY + (int) (25 * scale);
-        int tankY      = hudY + bgHeight - tankHeight - (int)(2 * scale);
-
+        // --- RENDER EQUIPMENT ICONS ---
         var inventory = mc.player.getData(HpCAttachments.EQUIPMENT_INVENTORY);
-        guiGraphics.pose().pushPose();
-        float oxyIconScale = scale * (6.0f / 16.0f);
-        guiGraphics.pose().scale(oxyIconScale, oxyIconScale, 1.0f);
 
-        // Centered horizontally: 3px padding on the left and right
-        int oxyCol1 = (int) ((hudX + (3 * scale)) / oxyIconScale);
-        int oxyCol2 = (int) ((hudX + (11 * scale)) / oxyIconScale);
-        int row1    = (int) ((hudY + (1 * scale)) / oxyIconScale);
+        if (isHorizontal) {
+            // PART 3 (Right): Thermal Icons
+            // Moved closer (X=38) and tightened vertical gaps (2, 7, 12, 17)
+            guiGraphics.pose().pushPose();
+            float thermIconScale = scale * (4.0f / 16.0f);
+            guiGraphics.pose().scale(thermIconScale, thermIconScale, 1.0f);
 
-//        renderSlot(guiGraphics, inventory.getStackInSlot(0), EMPTY_MASK, oxyCol1, row1);
-        renderSlot(guiGraphics, inventory.getStackInSlot(1), CONNECTOR_ICON, oxyCol2, row1);
-        guiGraphics.pose().popPose();
+            int thermCol = (int) ((hudX + (38 * scale)) / thermIconScale);
+            int tRow1 = (int) ((hudY + (2 * scale)) / thermIconScale);
+            int tRow2 = (int) ((hudY + (7 * scale)) / thermIconScale);
+            int tRow3 = (int) ((hudY + (12 * scale)) / thermIconScale);
+            int tRow4 = (int) ((hudY + (17 * scale)) / thermIconScale);
 
-        // 2. Row 2: Thermal Gear (4 Items, 4x4 pixels each)
-        guiGraphics.pose().pushPose();
-        // Shrink the standard 16x16 down to fit into a tiny 4x4 space!
-        float thermIconScale = scale * (4.0f / 16.0f);
-        guiGraphics.pose().scale(thermIconScale, thermIconScale, 1.0f);
+            renderSlot(guiGraphics, inventory.getStackInSlot(4), HEAD_ICON, thermCol, tRow1);
+            renderSlot(guiGraphics, inventory.getStackInSlot(5), TORSO_ICON, thermCol, tRow2);
+            renderSlot(guiGraphics, inventory.getStackInSlot(6), LEGS_ICON, thermCol, tRow3);
+            renderSlot(guiGraphics, inventory.getStackInSlot(7), HANDS_ICON, thermCol, tRow4);
+            guiGraphics.pose().popPose();
 
-        // Fit all 4 items within the 20-pixel width (1, 6, 11, 16)
-        int thermCol1 = (int) ((hudX + (1 * scale)) / thermIconScale);
-        int thermCol2 = (int) ((hudX + (5 * scale)) / thermIconScale);
-        int thermCol3 = (int) ((hudX + (10 * scale)) / thermIconScale);
-        int thermCol4 = (int) ((hudX + (14 * scale)) / thermIconScale);
-        int row2      = (int) ((hudY + (7 * scale)) / thermIconScale); // Y level kept identical
+            // PART 4 (Far Right): Oxygen Setup Icons
+            // Moved closer (X=44)
+            guiGraphics.pose().pushPose();
+            float oxyIconScale = scale * (6.0f / 16.0f);
+            guiGraphics.pose().scale(oxyIconScale, oxyIconScale, 1.0f);
 
-        renderSlot(guiGraphics, inventory.getStackInSlot(4), HEAD_ICON, thermCol1, row2);
-        renderSlot(guiGraphics, inventory.getStackInSlot(5), TORSO_ICON, thermCol2, row2);
-        renderSlot(guiGraphics, inventory.getStackInSlot(6), LEGS_ICON, thermCol3, row2);
-        renderSlot(guiGraphics, inventory.getStackInSlot(7), HANDS_ICON, thermCol4, row2);
+            int oxyCol = (int) ((hudX + (44 * scale)) / oxyIconScale);
+            int oRow1 = (int) ((hudY + (3 * scale)) / oxyIconScale);
+            int oRow2 = (int) ((hudY + (12 * scale)) / oxyIconScale);
 
-        guiGraphics.pose().popPose();
-        
-        // 4. DRAW HORIZONTAL HAZARD LIQUIDS (Radiation & Pressure)
-        // Assuming the hazard bars have a 1-pixel empty border on the left/right
-        int maxHazardFill = (int) (14 * scale); // 1 pixel border on a 16 pixel texture = 14 fill
+//            renderSlot(guiGraphics, inventory.getStackInSlot(0), EMPTY_MASK, oxyCol, oRow1);
+            renderSlot(guiGraphics, inventory.getStackInSlot(1), CONNECTOR_ICON, oxyCol, oRow2);
+            guiGraphics.pose().popPose();
+
+        } else {
+            // VERTICAL LAYOUT ICONS (Your exact logic)
+            guiGraphics.pose().pushPose();
+            float oxyIconScale = scale * (6.0f / 16.0f);
+            guiGraphics.pose().scale(oxyIconScale, oxyIconScale, 1.0f);
+
+            int oxyCol1 = (int) ((hudX + (3 * scale)) / oxyIconScale);
+            int oxyCol2 = (int) ((hudX + (11 * scale)) / oxyIconScale);
+            int row1    = (int) ((hudY + (1 * scale)) / oxyIconScale);
+
+//            renderSlot(guiGraphics, inventory.getStackInSlot(0), EMPTY_MASK, oxyCol1, row1);
+            renderSlot(guiGraphics, inventory.getStackInSlot(1), CONNECTOR_ICON, oxyCol2, row1);
+            guiGraphics.pose().popPose();
+
+            guiGraphics.pose().pushPose();
+            float thermIconScale = scale * (4.0f / 16.0f);
+            guiGraphics.pose().scale(thermIconScale, thermIconScale, 1.0f);
+
+            int thermCol1 = (int) ((hudX + (1 * scale)) / thermIconScale);
+            int thermCol2 = (int) ((hudX + (5 * scale)) / thermIconScale);
+            int thermCol3 = (int) ((hudX + (10 * scale)) / thermIconScale);
+            int thermCol4 = (int) ((hudX + (14 * scale)) / thermIconScale);
+            int row2      = (int) ((hudY + (7 * scale)) / thermIconScale);
+
+            renderSlot(guiGraphics, inventory.getStackInSlot(4), HEAD_ICON, thermCol1, row2);
+            renderSlot(guiGraphics, inventory.getStackInSlot(5), TORSO_ICON, thermCol2, row2);
+            renderSlot(guiGraphics, inventory.getStackInSlot(6), LEGS_ICON, thermCol3, row2);
+            renderSlot(guiGraphics, inventory.getStackInSlot(7), HANDS_ICON, thermCol4, row2);
+
+            guiGraphics.pose().popPose();
+        }
+
+        // --- LIQUID FILLS ---
+        int maxHazardFill = (int) (14 * scale);
 
         int radFill = getHazardScaled(radiationAmount, radiationCapacity, maxHazardFill);
         int pressFill = getPressureScaled(pressureAmount, maxHazardFill);
@@ -114,14 +184,12 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
         int radColor = getRadiationColor(radiationAmount);
         int pressColor = getPressureColor(pressureAmount);
 
-        // Radiation Fill 
-        guiGraphics.fill(tankX + (int)(1 * scale), radBarY + (int)(1 * scale),
-                tankX + (int)(1 * scale) + radFill, radBarY + (int)(3 * scale), radColor);
+        guiGraphics.fill(radBarX + (int)(1 * scale), radBarY + (int)(1 * scale),
+                radBarX + (int)(1 * scale) + radFill, radBarY + (int)(3 * scale), radColor);
 
-        // Pressure Fill 
-        guiGraphics.fill(tankX + (int)(1 * scale), pressBarY + (int)(1 * scale),
-                tankX + (int)(1 * scale) + pressFill, pressBarY + (int)(3 * scale), pressColor);
-        // 5. DRAW VERTICAL OXYGEN LIQUIDS
+        guiGraphics.fill(pressBarX + (int)(1 * scale), pressBarY + (int)(1 * scale),
+                pressBarX + (int)(1 * scale) + pressFill, pressBarY + (int)(3 * scale), pressColor);
+
         int maxOxyHeight = (int) (14 * scale);
         int oxyBottomY = tankY + (int) (15 * scale);
 
@@ -132,26 +200,22 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
         guiGraphics.fill(tankX + (int)(2 * scale), oxyBottomY - oxyFill1, tankX + (int)(2 * scale) + liqWidth, oxyBottomY, 0xFF00FFFF);
         guiGraphics.fill(tankX + (int)(10 * scale), oxyBottomY - oxyFill2, tankX + (int)(10 * scale) + liqWidth, oxyBottomY, 0xFF00FFFF);
 
-        // 6. DRAW ALL TEXTURES OVER THE LIQUIDS
-        // (Texture, X, Y, ScaledW, ScaledH, U, V, SourceW, SourceH, TexW, TexH)
-        guiGraphics.blit(HAZARD_LEVEL_H, tankX, radBarY, hazardWidth, hazardHeight, 0, 0, 16, 4, 16, 4);
-        guiGraphics.blit(HAZARD_LEVEL_H, tankX, pressBarY, hazardWidth, hazardHeight, 0, 0, 16, 4, 16, 4);
+        // --- DRAW ALL TEXTURES OVER THE LIQUIDS ---
+        guiGraphics.blit(HAZARD_LEVEL_H, radBarX, radBarY, hazardWidth, hazardHeight, 0, 0, 16, 4, 16, 4);
+        guiGraphics.blit(HAZARD_LEVEL_H, pressBarX, pressBarY, hazardWidth, hazardHeight, 0, 0, 16, 4, 16, 4);
         guiGraphics.blit(OXYGEN_TANK, tankX, tankY, tankWidth, tankHeight, 0, 0, 16, 16, 16, 16);
 
-        //region Texts
+        // --- DRAW ALL TEXT ---
         Font font = mc.font;
         guiGraphics.pose().pushPose();
         float textScale = scale * 0.35f;
         guiGraphics.pose().scale(textScale, textScale, 1.0f);
-        
-        int textX = (int) (tankX / textScale);
 
-        guiGraphics.drawString(font, "Radiation:", textX, (int) (radTextY / textScale), 0xFFFFFF, false);
-        guiGraphics.drawString(font, "Pressure:", textX, (int) (pressTextY / textScale), 0xFFFFFF, false);
-        guiGraphics.drawString(font, "Oxygen:", textX, (int) (oxyTextY / textScale), 0xFFFFFF, false);
+        guiGraphics.drawString(font, "Radiation:", (int) (radBarX / textScale), (int) (radTextY / textScale), 0xFFFFFF, false);
+        guiGraphics.drawString(font, "Pressure:", (int) (pressBarX / textScale), (int) (pressTextY / textScale), 0xFFFFFF, false);
+        guiGraphics.drawString(font, "Oxygen:", (int) (tankX / textScale), (int) (oxyTextY / textScale), 0xFFFFFF, false);
 
         guiGraphics.pose().popPose();
-        //endregion
     }
 
     //region Helpers

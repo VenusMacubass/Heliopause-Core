@@ -63,6 +63,11 @@ public class HeliopauseCore {
             modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
         }
         modContainer.registerConfig(ModConfig.Type.COMMON, HeliopauseConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.CLIENT, HeliopauseClientConfig.SPEC);
+
+        modContainer.registerExtensionPoint(IConfigScreenFactory.class,
+                (container, parentScreen) -> new net.venera.heliocore.screen.hud.HudSettingsScreen(parentScreen)
+        );
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
