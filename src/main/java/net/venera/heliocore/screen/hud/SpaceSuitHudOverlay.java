@@ -6,7 +6,9 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.venera.heliocore.HeliopauseCore;
+import net.venera.heliocore.data.HpCAttachments;
 
 public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
     public static final SpaceSuitHudOverlay INSTANCE = new SpaceSuitHudOverlay();
@@ -14,6 +16,11 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
     private static final ResourceLocation OXYGEN_TANK = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/hud/oxygen_tanks.png");
     private static final ResourceLocation HAZARD_LEVEL_V = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/hud/hazard_level_vertical.png");
     private static final ResourceLocation HAZARD_LEVEL_H = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/hud/hazard_level_horizontal.png");
+    private static final ResourceLocation CONNECTOR_ICON = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/player_gui/oxygen_connectors_slot.png");
+    private static final ResourceLocation HEAD_ICON = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/player_gui/t1_thermal_insulation_head_slot.png");
+    private static final ResourceLocation TORSO_ICON = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/player_gui/t1_thermal_insulation_torso_slot.png");
+    private static final ResourceLocation LEGS_ICON = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/player_gui/t1_thermal_insulation_leggings_slot.png");
+    private static final ResourceLocation HANDS_ICON = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/player_gui/t1_thermal_insulation_hands_and_feet_slot.png");
     
     public static int oxygenAmount1 = 0;
     public static int oxygenAmount2 = 0;
@@ -22,7 +29,7 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
     public static int pressureAmount = 0;
     public static final int pressureCapacity = 7600;
     public static double radiationAmount = 0;
-    public static final double radiationCapacity = 1000;
+    public static final double radiationCapacity = 800;
 
     @Override
     public void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
@@ -34,12 +41,11 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
         // 1. DIMENSIONS
         // Background height increased to 50 to fit the new text and bars
         int bgWidth = (int) (20 * scale);
-        int bgHeight = (int) (50 * scale);
+        int bgHeight = (int) (46 * scale);
 
         int tankWidth = (int) (16 * scale);
         int tankHeight = (int) (16 * scale);
-
-        // *CHANGE THESE IF YOUR HAZARD PNG IS TALLER THAN 4 PIXELS*
+        
         int hazardWidth = (int) (16 * scale);
         int hazardHeight = (int) (4 * scale);
 
@@ -55,15 +61,49 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
 
         // 3. TOP-DOWN Y-COORDINATES
         // We space everything out mathematically from the top!
-        int radTextY   = hudY + (int) (3 * scale);
-        int radBarY    = hudY + (int) (8 * scale);
+        int radTextY   = hudY + (int) (11 * scale);
+        int radBarY    = hudY + (int) (14 * scale);
 
-        int pressTextY = hudY + (int) (15 * scale);
-        int pressBarY  = hudY + (int) (20 * scale);
+        int pressTextY = hudY + (int) (18 * scale);
+        int pressBarY  = hudY + (int) (21 * scale);
 
-        int oxyTextY   = hudY + (int) (27 * scale);
-        int tankY      = hudY + (int) (32 * scale);
+        int oxyTextY   = hudY + (int) (25 * scale);
+        int tankY      = hudY + bgHeight - tankHeight - (int)(2 * scale);
 
+        var inventory = mc.player.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+        guiGraphics.pose().pushPose();
+        float oxyIconScale = scale * (6.0f / 16.0f);
+        guiGraphics.pose().scale(oxyIconScale, oxyIconScale, 1.0f);
+
+        // Centered horizontally: 3px padding on the left and right
+        int oxyCol1 = (int) ((hudX + (3 * scale)) / oxyIconScale);
+        int oxyCol2 = (int) ((hudX + (11 * scale)) / oxyIconScale);
+        int row1    = (int) ((hudY + (1 * scale)) / oxyIconScale);
+
+//        renderSlot(guiGraphics, inventory.getStackInSlot(0), EMPTY_MASK, oxyCol1, row1);
+        renderSlot(guiGraphics, inventory.getStackInSlot(1), CONNECTOR_ICON, oxyCol2, row1);
+        guiGraphics.pose().popPose();
+
+        // 2. Row 2: Thermal Gear (4 Items, 4x4 pixels each)
+        guiGraphics.pose().pushPose();
+        // Shrink the standard 16x16 down to fit into a tiny 4x4 space!
+        float thermIconScale = scale * (4.0f / 16.0f);
+        guiGraphics.pose().scale(thermIconScale, thermIconScale, 1.0f);
+
+        // Fit all 4 items within the 20-pixel width (1, 6, 11, 16)
+        int thermCol1 = (int) ((hudX + (1 * scale)) / thermIconScale);
+        int thermCol2 = (int) ((hudX + (5 * scale)) / thermIconScale);
+        int thermCol3 = (int) ((hudX + (10 * scale)) / thermIconScale);
+        int thermCol4 = (int) ((hudX + (14 * scale)) / thermIconScale);
+        int row2      = (int) ((hudY + (7 * scale)) / thermIconScale); // Y level kept identical
+
+        renderSlot(guiGraphics, inventory.getStackInSlot(4), HEAD_ICON, thermCol1, row2);
+        renderSlot(guiGraphics, inventory.getStackInSlot(5), TORSO_ICON, thermCol2, row2);
+        renderSlot(guiGraphics, inventory.getStackInSlot(6), LEGS_ICON, thermCol3, row2);
+        renderSlot(guiGraphics, inventory.getStackInSlot(7), HANDS_ICON, thermCol4, row2);
+
+        guiGraphics.pose().popPose();
+        
         // 4. DRAW HORIZONTAL HAZARD LIQUIDS (Radiation & Pressure)
         // Assuming the hazard bars have a 1-pixel empty border on the left/right
         int maxHazardFill = (int) (14 * scale); // 1 pixel border on a 16 pixel texture = 14 fill
@@ -126,7 +166,7 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
             ratio = (amount / 760.0) * 0.5;
         } else {
             // Second half of the bar is 760 to 7600
-            ratio = 0.5 + ((amount - 760.0) / (7600.0 - 760.0)) * 0.5;
+            ratio = 0.5 + ((amount - 760.0) / (pressureCapacity - 760.0)) * 0.5;
         }
         return (int) Math.min(ratio * maxPixels, maxPixels);
     }
@@ -134,7 +174,7 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
     // Dynamic Color for Radiation
     public int getRadiationColor(double amount) {
         if (amount < 100) return 0xFF55FF55; // Green (Safe)
-        if (amount < 400) return 0xFFFFFF55; // Yellow (Warning)
+        if (amount < 200) return 0xFFFFFF55; // Yellow (Warning)
         return 0xFFFF5555; // Red (Lethal)
     }
 
@@ -143,6 +183,15 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
         if (amount < 228 || amount > 2280) return 0xFFFF5555; // Red (Requires Baric Setup 1 or 2)
         if (amount < 500 || amount > 1500) return 0xFFFFFF55; // Yellow (Getting uncomfortable)
         return 0xFF55FF55; // Green (Optimal ~760)
+    }
+
+    private void renderSlot(GuiGraphics guiGraphics, ItemStack stack, ResourceLocation emptyTex, int x, int y) {
+        if (!stack.isEmpty()) {
+            guiGraphics.renderItem(stack, x, y);
+        } else {
+            // Draws the empty texture at standard 16x16 size (which is scaled down by iconScale!)
+            guiGraphics.blit(emptyTex, x, y, 0, 0, 16, 16, 16, 16);
+        }
     }
     //endregion
 }
