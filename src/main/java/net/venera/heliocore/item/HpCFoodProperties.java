@@ -9,8 +9,13 @@ public class HpCFoodProperties {
             .nutrition(3)
             .saturationModifier(1.0f)
             .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 120), 0.5f).build();
+    
+    public static final FoodProperties CANNED_FOOD = new FoodProperties.Builder()
+            .nutrition(3)
+            .saturationModifier(1.0f)
+            .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 120), 0.5f).build();
 
-    public static final FoodProperties MODERN_FOOD = new FoodProperties.Builder()
+    public static final FoodProperties COMPLEX_FOOD = new FoodProperties.Builder()
             .nutrition(5)
             .saturationModifier(1.5f)
             .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 240), 1f).build();

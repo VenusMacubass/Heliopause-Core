@@ -1,4 +1,4 @@
-// 1.21.1	2026-09-10T23:31:52.7509739	Item Models: heliocore
+// 1.21.1	2026-09-15T16:49:05.7633207	Item Models: heliocore
 1ac96947d6d705457f38d0a1fa68a0dcb74bc592 assets/heliocore/models/item/air_fan.json
 0734313d99e1a4ca395735a0943619e787dd452a assets/heliocore/models/item/base_building_wall_black.json
 77313ec5bf2583da66c950d2ae65ff21c6eb341c assets/heliocore/models/item/base_building_wall_white.json
@@ -37,6 +37,7 @@ d754b71e6180081a586fe7630dd92361e15d31f8 assets/heliocore/models/item/heavy_duty
 f161f4e5733fdfa637181ee0e9da9a60bf97c014 assets/heliocore/models/item/moon_dungeon_brick_wall.json
 8ba848f79f24fecc74d70c6e43e32f4a49d5ce29 assets/heliocore/models/item/moon_rock_wall.json
 f643fc074ecadea8066344fa970997e691ff0ec0 assets/heliocore/models/item/oxygen_connectors.json
+0549f03606bd6b2b55eccc9a669ae35907543288 assets/heliocore/models/item/oxygen_mask.json
 122a500f4c6fc3d03cb042beb3e80baffc05a50b assets/heliocore/models/item/petrochemicals.json
 00c9d55777d044cd7921206d188c6933590fc644 assets/heliocore/models/item/pressure_protection_material.json
 8ea9cae51fda03e164ae7cf72fcfd9b4ea091792 assets/heliocore/models/item/radiation_protection_material.json

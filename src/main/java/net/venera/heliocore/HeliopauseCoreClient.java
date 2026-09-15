@@ -9,13 +9,16 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.options.OptionsScreen;
 import net.minecraft.client.model.CatModel;
 import net.minecraft.client.model.WolfModel;
+import net.minecraft.client.model.ZombieModel;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -24,6 +27,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.FluidState;
@@ -311,12 +315,13 @@ public class HeliopauseCoreClient {
         event.registerLayerDefinition(Tier1RocketLanderModel.LANDER_LOCATION, Tier1RocketLanderModel::createBodyLayer);
         event.registerLayerDefinition(CatOxygenGear.LAYER_LOCATION, CatOxygenGear::createBodyLayer);
         event.registerLayerDefinition(WolfOxygenGear.LAYER_LOCATION, WolfOxygenGear::createBodyLayer);
+        event.registerLayerDefinition(HumanoidOxygenGear.LAYER_LOCATION, HumanoidOxygenGear::createBodyLayer);
     }
 
     @SubscribeEvent
     public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
-        var rawRenderer = event.getRenderer(EntityType.CAT);
-        if (rawRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+        var rawCatRenderer = event.getRenderer(EntityType.CAT);
+        if (rawCatRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
 
             @SuppressWarnings("unchecked")
             LivingEntityRenderer<Cat, CatModel<Cat>> catRenderer = (LivingEntityRenderer<Cat, CatModel<Cat>>) livingRenderer;
@@ -328,6 +333,23 @@ public class HeliopauseCoreClient {
             @SuppressWarnings("unchecked")
             LivingEntityRenderer<Wolf, WolfModel<Wolf>> wolfRenderer = (LivingEntityRenderer<Wolf, WolfModel<Wolf>>) livingRenderer;
             wolfRenderer.addLayer(new WolfOxygenGearLayer(wolfRenderer, event.getEntityModels()));
+        }
+
+        PlayerRenderer defaultPlayer = event.getSkin(PlayerSkin.Model.WIDE);
+        if (defaultPlayer != null) {
+            defaultPlayer.addLayer(new HumanoidOxygenGearLayer<>(defaultPlayer, event.getEntityModels()));
+        }
+        
+        PlayerRenderer slimPlayer = event.getSkin(PlayerSkin.Model.SLIM);
+        if (slimPlayer != null) {
+            slimPlayer.addLayer(new HumanoidOxygenGearLayer<>(slimPlayer, event.getEntityModels()));
+        }
+
+        var rawZombieRenderer = event.getRenderer(EntityType.ZOMBIE);
+        if (rawZombieRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+            @SuppressWarnings("unchecked")
+            LivingEntityRenderer<Zombie, ZombieModel<Zombie>> zombieRenderer = (LivingEntityRenderer<Zombie, ZombieModel<Zombie>>) livingRenderer;
+            zombieRenderer.addLayer(new HumanoidOxygenGearLayer<>(zombieRenderer, event.getEntityModels()));
         }
         
     }

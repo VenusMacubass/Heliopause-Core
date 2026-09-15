@@ -10,6 +10,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.venera.heliocore.HeliopauseCore;
 import java.util.EnumMap;
@@ -26,6 +27,15 @@ public class HpCArmorMaterials {
                 attribute.put(ArmorItem.Type.BODY, 5);
             }), 12, 1f, 0.1f, HpCItems.COMPRESSED_STEEL);
 
+    public static final Holder<ArmorMaterial> SPACE_GEAR_MATERIAL = register("space_gears",
+            Util.make(new EnumMap<>(ArmorItem.Type.class), attribute -> {
+                attribute.put(ArmorItem.Type.BOOTS, 0);
+                attribute.put(ArmorItem.Type.LEGGINGS, 0);
+                attribute.put(ArmorItem.Type.CHESTPLATE, 0);
+                attribute.put(ArmorItem.Type.HELMET, 0);
+                attribute.put(ArmorItem.Type.BODY, 0);
+            }), 0, 0f, 0f, () -> Items.AIR);
+
     public static final Holder<ArmorMaterial> SPACE_SUIT_MATERIAL = register("t1_space_suit",
             Util.make(new EnumMap<>(ArmorItem.Type.class), attribute -> {
                 attribute.put(ArmorItem.Type.BOOTS, 3);
@@ -33,7 +43,7 @@ public class HpCArmorMaterials {
                 attribute.put(ArmorItem.Type.CHESTPLATE, 6);
                 attribute.put(ArmorItem.Type.HELMET, 2);
                 attribute.put(ArmorItem.Type.BODY, 5);
-            }), 9, 1.5f, 0.11f, HpCItems.COMPRESSED_STEEL);
+            }), 9, 1.5f, 0.11f, () -> Items.AIR);
 
     public static Holder<ArmorMaterial> register(String name, EnumMap<ArmorItem.Type, Integer> typeProtection,
                                                  int enchantability, float toughness, float knockbackResistance, Supplier<Item> ingredientItem) {

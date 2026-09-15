@@ -98,6 +98,7 @@ public class HpCItemModelProvider extends ItemModelProvider {
         basicItem(HpCItems.RADIOACTIVE_CORE.get());
         handheldItem(HpCItems.STANDARD_WRENCH.get());
         handheldItem(HpCItems.DEBUG_STICK.get());
+        basicItem(HpCItems.OXYGEN_MASK.get());
         basicItem(HpCItems.OXYGEN_CONNECTORS.get());
         basicItem(HpCItems.AIR_FAN.get());
         basicItem(HpCItems.BASIC_CIRCUIT_BOARD.get());

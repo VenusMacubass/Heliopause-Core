@@ -2,7 +2,13 @@ package net.venera.heliocore.item;
 
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -67,7 +73,7 @@ public class HpCItems {
             () -> new Item(new Item.Properties().food(HpCFoodProperties.EDIBLE_INGREDIENT)));
     
     public static final DeferredItem<Item> HAMBURGER = ITEMS.register("hamburger",
-            () -> new Item(new Item.Properties().food(HpCFoodProperties.MODERN_FOOD)));
+            () -> new Item(new Item.Properties().food(HpCFoodProperties.COMPLEX_FOOD)));
 
     public static final DeferredItem<BatteryItem> RADIOACTIVE_CORE = ITEMS.register("radioactive_core",
             () -> new BatteryItem(new Item.Properties().component(HpCDataComponents.BATTERY_COMPONENT.get(), 
@@ -142,9 +148,33 @@ public class HpCItems {
             new ArmorItem(HpCArmorMaterials.STEEL_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
                     new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(18))));
     public static final DeferredItem<ArmorItem> OXYGEN_MASK = ITEMS.register("oxygen_mask", () ->
-            new ArmorItem(HpCArmorMaterials.SPACE_SUIT_MATERIAL, ArmorItem.Type.HELMET, new  Item.Properties()));
+            new ArmorItem(HpCArmorMaterials.SPACE_GEAR_MATERIAL, ArmorItem.Type.HELMET, new  Item.Properties()){
+                @Override
+                public boolean canEquip(ItemStack stack, EquipmentSlot armorType, LivingEntity entity) {
+                    if (armorType == EquipmentSlot.HEAD) {
+                        return false;
+                    }
+                    return super.canEquip(stack, armorType, entity);
+                }
+                @Override
+                public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+                    return InteractionResultHolder.pass(player.getItemInHand(hand));
+                }
+            });
     public static final DeferredItem<ArmorItem> OXYGEN_CONNECTORS = ITEMS.register("oxygen_connectors", () ->
-            new ArmorItem(HpCArmorMaterials.SPACE_SUIT_MATERIAL, ArmorItem.Type.BODY, new  Item.Properties()));
+            new ArmorItem(HpCArmorMaterials.SPACE_GEAR_MATERIAL, ArmorItem.Type.BODY, new  Item.Properties()){
+                @Override
+                public boolean canEquip(ItemStack stack, EquipmentSlot armorType, LivingEntity entity) {
+                    if (armorType == EquipmentSlot.BODY) {
+                        return false;
+                    }
+                    return super.canEquip(stack, armorType, entity);
+                }
+                @Override
+                public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+                    return InteractionResultHolder.pass(player.getItemInHand(hand));
+                }
+            });
     public static final DeferredItem<Item> MASS_BELT = ITEMS.register("mass_belt", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> T1_THERMAL_INSULATION_HEAD = ITEMS.register("t1_thermal_insulation_head", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> T1_THERMAL_INSULATION_TORSO = ITEMS.register("t1_thermal_insulation_torso", () -> new Item(new Item.Properties()));
