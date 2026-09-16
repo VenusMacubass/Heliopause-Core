@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "heliocore:item/dehydrated_potato"
+    "layer0": "heliocore:item/canned_steak"
   }
 }

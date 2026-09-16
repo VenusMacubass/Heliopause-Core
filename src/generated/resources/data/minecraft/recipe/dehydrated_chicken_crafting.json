@@ -1,17 +1,16 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "minecraft:crafting_shapeless",
   "category": "misc",
-  "key": {
-    "B": {
-      "item": "minecraft:cooked_chicken"
+  "ingredients": [
+    {
+      "item": "heliocore:empty_bag"
     },
-    "C": {
-      "item": "heliocore:tin_canister"
+    {
+      "item": "minecraft:chicken"
+    },
+    {
+      "item": "minecraft:chicken"
     }
-  },
-  "pattern": [
-    "CB ",
-    "B  "
   ],
   "result": {
     "count": 1,

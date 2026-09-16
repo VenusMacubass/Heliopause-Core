@@ -1,24 +1,30 @@
 package net.venera.heliocore.item;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.SuspiciousStewEffects;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
+import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.data.component.BatteryData;
 import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.data.component.GasTankData;
 import net.venera.heliocore.data.component.HpCDataComponents;
+import net.venera.heliocore.data.radiation.RadiationData;
 import net.venera.heliocore.item.hpc_custom.*;
+import net.venera.heliocore.screen.hud.SpaceSuitHudOverlay;
 
 import java.util.List;
 
@@ -39,45 +45,458 @@ public class HpCItems {
    
     //region Foods
     public static final DeferredItem<Item> DEHYDRATED_APPLE = ITEMS.register("dehydrated_apple",
-            () -> new Item(new Item.Properties().food(HpCFoodProperties.DEHYDRATED_FOOD)) {
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.APPLE, 2))) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("tooltip.heliocore.dehydrated_apple"));
                     super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
                 }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(15, false);
+                    }
+                    return result;
+                }
             }
     );
-    
-    public static final DeferredItem<Item> DEHYDRATED_POTATO = ITEMS.register("dehydrated_potato",
-            () -> new Item(new Item.Properties().food(HpCFoodProperties.DEHYDRATED_FOOD)));
-
+    public static final DeferredItem<Item> CHIPS = ITEMS.register("chips",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.BAKED_POTATO, 2))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.chips"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(15, false); 
+                    }
+                    return result;
+                }
+            });
+    public static final DeferredItem<Item> DEHYDRATED_CARROT = ITEMS.register("dehydrated_carrot",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.CARROT, 2))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.dehydrated_carrot"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(15, false);
+                    }
+                    return result;
+                }
+            });
     public static final DeferredItem<Item> DEHYDRATED_BERRIES = ITEMS.register("dehydrated_berries",
-            () -> new Item(new Item.Properties().food(HpCFoodProperties.DEHYDRATED_FOOD)));
-
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.SWEET_BERRIES, 2))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.dehydrated_berries"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(15, false);
+                    }
+                    return result;
+                }
+            });
     public static final DeferredItem<Item> DEHYDRATED_GLOW_BERRIES = ITEMS.register("dehydrated_glow_berries",
-            () -> new Item(new Item.Properties().food(HpCFoodProperties.DEHYDRATED_FOOD)));
-
-    public static final DeferredItem<Item> DEHYDRATED_BEEF = ITEMS.register("dehydrated_beef",
-            () -> new Item(new Item.Properties().food(HpCFoodProperties.DEHYDRATED_FOOD)));
-
-    public static final DeferredItem<Item> DEHYDRATED_RABBIT = ITEMS.register("dehydrated_rabbit",
-            () -> new Item(new Item.Properties().food(HpCFoodProperties.DEHYDRATED_FOOD)));
-
-    public static final DeferredItem<Item> DEHYDRATED_COD = ITEMS.register("dehydrated_cod",
-            () -> new Item(new Item.Properties().food(HpCFoodProperties.DEHYDRATED_FOOD)));
-
-    public static final DeferredItem<Item> DEHYDRATED_CHICKEN = ITEMS.register("dehydrated_chicken",
-            () -> new Item(new Item.Properties().food(HpCFoodProperties.DEHYDRATED_FOOD)));
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.GLOW_BERRIES, 2))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.dehydrated_glow_berries"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(15, false);
+                    }
+                    return result;
+                }
+            });
+    public static final DeferredItem<Item> DEHYDRATED_KELP = ITEMS.register("dehydrated_kelp",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.DRIED_KELP, 3))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.dehydrated_kelp"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(15, false);
+                    }
+                    return result;
+                }
+            });
     
+    public static final DeferredItem<Item> DEHYDRATED_CHICKEN = ITEMS.register("dehydrated_chicken",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.CHICKEN, 2))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.dehydrated_chicken"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(20, false);
+                    }
+                    return result;
+                }
+            });
+    public static final DeferredItem<Item> DEHYDRATED_BEEF = ITEMS.register("dehydrated_beef",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.BEEF, 2))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.dehydrated_beef"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(20, false);
+                    }
+                    return result;
+                }
+            });
+    public static final DeferredItem<Item> DEHYDRATED_RABBIT = ITEMS.register("dehydrated_rabbit",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.RABBIT, 2))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.dehydrated_rabbit"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(20, false);
+                    }
+                    return result;
+                }
+            });
+    public static final DeferredItem<Item> DEHYDRATED_COD = ITEMS.register("dehydrated_cod",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.COD, 2))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.dehydrated_cod"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(20, false);
+                    }
+                    return result;
+                }
+            });
+    public static final DeferredItem<Item> DEHYDRATED_SALMON = ITEMS.register("dehydrated_salmon",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.SALMON, 2))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.dehydrated_salmon"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(20, false);
+                    }
+                    return result;
+                }
+            });
+
+    public static final DeferredItem<Item> CANNED_CHICKEN = ITEMS.register("canned_chicken",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.COOKED_CHICKEN, 2))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.canned_chicken"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(30, false);
+                    }
+                    return result;
+                }
+            });
+    public static final DeferredItem<Item> CANNED_STEAK = ITEMS.register("canned_steak",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.COOKED_BEEF, 2))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.canned_steak"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(30, false);
+                    }
+                    return result;
+                }
+            });
+    public static final DeferredItem<Item> CANNED_MUTTON = ITEMS.register("canned_mutton",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.COOKED_MUTTON, 2))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.canned_mutton"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(30, false);
+                    }
+                    return result;
+                }
+            });
+    public static final DeferredItem<Item> CANNED_RABBIT = ITEMS.register("canned_rabbit",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.COOKED_RABBIT, 2))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.canned_rabbit"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(30, false);
+                    }
+                    return result;
+                }
+            });
+    public static final DeferredItem<Item> CANNED_COD = ITEMS.register("canned_cod",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.COOKED_COD, 2))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.canned_cod"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(30, false);
+                    }
+                    return result;
+                }
+            });
+    public static final DeferredItem<Item> CANNED_SALMON = ITEMS.register("canned_salmon",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.COOKED_SALMON, 2))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.canned_salmon"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(30, false);
+                    }
+                    return result;
+                }
+            });
+    
+    public static final DeferredItem<Item> CANNED_BEETROOT_SOUP = ITEMS.register("canned_beetroot_soup",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.BEETROOT_SOUP, 1))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.canned_beetroot_soup"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    // 1. Process the eating (reduces stack size, restores hunger)
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+
+                    // 2. Apply radiation safely on the server side
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        // Note: Make sure HpCAttachments is correct for your codebase
+                        var radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(50, false);
+                    }
+
+                    // 3. Return the Empty Can!
+                    if (entityLiving instanceof Player player && !player.getAbilities().instabuild) {
+                        // Change EMPTY_CAN to match whatever your actual item is named in your registry
+                        ItemStack emptyCan = new ItemStack(HpCItems.EMPTY_CAN.get());
+
+                        // If they ate the last one in the stack, swap it to an empty can
+                        if (result.isEmpty()) {
+                            return emptyCan;
+                        } else {
+                            // Otherwise, try to put it in their inventory, or drop if full
+                            if (!player.getInventory().add(emptyCan)) {
+                                player.drop(emptyCan, false);
+                            }
+                        }
+                    }
+
+                    return result;
+                }
+            });
+    public static final DeferredItem<Item> CANNED_MUSHROOM_STEW = ITEMS.register("canned_mushroom_stew",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.MUSHROOM_STEW, 1))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.canned_mushroom_stew"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    // 1. Process the eating (reduces stack size, restores hunger)
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+
+                    // 2. Apply radiation safely on the server side
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        // Note: Make sure HpCAttachments is correct for your codebase
+                        var radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(50, false);
+                    }
+
+                    // 3. Return the Empty Can!
+                    if (entityLiving instanceof Player player && !player.getAbilities().instabuild) {
+                        // Change EMPTY_CAN to match whatever your actual item is named in your registry
+                        ItemStack emptyCan = new ItemStack(HpCItems.EMPTY_CAN.get());
+
+                        // If they ate the last one in the stack, swap it to an empty can
+                        if (result.isEmpty()) {
+                            return emptyCan;
+                        } else {
+                            // Otherwise, try to put it in their inventory, or drop if full
+                            if (!player.getInventory().add(emptyCan)) {
+                                player.drop(emptyCan, false);
+                            }
+                        }
+                    }
+
+                    return result;
+                }
+            });
+    public static final DeferredItem<Item> CANNED_RABBIT_STEW = ITEMS.register("canned_rabbit_stew",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.RABBIT_STEW, 1))){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.canned_rabbit_stew"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    // 1. Process the eating (reduces stack size, restores hunger)
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+
+                    // 2. Apply radiation safely on the server side
+                    if (!level.isClientSide() && entityLiving instanceof Player player) {
+                        // Note: Make sure HpCAttachments is correct for your codebase
+                        var radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                        radiationData.changeRadiation(50, false);
+                    }
+
+                    // 3. Return the Empty Can!
+                    if (entityLiving instanceof Player player && !player.getAbilities().instabuild) {
+                        // Change EMPTY_CAN to match whatever your actual item is named in your registry
+                        ItemStack emptyCan = new ItemStack(HpCItems.EMPTY_CAN.get());
+
+                        // If they ate the last one in the stack, swap it to an empty can
+                        if (result.isEmpty()) {
+                            return emptyCan;
+                        } else {
+                            // Otherwise, try to put it in their inventory, or drop if full
+                            if (!player.getInventory().add(emptyCan)) {
+                                player.drop(emptyCan, false);
+                            }
+                        }
+                    }
+
+                    return result;
+                }
+            });
+    public static final DeferredItem<Item> CANNED_SUSPICIOUS_STEW = ITEMS.register("canned_suspicious_stew",
+            () -> new Item(new Item.Properties().food(getInheritedFoodProps(Items.SUSPICIOUS_STEW, 1)).component(DataComponents.SUSPICIOUS_STEW_EFFECTS, SuspiciousStewEffects.EMPTY)){
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.heliocore.canned_suspicious_stew"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+                @Override
+                public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+                    var effects = stack.get(DataComponents.SUSPICIOUS_STEW_EFFECTS);
+                    ItemStack result = super.finishUsingItem(stack, level, entityLiving);
+                    
+                    if (!level.isClientSide()) {
+                        if (entityLiving instanceof Player player) {
+                            RadiationData radiationData = player.getData(HpCAttachments.RADIATION_DATA);
+                            radiationData.changeRadiation(50, false);
+                        }
+                        
+                        if (effects != null) {
+                            for (var entry : effects.effects()) {
+                                entityLiving.addEffect(entry.createEffectInstance());
+                            }
+                        }
+                    }
+                    
+                    if (entityLiving instanceof Player player && !player.getAbilities().instabuild) {
+                        ItemStack emptyCan = new ItemStack(HpCItems.EMPTY_CAN.get()); 
+
+                        if (result.isEmpty()) {
+                            return emptyCan;
+                        } else {
+                            if (!player.getInventory().add(emptyCan)) {
+                                player.drop(emptyCan, false);
+                            }
+                        }
+                    }
+
+                    return result;
+                }
+            });
+
     public static final DeferredItem<Item> CHEESE_SLICE = ITEMS.register("cheese_slice",
             () -> new Item(new Item.Properties().food(HpCFoodProperties.EDIBLE_INGREDIENT)));
-    
+
     public static final DeferredItem<Item> HAMBURGER = ITEMS.register("hamburger",
             () -> new Item(new Item.Properties().food(HpCFoodProperties.COMPLEX_FOOD)));
-
-    public static final DeferredItem<BatteryItem> RADIOACTIVE_CORE = ITEMS.register("radioactive_core",
-            () -> new BatteryItem(new Item.Properties().component(HpCDataComponents.BATTERY_COMPONENT.get(), 
-                    new BatteryData(Integer.MAX_VALUE, Integer.MAX_VALUE)), Integer.MAX_VALUE, 5));
     //endregion
 
     //region Ingredients
@@ -115,6 +534,12 @@ public class HpCItems {
     public static final DeferredItem<Item> T1_ROCKET_ENGINE =  ITEMS.register("t1_rocket_engine", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> T1_ROCKET_FIN =  ITEMS.register("t1_rocket_fin", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> T1_ROCKET_NOSE_CONE =  ITEMS.register("t1_rocket_nose_cone", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<BatteryItem> RADIOACTIVE_CORE = ITEMS.register("radioactive_core",
+            () -> new BatteryItem(new Item.Properties().component(HpCDataComponents.BATTERY_COMPONENT.get(),
+                    new BatteryData(Integer.MAX_VALUE, Integer.MAX_VALUE)), Integer.MAX_VALUE, 5));
+
+    public static final DeferredItem<Item> EMPTY_CAN = ITEMS.register("empty_can", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> EMPTY_BAG = ITEMS.register("empty_bag", () -> new Item(new Item.Properties()));
     //endregion
 
     //region Tools
@@ -206,7 +631,34 @@ public class HpCItems {
                     new BatteryData(0, 10000)), 10000, 20));
 
 
+    //region Registry and Helpers
+    private static FoodProperties getInheritedFoodProps(Item ingredient, int ingredientCount) {
+        FoodProperties baseFood = ingredient.components().get(net.minecraft.core.component.DataComponents.FOOD);
+
+        // Multiply nutrition by the amount of ingredients used in the recipe
+        int nutrition = baseFood != null ? baseFood.nutrition() * ingredientCount : 2;
+
+        // Reverse-engineer the modifier: modifier = saturation / (nutrition * 2)
+        float modifier = 0.1f; // Default fallback
+        if (baseFood != null && baseFood.nutrition() > 0) {
+            modifier = baseFood.saturation() / (baseFood.nutrition() * 2.0f);
+        }
+
+        FoodProperties.Builder builder = new FoodProperties.Builder()
+                .nutrition(nutrition)
+                .saturationModifier(modifier) // We pass the MODIFIER here, not the raw points!
+                .alwaysEdible();
+
+        // If the original ingredient eats fast, this will too
+        if (baseFood != null && baseFood.eatDurationTicks() < 32) {
+            builder.fast();
+        }
+
+        return builder.build();
+    }
+    
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
+    //endregion
 }

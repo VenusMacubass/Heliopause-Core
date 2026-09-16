@@ -1,17 +1,16 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "minecraft:crafting_shapeless",
   "category": "misc",
-  "key": {
-    "C": {
-      "item": "heliocore:tin_canister"
+  "ingredients": [
+    {
+      "item": "heliocore:empty_bag"
     },
-    "F": {
-      "item": "minecraft:cooked_cod"
+    {
+      "item": "minecraft:cod"
+    },
+    {
+      "item": "minecraft:cod"
     }
-  },
-  "pattern": [
-    "CF ",
-    "F  "
   ],
   "result": {
     "count": 1,

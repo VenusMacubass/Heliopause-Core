@@ -39,15 +39,36 @@ public class HpCCreativeModeTabs {
                             tag.putInt("PreloadedFuel", Tier1RocketEntity.maxFuel);   
                         });
                         output.accept(preloadedRocket);
+
+                        output.accept(HpCItems.EMPTY_BAG.get());
+                        output.accept(HpCItems.EMPTY_CAN.get());
                         
                         output.accept(HpCItems.DEHYDRATED_APPLE.get());
-                        output.accept(HpCItems.DEHYDRATED_RABBIT.get());
-                        output.accept(HpCItems.DEHYDRATED_POTATO.get());
+                        output.accept(HpCItems.CHIPS.get());
+                        output.accept(HpCItems.DEHYDRATED_CARROT.get());
                         output.accept(HpCItems.DEHYDRATED_BERRIES.get());
                         output.accept(HpCItems.DEHYDRATED_GLOW_BERRIES.get());
-                        output.accept(HpCItems.DEHYDRATED_COD.get());
+                        output.accept(HpCItems.DEHYDRATED_KELP.get());
+
                         output.accept(HpCItems.DEHYDRATED_CHICKEN.get());
                         output.accept(HpCItems.DEHYDRATED_BEEF.get());
+                        output.accept(HpCItems.DEHYDRATED_RABBIT.get());
+                        output.accept(HpCItems.DEHYDRATED_COD.get());
+                        output.accept(HpCItems.DEHYDRATED_SALMON.get());
+
+                        output.accept(HpCItems.CANNED_CHICKEN.get());
+                        output.accept(HpCItems.CANNED_STEAK.get());
+                        output.accept(HpCItems.CANNED_MUTTON.get());
+                        output.accept(HpCItems.CANNED_RABBIT.get());
+                        output.accept(HpCItems.CANNED_COD.get());
+                        output.accept(HpCItems.CANNED_SALMON.get());
+
+                        output.accept(HpCItems.CANNED_BEETROOT_SOUP.get());
+                        output.accept(HpCItems.CANNED_MUSHROOM_STEW.get());
+                        output.accept(HpCItems.CANNED_RABBIT_STEW.get());
+                        output.accept(HpCItems.CANNED_SUSPICIOUS_STEW.get());
+                        
+                        
                         output.accept(HpCItems.CHEESE_SLICE.get());
                         output.accept(HpCItems.HAMBURGER.get());
                         

@@ -9,7 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.venera.heliocore.HeliopauseClientConfig;
-import net.venera.heliocore.HeliopauseConfig;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.item.HpCTags;
@@ -18,8 +17,8 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
     public static final SpaceSuitHudOverlay INSTANCE = new SpaceSuitHudOverlay();
     
     private static final ResourceLocation OXYGEN_TANK = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/hud/oxygen_tanks.png");
-    private static final ResourceLocation HAZARD_LEVEL_V = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/hud/hazard_level_vertical.png");
     private static final ResourceLocation HAZARD_LEVEL_H = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/hud/hazard_level_horizontal.png");
+    private static final ResourceLocation OXYGEN_MASK_ICON = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/player_gui/oxygen_mask_slot.png");
     private static final ResourceLocation CONNECTOR_ICON = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/player_gui/oxygen_connectors_slot.png");
     private static final ResourceLocation HEAD_ICON = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/player_gui/t1_thermal_insulation_head_slot.png");
     private static final ResourceLocation TORSO_ICON = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/gui/player_gui/t1_thermal_insulation_torso_slot.png");
@@ -139,7 +138,7 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
             int oRow1 = (int) ((hudY + (3 * scale)) / oxyIconScale);
             int oRow2 = (int) ((hudY + (12 * scale)) / oxyIconScale);
 
-//            renderSlot(guiGraphics, inventory.getStackInSlot(0), EMPTY_MASK, oxyCol, oRow1);
+            renderSlot(guiGraphics, inventory.getStackInSlot(0), OXYGEN_MASK_ICON, oxyCol, oRow1);
             renderSlot(guiGraphics, inventory.getStackInSlot(1), CONNECTOR_ICON, oxyCol, oRow2);
             guiGraphics.pose().popPose();
 
@@ -153,7 +152,7 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
             int oxyCol2 = (int) ((hudX + (11 * scale)) / oxyIconScale);
             int row1    = (int) ((hudY + (1 * scale)) / oxyIconScale);
 
-//            renderSlot(guiGraphics, inventory.getStackInSlot(0), EMPTY_MASK, oxyCol1, row1);
+            renderSlot(guiGraphics, inventory.getStackInSlot(0), OXYGEN_MASK_ICON, oxyCol1, row1);
             renderSlot(guiGraphics, inventory.getStackInSlot(1), CONNECTOR_ICON, oxyCol2, row1);
             guiGraphics.pose().popPose();
 
@@ -221,7 +220,8 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
     //region Helpers
     public int getHazardScaled(double amount, double capacity, int maxPixels) {
         if (capacity == 0 || amount <= 0) return 0;
-        return (int) ((amount * maxPixels) / capacity);
+        int rawPixels = (int) ((amount * maxPixels) / capacity);
+        return Math.min(rawPixels, maxPixels);
     }
     public int getPressureScaled(double amount, int maxPixels) {
         double ratio;

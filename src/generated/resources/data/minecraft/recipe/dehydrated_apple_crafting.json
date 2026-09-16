@@ -1,17 +1,16 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "minecraft:crafting_shapeless",
   "category": "misc",
-  "key": {
-    "A": {
+  "ingredients": [
+    {
+      "item": "heliocore:empty_bag"
+    },
+    {
       "item": "minecraft:apple"
     },
-    "C": {
-      "item": "heliocore:tin_canister"
+    {
+      "item": "minecraft:apple"
     }
-  },
-  "pattern": [
-    "CA ",
-    "A  "
   ],
   "result": {
     "count": 1,

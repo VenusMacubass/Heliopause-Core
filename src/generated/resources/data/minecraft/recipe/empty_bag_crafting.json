@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "heliocore:aluminium_ingot"
+    },
+    {
+      "item": "heliocore:petrochemicals"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "heliocore:empty_bag"
+  }
+}

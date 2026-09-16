@@ -80,14 +80,35 @@ public class HpCItemModelProvider extends ItemModelProvider {
         
         basicItem(HpCItems.COPPER_CANISTER.get());
         basicItem(HpCItems.TIN_CANISTER.get());
+
+        basicItem(HpCItems.EMPTY_BAG.get());
+        basicItem(HpCItems.EMPTY_CAN.get());
+        
         basicItem(HpCItems.DEHYDRATED_APPLE.get());
-        basicItem(HpCItems.DEHYDRATED_GLOW_BERRIES.get());
-        basicItem(HpCItems.DEHYDRATED_POTATO.get());
+        basicItem(HpCItems.CHIPS.get());
+        basicItem(HpCItems.DEHYDRATED_CARROT.get());
         basicItem(HpCItems.DEHYDRATED_BERRIES.get());
+        basicItem(HpCItems.DEHYDRATED_GLOW_BERRIES.get());
+        basicItem(HpCItems.DEHYDRATED_KELP.get());
+
+        basicItem(HpCItems.DEHYDRATED_CHICKEN.get());
         basicItem(HpCItems.DEHYDRATED_BEEF.get());
         basicItem(HpCItems.DEHYDRATED_RABBIT.get());
-        basicItem(HpCItems.DEHYDRATED_CHICKEN.get());
         basicItem(HpCItems.DEHYDRATED_COD.get());
+        basicItem(HpCItems.DEHYDRATED_SALMON.get());
+
+        basicItem(HpCItems.CANNED_CHICKEN.get());
+        basicItem(HpCItems.CANNED_STEAK.get());
+        basicItem(HpCItems.CANNED_MUTTON.get());
+        basicItem(HpCItems.CANNED_RABBIT.get());
+        basicItem(HpCItems.CANNED_COD.get());
+        basicItem(HpCItems.CANNED_SALMON.get());
+        
+        basicItem(HpCItems.CANNED_BEETROOT_SOUP.get());
+        basicItem(HpCItems.CANNED_MUSHROOM_STEW.get());
+        basicItem(HpCItems.CANNED_RABBIT_STEW.get());
+        basicItem(HpCItems.CANNED_SUSPICIOUS_STEW.get());
+        
         basicItem(HpCItems.CHEESE_SLICE.get());
         basicItem(HpCItems.HAMBURGER.get());
 

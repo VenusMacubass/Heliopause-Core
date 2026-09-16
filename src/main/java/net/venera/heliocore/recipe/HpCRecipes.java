@@ -1,14 +1,19 @@
 package net.venera.heliocore.recipe;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.heliocore.HeliopauseCore;
+import net.venera.heliocore.recipe.item.CannedStewRecipe;
 import net.venera.heliocore.recipe.item.SpaceSuitRecipe;
 import net.venera.heliocore.recipe.item.SpaceSuitRecipeSerializer;
+
+import java.util.function.Supplier;
 
 public class HpCRecipes {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, HeliopauseCore.MOD_ID);
@@ -45,7 +50,9 @@ public class HpCRecipes {
             return "space_suit";
         }
     });
-    
+
+    public static final Supplier<RecipeSerializer<CannedStewRecipe>> CANNED_STEW_SERIALIZER =
+            RECIPE_SERIALIZERS.register("canned_stew", () -> new SimpleCraftingRecipeSerializer<>(CannedStewRecipe::new));
     
     public static void register(IEventBus eventBus){
         RECIPE_SERIALIZERS.register(eventBus);

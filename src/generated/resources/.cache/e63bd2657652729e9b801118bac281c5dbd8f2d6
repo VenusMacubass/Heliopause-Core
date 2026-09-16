@@ -1,4 +1,4 @@
-// 1.21.1	2026-09-15T16:49:05.7633207	Item Models: heliocore
+// 1.21.1	2026-09-16T18:54:19.9583875	Item Models: heliocore
 1ac96947d6d705457f38d0a1fa68a0dcb74bc592 assets/heliocore/models/item/air_fan.json
 0734313d99e1a4ca395735a0943619e787dd452a assets/heliocore/models/item/base_building_wall_black.json
 77313ec5bf2583da66c950d2ae65ff21c6eb341c assets/heliocore/models/item/base_building_wall_white.json
@@ -10,7 +10,18 @@ b2b55824b52b010909f338a4632d512c545dfe4b assets/heliocore/models/item/canister_3
 c09afc6ae41f1034253446be96612059792980a7 assets/heliocore/models/item/canister_4.json
 022fc99d804cfdb5aeac372e9cbd6263dcb5a631 assets/heliocore/models/item/canister_5.json
 d45dc16510d3bf6917a4f79fb884d2d2f4f406a1 assets/heliocore/models/item/canister_6.json
+2ce57d06c7865f19e582565933fc3f5fffc923bb assets/heliocore/models/item/canned_beetroot_soup.json
+84ee340fc7b8d870081a9e1eb531c895f4f7e161 assets/heliocore/models/item/canned_chicken.json
+52bff3735f8c6029f733c86179a7291b748e1d47 assets/heliocore/models/item/canned_cod.json
+c4a4268ef65289fb57c2c78db77c20775c781f84 assets/heliocore/models/item/canned_mushroom_stew.json
+1e04effe0457787f17bebb549ff3d373433f94b1 assets/heliocore/models/item/canned_mutton.json
+23d98f8b860108abe0cdc2a42b0ade862333bc3b assets/heliocore/models/item/canned_rabbit.json
+791bc1ad4ddc503a3ce556f3b24c3911db5d41bb assets/heliocore/models/item/canned_rabbit_stew.json
+59da560c6e964bbdb656f2f949c02699c03b7b42 assets/heliocore/models/item/canned_salmon.json
+7e0920caf87e713c363c03b1f83fe83419ed688b assets/heliocore/models/item/canned_steak.json
+95008b7e4936e1314722c711ad231026882a8790 assets/heliocore/models/item/canned_suspicious_stew.json
 62c01033a4c1f12560cd7e8e0deda9ef61f67c70 assets/heliocore/models/item/cheese_slice.json
+92aa793e517ac556a9653b482a5654c9c0d61778 assets/heliocore/models/item/chips.json
 8cc483167b9451eb7ae0dd7530e83781ecfa22ab assets/heliocore/models/item/compressed_bronze.json
 0af2591c590f42947c6a487a09f4041de52d7575 assets/heliocore/models/item/compressed_copper.json
 bfaf5cd1e163da2e52bcf07e99765b580fc27810 assets/heliocore/models/item/compressed_gas_tank.json
@@ -22,12 +33,16 @@ b4a1f66332feceb0a7fb3fcf590d59a7db262afd assets/heliocore/models/item/compressed
 78450b101ccb277811e0fe94e48ab69b940d3f41 assets/heliocore/models/item/dehydrated_apple.json
 5f7ae5894fcb2ee80c988c27888064fcb538182e assets/heliocore/models/item/dehydrated_beef.json
 9c1557ee652911a0d6f99bca6299faade7074499 assets/heliocore/models/item/dehydrated_berries.json
+98ac0fe0ff6dfefbf514b5b6808311ac443297a7 assets/heliocore/models/item/dehydrated_carrot.json
 d69ce434ef98748f62f4e1d6ebdf9fe9297e27a1 assets/heliocore/models/item/dehydrated_chicken.json
 8900f18c282d208919c0122a44bfd2d118807331 assets/heliocore/models/item/dehydrated_cod.json
 bab023cceeedf9effb921268cd18de4d22505d00 assets/heliocore/models/item/dehydrated_glow_berries.json
-083fb4f648b0fc8236b43a962ef2fe5291fdccd8 assets/heliocore/models/item/dehydrated_potato.json
+a498124950e7773f4c4c63489c73a5e3ff3b14e5 assets/heliocore/models/item/dehydrated_kelp.json
 7b6cde9a11c9f7411212fcf43535c596375571fd assets/heliocore/models/item/dehydrated_rabbit.json
+b66434a69498935974468e73e87ce061bc73b7ec assets/heliocore/models/item/dehydrated_salmon.json
 7582407395437a5eaae8f7742f4d909ad6459bef assets/heliocore/models/item/electromagnetic_sensors.json
+1080e4f05946db56a6bb9938e908ce8a80549b14 assets/heliocore/models/item/empty_bag.json
+fc9361fbe32638c18217c1a5ce8dcee3743a1881 assets/heliocore/models/item/empty_can.json
 9732a5109bc554d824f368b3f3aeb9daaae6a205 assets/heliocore/models/item/fluid_filter.json
 a5d460edca37824a4e26dc7a6edeeea70b8dcbec assets/heliocore/models/item/gas_regulator.json
 1f5f611f28b823a9553c4a282c0690eb16df8ea1 assets/heliocore/models/item/glass_sword.json
