@@ -18,6 +18,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
 import net.venera.heliocore.block.hpc_custom.AirlockFrameSwitch;
+import net.venera.heliocore.block.hpc_custom.PizzaBlock;
 import net.venera.heliocore.block.hpc_custom.machine.electric.EnergyStorageBlock;
 import net.venera.heliocore.block.hpc_custom.machine.electric.SolarPanelBlock;
 import net.venera.heliocore.fluid.HpCFluids;
@@ -325,6 +326,10 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         tintedOreBlock(HpCBlocks.MOON_TEKTITES_REGOLITH.get(), moonRegolith, tektitesOreTex);
         tintedOreBlock(HpCBlocks.MOON_TEKTITES.get(), moonDirt, tektitesOreTex);
         //endregion
+        
+        //region Foods
+        makeIntegerVariantBlockState(HpCBlocks.DEFAULT_PIZZA.get(), PizzaBlock.SLICES, "block/pizza", "pizza_");
+        //endregion
     }
 
     //region Helpers
@@ -624,6 +629,17 @@ public class HpCBlockStateProvider extends BlockStateProvider {
                     .modelFile(model)
                     .rotationX(x)
                     .rotationY(y)
+                    .build();
+        });
+    }
+
+    private void makeIntegerVariantBlockState(Block block, IntegerProperty property, String folderPath, String filePrefix) {
+        getVariantBuilder(block).forAllStates(state -> {
+            int stateValue = state.getValue(property);
+            String modelLocation = folderPath + "/" + filePrefix + stateValue;
+            
+            return ConfiguredModel.builder()
+                    .modelFile(models().getExistingFile(modLoc(modelLocation)))
                     .build();
         });
     }

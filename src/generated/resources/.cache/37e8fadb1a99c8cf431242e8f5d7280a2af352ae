@@ -1,4 +1,4 @@
-// 1.21.1	2026-08-28T23:37:12.2834879	Block States: heliocore
+// 1.21.1	2026-09-18T11:55:00.4691722	Block States: heliocore
 d59962edbb614daa7605d955b287ee61773bd2a2 assets/heliocore/blockstates/airlock_frame_switch.json
 a23ba85944456dbe50bd58319b35ee6bd730f46f assets/heliocore/blockstates/airlock_gate_frame.json
 bdf870c7e5505d6271b1fd115489f88d5a3e3959 assets/heliocore/blockstates/airlock_generated_black.json
@@ -20,6 +20,7 @@ c5e478fb034abb897687e21759d0661260539833 assets/heliocore/blockstates/basic_sola
 7e82e24c4f0f2fdcb95f0cfff0ea38d91f56e0f8 assets/heliocore/blockstates/deepslate_iridium_ore.json
 621f549db7b087136e04412f17e4cf9dcf257faa assets/heliocore/blockstates/deepslate_silicon_ore.json
 d4db9bc8aed4f49dd493e450e5ffee1ecc133acb assets/heliocore/blockstates/deepslate_tin_ore.json
+0b7265983e2a7adf39289909316f11ca49fa0213 assets/heliocore/blockstates/default_pizza.json
 578b457a3052b7ad12da7f18d7d7788fc9aa4b99 assets/heliocore/blockstates/energy_generator.json
 04b920fa143b9875fcff04b5597262830a76c026 assets/heliocore/blockstates/energy_storage_unit.json
 2901a18c68082f2d113b3db2e27b983182223a2a assets/heliocore/blockstates/extinguished_lantern.json

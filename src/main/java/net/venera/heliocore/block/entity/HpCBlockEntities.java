@@ -108,6 +108,10 @@ public class HpCBlockEntities {
                                     50000, 120, 20),
                     HpCBlocks.PCB_FABRICATOR.get()).build(null));
 
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PizzaEntity>> PIZZA_ENTITY = BLOCK_ENTITIES.register("pizza_entity", 
+                    () -> BlockEntityType.Builder.of(PizzaEntity::new, HpCBlocks.DEFAULT_PIZZA.get()).build(null));
+    
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MagneticCraftingTableEntity>> MAGNETIC_CRAFTING_TABLE_ENTITY = BLOCK_ENTITIES.register("magnetic_crafting_table_entity",
             ()-> BlockEntityType.Builder.of(MagneticCraftingTableEntity::new, HpCBlocks.MAGNETIC_CRAFTING_TABLE.get()).build(null));
 

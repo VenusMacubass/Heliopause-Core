@@ -1,10 +1,14 @@
 package net.venera.heliocore.block;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -22,7 +26,10 @@ import net.venera.heliocore.block.hpc_custom.machine.CoalCompressorBlock;
 import net.venera.heliocore.block.hpc_custom.machine.MagneticAssemblyPlatformBlock;
 import net.venera.heliocore.block.hpc_custom.machine.electric.*;
 import net.venera.heliocore.block.entity.HpCBlockEntities;
+import net.venera.heliocore.data.component.HpCDataComponents;
 import net.venera.heliocore.item.HpCItems;
+
+import java.util.List;
 import java.util.function.Supplier;
 
 public class HpCBlocks {
@@ -230,7 +237,21 @@ public class HpCBlocks {
             () -> new MagneticCraftingTableBlock(BlockBehaviour.Properties.of().sound(SoundType.METAL)));
     
     public static final DeferredBlock<Block> DEFAULT_PIZZA = registerBlock("default_pizza",
-            () -> new PizzaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE)));
+            () -> new PizzaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).noLootTable()){
+                @Override
+                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    Integer mask = stack.get(HpCDataComponents.PIZZA_TOPPINGS.get());
+                    if (mask != null && mask > 0) {
+                        tooltipComponents.add(Component.translatable("tooltip.heliocore.pizza_toppings").withStyle(ChatFormatting.GRAY));
+                        if ((mask & 1) != 0) tooltipComponents.add(Component.translatable("tooltip.heliocore.topping.chicken").withStyle(ChatFormatting.YELLOW));
+                        if ((mask & 2) != 0) tooltipComponents.add(Component.translatable("tooltip.heliocore.topping.meat").withStyle(ChatFormatting.RED));
+                        if ((mask & 4) != 0) tooltipComponents.add(Component.translatable("tooltip.heliocore.topping.mushroom").withStyle(ChatFormatting.DARK_RED));
+                        if ((mask & 8) != 0) tooltipComponents.add(Component.translatable("tooltip.heliocore.topping.fish").withStyle(ChatFormatting.AQUA));
+                        if ((mask & 16) != 0) tooltipComponents.add(Component.translatable("tooltip.heliocore.topping.veggies").withStyle(ChatFormatting.GREEN));
+                    }
+                }
+            });
+    
     
     public static final DeferredBlock<Block> SOLAR_PANEL_PARTS = registerBlock("solar_panel_parts",
             () -> new SolarPanelPartBlock(BlockBehaviour.Properties.of().noLootTable().sound(SoundType.METAL)));

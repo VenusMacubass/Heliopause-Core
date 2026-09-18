@@ -1,4 +1,4 @@
-// 1.21.1	2026-08-28T23:12:56.7707072	Loot Tables
+// 1.21.1	2026-09-18T11:55:00.4691722	Loot Tables
 8d3485d0593ffa5c07d22187b1d1e00dd7b2de21 data/heliocore/loot_table/blocks/airlock_frame_switch.json
 ff4b0fd001180ba9d9b920b1e9c59581a4720d73 data/heliocore/loot_table/blocks/airlock_gate_frame.json
 4c6effb42af79317efc025b64a17716f1bcfaa42 data/heliocore/loot_table/blocks/aluminium_block.json
@@ -23,7 +23,6 @@ b7bf97a84f487f477628982c43b98c6087bdc122 data/heliocore/loot_table/blocks/cheese
 b7bc75985ea6a6309924bea0631d396456967510 data/heliocore/loot_table/blocks/deepslate_iridium_ore.json
 79a7b8ecffb672a6a05d693782bf811f7ba2c6bb data/heliocore/loot_table/blocks/deepslate_silicon_ore.json
 0c57cb6a500b0f944c3b217e1c57b765cbaee13d data/heliocore/loot_table/blocks/deepslate_tin_ore.json
-1e4aae09004837c0ab525df73ea475d45a8d52fc data/heliocore/loot_table/blocks/default_pizza.json
 5e477c194a82303c7857e0dfae04deee581815e1 data/heliocore/loot_table/blocks/energy_generator.json
 f0212cadba30b6af7b467b4263f8647ce9f49101 data/heliocore/loot_table/blocks/energy_storage_unit.json
 6c20c709bbc54459f8d60c1443dc3e5e9bcd5b28 data/heliocore/loot_table/blocks/extinguished_lantern.json

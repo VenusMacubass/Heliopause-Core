@@ -943,9 +943,6 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .requires(Items.COOKED_SALMON, 2)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
                 .save(recipeOutput, "canned_salmon_crafting");
-        
-        
-        
 
         SpecialRecipeBuilder.special(CannedStewRecipe::new)
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "canned_suspicious_stew"));
@@ -964,8 +961,16 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('C', HpCItems.CHEESE_SLICE.get())
                 .define('B', Items.BREAD)
                 .define('P', Items.COOKED_BEEF)
-                .unlockedBy("has_patty", has(Items.COOKED_BEEF))
+                .unlockedBy("has_meat", has(Items.COOKED_BEEF))
                 .save(recipeOutput, "cheeseburger_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HpCBlocks.DEFAULT_PIZZA.get())
+                .pattern("C  ")
+                .pattern("WWW")
+                .define('C', HpCItems.CHEESE_SLICE.get())
+                .define('W', Items.WHEAT)
+                .unlockedBy("has_cheese", has(HpCItems.CHEESE_SLICE.get()))
+                .save(recipeOutput, "pizza_crafting");
 
         
         //endregion

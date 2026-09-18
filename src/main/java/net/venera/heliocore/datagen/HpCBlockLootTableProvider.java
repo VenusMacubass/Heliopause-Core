@@ -30,7 +30,6 @@ public class HpCBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(HpCBlocks.ALUMINIUM_BLOCK.get());
         dropSelf(HpCBlocks.RADIOACTIVE_BLOCK.get());
         dropSelf(HpCBlocks.CHEESE_BLOCK.get());
-        dropSelf(HpCBlocks.DEFAULT_PIZZA.get());
         dropSelf(HpCBlocks.MOON_REGOLITH.get());
         dropSelf(HpCBlocks.MOON_DIRT.get());
         dropSelf(HpCBlocks.BASE_BUILDING_WHITE_BLOCK.get());

@@ -10,6 +10,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.recipe.item.CannedStewRecipe;
+import net.venera.heliocore.recipe.item.PizzaRecipe;
 import net.venera.heliocore.recipe.item.SpaceSuitRecipe;
 import net.venera.heliocore.recipe.item.SpaceSuitRecipeSerializer;
 
@@ -50,9 +51,12 @@ public class HpCRecipes {
             return "space_suit";
         }
     });
-
+    
     public static final Supplier<RecipeSerializer<CannedStewRecipe>> CANNED_STEW_SERIALIZER =
             RECIPE_SERIALIZERS.register("canned_stew", () -> new SimpleCraftingRecipeSerializer<>(CannedStewRecipe::new));
+
+    public static final DeferredHolder<RecipeSerializer<?>, SimpleCraftingRecipeSerializer<PizzaRecipe>> PIZZA_TOPPING =
+            RECIPE_SERIALIZERS.register("pizza_topping", () -> new SimpleCraftingRecipeSerializer<>(PizzaRecipe::new));
     
     public static void register(IEventBus eventBus){
         RECIPE_SERIALIZERS.register(eventBus);

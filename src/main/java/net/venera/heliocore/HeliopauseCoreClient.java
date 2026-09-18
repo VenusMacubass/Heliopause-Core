@@ -19,6 +19,8 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.PlayerSkin;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -65,6 +67,7 @@ import net.venera.heliocore.item.hpc_custom.GasTankItem;
 import net.venera.heliocore.render.FluidTankRenderer;
 import net.venera.heliocore.render.MagneticAssemblyPlatformRenderer;
 import net.venera.heliocore.render.MagneticCraftingTableRenderer;
+import net.venera.heliocore.render.PizzaBakedModel;
 import net.venera.heliocore.render.sky.MoonSkyRenderer;
 import net.venera.heliocore.screen.HpCMenuTypes;
 import net.venera.heliocore.screen.block_entity.*;
@@ -78,6 +81,8 @@ import net.venera.heliocore.util.*;
 import org.joml.Matrix4f;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
 
 @EventBusSubscriber(modid = HeliopauseCore.MOD_ID, value = Dist.CLIENT)
 public class HeliopauseCoreClient {
@@ -515,5 +520,46 @@ public class HeliopauseCoreClient {
         event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "space_suit_hud"),
                 SpaceSuitHudOverlay.INSTANCE
         );
+    }
+
+
+    private static final String[] TOPPINGS = {"chicken", "meat", "mushroom", "fish", "veggies"};
+    @SubscribeEvent
+    public static void onRegisterAdditionalModels(ModelEvent.RegisterAdditional event) {
+        for (String topping : TOPPINGS) {
+            for (int slice = 0; slice <= 3; slice++) {
+                ResourceLocation loc = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "block/pizza/topping_" + topping + "_" + slice);
+                event.register(new ModelResourceLocation(loc, "standalone"));
+            }
+        }
+    }
+    
+    @SubscribeEvent
+    public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
+        Map<String, BakedModel> toppingModels = new HashMap<>();
+
+        // Extract the baked topping models we requested in the previous event
+        for (String topping : TOPPINGS) {
+            for (int slice = 0; slice <= 3; slice++) {
+                ResourceLocation loc = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "block/pizza/topping_" + topping + "_" + slice);
+                BakedModel bakedTopping = event.getModels().get(new ModelResourceLocation(loc, "standalone"));
+                if (bakedTopping != null) {
+                    toppingModels.put(topping + "_" + slice, bakedTopping);
+                }
+            }
+        }
+
+        // Loop through all 4 slice states of the physical Pizza block
+        for (int slice = 0; slice <= 3; slice++) {
+            // This ModelResourceLocation matches exactly what NeoForge generates for block states
+            ModelResourceLocation pizzaBaseLoc = new ModelResourceLocation(
+                    ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "default_pizza"), "slices=" + slice);
+
+            BakedModel existingModel = event.getModels().get(pizzaBaseLoc);
+            if (existingModel != null) {
+                // Replace it with our wrapper!
+                event.getModels().put(pizzaBaseLoc, new PizzaBakedModel(existingModel, toppingModels));
+            }
+        }
     }
 }

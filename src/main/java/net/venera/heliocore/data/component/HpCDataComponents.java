@@ -1,8 +1,10 @@
 package net.venera.heliocore.data.component;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -25,6 +27,9 @@ public class HpCDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<GasTankData>> GAS_TANK_COMPONENT = register("gas_tank_content",
             builder -> builder.persistent(GasTankData.CODEC).networkSynchronized(GasTankData.STREAM_CODEC));
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> PIZZA_TOPPINGS = register("pizza_toppings",
+            builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+    
     private static <T>DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
         return DATA_COMPONENT_TYPES.register(name, () -> builderOperator.apply(DataComponentType.builder()).build());
     }

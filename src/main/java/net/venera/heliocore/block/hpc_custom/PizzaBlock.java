@@ -1,13 +1,22 @@
 package net.venera.heliocore.block.hpc_custom;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -17,8 +26,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.venera.heliocore.block.entity.PizzaEntity;
+import net.venera.heliocore.data.component.HpCDataComponents;
+import org.jetbrains.annotations.Nullable;
 
-public class PizzaBlock extends Block {
+public class PizzaBlock extends Block implements EntityBlock {
     public static final IntegerProperty SLICES = IntegerProperty.create("slices", 0, 3);
 
     //North-West (Top-Left)
@@ -49,35 +61,64 @@ public class PizzaBlock extends Block {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(SLICES);
     }
-    
+
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.isClientSide) return InteractionResult.SUCCESS;
-        if (eat(level, pos, state, player).consumesAction()) {
-            return InteractionResult.SUCCESS;
-        }
-        if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
-            return InteractionResult.CONSUME;
-        }
         return eat(level, pos, state, player);
+    }
+
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        if (level.getBlockEntity(pos) instanceof PizzaEntity pizzaBE) {
+
+            // Check if the item has our custom data component
+            Integer mask = stack.get(HpCDataComponents.PIZZA_TOPPINGS.get());
+
+            if (mask != null) {
+                // Apply the toppings from the item to the physical block
+                pizzaBE.setToppingsMask(mask);
+            }
+        }
+        super.setPlacedBy(level, pos, state, placer, stack);
     }
 
     protected static InteractionResult eat(LevelAccessor level, BlockPos pos, BlockState state, Player player) {
         if (!player.canEat(false)) {
             return InteractionResult.PASS;
         } else {
-            player.getFoodData().eat(2, 0.1F);
+            int nutrition = 2; // Base crust/cheese nutrition
+            float saturation = 0.1F;
+
+            // 4. Read the toppings before they eat the slice!
+            if (level.getBlockEntity(pos) instanceof PizzaEntity pizzaBE) {
+                int mask = pizzaBE.getToppingsMask();
+
+                // Add bonus stats for each topping present
+                if ((mask & 1) != 0) { nutrition += 2; saturation += 0.2F; } // Chicken
+                if ((mask & 2) != 0) { nutrition += 3; saturation += 0.3F; } // Meat
+                if ((mask & 4) != 0) { nutrition += 1; saturation += 0.1F; } // Mushroom
+                if ((mask & 8) != 0) { nutrition += 2; saturation += 0.2F; } // Fish
+                if ((mask & 16) != 0) { nutrition += 1; saturation += 0.1F; } // Vegetable
+            }
+
+            player.getFoodData().eat(nutrition, saturation);
             int i = state.getValue(SLICES);
             level.gameEvent(player, GameEvent.EAT, pos);
+
             if (i < 3) {
                 level.setBlock(pos, state.setValue(SLICES, i + 1), 3);
             } else {
                 level.removeBlock(pos, false);
                 level.gameEvent(player, GameEvent.BLOCK_DESTROY, pos);
             }
-
             return InteractionResult.SUCCESS;
         }
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return new PizzaEntity(blockPos, blockState);
     }
 
     @Override

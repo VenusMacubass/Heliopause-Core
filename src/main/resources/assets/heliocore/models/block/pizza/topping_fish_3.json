@@ -2,32 +2,22 @@
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"1": "heliocore:block/pizza",
+		"3": "heliocore:block/pizza_fish",
 		"particle": "heliocore:block/pizza_chicken"
 	},
 	"elements": [
 		{
-			"from": [0, 0, 0],
-			"to": [8, 1, 8],
+			"name": "fish",
+			"from": [1, 1.03, 1],
+			"to": [8, 1.03, 8],
+			"rotation": {"angle": 0, "axis": "y", "origin": [1, 0, 1]},
 			"faces": {
-				"north": {"uv": [0, 15, 16, 16], "texture": "#1"},
-				"east": {"uv": [0, 15, 16, 16], "texture": "#1"},
-				"south": {"uv": [0, 15, 16, 16], "texture": "#1"},
-				"west": {"uv": [0, 15, 16, 16], "texture": "#1"},
-				"up": {"uv": [0, 0, 14, 14], "texture": "#1"},
-				"down": {"uv": [1, 14, 2, 15], "texture": "#1"}
-			}
-		},
-		{
-			"from": [0, 0, 8],
-			"to": [8, 1, 16],
-			"faces": {
-				"north": {"uv": [0, 15, 16, 16], "texture": "#1"},
-				"east": {"uv": [0, 15, 16, 16], "texture": "#1"},
-				"south": {"uv": [0, 15, 16, 16], "texture": "#1"},
-				"west": {"uv": [0, 15, 16, 16], "texture": "#1"},
-				"up": {"uv": [0, 2, 14, 16], "texture": "#1"},
-				"down": {"uv": [1, 14, 2, 15], "texture": "#1"}
+				"north": {"uv": [0, 0, 7, 0], "texture": "#missing"},
+				"east": {"uv": [0, 0, 7, 0], "texture": "#missing"},
+				"south": {"uv": [0, 0, 7, 0], "texture": "#missing"},
+				"west": {"uv": [0, 0, 7, 0], "texture": "#missing"},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#3"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#3"}
 			}
 		}
 	],
@@ -73,10 +63,10 @@
 	},
 	"groups": [
 		{
-			"name": "base",
-			"origin": [8, 8, 8],
+			"name": "fish",
+			"origin": [0, 0, 0],
 			"color": 0,
-			"children": [0, 1]
+			"children": [0]
 		}
 	]
 }
