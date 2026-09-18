@@ -74,6 +74,12 @@ public class HpCItemTagProvider extends ItemTagsProvider {
                 .add(HpCItems.T1_SPACE_SUIT_LEGGINGS.get())
                 .add(HpCItems.T1_SPACE_SUIT_BOOTS.get());
         
+        tag(T1_RADIATION_PROTECTORS)
+                .add(HpCItems.T1_SPACE_SUIT_HELMET.get())
+                .add(HpCItems.T1_SPACE_SUIT_CHESTPLATE.get())
+                .add(HpCItems.T1_SPACE_SUIT_LEGGINGS.get())
+                .add(HpCItems.T1_SPACE_SUIT_BOOTS.get());
+        
         tag(NOSES).add(HpCItems.T1_ROCKET_NOSE_CONE.get());
 //        tag(BOOSTERS).add(HpCItems..get());
         tag(HULLS).add(HpCItems.COMPRESSED_HD_PLATE.get());

@@ -66,6 +66,10 @@ public class HpCTags {
         public static final TagKey<Item> T1_PRESSURE_PROTECTORS = createTag("t1_pressure_protectors");
         public static final TagKey<Item> T2_PRESSURE_PROTECTORS = createTag("t2_pressure_protectors");
         public static final TagKey<Item> T3_PRESSURE_PROTECTORS = createTag("t3_pressure_protectors");
+
+        public static final TagKey<Item> T1_RADIATION_PROTECTORS = createTag("t1_radiation_protectors");
+        public static final TagKey<Item> T2_RADIATION_PROTECTORS = createTag("t2_radiation_protectors");
+        public static final TagKey<Item> T3_RADIATION_PROTECTORS = createTag("t3_radiation_protectors");
         
         public static final TagKey<Item> STONES = createTag("stone_variants");
 

@@ -26,6 +26,16 @@ public class RadiationData implements INBTSerializable<CompoundTag> {
         else{setRadiation(this.radiation - amount);}
     }
 
+    public void changeRadiation(double amount, boolean vector, double limit) {
+        if (vector) {
+            if (this.radiation < limit) {
+                setRadiation(Math.min(this.radiation + amount, limit));
+            }
+        } else {
+            setRadiation(this.radiation - amount);
+        }
+    }
+
     public double getRadPercentage(){
         return radiation/MAX_RADIATION;
     }

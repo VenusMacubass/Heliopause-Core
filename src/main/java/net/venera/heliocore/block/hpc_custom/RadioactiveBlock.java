@@ -15,10 +15,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.data.radiation.RadiationData;
+import net.venera.heliocore.data.radiation.RadiationHandler;
+
 import java.util.List;
 
 public class RadioactiveBlock extends Block {
-    private static final double RADIUS = 9.0;
+    private static final double RADIUS = 12.0;
     public RadioactiveBlock(Properties properties) {
         super(properties);
     }
@@ -30,12 +32,13 @@ public class RadioactiveBlock extends Block {
 
         for (Entity entity : entities) {
             if (entity instanceof LivingEntity living) {
-                RadiationData radData = entity.getData(HpCAttachments.RADIATION_DATA);
-                if (!living.hasData(HpCAttachments.RADIATION_DATA)) continue;
-                double distanceSq = entity.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-                if(distanceSq < (RADIUS *RADIUS)){
+                RadiationData radData = living.getData(HpCAttachments.RADIATION_DATA);
+
+                double distanceSq = living.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+                if(distanceSq < (RADIUS * RADIUS)){
                     double distance = Math.sqrt(distanceSq);
-                    radData.changeRadiation(Math.max(0.3, (RADIUS - distance) * 0.5f), true);
+                    int suitLimit = RadiationHandler.getSuitProtectionLevel(living);
+                    radData.changeRadiation(Math.max(0.3, (RADIUS - distance) * 0.5f), true, suitLimit);
                 }
             }
         }

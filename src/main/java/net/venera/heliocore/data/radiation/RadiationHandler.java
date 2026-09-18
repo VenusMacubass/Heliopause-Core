@@ -1,11 +1,14 @@
 package net.venera.heliocore.data.radiation;
 
+import it.unimi.dsi.fastutil.ints.Int2FloatAVLTreeMap;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -14,6 +17,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.dimension.HpCDimensions;
+import net.venera.heliocore.item.HpCTags;
 import net.venera.heliocore.util.SyncRadiationPayload;
 
 @EventBusSubscriber(modid = HeliopauseCore.MOD_ID)
@@ -27,10 +31,8 @@ public class RadiationHandler {
     public static void onEntityTick(EntityTickEvent.Post event) {
         if(!(event.getEntity() instanceof LivingEntity aliveEntity)){return;}
         if (aliveEntity.level().isClientSide || aliveEntity.tickCount % 20 != 0) {return;}
-        if (!aliveEntity.hasData(HpCAttachments.RADIATION_DATA)) {return;}
         RadiationData radiationData = aliveEntity.getData(HpCAttachments.RADIATION_DATA);
-
-
+        
         radiationChange(aliveEntity, radiationData);
         applyRadiationEffects(aliveEntity, radiationData);
         if (aliveEntity.tickCount % (radiationData.getRadiation() >= 400 ? 40:100) == 0) {
@@ -41,28 +43,27 @@ public class RadiationHandler {
         }
     }
 
-    private static void radiationChange(Entity entity, RadiationData radiationData) {
+    private static void radiationChange(LivingEntity entity, RadiationData radiationData) {
         double radLevel = radiationData.getRadiation();
         var dim = entity.level().dimension();
+
         double difficulty = switch (entity.level().getDifficulty()) {
-            case PEACEFUL -> 0f;
             case EASY -> 0.007f;
             case NORMAL -> 0.01f;
             case HARD -> 0.013f;
             default -> 0f;
         };
-        if (dim.equals(Level.OVERWORLD)) {
-            radiationData.changeRadiation(Math.abs(EARTH_BG_RAD - Math.min(radLevel, 100)) * difficulty, EARTH_BG_RAD > radLevel);
-        } else if (dim.equals(Level.NETHER)) {
-            radiationData.changeRadiation(Math.abs(NETHER_BG_RAD - Math.min(radLevel, 100)) * difficulty, NETHER_BG_RAD > radLevel);
-        } else if (dim.equals(Level.END)) {
-            radiationData.changeRadiation(Math.abs(END_BG_RAD - Math.min(radLevel, 100)) * difficulty,  END_BG_RAD > radLevel);
-        }
-        else if (dim.equals(HpCDimensions.MOON_LEVEL_KEY)) {
-            radiationData.changeRadiation(Math.abs(MOON_BG_RAD - Math.min(radLevel, 100)) * difficulty,  MOON_BG_RAD > radLevel);
-        } else {
-            throw new IllegalStateException("Unexpected value: " + dim);
-        }
+        
+        double targetBgRad;
+        if (dim.equals(Level.NETHER)) targetBgRad = NETHER_BG_RAD;
+        else if (dim.equals(Level.END)) targetBgRad = END_BG_RAD;
+        else if (dim.equals(HpCDimensions.MOON_LEVEL_KEY)) targetBgRad = MOON_BG_RAD;
+        else targetBgRad = EARTH_BG_RAD;
+
+        boolean isGaining = targetBgRad > radLevel;
+        double amount = Math.abs(targetBgRad - Math.min(radLevel, 100)) * difficulty;
+        int limit = getSuitProtectionLevel(entity);
+        radiationData.changeRadiation(amount, isGaining, limit);
     }
 
     private static void applyRadiationEffects(LivingEntity entity, RadiationData radData) {
@@ -76,10 +77,9 @@ public class RadiationHandler {
         }
         if (radLevel > 600) {
             entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 1200, 0));
-            entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 1200, 0));
         }
         if (radLevel > 800) {
-
+            entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 1200, 0));
         }
     }
 
@@ -97,29 +97,18 @@ public class RadiationHandler {
             entity.hurt(damageSource, (float)(radLevel-900)*0.3f);
         }
     }
+
+    public static int getSuitProtectionLevel(LivingEntity entity) {
+        int protection = 0;
+        for(ItemStack stack : entity.getArmorSlots()){
+            if(stack.is(HpCTags.Items.T3_RADIATION_PROTECTORS)) protection += 3;
+            else if(stack.is(HpCTags.Items.T2_RADIATION_PROTECTORS)) protection += 2;
+            else if(stack.is(HpCTags.Items.T1_RADIATION_PROTECTORS)) protection += 1;
+        }
+
+        if (protection >= 12) return 200; // Full T3
+        if (protection >= 8)  return 400; // Full T2
+        if (protection >= 4)  return 800; // Full T1
+        return 1000; 
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
