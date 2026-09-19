@@ -129,57 +129,57 @@ public class HpCBlocks {
     
     //region Moon
     public static final DeferredBlock<Block> MOON_REGOLITH = registerBlock("moon_regolith",
-            () -> new Block(BlockBehaviour.Properties.of()));
+            () -> new Block(BlockBehaviour.Properties.of().sound(SoundType.SAND)));
     public static final DeferredBlock<Block> MOON_DIRT = registerBlock("moon_dirt",
-            () -> new Block(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().sound(SoundType.GRAVEL)));
+            () -> new Block(BlockBehaviour.Properties.of().sound(SoundType.ROOTED_DIRT)));
     public static final DeferredBlock<Block> MOON_ROCK = registerBlock("moon_rock",
-            () -> new Block(BlockBehaviour.Properties.of().sound(SoundType.GRAVEL)));
+            () -> new Block(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().sound(SoundType.STONE)));
     public static final DeferredBlock<Block> MOON_COBBLESTONE = registerBlock("moon_cobblestone",
-            () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops()));
+            () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops().sound(SoundType.STONE)));
     public static final DeferredBlock<Block> MOON_DUNGEON_BRICKS = registerBlock("moon_dungeon_bricks",
             () -> new Block(BlockBehaviour.Properties.of().requiresCorrectToolForDrops()));
     
     
     public static final DeferredBlock<WallBlock> MOON_ROCK_WALL = registerBlock("moon_rock_wall",
-            ()-> new WallBlock(BlockBehaviour.Properties.of().strength(4f)));
+            ()-> new WallBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(4f)));
     public static final DeferredBlock<WallBlock> MOON_DUNGEON_BRICK_WALL = registerBlock("moon_dungeon_brick_wall",
-            ()-> new WallBlock(BlockBehaviour.Properties.of().strength(4f)));
+            ()-> new WallBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(4f)));
     public static final DeferredBlock<StairBlock> MOON_ROCK_STAIRS = registerBlock("moon_rock_stairs",
-            ()-> new StairBlock(HpCBlocks.MOON_ROCK.get().defaultBlockState(), BlockBehaviour.Properties.of().strength(4f)));
+            ()-> new StairBlock(HpCBlocks.MOON_ROCK.get().defaultBlockState(), BlockBehaviour.Properties.of().strength(4f).requiresCorrectToolForDrops()));
     public static final DeferredBlock<StairBlock> MOON_DUNGEON_BRICK_STAIRS = registerBlock("moon_dungeon_brick_stairs",
-            ()-> new StairBlock(HpCBlocks.MOON_DUNGEON_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.of().strength(4f)));
+            ()-> new StairBlock(HpCBlocks.MOON_DUNGEON_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(4f)));
     public static final DeferredBlock<SlabBlock> MOON_ROCK_SLAB = registerBlock("moon_rock_slab",
-            ()-> new SlabBlock(BlockBehaviour.Properties.of().strength(4f)));
+            ()-> new SlabBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(4f)));
     public static final DeferredBlock<SlabBlock> MOON_DUNGEON_BRICK_SLAB = registerBlock("moon_dungeon_brick_slab",
-            ()-> new SlabBlock(BlockBehaviour.Properties.of().strength(4f)));
+            ()-> new SlabBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(4f)));
     //endregion
     
     public static final DeferredBlock<Block> RADIOACTIVE_BLOCK = registerBlock("radioactive_block",
             () -> new RadioactiveBlock(BlockBehaviour.Properties.of().strength(8f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
     
     public static final DeferredBlock<Block> BASE_BUILDING_WHITE_BLOCK = registerBlock("base_building_block_white",
-            () -> new Block(BlockBehaviour.Properties.of().strength(5f).sound(SoundType.METAL)));
+            () -> new Block(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(5f).sound(SoundType.METAL)));
 
     public static final DeferredBlock<Block> BASE_BUILDING_BLACK_BLOCK = registerBlock("base_building_block_black",
-            () -> new Block(BlockBehaviour.Properties.of().strength(5f).sound(SoundType.METAL)));
+            () -> new Block(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(5f).sound(SoundType.METAL)));
 
     public static final DeferredBlock<WallBlock> BASE_BUILDING_WALL_WHITE = registerBlock("base_building_wall_white",
-            ()-> new WallBlock(BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(4f)));
+            ()-> new WallBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().sound(SoundType.METAL).strength(5f)));
 
     public static final DeferredBlock<WallBlock> BASE_BUILDING_WALL_BLACK = registerBlock("base_building_wall_black",
-            ()-> new WallBlock(BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(4f)));
+            ()-> new WallBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().sound(SoundType.METAL).strength(5f)));
 
     public static final DeferredBlock<StairBlock> BASE_BUILDING_STAIRS_WHITE = registerBlock("base_building_stairs_white",
-            ()-> new StairBlock(HpCBlocks.BASE_BUILDING_WHITE_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(4f)));
+            ()-> new StairBlock(HpCBlocks.BASE_BUILDING_WHITE_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.of().requiresCorrectToolForDrops().sound(SoundType.METAL).strength(5f)));
 
     public static final DeferredBlock<StairBlock> BASE_BUILDING_STAIRS_BLACK = registerBlock("base_building_stairs_black",
-            ()-> new StairBlock(HpCBlocks.BASE_BUILDING_WHITE_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(4f)));
+            ()-> new StairBlock(HpCBlocks.BASE_BUILDING_WHITE_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.of().requiresCorrectToolForDrops().sound(SoundType.METAL).strength(5f)));
 
     public static final DeferredBlock<SlabBlock> BASE_BUILDING_SLAB_WHITE = registerBlock("base_building_slab_white",
-            ()-> new SlabBlock(BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(5f)));
+            ()-> new SlabBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().sound(SoundType.METAL).strength(5f)));
 
     public static final DeferredBlock<SlabBlock> BASE_BUILDING_SLAB_BLACK = registerBlock("base_building_slab_black",
-            ()-> new SlabBlock(BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(5f)));
+            ()-> new SlabBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().sound(SoundType.METAL).strength(5f)));
 
     public static final DeferredBlock<Block> ARC_LAMP = registerBlock("arc_lamp",
             () -> new ArcLamp(BlockBehaviour.Properties.of().lightLevel(state -> state.getValue(ArcLamp.CLICKED) ? 15:0).noOcclusion().strength(2f)));
@@ -225,16 +225,16 @@ public class HpCBlocks {
     });
 
     public static final DeferredBlock<Block> AIRLOCK_FRAME = registerBlock("airlock_gate_frame",
-            () -> new Block(BlockBehaviour.Properties.of().sound(SoundType.METAL)));
+            () -> new Block(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
     public static final DeferredBlock<Block> AIRLOCK_FRAME_SWITCH = registerBlock("airlock_frame_switch",
-            () -> new AirlockFrameSwitch(BlockBehaviour.Properties.of().sound(SoundType.METAL)));
+            () -> new AirlockFrameSwitch(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().sound(SoundType.METAL)));
 
     public static final DeferredBlock<Block> AIRLOCK_GENERATED_BLOCK = BLOCKS.register("airlock_generated_black",
             () -> new AirlockGeneratedBlock(BlockBehaviour.Properties.of().noLootTable().sound(SoundType.METAL).strength(-1.0F, 3600000.0F).noOcclusion()));
 
     public static final DeferredBlock<Block> MAGNETIC_CRAFTING_TABLE = registerBlock("magnetic_crafting_table",
-            () -> new MagneticCraftingTableBlock(BlockBehaviour.Properties.of().sound(SoundType.METAL)));
+            () -> new MagneticCraftingTableBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().sound(SoundType.METAL)));
     
     public static final DeferredBlock<Block> DEFAULT_PIZZA = registerBlock("default_pizza",
             () -> new PizzaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).noLootTable()){

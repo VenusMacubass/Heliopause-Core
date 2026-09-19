@@ -20,39 +20,102 @@ public class HpCBlockTagProvider extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(HpCBlocks.ALUMINIUM_ORE.get())
-                .add(HpCBlocks.ALUMINIUM_BLOCK.get())
-                .add(HpCBlocks.RADIOACTIVE_BLOCK.get())
-                .add(HpCBlocks.MOON_ROCK.get())
-                .add(HpCBlocks.BASE_BUILDING_WHITE_BLOCK.get())
-                .add(HpCBlocks.TIN_BLOCK.get())
-                .add(HpCBlocks.TIN_ORE.get())
-                .add(HpCBlocks.RAW_TIN_BLOCK.get())
-                .add(HpCBlocks.RAW_ALUMINIUM_BLOCK.get())
-                .add(HpCBlocks.SILICON_BLOCK.get())
-                .add(HpCBlocks.SILICON_ORE.get())
                 .add(HpCBlocks.MOON_COPPER_ORE.get())
-                .add(HpCBlocks.MOON_TIN_ORE.get())
-                .add(HpCBlocks.MOON_COBBLESTONE.get())
-                .add(HpCBlocks.MOON_DUNGEON_BRICKS.get())
-                .add(HpCBlocks.BASE_BUILDING_SLAB_WHITE.get())
-                .add(HpCBlocks.MOON_ROCK_SLAB.get())
-                .add(HpCBlocks.MOON_DUNGEON_BRICK_SLAB.get())
-                .add(HpCBlocks.MOON_TEKTITES.get())
                 
-                .add(HpCBlocks.IRIDIUM_BLOCK.get());
+                .add(HpCBlocks.MOON_TIN_ORE.get())
+                .add(HpCBlocks.TIN_ORE.get())
+                .add(HpCBlocks.DEEPSLATE_TIN_ORE.get())
+                .add(HpCBlocks.RAW_TIN_BLOCK.get())
+                .add(HpCBlocks.TIN_BLOCK.get())
 
+                .add(HpCBlocks.MOON_IRON_ORE.get())
+                
+                .add(HpCBlocks.MOON_ALUMINIUM_ORE.get())
+                .add(HpCBlocks.ALUMINIUM_ORE.get())
+                .add(HpCBlocks.DEEPSLATE_ALUMINIUM_ORE.get())
+                .add(HpCBlocks.RAW_ALUMINIUM_BLOCK.get())
+                .add(HpCBlocks.ALUMINIUM_BLOCK.get())
+
+                .add(HpCBlocks.MOON_SILICON_ORE.get())
+                .add(HpCBlocks.SILICON_ORE.get())
+                .add(HpCBlocks.DEEPSLATE_SILICON_ORE.get())
+                .add(HpCBlocks.SILICON_BLOCK.get())
+
+                .add(HpCBlocks.MOON_IRIDIUM_ORE.get())
+                .add(HpCBlocks.IRIDIUM_ORE.get())
+                .add(HpCBlocks.DEEPSLATE_IRIDIUM_ORE.get())
+                .add(HpCBlocks.IRIDIUM_BLOCK.get())
+
+                .add(HpCBlocks.COAL_COMPRESSOR.get())
+                .add(HpCBlocks.REFINERY.get())
+                .add(HpCBlocks.ENERGY_STORAGE_UNIT.get())
+                .add(HpCBlocks.BASIC_SOLAR_PANEL.get())
+                .add(HpCBlocks.CARGO_MANAGER.get())
+                .add(HpCBlocks.FUEL_MANAGER.get())
+                .add(HpCBlocks.OXYGEN_GENERATOR.get())
+                .add(HpCBlocks.GAS_COMPRESSOR.get())
+                .add(HpCBlocks.GAS_VAPORIZER.get())
+                .add(HpCBlocks.ENERGY_GENERATOR.get())
+                .add(HpCBlocks.DECONSTRUCTOR.get())
+                .add(HpCBlocks.OXYGEN_SEALER.get())
+                .add(HpCBlocks.MAGNETIC_ASSEMBLY_PLATFORM.get())
+                
+                .add(HpCBlocks.RADIOACTIVE_BLOCK.get())
+                .add(HpCBlocks.AIRLOCK_FRAME.get())
+                .add(HpCBlocks.AIRLOCK_FRAME_SWITCH.get())
+                .add(HpCBlocks.MAGNETIC_CRAFTING_TABLE.get())
+                
+                .add(HpCBlocks.BASE_BUILDING_WHITE_BLOCK.get())
+                .add(HpCBlocks.BASE_BUILDING_SLAB_WHITE.get())
+                .add(HpCBlocks.BASE_BUILDING_STAIRS_WHITE.get())
+                .add(HpCBlocks.BASE_BUILDING_WALL_WHITE.get())
+                .add(HpCBlocks.BASE_BUILDING_BLACK_BLOCK.get())
+                .add(HpCBlocks.BASE_BUILDING_SLAB_BLACK.get())
+                .add(HpCBlocks.BASE_BUILDING_STAIRS_BLACK.get())
+                .add(HpCBlocks.BASE_BUILDING_WALL_BLACK.get())
+
+                .add(HpCBlocks.MOON_COBBLESTONE.get())
+                .add(HpCBlocks.MOON_ROCK.get())
+                .add(HpCBlocks.MOON_ROCK_SLAB.get())
+                .add(HpCBlocks.MOON_ROCK_STAIRS.get())
+                .add(HpCBlocks.MOON_ROCK_WALL.get())
+                .add(HpCBlocks.MOON_TEKTITES.get())
+
+                .add(HpCBlocks.MOON_DUNGEON_BRICKS.get())
+                .add(HpCBlocks.MOON_DUNGEON_BRICK_SLAB.get())
+                .add(HpCBlocks.MOON_DUNGEON_BRICK_STAIRS.get())
+                .add(HpCBlocks.MOON_DUNGEON_BRICK_WALL.get());
+        
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
-                .add(HpCBlocks.MOON_DIRT.get());
+                .add(HpCBlocks.MOON_REGOLITH.get())
+                .add(HpCBlocks.MOON_TEKTITES_REGOLITH.get())
+                .add(HpCBlocks.MOON_DIRT.get())
+        ;
 
         tag(BlockTags.NEEDS_STONE_TOOL)
+                .add(HpCBlocks.MOON_TIN_ORE.get())
                 .add(HpCBlocks.TIN_ORE.get())
+                .add(HpCBlocks.DEEPSLATE_TIN_ORE.get())
+                .add(HpCBlocks.RAW_TIN_BLOCK.get())
+                .add(HpCBlocks.TIN_BLOCK.get())
+                .add(HpCBlocks.MOON_COPPER_ORE.get())
+                .add(HpCBlocks.MOON_IRON_ORE.get())
                 .add(HpCBlocks.MOON_TEKTITES.get());
         
         tag(BlockTags.NEEDS_IRON_TOOL)
+                .add(HpCBlocks.MOON_ALUMINIUM_ORE.get())
                 .add(HpCBlocks.ALUMINIUM_ORE.get())
+                .add(HpCBlocks.RAW_ALUMINIUM_BLOCK.get())
+                .add(HpCBlocks.DEEPSLATE_ALUMINIUM_ORE.get())
                 .add(HpCBlocks.ALUMINIUM_BLOCK.get())
-                .add(HpCBlocks.SILICON_ORE.get());
+                .add(HpCBlocks.MOON_SILICON_ORE.get())
+                .add(HpCBlocks.SILICON_ORE.get())
+                .add(HpCBlocks.SILICON_BLOCK.get())
+                .add(HpCBlocks.DEEPSLATE_SILICON_ORE.get())
+                .add(HpCBlocks.MOON_IRIDIUM_ORE.get())
+                .add(HpCBlocks.IRIDIUM_ORE.get())
+                .add(HpCBlocks.IRIDIUM_BLOCK.get())
+                .add(HpCBlocks.DEEPSLATE_IRIDIUM_ORE.get());
 
         tag(HpCTags.Blocks.NEEDS_STEEL_TOOLS)
                 .addTag(BlockTags.NEEDS_IRON_TOOL);

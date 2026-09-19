@@ -1,5 +1,7 @@
 {
   "values": [
+    "heliocore:moon_regolith",
+    "heliocore:moon_regolith_tektites",
     "heliocore:moon_dirt"
   ]
 }

@@ -1,6 +1,12 @@
 {
   "values": [
+    "heliocore:moon_tin_ore",
     "heliocore:tin_ore",
+    "heliocore:deepslate_tin_ore",
+    "heliocore:raw_tin_block",
+    "heliocore:tin_block",
+    "heliocore:moon_copper_ore",
+    "heliocore:moon_iron_ore",
     "heliocore:moon_tektites"
   ]
 }
