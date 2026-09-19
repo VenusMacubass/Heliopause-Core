@@ -856,89 +856,89 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
         //endregion
 
         //region Foods
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.DEHYDRATED_APPLE.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.DEHYDRATED_APPLE.get(), 1)
                 .requires(HpCItems.EMPTY_BAG, 1)
                 .requires(Items.APPLE, 2)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
                 .save(recipeOutput, "dehydrated_apple_crafting");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.CHIPS.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.CHIPS.get(), 1)
                 .requires(HpCItems.EMPTY_BAG, 1)
                 .requires(Items.BAKED_POTATO, 2)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
                 .save(recipeOutput, "chips_crafting");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.DEHYDRATED_CARROT.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.DEHYDRATED_CARROT.get(), 1)
                 .requires(HpCItems.EMPTY_BAG, 1)
                 .requires(Items.CARROT, 2)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
                 .save(recipeOutput, "dehydrated_carrot_crafting");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.DEHYDRATED_BERRIES.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.DEHYDRATED_BERRIES.get(), 1)
                 .requires(HpCItems.EMPTY_BAG, 1)
                 .requires(Items.SWEET_BERRIES, 2)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
                 .save(recipeOutput, "dehydrated_berries_crafting");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.DEHYDRATED_GLOW_BERRIES.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.DEHYDRATED_GLOW_BERRIES.get(), 1)
                 .requires(HpCItems.EMPTY_BAG, 1)
                 .requires(Items.GLOW_BERRIES, 2)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
                 .save(recipeOutput, "dehydrated_glow_berries_crafting");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.DEHYDRATED_KELP.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.DEHYDRATED_KELP.get(), 1)
                 .requires(HpCItems.EMPTY_BAG, 1)
                 .requires(Items.DRIED_KELP, 3)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
                 .save(recipeOutput, "dehydrated_kelp_crafting");
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.DEHYDRATED_CHICKEN.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.DEHYDRATED_CHICKEN.get(), 1)
                 .requires(HpCItems.EMPTY_BAG, 1)
                 .requires(Items.CHICKEN, 2)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
                 .save(recipeOutput, "dehydrated_chicken_crafting");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.DEHYDRATED_BEEF.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.DEHYDRATED_BEEF.get(), 1)
                 .requires(HpCItems.EMPTY_BAG, 1)
                 .requires(Items.BEEF, 2)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
                 .save(recipeOutput, "dehydrated_beef_crafting");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.DEHYDRATED_RABBIT.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.DEHYDRATED_RABBIT.get(), 1)
                 .requires(HpCItems.EMPTY_BAG, 1)
                 .requires(Items.RABBIT, 2)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
                 .save(recipeOutput, "dehydrated_rabbit_crafting");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.DEHYDRATED_COD.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.DEHYDRATED_COD.get(), 1)
                 .requires(HpCItems.EMPTY_BAG, 1)
                 .requires(Items.COD, 2)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
                 .save(recipeOutput, "dehydrated_cod_crafting");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.DEHYDRATED_SALMON.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.DEHYDRATED_SALMON.get(), 1)
                 .requires(HpCItems.EMPTY_BAG, 1)
                 .requires(Items.SALMON, 2)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
                 .save(recipeOutput, "dehydrated_salmon_crafting");
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.CANNED_CHICKEN.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.CANNED_CHICKEN.get(), 1)
                 .requires(HpCItems.EMPTY_CAN, 1)
                 .requires(Items.COOKED_CHICKEN, 2)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
                 .save(recipeOutput, "canned_chicken_crafting");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.CANNED_STEAK.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.CANNED_STEAK.get(), 1)
                 .requires(HpCItems.EMPTY_CAN, 1)
                 .requires(Items.COOKED_BEEF, 2)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
                 .save(recipeOutput, "canned_steak_crafting");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.CANNED_MUTTON.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.CANNED_MUTTON.get(), 1)
                 .requires(HpCItems.EMPTY_CAN, 1)
                 .requires(Items.COOKED_MUTTON, 2)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
                 .save(recipeOutput, "canned_mutton_crafting");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.CANNED_RABBIT.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.CANNED_RABBIT.get(), 1)
                 .requires(HpCItems.EMPTY_CAN, 1)
                 .requires(Items.COOKED_RABBIT, 2)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
                 .save(recipeOutput, "canned_rabbit_crafting");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.CANNED_COD.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.CANNED_COD.get(), 1)
                 .requires(HpCItems.EMPTY_CAN, 1)
                 .requires(Items.COOKED_COD, 2)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
                 .save(recipeOutput, "canned_cod_crafting");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HpCItems.CANNED_SALMON.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.CANNED_SALMON.get(), 1)
                 .requires(HpCItems.EMPTY_CAN, 1)
                 .requires(Items.COOKED_SALMON, 2)
                 .unlockedBy("has_empty_bag", has(HpCItems.EMPTY_BAG.get()))
@@ -953,16 +953,6 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('M', Items.MILK_BUCKET)
                 .unlockedBy("has_milk_bucket", has(Items.MILK_BUCKET))
                 .save(recipeOutput, "cheese_block_crafting");
-        
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HpCItems.HAMBURGER.get())
-                .pattern(" B ")
-                .pattern("CP ")
-                .pattern(" B ")
-                .define('C', HpCItems.CHEESE_SLICE.get())
-                .define('B', Items.BREAD)
-                .define('P', Items.COOKED_BEEF)
-                .unlockedBy("has_meat", has(Items.COOKED_BEEF))
-                .save(recipeOutput, "cheeseburger_crafting");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HpCBlocks.DEFAULT_PIZZA.get())
                 .pattern("C  ")
@@ -972,7 +962,10 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_cheese", has(HpCItems.CHEESE_SLICE.get()))
                 .save(recipeOutput, "pizza_crafting");
 
-        
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HpCItems.BURGER_BUN.get(), 2)
+                .requires(Items.BREAD, 1)
+                .unlockedBy("has_bread", has(Items.BREAD))
+                .save(recipeOutput, "burger_bun_crafting");
         //endregion
         
         //region Space Suits

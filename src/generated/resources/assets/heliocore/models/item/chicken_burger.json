@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "heliocore:item/chicken_burger_c1_v0",
+      "predicate": {
+        "heliocore:cheese": 1.0,
+        "heliocore:veggie": 0.0
+      }
+    },
+    {
+      "model": "heliocore:item/chicken_burger_c2_v0",
+      "predicate": {
+        "heliocore:cheese": 2.0,
+        "heliocore:veggie": 0.0
+      }
+    },
+    {
+      "model": "heliocore:item/chicken_burger_c0_v1",
+      "predicate": {
+        "heliocore:cheese": 0.0,
+        "heliocore:veggie": 1.0
+      }
+    },
+    {
+      "model": "heliocore:item/chicken_burger_c1_v1",
+      "predicate": {
+        "heliocore:cheese": 1.0,
+        "heliocore:veggie": 1.0
+      }
+    },
+    {
+      "model": "heliocore:item/chicken_burger_c2_v1",
+      "predicate": {
+        "heliocore:cheese": 2.0,
+        "heliocore:veggie": 1.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "heliocore:item/burger/chicken_burger_cheese_0_vegg_0"
+  }
+}

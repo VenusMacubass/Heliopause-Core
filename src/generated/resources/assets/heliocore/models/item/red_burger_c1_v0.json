@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "heliocore:item/burger/red_burger_cheese_1_vegg_0"
+  }
+}

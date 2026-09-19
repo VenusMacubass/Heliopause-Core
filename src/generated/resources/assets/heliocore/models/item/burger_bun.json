@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "heliocore:item/hamburger"
+    "layer0": "heliocore:item/burger_bun"
   }
 }

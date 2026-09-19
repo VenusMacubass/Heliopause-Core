@@ -24,7 +24,6 @@ import net.venera.heliocore.data.component.GasTankData;
 import net.venera.heliocore.data.component.HpCDataComponents;
 import net.venera.heliocore.data.radiation.RadiationData;
 import net.venera.heliocore.item.hpc_custom.*;
-import net.venera.heliocore.screen.hud.SpaceSuitHudOverlay;
 
 import java.util.List;
 
@@ -495,7 +494,14 @@ public class HpCItems {
     public static final DeferredItem<Item> CHEESE_SLICE = ITEMS.register("cheese_slice",
             () -> new Item(new Item.Properties().food(HpCFoodProperties.EDIBLE_INGREDIENT)));
 
-    public static final DeferredItem<Item> HAMBURGER = ITEMS.register("hamburger",
+    public static final DeferredItem<Item> BURGER_BUN = ITEMS.register("burger_bun",
+            () -> new Item(new Item.Properties().food(HpCFoodProperties.EDIBLE_INGREDIENT)));
+    
+    public static final DeferredItem<Item> RED_BURGER = ITEMS.register("red_burger",
+            () -> new Item(new Item.Properties().food(HpCFoodProperties.COMPLEX_FOOD)));
+    public static final DeferredItem<Item> CHICKEN_BURGER = ITEMS.register("chicken_burger",
+            () -> new Item(new Item.Properties().food(HpCFoodProperties.COMPLEX_FOOD)));
+    public static final DeferredItem<Item> FISH_BURGER = ITEMS.register("fish_burger",
             () -> new Item(new Item.Properties().food(HpCFoodProperties.COMPLEX_FOOD)));
     //endregion
 

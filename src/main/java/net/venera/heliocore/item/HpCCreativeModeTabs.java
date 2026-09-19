@@ -70,7 +70,9 @@ public class HpCCreativeModeTabs {
                         
                         
                         output.accept(HpCItems.CHEESE_SLICE.get());
-                        output.accept(HpCItems.HAMBURGER.get());
+                        output.accept(HpCItems.CHICKEN_BURGER.get());
+                        output.accept(HpCItems.RED_BURGER.get());
+                        output.accept(HpCItems.FISH_BURGER.get());
                         
                         output.accept(HpCFluids.CRUDE_OIL.getBucket());
                         output.accept(HpCFluids.REFINED_FUEL.getBucket());

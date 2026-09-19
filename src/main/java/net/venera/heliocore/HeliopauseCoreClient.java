@@ -31,6 +31,7 @@ import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
@@ -104,6 +105,29 @@ public class HeliopauseCoreClient {
                     if (data == null || data.isEmpty()) return 0f;
                     return data.amount() / (float) CanisterItem.MAX_CAPACITY;
                 }));
+
+        event.enqueueWork(() -> {
+            Item[] allBurgers = {
+                    HpCItems.RED_BURGER.get(),
+                    HpCItems.CHICKEN_BURGER.get(),
+                    HpCItems.FISH_BURGER.get()
+            };
+            
+            for (Item burger : allBurgers) {
+                ItemProperties.register(burger,
+                        ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "cheese"),
+                        (stack, level, entity, seed) -> {
+                            Integer cheese = stack.get(HpCDataComponents.BURGER_CHEESE.get());
+                            return cheese != null ? cheese.floatValue() : 0f;
+                        });
+                ItemProperties.register(burger,
+                        ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "veggie"),
+                        (stack, level, entity, seed) -> {
+                            Boolean hasVeggie = stack.get(HpCDataComponents.BURGER_VEGGIE.get());
+                            return (hasVeggie != null && hasVeggie) ? 1f : 0f;
+                        });
+            }
+        });
     }
 
     @SubscribeEvent

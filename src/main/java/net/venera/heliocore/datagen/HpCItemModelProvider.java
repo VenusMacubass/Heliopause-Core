@@ -110,7 +110,10 @@ public class HpCItemModelProvider extends ItemModelProvider {
         basicItem(HpCItems.CANNED_SUSPICIOUS_STEW.get());
         
         basicItem(HpCItems.CHEESE_SLICE.get());
-        basicItem(HpCItems.HAMBURGER.get());
+        basicItem(HpCItems.BURGER_BUN.get());
+        makeBurgerModel("red");
+        makeBurgerModel("chicken");
+        makeBurgerModel("fish");
 
         basicItem(HpCFluids.CRUDE_OIL.getBucket());
         basicItem(HpCFluids.REFINED_FUEL.getBucket());
@@ -156,10 +159,10 @@ public class HpCItemModelProvider extends ItemModelProvider {
         
         basicItem(HpCItems.SMALL_BATTERY.get());
 
-       wallItem(HpCBlocks.BASE_BUILDING_WALL_WHITE, buildingBlockWhiteTex);
+        wallItem(HpCBlocks.BASE_BUILDING_WALL_WHITE, buildingBlockWhiteTex);
         wallItem(HpCBlocks.BASE_BUILDING_WALL_BLACK, buildingBlockBlackTex);
-       wallItem(HpCBlocks.MOON_ROCK_WALL, moonRockTex);
-       wallItem(HpCBlocks.MOON_DUNGEON_BRICK_WALL, dungeonBrickTex);
+        wallItem(HpCBlocks.MOON_ROCK_WALL, moonRockTex);
+        wallItem(HpCBlocks.MOON_DUNGEON_BRICK_WALL, dungeonBrickTex);
         
 
         handheldItem(HpCItems.STEEL_SWORD.get());
@@ -230,5 +233,34 @@ public class HpCItemModelProvider extends ItemModelProvider {
     public void wallItem(DeferredBlock<?> block, ResourceLocation texture) {
         this.withExistingParent(block.getId().getPath(), modLoc("block/tinted_wall_inventory"))
                 .texture("wall", texture);
+    }
+
+    private void makeBurgerModel(String meatType) {
+        String baseName = meatType + "_burger";
+        
+        withExistingParent(baseName + "_c1_v0", "item/generated").texture("layer0", "item/burger/" + meatType + "_burger_cheese_1_vegg_0");
+        withExistingParent(baseName + "_c2_v0", "item/generated").texture("layer0", "item/burger/" + meatType + "_burger_cheese_2_vegg_0");
+        withExistingParent(baseName + "_c0_v1", "item/generated").texture("layer0", "item/burger/" + meatType + "_burger_cheese_0_vegg_1");
+        withExistingParent(baseName + "_c1_v1", "item/generated").texture("layer0", "item/burger/" + meatType + "_burger_cheese_1_vegg_1");
+        withExistingParent(baseName + "_c2_v1", "item/generated").texture("layer0", "item/burger/" + meatType + "_burger_cheese_2_vegg_1");
+        
+        getBuilder(baseName)
+                .parent(getExistingFile(mcLoc("item/generated")))
+                .texture("layer0", "item/burger/" + meatType + "_burger_cheese_0_vegg_0")
+                .override()
+                .predicate(modLoc("cheese"), 1.0f).predicate(modLoc("veggie"), 0.0f)
+                .model(getExistingFile(modLoc("item/" + baseName + "_c1_v0"))).end()
+                .override()
+                .predicate(modLoc("cheese"), 2.0f).predicate(modLoc("veggie"), 0.0f)
+                .model(getExistingFile(modLoc("item/" + baseName + "_c2_v0"))).end()
+                .override()
+                .predicate(modLoc("cheese"), 0.0f).predicate(modLoc("veggie"), 1.0f)
+                .model(getExistingFile(modLoc("item/" + baseName + "_c0_v1"))).end()
+                .override()
+                .predicate(modLoc("cheese"), 1.0f).predicate(modLoc("veggie"), 1.0f)
+                .model(getExistingFile(modLoc("item/" + baseName + "_c1_v1"))).end()
+                .override()
+                .predicate(modLoc("cheese"), 2.0f).predicate(modLoc("veggie"), 1.0f)
+                .model(getExistingFile(modLoc("item/" + baseName + "_c2_v1"))).end();
     }
 }
