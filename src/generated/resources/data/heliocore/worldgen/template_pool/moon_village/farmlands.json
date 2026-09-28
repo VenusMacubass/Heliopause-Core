@@ -3,46 +3,35 @@
     {
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "heliocore:moon_village_small_house",
+        "location": "heliocore:moon_village_farmland_1",
         "processors": {
           "processors": []
         },
         "projection": "rigid"
       },
-      "weight": 5
+      "weight": 2
     },
     {
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "heliocore:moon_village_square",
+        "location": "heliocore:moon_village_farmland_2",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "heliocore:moon_village_farmland_3",
         "processors": {
           "processors": []
         },
         "projection": "rigid"
       },
       "weight": 1
-    },
-    {
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "heliocore:moon_village_librarian_house",
-        "processors": {
-          "processors": []
-        },
-        "projection": "rigid"
-      },
-      "weight": 5
-    },
-    {
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "heliocore:moon_village_farmer_house",
-        "processors": {
-          "processors": []
-        },
-        "projection": "rigid"
-      },
-      "weight": 5
     }
   ],
   "fallback": "minecraft:empty"

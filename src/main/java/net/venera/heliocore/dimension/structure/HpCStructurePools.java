@@ -1,4 +1,4 @@
-package net.venera.heliocore.util;
+package net.venera.heliocore.dimension.structure;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Holder;
@@ -25,6 +25,7 @@ public class HpCStructurePools {
     public static final ResourceKey<StructureTemplatePool> ROAD_TURNS = createKey("moon_village/road_turns");
     public static final ResourceKey<StructureTemplatePool> CORNER_BUILDINGS = createKey("moon_village/corner_buildings");
     public static final ResourceKey<StructureTemplatePool> SOLAR_FIELDS = createKey("moon_village/solar_fields");
+    public static final ResourceKey<StructureTemplatePool> FARMLANDS = createKey("moon_village/farmlands");
 
     public static final ResourceKey<StructureTemplatePool> BEDS = createKey("moon_village/beds");
     public static final ResourceKey<StructureTemplatePool> JOB_BLOCKS = createKey("moon_village/job_blocks");
@@ -46,7 +47,9 @@ public class HpCStructurePools {
 
         register(context, HOUSES, List.of(
                 Pair.of(HeliopauseCore.MOD_ID + ":moon_village_small_house", 5),
-                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_square", 1)
+                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_square", 1),
+                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_librarian_house", 5),
+                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_farmer_house", 5)
         ));
         
         register(context, ROAD_TURNS, List.of(
@@ -55,7 +58,8 @@ public class HpCStructurePools {
         ));
         
         register(context, CORNER_BUILDINGS, List.of(
-                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_small_house", 2),
+                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_librarian_house", 1),
+                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_small_house", 1),
                 Pair.of(HeliopauseCore.MOD_ID + ":moon_village_solar_field", 1)
         ));
         
@@ -74,6 +78,12 @@ public class HpCStructurePools {
         register(context, JOB_BLOCKS, List.of(
                 Pair.of(HeliopauseCore.MOD_ID + ":smithing_table", 1),
                 Pair.of(HeliopauseCore.MOD_ID + ":grindstone", 1)
+        ));
+
+        register(context, FARMLANDS, List.of(
+                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_farmland_1", 2),
+                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_farmland_2", 2),
+                Pair.of(HeliopauseCore.MOD_ID + ":moon_village_farmland_3", 1)        
         ));
     }
 

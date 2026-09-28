@@ -8,14 +8,14 @@ import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.dimension.HpCDimensions;
-import net.venera.heliocore.dimension.HpCStructures;
+import net.venera.heliocore.dimension.structure.HpCStructures;
 import net.venera.heliocore.dimension.biome.HpCBiomes;
 import net.venera.heliocore.dimension.worldgen.HpCBiomeModifiers;
 import net.venera.heliocore.dimension.worldgen.HpCConfiguredFeatures;
 import net.venera.heliocore.dimension.worldgen.HpCNoiseSettings;
 import net.venera.heliocore.dimension.worldgen.HpCPlacedFeatures;
-import net.venera.heliocore.util.HpCStructurePools;
-import net.venera.heliocore.util.HpCStructureSets;
+import net.venera.heliocore.dimension.structure.HpCStructurePools;
+import net.venera.heliocore.dimension.structure.HpCStructureSets;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;

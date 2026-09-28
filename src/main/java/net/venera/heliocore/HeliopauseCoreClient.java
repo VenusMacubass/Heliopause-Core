@@ -16,6 +16,8 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.VillagerRenderer;
+import net.minecraft.client.renderer.entity.layers.VillagerProfessionLayer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.PlayerSkin;
@@ -59,6 +61,7 @@ import net.venera.heliocore.entity.HpCEntities;
 import net.venera.heliocore.entity.client.*;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
+import net.venera.heliocore.entity.villager.HpCVillagers;
 import net.venera.heliocore.entity.zombie.SpaceZombieRenderer;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.item.HpCItems;
@@ -96,7 +99,6 @@ public class HeliopauseCoreClient {
         ItemBlockRenderTypes.setRenderLayer(HpCBlocks.FLUID_PIPE.get(), RenderType.translucent());
         EntityRenderers.register(HpCEntities.TIER_1_ROCKET.get(), Tier1RocketRenderer::new);
         EntityRenderers.register(HpCEntities.TIER_1_ROCKET_LANDER.get(), Tier1RocketLanderRenderer::new);
-        
 
         event.enqueueWork(() -> ItemProperties.register(HpCItems.CANISTER.get(),
                 ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "fill_level"),
@@ -234,6 +236,13 @@ public class HeliopauseCoreClient {
         event.registerBlockEntityRenderer(HpCBlockEntities.FLUID_TANK_ENTITY.get(), FluidTankRenderer::new);
         event.registerBlockEntityRenderer(HpCBlockEntities.MAGNETIC_ASSEMBLY_PLATFORM_ENTITY.get(), MagneticAssemblyPlatformRenderer::new);
         event.registerBlockEntityRenderer(HpCBlockEntities.MAGNETIC_CRAFTING_TABLE_ENTITY.get(), MagneticCraftingTableRenderer::new);
+        event.registerEntityRenderer(EntityType.VILLAGER, context -> new VillagerRenderer(context) {
+            {
+                // Remove the vanilla profession layer and replace it with our lunar-aware layer
+                this.layers.removeIf(layer -> layer instanceof VillagerProfessionLayer);
+                this.addLayer(new HpCVillagerProfessionLayer(this, context.getResourceManager(), "villager"));
+            }
+        });
     }
 
     @SubscribeEvent

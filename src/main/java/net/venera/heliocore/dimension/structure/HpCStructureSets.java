@@ -1,4 +1,4 @@
-package net.venera.heliocore.util;
+package net.venera.heliocore.dimension.structure;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
@@ -10,7 +10,6 @@ import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 import net.venera.heliocore.HeliopauseCore;
-import net.venera.heliocore.dimension.HpCStructures;
 
 public class HpCStructureSets {
 

@@ -11,6 +11,7 @@ import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.VillagerType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -65,6 +67,7 @@ import net.venera.heliocore.data.atmospherics.AtmosphericProperty;
 import net.venera.heliocore.entity.ai.goal.OpenAirlockGoal;
 import net.venera.heliocore.entity.ai.goal.RefillOxygenGoal;
 import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
+import net.venera.heliocore.entity.villager.HpCVillagers;
 import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.item.HpCTags;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
@@ -636,26 +639,46 @@ public class HpCEvents {
             if (entity instanceof Villager villager) {
                 ItemStackHandler inventory = villager.getData(HpCAttachments.EQUIPMENT_INVENTORY);
 
-                inventory.setStackInSlot(0, HpCItems.OXYGEN_MASK.asItem().getDefaultInstance()); //Oxygen Mask
-                inventory.setStackInSlot(1, HpCItems.OXYGEN_CONNECTORS.asItem().getDefaultInstance()); //Oxygen Connectors
-                inventory.setStackInSlot(2, HpCItems.COMPRESSED_GAS_TANK.get().setGasTankData(new ItemStack(HpCItems.COMPRESSED_GAS_TANK.get()), GasTankData.OXYGEN_GAS, GasTankItem.MAX_CAPACITY)); //Oxygen Tank 1
-                inventory.setStackInSlot(3, HpCItems.COMPRESSED_GAS_TANK.get().setGasTankData(new ItemStack(HpCItems.COMPRESSED_GAS_TANK.get()), GasTankData.OXYGEN_GAS, GasTankItem.MAX_CAPACITY)); //Oxygen Tank 2
+                inventory.setStackInSlot(0, HpCItems.OXYGEN_MASK.asItem().getDefaultInstance()); 
+                inventory.setStackInSlot(1, HpCItems.OXYGEN_CONNECTORS.asItem().getDefaultInstance()); 
+                inventory.setStackInSlot(2, HpCItems.COMPRESSED_GAS_TANK.get().setGasTankData(new ItemStack(HpCItems.COMPRESSED_GAS_TANK.get()), GasTankData.OXYGEN_GAS, GasTankItem.MAX_CAPACITY)); 
+                inventory.setStackInSlot(3, HpCItems.COMPRESSED_GAS_TANK.get().setGasTankData(new ItemStack(HpCItems.COMPRESSED_GAS_TANK.get()), GasTankData.OXYGEN_GAS, GasTankItem.MAX_CAPACITY));
                 
-                inventory.setStackInSlot(4, HpCItems.T1_THERMAL_INSULATION_HEAD.asItem().getDefaultInstance()); //Head thermal
-                inventory.setStackInSlot(5, HpCItems.T1_THERMAL_INSULATION_TORSO.asItem().getDefaultInstance()); //Torso
-                inventory.setStackInSlot(6, HpCItems.T1_THERMAL_INSULATION_LEGGINGS.asItem().getDefaultInstance()); //Legs
-                inventory.setStackInSlot(7, HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.asItem().getDefaultInstance()); //Hands
+                inventory.setStackInSlot(4, HpCItems.T1_THERMAL_INSULATION_HEAD.asItem().getDefaultInstance()); 
+                inventory.setStackInSlot(5, HpCItems.T1_THERMAL_INSULATION_TORSO.asItem().getDefaultInstance());
+                inventory.setStackInSlot(6, HpCItems.T1_THERMAL_INSULATION_LEGGINGS.asItem().getDefaultInstance()); 
+                inventory.setStackInSlot(7, HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.asItem().getDefaultInstance()); 
+
+                villager.setItemSlot(EquipmentSlot.HEAD, new ItemStack(HpCItems.T1_SPACE_SUIT_HELMET.get()));
+                villager.setItemSlot(EquipmentSlot.CHEST, new ItemStack(HpCItems.T1_SPACE_SUIT_CHESTPLATE.get()));
+                villager.setItemSlot(EquipmentSlot.LEGS, new ItemStack(HpCItems.T1_SPACE_SUIT_LEGGINGS.get()));
+                villager.setItemSlot(EquipmentSlot.FEET, new ItemStack(HpCItems.T1_SPACE_SUIT_BOOTS.get()));
+                
+                villager.setDropChance(EquipmentSlot.HEAD, 0.0f);
+                villager.setDropChance(EquipmentSlot.CHEST, 0.0f);
+                villager.setDropChance(EquipmentSlot.LEGS, 0.0f);
+                villager.setDropChance(EquipmentSlot.FEET, 0.0f);
             }
         }
     }
-    
+    //execute as @e[type=villager,distance=..5] run data merge entity @s {ArmorItems:[{id:"heliocore:t1_space_suit_boots",count:1},{id:"heliocore:t1_space_suit_leggings",count:1},{id:"heliocore:t1_space_suit_chestplate",count:1},{id:"heliocore:t1_space_suit_helmet",count:1}], ArmorDropChances:[0.0f,0.0f,0.0f,0.0f]}
     @SubscribeEvent
     public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
         if (event.getLevel().isClientSide) return;
-        
+
         if (event.getEntity() instanceof Villager villager) {
             villager.goalSelector.addGoal(2, new OpenAirlockGoal(villager));
             villager.goalSelector.addGoal(4, new RefillOxygenGoal(villager, 1, 48));
+
+            // If the villager is in a vacuum dimension but still has a vanilla Overworld skin (e.g. Plains from a Structure Block),
+            // automatically assign the skin matching the lunar biome at its current position.
+            VillagerType currentType = villager.getVillagerData().getType();
+            if (OxygenVolumeHelper.isVacuumDimension(event.getLevel())
+                    && currentType != HpCVillagers.LUNAR_HIGHLANDS.get()
+                    && currentType != HpCVillagers.LUNAR_MARIA.get()) {
+                VillagerType biomeType = VillagerType.byBiome(event.getLevel().getBiome(villager.blockPosition()));
+                villager.setVillagerData(villager.getVillagerData().setType(biomeType));
+            }
         }
     }
     //endregion

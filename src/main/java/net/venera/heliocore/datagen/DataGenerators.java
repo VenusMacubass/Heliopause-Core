@@ -15,6 +15,7 @@ import net.venera.heliocore.HeliopauseCore;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 @EventBusSubscriber(modid = HeliopauseCore.MOD_ID)
@@ -27,8 +28,15 @@ public class DataGenerators {
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-        generator.addProvider(event.includeServer(), new LootTableProvider(packOutput, Collections.emptySet(),
-                List.of(new LootTableProvider.SubProviderEntry(HpCBlockLootTableProvider::new, LootContextParamSets.BLOCK)), lookupProvider));
+        generator.addProvider(event.includeServer(), new LootTableProvider(
+                packOutput,
+                Collections.emptySet(),
+                List.of(
+                        new LootTableProvider.SubProviderEntry(HpCBlockLootTableProvider::new, LootContextParamSets.BLOCK),
+                        new LootTableProvider.SubProviderEntry(HpCLootProvider::new, LootContextParamSets.CHEST)
+                ),
+                lookupProvider
+        ));
         BlockTagsProvider blockTagsProvider = new HpCBlockTagProvider(packOutput, lookupProvider, existingFileHelper);
         generator.addProvider(event.includeServer(), blockTagsProvider);
         FluidTagsProvider fluidTagsProvider = new HpCFluidTagsProvider(packOutput, lookupProvider, existingFileHelper);

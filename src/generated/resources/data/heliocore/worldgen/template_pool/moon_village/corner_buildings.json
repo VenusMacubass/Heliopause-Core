@@ -3,13 +3,24 @@
     {
       "element": {
         "element_type": "minecraft:single_pool_element",
+        "location": "heliocore:moon_village_librarian_house",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
         "location": "heliocore:moon_village_small_house",
         "processors": {
           "processors": []
         },
         "projection": "rigid"
       },
-      "weight": 2
+      "weight": 1
     },
     {
       "element": {
