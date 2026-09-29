@@ -51,6 +51,7 @@ public class HpCMobTagProvider extends EntityTypeTagsProvider {
                 .add(EntityType.CAT)
                 .add(EntityType.WOLF);
         tag(HAS_PRESSURE_BLESSING)
+                .add(EntityType.IRON_GOLEM)
                 .add(EntityType.CAT)
                 .add(EntityType.WOLF);
     }

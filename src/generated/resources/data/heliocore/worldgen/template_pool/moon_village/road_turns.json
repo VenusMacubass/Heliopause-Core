@@ -23,5 +23,5 @@
       "weight": 1
     }
   ],
-  "fallback": "minecraft:empty"
+  "fallback": "heliocore:moon_village/street_terminators"
 }

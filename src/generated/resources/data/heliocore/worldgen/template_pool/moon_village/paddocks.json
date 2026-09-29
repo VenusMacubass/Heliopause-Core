@@ -3,7 +3,7 @@
     {
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "heliocore:moon_village_farmer_house",
+        "location": "heliocore:moon_village_paddock_1",
         "processors": {
           "processors": []
         },
@@ -14,7 +14,7 @@
     {
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "heliocore:moon_village_blacksmith_house",
+        "location": "heliocore:moon_village_paddock_2",
         "processors": {
           "processors": []
         },
@@ -25,7 +25,7 @@
     {
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "heliocore:moon_village_whitesmith_house",
+        "location": "heliocore:moon_village_paddock_3",
         "processors": {
           "processors": []
         },
@@ -36,7 +36,7 @@
     {
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "heliocore:moon_village_solar_field",
+        "location": "heliocore:moon_village_paddock_4",
         "processors": {
           "processors": []
         },

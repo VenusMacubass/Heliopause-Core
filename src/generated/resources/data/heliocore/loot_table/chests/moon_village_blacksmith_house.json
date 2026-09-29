@@ -17,8 +17,39 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "heliocore:compressed_bronze",
-          "weight": 15
+          "name": "minecraft:diamond"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:emerald",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 5.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:iron_ingot",
+          "weight": 6
         },
         {
           "type": "minecraft:item",
@@ -33,8 +64,44 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "heliocore:compressed_iridium",
-          "weight": 5
+          "name": "minecraft:gold_ingot",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 7.0,
+                "min": 3.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:obsidian",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_sword",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_pickaxe",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_chestplate",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_helmet",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
@@ -49,8 +116,8 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "heliocore:compressed_aluminium",
-          "weight": 15
+          "name": "minecraft:bread",
+          "weight": 8
         },
         {
           "type": "minecraft:item",
@@ -65,8 +132,8 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "heliocore:compressed_tin",
-          "weight": 20
+          "name": "minecraft:apple",
+          "weight": 8
         },
         {
           "type": "minecraft:item",
@@ -75,29 +142,13 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 3.0,
-                "min": 1.0
+                "max": 7.0,
+                "min": 3.0
               },
               "function": "minecraft:set_count"
             }
           ],
-          "name": "heliocore:compressed_steel",
-          "weight": 15
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "heliocore:heavy_duty_plate",
+          "name": "minecraft:oak_sapling",
           "weight": 5
         }
       ],
@@ -108,5 +159,5 @@
       }
     }
   ],
-  "random_sequence": "heliocore:chests/moon_village_whitesmith_house"
+  "random_sequence": "heliocore:chests/moon_village_blacksmith_house"
 }

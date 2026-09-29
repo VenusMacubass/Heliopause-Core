@@ -661,7 +661,7 @@ public class HpCEvents {
             }
         }
     }
-    //execute as @e[type=villager,distance=..5] run data merge entity @s {ArmorItems:[{id:"heliocore:t1_space_suit_boots",count:1},{id:"heliocore:t1_space_suit_leggings",count:1},{id:"heliocore:t1_space_suit_chestplate",count:1},{id:"heliocore:t1_space_suit_helmet",count:1}], ArmorDropChances:[0.0f,0.0f,0.0f,0.0f]}
+    
     @SubscribeEvent
     public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
         if (event.getLevel().isClientSide) return;

@@ -12,7 +12,6 @@ import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 import net.venera.heliocore.HeliopauseCore;
 
 public class HpCStructureSets {
-
     public static final ResourceKey<StructureSet> MOON_VILLAGE_SET = ResourceKey.create(Registries.STRUCTURE_SET, ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon_village"));
 
     public static void bootstrap(BootstrapContext<StructureSet> context) {

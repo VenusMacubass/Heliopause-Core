@@ -47,7 +47,7 @@ public class HpCStructures {
                         TerrainAdjustment.BEARD_THIN
                 ),
                 templatePools.getOrThrow(HpCStructurePools.START), 
-                9, // Max size/depth of the village chain
+                12, // Max size/depth of the village chain
                 ConstantHeight.of(VerticalAnchor.absolute(0)),
                 true, 
                 Heightmap.Types.WORLD_SURFACE

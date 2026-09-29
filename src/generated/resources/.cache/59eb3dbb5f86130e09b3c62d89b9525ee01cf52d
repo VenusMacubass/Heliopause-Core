@@ -1,4 +1,4 @@
-// 1.21.1	2026-09-28T17:52:08.8967355	Loot Tables
+// 1.21.1	2026-09-30T01:13:50.1717283	Loot Tables
 8d3485d0593ffa5c07d22187b1d1e00dd7b2de21 data/heliocore/loot_table/blocks/airlock_frame_switch.json
 ff4b0fd001180ba9d9b920b1e9c59581a4720d73 data/heliocore/loot_table/blocks/airlock_gate_frame.json
 4c6effb42af79317efc025b64a17716f1bcfaa42 data/heliocore/loot_table/blocks/aluminium_block.json
@@ -72,8 +72,9 @@ a0961a709e4874e2b5b1b2c9543eb394eced7881 data/heliocore/loot_table/blocks/silico
 9fb21fa993f195938a8f02c2b12335d2f7d0b78f data/heliocore/loot_table/blocks/tinted_prismatic_glass.json
 fcd7eb4ba12eed3e3151d39887ec03aed86d737a data/heliocore/loot_table/blocks/tin_block.json
 bd310cc5613124fada8162648d983f21ffcee634 data/heliocore/loot_table/blocks/tin_ore.json
-479bf5baa86a5e3e40397829733b9eb6fd638338 data/heliocore/loot_table/chests/moon_village_butcher_house.json
-c0fe1f3f6d5673e51c4e945a76695967d53ca37d data/heliocore/loot_table/chests/moon_village_farmer_house.json
+f7f2944d2b16d5a4a50589ce5c29eb7fdcde4a7e data/heliocore/loot_table/chests/moon_village_blacksmith_house.json
+583343383bb6caa6e7ff0549270d0ee725b4b1a4 data/heliocore/loot_table/chests/moon_village_butcher_house.json
+3559a1ae3c8609948b43d801c791fbb0602af2a7 data/heliocore/loot_table/chests/moon_village_depot_house.json
+4d5a67adfefe15d9e758dd07823c8296d92835db data/heliocore/loot_table/chests/moon_village_farmer_house.json
 7122bdd5851222a93903b215338e9afe9a77addd data/heliocore/loot_table/chests/moon_village_librarian_house.json
-b8f6870278baa58c1d0c469fb4677195fc6a7c2f data/heliocore/loot_table/chests/moon_village_plumber_house.json
-6ae44419fdccf6f31c11e5aa001002868555041e data/heliocore/loot_table/chests/moon_village_whitesmith_house.json
+48dba630fdef12b77c855200e9cc535fe6956e23 data/heliocore/loot_table/chests/moon_village_whitesmith_house.json

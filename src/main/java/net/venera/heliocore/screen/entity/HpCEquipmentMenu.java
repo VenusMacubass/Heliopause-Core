@@ -56,6 +56,11 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
             }
 
             @Override
+            public int getMaxStackSize() {
+                return 1;
+            }
+
+            @Override
             public void setChanged() {
                 super.setChanged();
                 HpCEvents.syncToAllTracking(targetEntity);
@@ -68,6 +73,11 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
                 return stack.is(HpCTags.Items.OXYGEN_CONNECTORS);
             }
 
+            @Override
+            public int getMaxStackSize() {
+                return 1;
+            }
+            
             @Override
             public void setChanged() {
                 super.setChanged();
@@ -82,6 +92,11 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
             }
 
             @Override
+            public int getMaxStackSize() {
+                return 1;
+            }
+            
+            @Override
             public void setChanged() {
                 super.setChanged();
                 HpCEvents.syncToAllTracking(targetEntity);
@@ -94,6 +109,11 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
                 return stack.is(HpCTags.Items.OXYGEN_TANK);
             }
 
+            @Override
+            public int getMaxStackSize() {
+                return 1;
+            }
+            
             @Override
             public void setChanged() {
                 super.setChanged();
@@ -116,6 +136,11 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
                 }
 
                 @Override
+                public int getMaxStackSize() {
+                    return 1;
+                }
+
+                @Override
                 public void setChanged() {
                     super.setChanged();
                     HpCEvents.syncToAllTracking(targetEntity);
@@ -131,6 +156,11 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
             }
 
             @Override
+            public int getMaxStackSize() {
+                return 1;
+            }
+            
+            @Override
             public void setChanged() {
                 super.setChanged();
                 HpCEvents.syncToAllTracking(targetEntity);
@@ -143,6 +173,11 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
                 return stack.is(HpCItems.MASS_BELT.get());
             }
 
+            @Override
+            public int getMaxStackSize() {
+                return 1;
+            }
+            
             @Override
             public void setChanged() {
                 super.setChanged();

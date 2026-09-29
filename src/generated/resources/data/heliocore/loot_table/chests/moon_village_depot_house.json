@@ -9,31 +9,11 @@
           "functions": [
             {
               "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 3.0,
-                "min": 1.0
-              },
+              "count": 1.0,
               "function": "minecraft:set_count"
             }
           ],
-          "name": "heliocore:compressed_bronze",
-          "weight": 15
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 3.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "heliocore:compressed_iridium",
+          "name": "heliocore:fluid_filter",
           "weight": 5
         },
         {
@@ -43,46 +23,23 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 3.0,
+                "max": 2.0,
                 "min": 1.0
               },
               "function": "minecraft:set_count"
-            }
-          ],
-          "name": "heliocore:compressed_aluminium",
-          "weight": 15
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+            },
             {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 3.0,
-                "min": 1.0
+              "components": {
+                "heliocore:gas_tank_content": {
+                  "amount": 333,
+                  "fluid": "heliocore:oxygen_gas"
+                }
               },
-              "function": "minecraft:set_count"
+              "function": "minecraft:set_components"
             }
           ],
-          "name": "heliocore:compressed_tin",
-          "weight": 20
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 3.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "heliocore:compressed_steel",
-          "weight": 15
+          "name": "heliocore:compressed_gas_tank",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
@@ -97,8 +54,40 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "heliocore:heavy_duty_plate",
-          "weight": 5
+          "name": "minecraft:bucket",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 6.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "heliocore:copper_wire",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 7.0,
+                "min": 3.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "heliocore:fluid_pipe",
+          "weight": 10
         }
       ],
       "rolls": {
@@ -108,5 +97,5 @@
       }
     }
   ],
-  "random_sequence": "heliocore:chests/moon_village_whitesmith_house"
+  "random_sequence": "heliocore:chests/moon_village_depot_house"
 }
