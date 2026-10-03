@@ -20,9 +20,13 @@ import net.venera.heliocore.item.hpc_custom.CanisterItem;
 import net.venera.heliocore.screen.entity.LanderMenu;
 
 import javax.annotation.Nullable;
+import java.util.UUID;
 
 public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJumping {
     public final ItemStackHandler inventory = new ItemStackHandler(29);
+    public UUID expectedPassenger = null;
+    private int waitTimer = 0;
+
     public Tier1RocketLanderEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
     }
@@ -39,6 +43,29 @@ public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJum
 
     @Override
     public void tick() {
+        if (this.expectedPassenger != null && this.getFirstPassenger() == null) {
+            this.setDeltaMovement(Vec3.ZERO); 
+
+            Player player = this.level().getPlayerByUUID(this.expectedPassenger);
+            if (player != null && player.distanceToSqr(this) < 256.0D) { 
+                player.startRiding(this, true);
+                this.expectedPassenger = null;
+                this.setDeltaMovement(0.0D, -2.5D, 0.0D); 
+            }
+
+            this.waitTimer++;
+            if (this.waitTimer > 600) { 
+                this.expectedPassenger = null;
+                this.setDeltaMovement(0.0D, -2.5D, 0.0D); 
+            }
+
+            super.tick();
+            return; 
+        } else if (this.expectedPassenger != null) {
+            this.expectedPassenger = null; 
+            this.setDeltaMovement(0.0D, -2.5D, 0.0D); 
+        }
+        
         previousYVelocity = this.getDeltaMovement().y;
         super.tick();
         if (!this.level().isClientSide()) {
@@ -48,41 +75,46 @@ public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJum
         if (this.isThrusting) {
             this.applyThrust();
         }
-        
+
         Vec3 currentMove = this.getDeltaMovement();
 
-        double newY = currentMove.y - 0.015D; 
+        double newY = currentMove.y - 0.015D;
         if (newY < -6.0D) {
             newY = -6.0D;
         }
         this.setDeltaMovement(0.0D, newY, 0.0D);
+        this.fallDistance = 0.0F;
+        if (this.getFirstPassenger() != null) {
+            this.getFirstPassenger().fallDistance = 0.0F;
+        }
         this.move(MoverType.SELF, this.getDeltaMovement());
 
-        if (this.onGround() && this.previousYVelocity < -2.0D) { //2.0 explosion threshold
+        if (this.onGround() && this.previousYVelocity < -2.0D) { 
             explode(Math.abs(previousYVelocity*20D));
-        } 
+        }
         else if (this.onGround() && this.getFirstPassenger() != null) {
             this.getFirstPassenger().fallDistance = 0.0F;
         }
-        
+
         if(this.getDeltaMovement().y == 0.0F || this.onGround()){
             entityData.set(IS_LANDING, false);
         }
         else{
             entityData.set(IS_LANDING, true);
         }
-        
+
         if(entityData.get(IS_LANDING)) {
             this.setEnergyAmount(getEnergyAmount() - ENERGY_USAGE);
         }
-         
     }
 
     public void applyThrust() {
-        if (getFuelAmount() > 0 &&  getEnergyAmount() > 0) {
+        if (getFuelAmount() > 0 && getEnergyAmount() > 0) {
             Vec3 currentMove = this.getDeltaMovement();
-
-            double newY = Math.min(currentMove.y + 0.05D, - 1.2D); //braking power, terminal speed: engine on
+            
+            double terminalVelocity = this.getY() > 350.0D ? -1.2D : -0.4D;
+            
+            double newY = Math.min(currentMove.y + 0.05D, terminalVelocity);
 
             this.setDeltaMovement(currentMove.x, newY, currentMove.z);
             if (!this.level().isClientSide()) {
@@ -242,6 +274,9 @@ public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJum
         compoundTag.putBoolean("IsLanding", this.entityData.get(IS_LANDING));
         compoundTag.putInt("EnergyAmount", this.getEnergyAmount());
         compoundTag.putInt("FuelAmount", this.getFuelAmount());
+        if (this.expectedPassenger != null) {
+            compoundTag.putUUID("ExpectedPassenger", this.expectedPassenger);
+        }
     }
 
     @Override
@@ -257,6 +292,9 @@ public class Tier1RocketLanderEntity extends Entity implements PlayerRideableJum
         }
         if (compoundTag.contains("FuelAmount")) {
             this.setFuelAmount(compoundTag.getInt("FuelAmount"));
+        }
+        if (compoundTag.hasUUID("ExpectedPassenger")) {
+            this.expectedPassenger = compoundTag.getUUID("ExpectedPassenger");
         }
     }
 }

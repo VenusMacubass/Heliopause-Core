@@ -18,6 +18,13 @@ public class HpCKeybinds {
             "category.heliocore.keys"
     );
 
+    public static final KeyMapping VEHICLE_INVENTORY_KEY = new KeyMapping(
+            "key.heliocore.vehicle_inventory",
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_G,
+            "category.heliocore.keys"
+    );
+
     @SubscribeEvent
     public static void registerKeybinds(RegisterKeyMappingsEvent event) {
         event.register(ZOOM_KEY);

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerType;
@@ -24,13 +25,13 @@ public class HpCVillagers {
     public static final DeferredRegister<VillagerProfession> VILLAGER_PROFESSIONS = DeferredRegister.create(BuiltInRegistries.VILLAGER_PROFESSION, HeliopauseCore.MOD_ID);
     public static final DeferredRegister<VillagerType> VILLAGER_TYPES = DeferredRegister.create(BuiltInRegistries.VILLAGER_TYPE, HeliopauseCore.MOD_ID);
     
-    public static final Holder<PoiType> MOON_POI = POI_TYPES.register("moon_poi", //There can be only 1 block for each chosen block
+    public static final Holder<PoiType> WHITESMITH_POI = POI_TYPES.register("whitesmith_poi", 
             () -> new PoiType(ImmutableSet.copyOf(HpCBlocks.COAL_COMPRESSOR.get().getStateDefinition().getPossibleStates()), 1,1));
 
-    public static final Holder<VillagerProfession> MOON_VILLAGER = VILLAGER_PROFESSIONS.register("moon_villager",
-            () -> new VillagerProfession("moon_villager",
-                    holder -> holder.value() == MOON_POI.value(), poiTypeHolder -> poiTypeHolder.value() == MOON_POI.value(),
-                   ImmutableSet.of(), ImmutableSet.of(), null)); //Placeholder for custom professions
+    public static final Holder<VillagerProfession> WHITESMITH_VILLAGER = VILLAGER_PROFESSIONS.register("whitesmith",
+            () -> new VillagerProfession("whitesmith",
+                    holder -> holder.value() == WHITESMITH_POI.value(), poiTypeHolder -> poiTypeHolder.value() == WHITESMITH_POI.value(),
+                   ImmutableSet.of(), ImmutableSet.of(), SoundEvents.VILLAGER_WORK_ARMORER)); //Placeholder for custom professions
 
     public static final DeferredHolder<VillagerType, VillagerType> LUNAR_HIGHLANDS =
             VILLAGER_TYPES.register("lunar_highlands", () -> new VillagerType("lunar_highlands"));

@@ -8,6 +8,7 @@ import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.options.OptionsScreen;
 import net.minecraft.client.model.CatModel;
+import net.minecraft.client.model.VillagerModel;
 import net.minecraft.client.model.WolfModel;
 import net.minecraft.client.model.ZombieModel;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -29,9 +30,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.monster.Drowned;
+import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -354,6 +359,7 @@ public class HeliopauseCoreClient {
         event.registerLayerDefinition(CatOxygenGear.LAYER_LOCATION, CatOxygenGear::createBodyLayer);
         event.registerLayerDefinition(WolfOxygenGear.LAYER_LOCATION, WolfOxygenGear::createBodyLayer);
         event.registerLayerDefinition(HumanoidOxygenGear.LAYER_LOCATION, HumanoidOxygenGear::createBodyLayer);
+        event.registerLayerDefinition(VillagerOxygenGear.LAYER_LOCATION, VillagerOxygenGear::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -383,11 +389,30 @@ public class HeliopauseCoreClient {
             slimPlayer.addLayer(new HumanoidOxygenGearLayer<>(slimPlayer, event.getEntityModels()));
         }
 
+        var rawVillagerRenderer = event.getRenderer(EntityType.VILLAGER);
+        if (rawVillagerRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+            @SuppressWarnings("unchecked")
+            LivingEntityRenderer<Villager, VillagerModel<Villager>> villagerRenderer = (LivingEntityRenderer<Villager, VillagerModel<Villager>>) livingRenderer;
+            villagerRenderer.addLayer(new VillagerOxygenGearLayer(villagerRenderer, event.getEntityModels()));
+        }
+
         var rawZombieRenderer = event.getRenderer(EntityType.ZOMBIE);
         if (rawZombieRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
             @SuppressWarnings("unchecked")
             LivingEntityRenderer<Zombie, ZombieModel<Zombie>> zombieRenderer = (LivingEntityRenderer<Zombie, ZombieModel<Zombie>>) livingRenderer;
             zombieRenderer.addLayer(new HumanoidOxygenGearLayer<>(zombieRenderer, event.getEntityModels()));
+        }
+        var rawHuskRenderer = event.getRenderer(EntityType.HUSK);
+        if (rawHuskRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+            @SuppressWarnings("unchecked")
+            LivingEntityRenderer<Husk, ZombieModel<Husk>> huskRenderer = (LivingEntityRenderer<Husk, ZombieModel<Husk>>) livingRenderer;
+            huskRenderer.addLayer(new HumanoidOxygenGearLayer<>(huskRenderer, event.getEntityModels()));
+        }
+        var rawDrownedRenderer = event.getRenderer(EntityType.DROWNED);
+        if (rawDrownedRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+            @SuppressWarnings("unchecked")
+            LivingEntityRenderer<Drowned, ZombieModel<Drowned>> drownedRenderer = (LivingEntityRenderer<Drowned, ZombieModel<Drowned>>) livingRenderer;
+            drownedRenderer.addLayer(new HumanoidOxygenGearLayer<>(drownedRenderer, event.getEntityModels()));
         }
         
     }
@@ -443,6 +468,14 @@ public class HeliopauseCoreClient {
 
         if (player == null) return;
 
+        while (HpCKeybinds.VEHICLE_INVENTORY_KEY.consumeClick()) {
+            if (player.getVehicle() != null) {
+                if (player.getVehicle() instanceof Tier1RocketEntity || player.getVehicle() instanceof Tier1RocketLanderEntity) {
+                    PacketDistributor.sendToServer(new OpenVehicleMenuPayload());
+                }
+            }
+        }
+        
         boolean isJumping = mc.options.keyJump.isDown();
         boolean onGround = player.onGround(); 
 
@@ -595,4 +628,30 @@ public class HeliopauseCoreClient {
             }
         }
     }
+
+    @SubscribeEvent
+    public static void onPreRenderVillager(RenderLivingEvent.Pre<?, ?> event) {
+        if (event.getEntity() instanceof Villager villager && event.getRenderer().getModel() instanceof VillagerModel<?> model) {
+            var inventory = villager.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+            boolean hasMask = !inventory.getStackInSlot(0).isEmpty();
+
+            var headArmor = villager.getItemBySlot(EquipmentSlot.HEAD);
+            if (headArmor.is(HpCTags.Items.T1_PRESSURE_PROTECTORS) || headArmor.is(HpCTags.Items.T2_PRESSURE_PROTECTORS)) {
+                hasMask = false;
+            }
+            // Hide the vanilla nose BEFORE the base model renders
+            if (hasMask) {
+                model.getHead().getChild("nose").visible = false;
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPostRenderVillager(RenderLivingEvent.Post<?, ?> event) {
+        if (event.getEntity() instanceof Villager villager && event.getRenderer().getModel() instanceof VillagerModel<?> model) {
+            // Unhide the nose immediately AFTER rendering to ensure regular Overworld villagers aren't affected
+            model.getHead().getChild("nose").visible = true;
+        }
+    }
 }
+

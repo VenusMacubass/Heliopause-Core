@@ -272,6 +272,12 @@ public class HpCEvents {
                 SyncEquipmentPayload.CODEC,
                 SyncEquipmentPayload::handle
         );
+
+        registrar.playToServer(
+                OpenVehicleMenuPayload.TYPE,
+                OpenVehicleMenuPayload.CODEC,
+                OpenVehicleMenuPayload::handle
+        );
     }
     //endregion
     
@@ -438,37 +444,65 @@ public class HpCEvents {
         if (!(event.getEntity() instanceof LivingEntity living) || living.level().isClientSide) {
             return;
         }
-        if (living.tickCount % 20 != 0) return;
         if (living instanceof Player player && (player.isCreative() || player.isSpectator())) {
             return;
         }
         if (living.getType().is(HpCTags.Entities.DOES_NOT_BREATHE)) return;
         
-        BlockPos headPos = BlockPos.containing(event.getEntity().getX(), event.getEntity().getEyeY(), event.getEntity().getZ());
+        BlockPos headPos = BlockPos.containing(living.getX(), living.getEyeY(), living.getZ());
         long headLong = headPos.asLong();
-        boolean inOxygen = !OxygenVolumeHelper.isVacuumDimension(living.level());
-        
-        if (!inOxygen) {
-            inOxygen = OxygenVolumeHelper.isPositionSealed(headLong);
-            if (!inOxygen) {
+
+        boolean inVacuum = OxygenVolumeHelper.isVacuumDimension(living.level());
+        boolean isSealed = false;
+
+        if (inVacuum) {
+            isSealed = OxygenVolumeHelper.isPositionSealed(headLong);
+            if (!isSealed) {
                 BlockState headState = living.level().getBlockState(headPos);
                 if (headState.is(HpCBlocks.AIRLOCK_GENERATED_BLOCK.get())) {
                     for (Direction dir : Direction.Plane.HORIZONTAL) {
                         if (OxygenVolumeHelper.isPositionSealed(headPos.relative(dir).asLong())) {
-                            inOxygen = true;
+                            isSealed = true;
                             break;
                         }
                     }
                 }
             }
         }
-        
-        if (!inOxygen) {
-            boolean hasOxygenGear = SpaceGearSetupController.checkOxygenSetup(living);
 
-            if (!hasOxygenGear) {
-                if (living.isInvertedHealAndHarm()) return;
-                living.hurt(living.damageSources().drown(), 2.0f);
+        boolean needsSpaceOxygen = inVacuum && !isSealed;
+        boolean hasOxygenGear = SpaceGearSetupController.hasSufficientOxygenClientSafe(living);
+        if (needsSpaceOxygen) {
+            if (living.tickCount % 20 == 0) {
+                if (hasOxygenGear) {
+                    SpaceGearSetupController.checkOxygenSetup(living);
+                } else {
+                    if (!living.isInvertedHealAndHarm()) {
+                        living.hurt(living.damageSources().drown(), 2.0f);
+                    }
+                }
+            }
+            
+            if (living.isUnderWater() && hasOxygenGear) {
+                living.setAirSupply(living.getMaxAirSupply());
+            }
+        }
+        
+        else if (living.isUnderWater()) {
+            int currentAir = living.getAirSupply();
+            int maxAir = living.getMaxAirSupply();
+            
+            if (currentAir < maxAir) {
+                int missingAir = maxAir - currentAir;
+
+                if (hasOxygenGear) {
+                    for (int i = 0; i < missingAir; i++) {
+                        if (living.getRandom().nextInt(20) == 0) {
+                            SpaceGearSetupController.checkOxygenSetup(living);
+                        }
+                    }
+                    living.setAirSupply(maxAir);
+                }
             }
         }
     }

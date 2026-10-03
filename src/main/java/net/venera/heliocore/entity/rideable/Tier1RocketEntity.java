@@ -31,42 +31,78 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
     private static final EntityDataAccessor<Boolean> IS_LAUNCHED = SynchedEntityData.defineId(Tier1RocketEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> FUEL_AMOUNT = SynchedEntityData.defineId(Tier1RocketEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ENERGY_AMOUNT = SynchedEntityData.defineId(Tier1RocketEntity.class, EntityDataSerializers.INT);
-    public final int MAX_FUEL = 1000; 
+    public final int MAX_FUEL = 1000;
     public final int MAX_ENERGY = 5000;
     public final int ENERGY_USAGE = 2;
     public final int FUEL_USAGE = 1;
     public static final int maxFuel = 1000;
     public static final int maxEnergy = 5000;
+    private double previousYVelocity;
 
     @Override
     public void tick() {
+        this.previousYVelocity = this.getDeltaMovement().y;
         super.tick();
-        double targetAltitude = 1500.0;
-        
-        if (this.entityData.get(IS_LAUNCHED)) {
-            if (this.getFuelAmount() > 0 && this.getEnergyAmount() > 0) {
-                this.setFuelAmount(this.getFuelAmount() - FUEL_USAGE);
-                this.setEnergyAmount(this.getEnergyAmount() - ENERGY_USAGE);
+        double targetAltitude = 2500.0;
 
-                Vec3 currentVelocity = this.getDeltaMovement();
-                double acceleration = 0.05;
-                double maxSpeed = 5.0;
-                double newYVelocity = Math.min(currentVelocity.y() + acceleration, maxSpeed);
-                this.setDeltaMovement(new Vec3(currentVelocity.x(), newYVelocity, currentVelocity.z()));
-            } else {
-                this.entityData.set(IS_LAUNCHED, false);
+        Vec3 currentVelocity = this.getDeltaMovement();
+        double newYVelocity = currentVelocity.y();
+
+        // 1. Universal Gravity
+        if (!this.onGround()) {
+            double gravity = 0.05D;
+            newYVelocity -= gravity;
+        }
+
+        // 2. Engine Thrust (Overcomes gravity if active)
+        if (this.entityData.get(IS_LAUNCHED)) {
+
+            // SERVER ONLY: Drain fuel and cut engine if empty
+            if (!this.level().isClientSide()) {
+                if (this.getFuelAmount() >= FUEL_USAGE && this.getEnergyAmount() >= ENERGY_USAGE) {
+                    this.setFuelAmount(this.getFuelAmount() - FUEL_USAGE);
+                    this.setEnergyAmount(this.getEnergyAmount() - ENERGY_USAGE);
+                } else {
+                    this.entityData.set(IS_LAUNCHED, false); // Out of fuel/energy!
+                }
             }
 
-            this.move(MoverType.SELF, this.getDeltaMovement());
+            // BOTH SIDES: Apply physical thrust as long as the engine is on
+            if (this.entityData.get(IS_LAUNCHED)) {
+                double engineThrust = 0.10D; // Strong enough to beat the 0.05 gravity
+                newYVelocity += engineThrust;
+            }
         }
-        
+
+        // 3. Clamp speeds to terminal velocity (max 5.0 up, max -5.0 down)
+        // (Using Math.max/min for broader Java version compatibility)
+        newYVelocity = Math.clamp(newYVelocity, -5.0D, 5.0D);
+
+        // 4. Apply calculated net movement
+        this.setDeltaMovement(new Vec3(currentVelocity.x(), newYVelocity, currentVelocity.z()));
+        this.move(MoverType.SELF, this.getDeltaMovement());
+
+        // 5. Collision and Crash Logic (SERVER ONLY)
+        if (!this.level().isClientSide()) {
+            // Did it hit a ceiling during launch? (Vertical collision is true, but it's not on the ground)
+            if (this.entityData.get(IS_LAUNCHED) && this.verticalCollision && !this.onGround()) {
+                this.explode(Math.abs(this.previousYVelocity * 20D));
+                return;
+            }
+
+            // Did it fall out of the sky and hit the ground? (Speed was highly negative)
+            if (this.onGround() && this.previousYVelocity < -1.0D) {
+                this.explode(Math.abs(this.previousYVelocity * 20D));
+                return;
+            }
+        }
+
+        // 6. Dimension Transition Logic
         if (this.getY() >= targetAltitude) {
-            
             if (!this.level().isClientSide() && this.level() instanceof ServerLevel serverLevel) {
                 Entity passenger = this.getFirstPassenger();
 
                 if (passenger instanceof LivingEntity) {
-                    
                     if (serverLevel.dimension().equals(Level.OVERWORLD)) {
                         transitionToMoon();
                     } else if (serverLevel.dimension().equals(HpCDimensions.MOON_LEVEL_KEY)) {
@@ -75,13 +111,13 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
                         this.discard();
                     }
                 } else {
-                    
                     this.level().explode(this, this.getX(), this.getY(), this.getZ(), 6.0F, Level.ExplosionInteraction.TNT);
                     this.discard();
                 }
             }
         }
-        if(this.entityData.get(IS_LAUNCHED) && this.getFirstPassenger() == null && this.getY() >= targetAltitude){
+
+        if (this.entityData.get(IS_LAUNCHED) && this.getFirstPassenger() == null && this.getY() >= targetAltitude) {
             this.level().explode(this, this.getX(), this.getY(), this.getZ(), 6.0F, Level.ExplosionInteraction.TNT);
             this.discard();
         }
@@ -128,6 +164,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
         }
         return false;
     }
+
     public void transitionToEarth() {
         if (!(this.level() instanceof ServerLevel currentLevel)) return;
         ServerLevel earthLevel = currentLevel.getServer().overworld();
@@ -136,21 +173,21 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
         if (passenger instanceof LivingEntity livingPassenger) {
             livingPassenger.stopRiding();
 
-            double dropX = this.getX();
-            double dropY = 600.0D;
-            double dropZ = this.getZ();
-            
+            double dropX = this.getX()/4;
+            double dropY = 900.0D;
+            double dropZ = this.getZ()/4;
+
             int fuel = this.getFuelAmount();
             int energy = this.getEnergyAmount();
             CompoundTag invTag = this.inventory.serializeNBT(this.registryAccess());
-        
+
             DimensionTransition transition = new DimensionTransition(
                     earthLevel,
                     new Vec3(dropX, dropY, dropZ),
                     Vec3.ZERO,
                     livingPassenger.getYRot(),
                     livingPassenger.getXRot(),
-                    
+
                     (teleportedEntity) -> {
                         Tier1RocketLanderEntity lander = new Tier1RocketLanderEntity(HpCEntities.TIER_1_ROCKET_LANDER.get(), earthLevel);
                         lander.setPos(dropX, dropY, dropZ);
@@ -160,10 +197,13 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
                         for (int i = 0; i < this.inventory.getSlots(); i++) {
                             lander.inventory.setStackInSlot(i, this.inventory.getStackInSlot(i).copy());
                         }
-                        lander.inventory.setStackInSlot(28, new ItemStack(HpCItems.ROCKET_ITEM.get()));
-                        lander.setDeltaMovement(new Vec3(0.0D, -2.5D, 0.0D));
-                        earthLevel.addFreshEntity(lander);
 
+                        lander.inventory.setStackInSlot(28, new ItemStack(HpCItems.ROCKET_ITEM.get()));
+
+                        lander.expectedPassenger = teleportedEntity.getUUID();
+                        lander.setDeltaMovement(Vec3.ZERO);
+
+                        earthLevel.addFreshEntity(lander);
                         teleportedEntity.startRiding(lander, true);
                     }
             );
@@ -178,7 +218,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
         ServerLevel moonLevel = currentLevel.getServer().getLevel(HpCDimensions.MOON_LEVEL_KEY);
 
         if (moonLevel == null) {
-            this.discard(); 
+            this.discard();
             return;
         }
 
@@ -186,9 +226,9 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
         if (passenger instanceof LivingEntity livingPassenger) {
             livingPassenger.stopRiding();
 
-            double dropX = this.getX();
-            double dropY = 600.0D;
-            double dropZ = this.getZ();
+            double dropX = this.getX()/4;
+            double dropY = 900.0D;
+            double dropZ = this.getZ()/4;
 
             int fuel = this.getFuelAmount();
             int energy = this.getEnergyAmount();
@@ -211,15 +251,29 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
                             lander.inventory.setStackInSlot(i, this.inventory.getStackInSlot(i).copy());
                         }
 
-                        lander.setDeltaMovement(new Vec3(0.0D, -2.5D, 0.0D));
-                        moonLevel.addFreshEntity(lander);
+                        lander.expectedPassenger = teleportedEntity.getUUID();
+                        lander.setDeltaMovement(Vec3.ZERO);
 
+                        moonLevel.addFreshEntity(lander);
                         teleportedEntity.startRiding(lander, true);
                     }
             );
 
             livingPassenger.changeDimension(transition);
             this.discard();
+        }
+    }
+
+    private void explode(double speed) {
+        this.clearInventory();
+        float explosionCoefficient =  1 + (getFuelAmount() / (float)MAX_FUEL) + ((float)speed / 100.0F);
+        this.level().explode(this, this.getX(), this.getY(), this.getZ(), 4.0F * explosionCoefficient, Level.ExplosionInteraction.MOB);
+        this.discard();
+    }
+
+    private void clearInventory() {
+        for (int i = 0; i < inventory.getSlots(); i++) {
+            inventory.setStackInSlot(i, ItemStack.EMPTY);
         }
     }
 
@@ -240,13 +294,11 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
 
     @Override
     public void handleStartJump(int jumpPower) {
-        
+        if(jumpPower > 0) { igniteEngine(); }
     }
 
     @Override
-    public void handleStopJump() {
-        
-    }
+    public void handleStopJump() { }
 
     @Override
     public boolean shouldRiderSit() {
@@ -265,7 +317,8 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
     public @Nullable LivingEntity getControllingPassenger() {
         Entity passenger = this.getFirstPassenger();
         if (passenger instanceof LivingEntity livingPassenger) {
-            return livingPassenger;}
+            return livingPassenger;
+        }
         return null;
     }
 
@@ -291,7 +344,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
     public void setEnergyAmount(int amount) {
         this.entityData.set(ENERGY_AMOUNT, Math.max(0, Math.min(amount, MAX_ENERGY)));
     }
-    
+
     public int chargeEnergy(int amount, boolean simulate) {
         int space = MAX_ENERGY - this.getEnergyAmount();
         int accepted = Math.min(space, amount);
@@ -300,7 +353,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
         }
         return accepted;
     }
-    
+
     public int fillFuel(int amount, boolean simulate) {
         int space = MAX_FUEL - this.getFuelAmount();
         int filled = Math.min(space, amount);
@@ -309,7 +362,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
         }
         return filled;
     }
-    
+
     @Override
     protected void addAdditionalSaveData(CompoundTag compoundTag) {
         compoundTag.put("RocketInventory", this.inventory.serializeNBT(this.registryAccess()));
@@ -317,7 +370,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
         compoundTag.putInt("EnergyAmount", this.getEnergyAmount());
         compoundTag.putInt("FuelAmount", this.getFuelAmount());
     }
-    
+
     @Override
     protected void readAdditionalSaveData(CompoundTag compoundTag) {
         if (compoundTag.contains("RocketInventory")) {
@@ -330,7 +383,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
             this.setEnergyAmount(compoundTag.getInt("EnergyAmount"));
         }
         if (compoundTag.contains("FuelAmount")) {
-            this.setFuelAmount(compoundTag.getInt("FuelAmount")); 
+            this.setFuelAmount(compoundTag.getInt("FuelAmount"));
         }
     }
 }

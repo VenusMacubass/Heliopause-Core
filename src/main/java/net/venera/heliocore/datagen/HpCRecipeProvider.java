@@ -285,14 +285,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('H', HpCItems.COMPRESSED_HD_PLATE.get())
                 .unlockedBy("has_steel_rod", has(ItemTags.WOOL))
                 .save(recipeOutput, "t1_nose_cone_crafting");
-//        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCItems.T1_ROCKET_NOSE_CONE.get())
-//                .pattern(" R ")
-//                .pattern(" H ")
-//                .pattern("HHH")
-//                .define('R', HpCItems.STEEL_ROD.get())
-//                .define('H', HpCItems.COMPRESSED_HD_PLATE.get())
-//                .unlockedBy("has_steel_rod", has(ItemTags.WOOL))
-//                .save(recipeOutput, "t1_nose_cone_crafting");
+
         ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, HpCItems.T1_ROCKET_BASE.get())
                 .pattern("HCH")
                 .pattern("HBH")

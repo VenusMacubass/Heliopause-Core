@@ -61,6 +61,9 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
             }
 
             @Override
+            public int getMaxStackSize(ItemStack stack) { return 1; }
+
+            @Override
             public void setChanged() {
                 super.setChanged();
                 HpCEvents.syncToAllTracking(targetEntity);
@@ -77,6 +80,9 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
             public int getMaxStackSize() {
                 return 1;
             }
+
+            @Override
+            public int getMaxStackSize(ItemStack stack) { return 1; }
             
             @Override
             public void setChanged() {
@@ -95,6 +101,9 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
             public int getMaxStackSize() {
                 return 1;
             }
+
+            @Override
+            public int getMaxStackSize(ItemStack stack) { return 1; }
             
             @Override
             public void setChanged() {
@@ -113,6 +122,9 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
             public int getMaxStackSize() {
                 return 1;
             }
+
+            @Override
+            public int getMaxStackSize(ItemStack stack) { return 1; }
             
             @Override
             public void setChanged() {
@@ -141,6 +153,9 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
                 }
 
                 @Override
+                public int getMaxStackSize(ItemStack stack) { return 1; }
+
+                @Override
                 public void setChanged() {
                     super.setChanged();
                     HpCEvents.syncToAllTracking(targetEntity);
@@ -161,6 +176,9 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
             }
             
             @Override
+            public int getMaxStackSize(ItemStack stack) { return 1; }
+            
+            @Override
             public void setChanged() {
                 super.setChanged();
                 HpCEvents.syncToAllTracking(targetEntity);
@@ -174,9 +192,10 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
             }
 
             @Override
-            public int getMaxStackSize() {
-                return 1;
-            }
+            public int getMaxStackSize() {return 1;}
+            
+            @Override
+            public int getMaxStackSize(ItemStack stack) { return 1; }
             
             @Override
             public void setChanged() {
@@ -187,14 +206,12 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
     }
 
     private static final int CUSTOM_SLOT_COUNT = 10;
-    private static final int HOTBAR_SLOT_COUNT = 9;
-    private static final int PLAYER_INVENTORY_ROW_COUNT = 3;
-    private static final int PLAYER_INVENTORY_COLUMN_COUNT = 9;
-    private static final int PLAYER_INVENTORY_SLOT_COUNT = PLAYER_INVENTORY_COLUMN_COUNT * PLAYER_INVENTORY_ROW_COUNT;
-    private static final int OFFHAND_SLOT_COUNT = 1;
-    private static final int VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INVENTORY_SLOT_COUNT + OFFHAND_SLOT_COUNT;
-    private static final int CUSTOM_FIRST_SLOT_INDEX = 0;
-    private static final int VANILLA_FIRST_SLOT_INDEX = CUSTOM_FIRST_SLOT_INDEX + CUSTOM_SLOT_COUNT;
+    private static final int VANILLA_MAIN_FIRST = CUSTOM_SLOT_COUNT; // 10
+    private static final int VANILLA_MAIN_COUNT = 27;
+    private static final int VANILLA_HOTBAR_FIRST = VANILLA_MAIN_FIRST + VANILLA_MAIN_COUNT; // 37
+    private static final int VANILLA_HOTBAR_COUNT = 9;
+    private static final int VANILLA_END = VANILLA_HOTBAR_FIRST + VANILLA_HOTBAR_COUNT; // 46
+    private static final int OFFHAND_INDEX = 46;
 
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
@@ -203,23 +220,35 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
         ItemStack sourceStack = sourceSlot.getItem();
         ItemStack copyOfSourceStack = sourceStack.copy();
 
-        if (pIndex < CUSTOM_FIRST_SLOT_INDEX + CUSTOM_SLOT_COUNT) {
-            if (!moveItemStackTo(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)) {
+        // 1. Completely disable quick moving if clicking the offhand slot
+        if (pIndex == OFFHAND_INDEX) {
+            return ItemStack.EMPTY;
+        }
+
+        // 2. Custom Slots (0-9) -> Player Inventory + Hotbar (10-45)
+        if (pIndex < CUSTOM_SLOT_COUNT) {
+            if (!moveItemStackTo(sourceStack, VANILLA_MAIN_FIRST, VANILLA_END, false)) {
                 return ItemStack.EMPTY;
             }
-        } else if (pIndex >= VANILLA_FIRST_SLOT_INDEX && pIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
-            if (!moveItemStackTo(sourceStack, CUSTOM_FIRST_SLOT_INDEX, CUSTOM_FIRST_SLOT_INDEX + CUSTOM_SLOT_COUNT, false)) {
-                if (pIndex != VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT - 1) {
-                    if (!moveItemStackTo(sourceStack, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT - 1, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)) {
+        }
+        // 3. Player Inventory + Hotbar (10-45) -> Custom Slots OR internal swapping
+        else if (pIndex >= VANILLA_MAIN_FIRST && pIndex < VANILLA_END) {
+            // First, try to send it to our custom equipment slots
+            if (!moveItemStackTo(sourceStack, 0, CUSTOM_SLOT_COUNT, false)) {
+
+                // If it can't go to equipment slots, swap it between main inventory and hotbar
+                if (pIndex < VANILLA_HOTBAR_FIRST) {
+                    // Main Inventory -> Hotbar
+                    if (!moveItemStackTo(sourceStack, VANILLA_HOTBAR_FIRST, VANILLA_END, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
-                    return ItemStack.EMPTY;
+                    // Hotbar -> Main Inventory
+                    if (!moveItemStackTo(sourceStack, VANILLA_MAIN_FIRST, VANILLA_HOTBAR_FIRST, false)) {
+                        return ItemStack.EMPTY;
+                    }
                 }
             }
-        } else {
-            HeliopauseCore.LOGGER.info("Invalid slotIndex:{}", pIndex);
-            return ItemStack.EMPTY;
         }
 
         if (sourceStack.getCount() == 0) {
@@ -227,10 +256,15 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
         } else {
             sourceSlot.setChanged();
         }
+
+        // If the stack size didn't change at all, the move failed entirely
+        if (sourceStack.getCount() == copyOfSourceStack.getCount()) {
+            return ItemStack.EMPTY;
+        }
+
         sourceSlot.onTake(playerIn, sourceStack);
         return copyOfSourceStack;
     }
-
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
