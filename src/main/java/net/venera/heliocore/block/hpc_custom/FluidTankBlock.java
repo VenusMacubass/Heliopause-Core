@@ -42,27 +42,27 @@ public class FluidTankBlock extends BaseEntityBlock {
 
             if (stack.getItem() instanceof CanisterItem) {
                 if (player.isCreative()) {
-                    fluidTankEntity.handleCanister(stack.copyWithCount(1), player);
+                    fluidTankEntity.handleCanister(stack.copyWithCount(1));
                 } else {
-                    resultItem = fluidTankEntity.handleCanister(stack.copyWithCount(1), player);
+                    resultItem = fluidTankEntity.handleCanister(stack.copyWithCount(1));
                     stack.shrink(1);
                     if (!player.addItem(resultItem)) player.drop(resultItem, false);
                 }
             }
             else if (stack.getItem() instanceof GasTankItem) {
                 if (player.isCreative()) {
-                    fluidTankEntity.handleGasTank(stack.copyWithCount(1), player);
+                    fluidTankEntity.handleGasTank(stack.copyWithCount(1));
                 } else {
-                    resultItem = fluidTankEntity.handleGasTank(stack.copyWithCount(1), player);
+                    resultItem = fluidTankEntity.handleGasTank(stack.copyWithCount(1));
                     stack.shrink(1);
                     if (!player.addItem(resultItem)) player.drop(resultItem, false);
                 }
             }
             else if (stack.getItem() instanceof BucketItem) {
                 if (player.isCreative()) {
-                    fluidTankEntity.handleBucket(stack.copyWithCount(1), player);
+                    fluidTankEntity.handleBucket(stack.copyWithCount(1));
                 } else {
-                    resultItem = fluidTankEntity.handleBucket(stack.copyWithCount(1), player);
+                    resultItem = fluidTankEntity.handleBucket(stack.copyWithCount(1));
                     stack.shrink(1);
                     if (!player.addItem(resultItem)) player.drop(resultItem, false);
                 }

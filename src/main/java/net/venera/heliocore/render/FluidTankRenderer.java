@@ -28,8 +28,8 @@ public class FluidTankRenderer implements BlockEntityRenderer<FluidTankEntity> {
 
         int yOffset = entity.getBlockPos().getY() - master.getBlockPos().getY();
 
-        int fluidInThisBlock = Math.max(0, Math.min(FluidTankEntity.FLUID_TANK_CAPACITY,
-                master.getFluidAmount() - (yOffset * FluidTankEntity.FLUID_TANK_CAPACITY)));
+        int fluidInThisBlock = Math.clamp(
+                master.getFluidAmount() - ((long) yOffset * FluidTankEntity.FLUID_TANK_CAPACITY), 0, FluidTankEntity.FLUID_TANK_CAPACITY);
 
         boolean isGas = master.getCurrentFluid().getFluidType().getDensity() < 0;
 

@@ -74,7 +74,6 @@ public class EnergyGeneratorEntity extends BaseElectricMachineEntity implements 
         this.generationRate = generationRate;
     }
     
-    
     @Override
     protected ContainerData initContainerData() {
         return new ContainerData() {
@@ -172,9 +171,8 @@ public class EnergyGeneratorEntity extends BaseElectricMachineEntity implements 
     
     private boolean processLiquidFuels(){
         if(!liquidFuelTank.isEmpty()){
-            int conversionAmount = Math.min(liquidFuelTank.getFluidAmount(), LIQUID_CONSUMPTION_RATE);
-            liquidFuelTank.drain(conversionAmount, FluidTank.FluidAction.EXECUTE);
-            int burnDuration = conversionAmount;
+            int burnDuration = Math.min(liquidFuelTank.getFluidAmount(), LIQUID_CONSUMPTION_RATE);
+            liquidFuelTank.drain(burnDuration, FluidTank.FluidAction.EXECUTE);
             burnTime += burnDuration;
             maxBurnTime = burnDuration;
             return true;
@@ -191,7 +189,6 @@ public class EnergyGeneratorEntity extends BaseElectricMachineEntity implements 
         }
         else if(inputStack.getItem() instanceof CanisterItem canister){
             CanisterData data = canister.getCanisterData(inputStack);
-
             if(data.isRefinedFuel()) {
                 int receivedFuelCanister = liquidFuelTank.fill(new FluidStack(HpCFluids.REFINED_FUEL.getSource(), data.amount()), IFluidHandler.FluidAction.SIMULATE);
 

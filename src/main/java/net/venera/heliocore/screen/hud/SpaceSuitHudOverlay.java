@@ -55,8 +55,7 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
         int hudY = HeliopauseClientConfig.HUD_Y.get();
 
         boolean isHorizontal = HeliopauseClientConfig.HUD_HORIZONTAL.get();
-
-        // 1. DYNAMIC BACKGROUND SIZING (Much shorter and tighter!)
+        
         int bgWidth = (int) ((isHorizontal ? 52 : 20) * scale);
         int bgHeight = (int) ((isHorizontal ? 23 : 46) * scale);
 
@@ -65,21 +64,16 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
 
         int hazardWidth = (int) (16 * scale);
         int hazardHeight = (int) (4 * scale);
-
-        // --- NEW: DYNAMIC COORDINATE ROUTER ---
+        
         int tankX, tankY, oxyTextY;
         int radBarX, radBarY, radTextY;
         int pressBarX, pressBarY, pressTextY;
 
         if (isHorizontal) {
-            // PART 1: Oxygen (Left)
-            // Moved up to Y=2 so it doesn't push the bottom edge down
             tankX = hudX + (int) (2 * scale);
             oxyTextY = hudY + (int) (2 * scale);
             tankY = hudY + (int) (5 * scale);
-
-            // PART 2: Hazards (Middle)
-            // Moved closer to the tanks (X=20) and squished the vertical gaps
+            
             radBarX = hudX + (int) (20 * scale);
             radTextY = hudY + (int) (2 * scale);
             radBarY = hudY + (int) (5 * scale);
@@ -88,7 +82,6 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
             pressTextY = hudY + (int) (11 * scale);
             pressBarY = hudY + (int) (14 * scale);
         } else {
-            // VERTICAL LAYOUT (Your exact numbers remain untouched)
             tankX = hudX + (int)(2 * scale);
             radBarX = tankX;
             pressBarX = tankX;
@@ -102,16 +95,12 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
             oxyTextY   = hudY + (int) (25 * scale);
             tankY      = hudY + bgHeight - tankHeight - (int)(2 * scale);
         }
-
-        // Draw Background
+        
         guiGraphics.fill(hudX, hudY, hudX + bgWidth, hudY + bgHeight, 0x80000000);
-
-        // --- RENDER EQUIPMENT ICONS ---
+        
         var inventory = mc.player.getData(HpCAttachments.EQUIPMENT_INVENTORY);
 
         if (isHorizontal) {
-            // PART 3 (Right): Thermal Icons
-            // Moved closer (X=38) and tightened vertical gaps (2, 7, 12, 17)
             guiGraphics.pose().pushPose();
             float thermIconScale = scale * (4.0f / 16.0f);
             guiGraphics.pose().scale(thermIconScale, thermIconScale, 1.0f);
@@ -127,9 +116,7 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
             renderSlot(guiGraphics, inventory.getStackInSlot(6), LEGS_ICON, thermCol, tRow3);
             renderSlot(guiGraphics, inventory.getStackInSlot(7), HANDS_ICON, thermCol, tRow4);
             guiGraphics.pose().popPose();
-
-            // PART 4 (Far Right): Oxygen Setup Icons
-            // Moved closer (X=44)
+            
             guiGraphics.pose().pushPose();
             float oxyIconScale = scale * (6.0f / 16.0f);
             guiGraphics.pose().scale(oxyIconScale, oxyIconScale, 1.0f);
@@ -143,7 +130,6 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
             guiGraphics.pose().popPose();
 
         } else {
-            // VERTICAL LAYOUT ICONS (Your exact logic)
             guiGraphics.pose().pushPose();
             float oxyIconScale = scale * (6.0f / 16.0f);
             guiGraphics.pose().scale(oxyIconScale, oxyIconScale, 1.0f);
@@ -173,8 +159,7 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
 
             guiGraphics.pose().popPose();
         }
-
-        // --- LIQUID FILLS ---
+        
         int maxHazardFill = (int) (14 * scale);
 
         int radFill = getHazardScaled(radiationAmount, radiationCapacity, maxHazardFill);
@@ -198,13 +183,11 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
         int liqWidth = (int) (4 * scale);
         guiGraphics.fill(tankX + (int)(2 * scale), oxyBottomY - oxyFill1, tankX + (int)(2 * scale) + liqWidth, oxyBottomY, 0xFF00FFFF);
         guiGraphics.fill(tankX + (int)(10 * scale), oxyBottomY - oxyFill2, tankX + (int)(10 * scale) + liqWidth, oxyBottomY, 0xFF00FFFF);
-
-        // --- DRAW ALL TEXTURES OVER THE LIQUIDS ---
+        
         guiGraphics.blit(HAZARD_LEVEL_H, radBarX, radBarY, hazardWidth, hazardHeight, 0, 0, 16, 4, 16, 4);
         guiGraphics.blit(HAZARD_LEVEL_H, pressBarX, pressBarY, hazardWidth, hazardHeight, 0, 0, 16, 4, 16, 4);
         guiGraphics.blit(OXYGEN_TANK, tankX, tankY, tankWidth, tankHeight, 0, 0, 16, 16, 16, 16);
-
-        // --- DRAW ALL TEXT ---
+        
         Font font = mc.font;
         guiGraphics.pose().pushPose();
         float textScale = scale * 0.35f;
@@ -226,34 +209,29 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
     public int getPressureScaled(double amount, int maxPixels) {
         double ratio;
         if (amount <= 760) {
-            // First half of the bar is 0 to 760
             ratio = (amount / 760.0) * 0.5;
         } else {
-            // Second half of the bar is 760 to 7600
             ratio = 0.5 + ((amount - 760.0) / (pressureCapacity - 760.0)) * 0.5;
         }
         return (int) Math.min(ratio * maxPixels, maxPixels);
     }
-
-    // Dynamic Color for Radiation
+    
     public int getRadiationColor(double amount) {
-        if (amount < 100) return 0xFF55FF55; // Green (Safe)
-        if (amount < 200) return 0xFFFFFF55; // Yellow (Warning)
-        return 0xFFFF5555; // Red (Lethal)
+        if (amount < 100) return 0xFF55FF55; //Green (Safe)
+        if (amount < 200) return 0xFFFFFF55; //Yellow (Warning)
+        return 0xFFFF5555; //Red (Lethal)
     }
-
-    // Dynamic Color for Pressure based on your SpaceGearSetupController bounds
+    
     public int getPressureColor(double amount) {
-        if (amount < 228 || amount > 2280) return 0xFFFF5555; // Red (Requires Baric Setup 1 or 2)
-        if (amount < 500 || amount > 1500) return 0xFFFFFF55; // Yellow (Getting uncomfortable)
-        return 0xFF55FF55; // Green (Optimal ~760)
+        if (amount < 228 || amount > 2280) return 0xFFFF5555; //Red (Requires Baric Setup 1 or 2)
+        if (amount < 500 || amount > 1500) return 0xFFFFFF55; //Yellow (Getting uncomfortable)
+        return 0xFF55FF55; //Green (Optimal ~760)
     }
 
     private void renderSlot(GuiGraphics guiGraphics, ItemStack stack, ResourceLocation emptyTex, int x, int y) {
         if (!stack.isEmpty()) {
             guiGraphics.renderItem(stack, x, y);
         } else {
-            // Draws the empty texture at standard 16x16 size (which is scaled down by iconScale!)
             guiGraphics.blit(emptyTex, x, y, 0, 0, 16, 16, 16, 16);
         }
     }

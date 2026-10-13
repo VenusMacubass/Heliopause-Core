@@ -26,7 +26,6 @@ public class BatteryItem extends Item {
         BatteryData current = getBatteryData(stack);
 
         int energyToAdd = Math.min(maxReceive, transferRate);
-
         int proposedEnergy = current.energy() + energyToAdd;
 
         BatteryData newData = current.setEnergy(proposedEnergy);
@@ -39,8 +38,7 @@ public class BatteryItem extends Item {
 
         return actuallyAdded;
     }
-
-    // Returns: The amount of energy actually extracted
+    
     public int extractEnergy(ItemStack stack, int maxExtract, boolean simulate) {
         BatteryData current = getBatteryData(stack);
 

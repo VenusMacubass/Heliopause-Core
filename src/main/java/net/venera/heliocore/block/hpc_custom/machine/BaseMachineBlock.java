@@ -60,7 +60,7 @@ public abstract class BaseMachineBlock<T extends BaseMachineEntity> extends Base
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @org.jetbrains.annotations.Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
         if (!level.isClientSide) {
-            GridManager.get(level).onMachinePlaced(level, pos); // Trigger placed
+            GridManager.get(level).onMachinePlaced(level, pos); 
         }
     }
 
@@ -78,13 +78,14 @@ public abstract class BaseMachineBlock<T extends BaseMachineEntity> extends Base
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())) {
             OxygenVolumeHelper.removeRoom(pos, level);
+            GridManager.get(level).onMachineBroken(level, pos);
             super.onRemove(state, level, pos, newState, isMoving);
         }
     }
     
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof MenuProvider menuProvider) { //Standard GUI Opener
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof MenuProvider menuProvider) { 
             player.openMenu(menuProvider, pos);
             return InteractionResult.SUCCESS;
         }

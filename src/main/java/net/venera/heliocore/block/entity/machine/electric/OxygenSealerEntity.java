@@ -22,6 +22,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.venera.heliocore.HeliopauseConfig;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.hpc_custom.FluidPipeBlock;
 import net.venera.heliocore.block.hpc_custom.machine.BaseMachineBlock;
@@ -67,7 +68,6 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
             return stack.getFluid().getFluidType() == HpCFluids.OXYGEN.get().getFluidType();
         }
     };
-    private final int maxVolume = 100000;
     
     public OxygenSealerEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int energyCapacity, int energyTransferRate, int oxygenUsage, int energyUsage, int maxFlowRate) {
         super(type, pos, state, 3, energyCapacity, energyTransferRate, 0);
@@ -153,7 +153,8 @@ public class OxygenSealerEntity extends BaseElectricMachineEntity implements IFl
                     }
                 }
                 if (!seal && isInSpace) {
-                    var result = OxygenVolumeHelper.scanAndRegisterRoom(level, pos, maxVolume);
+                    int currentMax = HeliopauseConfig.MAX_CHAMBER_VOLUME.get();
+                    var result = OxygenVolumeHelper.scanAndRegisterRoom(level, pos, currentMax);
 
                     if (result != null) {
                         seal = true;

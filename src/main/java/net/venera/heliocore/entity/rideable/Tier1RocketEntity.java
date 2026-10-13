@@ -48,16 +48,12 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
         Vec3 currentVelocity = this.getDeltaMovement();
         double newYVelocity = currentVelocity.y();
 
-        // 1. Universal Gravity
         if (!this.onGround()) {
             double gravity = 0.05D;
             newYVelocity -= gravity;
         }
-
-        // 2. Engine Thrust (Overcomes gravity if active)
+        
         if (this.entityData.get(IS_LAUNCHED)) {
-
-            // SERVER ONLY: Drain fuel and cut engine if empty
             if (!this.level().isClientSide()) {
                 if (this.getFuelAmount() >= FUEL_USAGE && this.getEnergyAmount() >= ENERGY_USAGE) {
                     this.setFuelAmount(this.getFuelAmount() - FUEL_USAGE);
@@ -66,38 +62,30 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
                     this.entityData.set(IS_LAUNCHED, false); // Out of fuel/energy!
                 }
             }
-
-            // BOTH SIDES: Apply physical thrust as long as the engine is on
+            
             if (this.entityData.get(IS_LAUNCHED)) {
-                double engineThrust = 0.10D; // Strong enough to beat the 0.05 gravity
+                double engineThrust = 0.10D; 
                 newYVelocity += engineThrust;
             }
         }
-
-        // 3. Clamp speeds to terminal velocity (max 5.0 up, max -5.0 down)
-        // (Using Math.max/min for broader Java version compatibility)
+        
         newYVelocity = Math.clamp(newYVelocity, -5.0D, 5.0D);
-
-        // 4. Apply calculated net movement
+        
         this.setDeltaMovement(new Vec3(currentVelocity.x(), newYVelocity, currentVelocity.z()));
         this.move(MoverType.SELF, this.getDeltaMovement());
-
-        // 5. Collision and Crash Logic (SERVER ONLY)
+        
         if (!this.level().isClientSide()) {
-            // Did it hit a ceiling during launch? (Vertical collision is true, but it's not on the ground)
             if (this.entityData.get(IS_LAUNCHED) && this.verticalCollision && !this.onGround()) {
                 this.explode(Math.abs(this.previousYVelocity * 20D));
                 return;
             }
-
-            // Did it fall out of the sky and hit the ground? (Speed was highly negative)
+            
             if (this.onGround() && this.previousYVelocity < -1.0D) {
                 this.explode(Math.abs(this.previousYVelocity * 20D));
                 return;
             }
         }
-
-        // 6. Dimension Transition Logic
+        
         if (this.getY() >= targetAltitude) {
             if (!this.level().isClientSide() && this.level() instanceof ServerLevel serverLevel) {
                 Entity passenger = this.getFirstPassenger();

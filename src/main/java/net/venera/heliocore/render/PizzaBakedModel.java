@@ -30,13 +30,11 @@ public class PizzaBakedModel implements BakedModel {
     @Override
     public @NotNull List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull RandomSource rand, @NotNull ModelData data, @Nullable RenderType renderType) {
         List<BakedQuad> quads = new ArrayList<>();
-
-        // 1. Give the Chunk Builder the base crust ONLY during the Solid pass
+        
         if (renderType == null || renderType == RenderType.solid()) {
             quads.addAll(basePizzaModel.getQuads(state, side, rand, data, renderType));
         }
-
-        // 2. Give the Chunk Builder the toppings ONLY during the Cutout (transparent) pass
+        
         if (renderType == null || renderType == RenderType.cutout()) {
             if (state != null && data.has(PizzaEntity.TOPPINGS_PROPERTY)) {
                 int mask = data.get(PizzaEntity.TOPPINGS_PROPERTY);

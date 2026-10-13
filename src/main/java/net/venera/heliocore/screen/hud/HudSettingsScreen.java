@@ -12,7 +12,7 @@ import net.venera.heliocore.HeliopauseClientConfig;
 import java.util.function.Consumer;
 
 public class HudSettingsScreen extends Screen {
-    private final Screen parent; // Remembers the Mod Menu screen
+    private final Screen parent; 
     
     public HudSettingsScreen(Screen parent) {
         super(Component.literal("Space Suit HUD Settings"));
@@ -23,8 +23,7 @@ public class HudSettingsScreen extends Screen {
     protected void init() {
         super.init();
         int centerX = this.width / 2;
-
-        // 1. Master Toggle Button
+        
         this.addRenderableWidget(Button.builder(
                 Component.literal("HUD: " + (HeliopauseClientConfig.HUD_ENABLED.get() ? "ON" : "OFF")),
                 btn -> {
@@ -42,34 +41,28 @@ public class HudSettingsScreen extends Screen {
                     btn.setMessage(Component.literal("Layout: " + (!current ? "Horizontal" : "Vertical")));
                 }
         ).bounds(centerX + 5, 40, 95, 20).build());
-
-        // 2. X Coordinate
+        
         addSliderAndInput("X Position", centerX, 70,
                 HeliopauseClientConfig.HUD_X.get(), 0, 1000,
                 val -> HeliopauseClientConfig.HUD_X.set(val.intValue()));
-
-        // 3. Y Coordinate
+        
         addSliderAndInput("Y Position", centerX, 100,
                 HeliopauseClientConfig.HUD_Y.get(), 0, 1000,
                 val -> HeliopauseClientConfig.HUD_Y.set(val.intValue()));
-
-        // 4. Scale 
+        
         addSliderAndInput("Scale", centerX, 130,
                 HeliopauseClientConfig.HUD_SCALE.get().floatValue(), 0.5f, 5.0f,
                 val -> HeliopauseClientConfig.HUD_SCALE.set((double) val));
-
-        // 5. Reset Defaults Button
+        
         this.addRenderableWidget(Button.builder(Component.literal("Reset Defaults"), btn -> {
             HeliopauseClientConfig.HUD_ENABLED.set(true);
             HeliopauseClientConfig.HUD_X.set(HeliopauseClientConfig.HUD_X.getDefault());
             HeliopauseClientConfig.HUD_Y.set(HeliopauseClientConfig.HUD_Y.getDefault());
             HeliopauseClientConfig.HUD_SCALE.set(HeliopauseClientConfig.HUD_SCALE.getDefault());
-
-            // Reload the screen, passing the parent along
+            
             this.minecraft.setScreen(new HudSettingsScreen(this.parent));
         }).bounds(centerX - 100, 170, 200, 20).build());
-
-        // 6. NEW: "Done" Button to exit back to Mod Menu
+        
         this.addRenderableWidget(Button.builder(Component.literal("Done"), btn -> {
             this.onClose();
         }).bounds(centerX - 100, 200, 200, 20).build());
@@ -78,11 +71,9 @@ public class HudSettingsScreen extends Screen {
     private void addSliderAndInput(String name, int centerX, int y, float currentValue, float min, float max, Consumer<Float> onSave) {
         boolean isScale = max < 100;
         EditBox editBox = new EditBox(this.font, centerX + 50, y, 70, 20, Component.literal(name));
-
-        // Use Locale.US to force '.' instead of ',' for decimals to prevent NumberFormatException crashes!
+        
         editBox.setValue(isScale ? String.format(java.util.Locale.US, "%.2f", currentValue) : String.valueOf((int) currentValue));
-
-        // Create a custom subclass to bypass the private access restriction
+        
         class CustomSlider extends AbstractSliderButton {
             public CustomSlider(int x, int y, int width, int height, Component message, double value) {
                 super(x, y, width, height, message, value);
@@ -99,10 +90,9 @@ public class HudSettingsScreen extends Screen {
                 editBox.setValue(isScale ? String.format(java.util.Locale.US, "%.2f", val) : String.valueOf((int) val));
                 onSave.accept(val);
             }
-
-            // Expose the protected 'value' field safely
+            
             public void updateVisuals(double newValue) {
-                this.value = newValue; // Accessing the protected field directly
+                this.value = newValue; 
                 this.updateMessage();
             }
         }
@@ -113,10 +103,8 @@ public class HudSettingsScreen extends Screen {
             try {
                 float val = Float.parseFloat(text);
                 onSave.accept(val);
-                // Use our new custom method instead of the private setValue
                 slider.updateVisuals(Mth.inverseLerp(val, min, max));
             } catch (NumberFormatException ignored) {
-                // Ignore invalid characters while typing
             }
         });
 
@@ -126,7 +114,6 @@ public class HudSettingsScreen extends Screen {
 
     @Override
     public void onClose() {
-        // Return to the Mod Menu instead of closing all GUIs
         this.minecraft.setScreen(this.parent);
     }
 

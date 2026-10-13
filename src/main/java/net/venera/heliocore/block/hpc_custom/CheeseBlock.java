@@ -46,15 +46,15 @@ public class CheeseBlock extends Block {
 
         int slices = state.getValue(SLICES);
         
-        ItemStack cheese = new ItemStack(HpCItems.CHEESE_SLICE.get(), 2); // Give player 2 cheese slices
+        ItemStack cheese = new ItemStack(HpCItems.CHEESE_SLICE.get(), 2); 
         if (!player.addItem(cheese)) {
             player.drop(cheese, false);
         }
         
         if (slices < 6) {
-            level.setBlock(pos, state.setValue(SLICES, slices + 1), 6); // Update bite state
+            level.setBlock(pos, state.setValue(SLICES, slices + 1), 6); 
         } else {
-            level.removeBlock(pos, false);  // Fully eaten, remove block
+            level.removeBlock(pos, false);  
         }
         return InteractionResult.SUCCESS;
     }

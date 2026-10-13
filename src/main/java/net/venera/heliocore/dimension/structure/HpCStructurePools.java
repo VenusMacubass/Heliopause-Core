@@ -21,7 +21,7 @@ public class HpCStructurePools {
     public static final ResourceKey<StructureTemplatePool> CENTER = createKey("moon_village/center");
     public static final ResourceKey<StructureTemplatePool> PATHWAYS = createKey("moon_village/pathways");
     public static final ResourceKey<StructureTemplatePool> STREETS = createKey("moon_village/streets");
-    public static final ResourceKey<StructureTemplatePool> STREET_TERMINATORS = createKey("moon_village/street_terminators");
+    public static final ResourceKey<StructureTemplatePool> STREET_ENDS = createKey("moon_village/street_ends");
     public static final ResourceKey<StructureTemplatePool> HOUSES = createKey("moon_village/houses");
     public static final ResourceKey<StructureTemplatePool> ROAD_TURNS = createKey("moon_village/road_turns");
     public static final ResourceKey<StructureTemplatePool> CORNER_BUILDINGS = createKey("moon_village/corner_buildings");
@@ -41,14 +41,12 @@ public class HpCStructurePools {
         register(context, CENTER, Pools.EMPTY, List.of(Pair.of(HeliopauseCore.MOD_ID + ":moon_village_center", 1)));
 
         register(context, PATHWAYS, Pools.EMPTY, List.of(Pair.of(HeliopauseCore.MOD_ID + ":moon_village_small_pathway", 1)));
-
-        // Added terminator pool
-        register(context, STREET_TERMINATORS, Pools.EMPTY, List.of(
+        
+        register(context, STREET_ENDS, Pools.EMPTY, List.of(
                 Pair.of("minecraft:empty", 1)
         ));
-
-        // Streets and road turns now use STREET_TERMINATORS as their fallback
-        register(context, STREETS, STREET_TERMINATORS, List.of(
+        
+        register(context, STREETS, STREET_ENDS, List.of(
                 Pair.of(HeliopauseCore.MOD_ID + ":moon_village_street", 2),
                 Pair.of(HeliopauseCore.MOD_ID + ":moon_village_street_long", 2)
         ));
@@ -63,7 +61,7 @@ public class HpCStructurePools {
                 Pair.of(HeliopauseCore.MOD_ID + ":moon_village_farmer_house", 6)
         ));
 
-        register(context, ROAD_TURNS, STREET_TERMINATORS, List.of(
+        register(context, ROAD_TURNS, STREET_ENDS, List.of(
                 Pair.of(HeliopauseCore.MOD_ID + ":moon_village_road_turn", 2),
                 Pair.of(HeliopauseCore.MOD_ID + ":moon_village_junction", 1)
         ));
@@ -103,8 +101,7 @@ public class HpCStructurePools {
                 Pair.of(HeliopauseCore.MOD_ID + ":moon_village_paddock_4", 1)
         ));
     }
-
-    // Signature updated to accept fallbackPool
+    
     private static void register(BootstrapContext<StructureTemplatePool> context, ResourceKey<StructureTemplatePool> key, ResourceKey<StructureTemplatePool> fallbackPool, List<Pair<String, Integer>> structures) {
         HolderGetter<StructureTemplatePool> templatePools = context.lookup(Registries.TEMPLATE_POOL);
         Holder<StructureTemplatePool> fallback = templatePools.getOrThrow(fallbackPool);

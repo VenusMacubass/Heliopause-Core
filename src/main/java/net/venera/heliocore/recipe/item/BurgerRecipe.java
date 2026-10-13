@@ -79,7 +79,7 @@ public class BurgerRecipe extends CustomRecipe {
 
             FoodProperties upgradedFood = new FoodProperties.Builder()
                     .nutrition(currentFood.nutrition() + bonusNutrition)
-                    .saturationModifier(1.5f + bonusSaturation) // Hardcoded the base 1.5f modifier to stop the explosion
+                    .saturationModifier(1.5f + bonusSaturation) 
                     .effect(() -> new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.REGENERATION, 120), 1f) // Restored the lost effect
                     .build();
 
@@ -88,8 +88,7 @@ public class BurgerRecipe extends CustomRecipe {
 
         return burgerStack;
     }
-
-    // New helper method to ensure matches() and assemble() are perfectly synced
+    
     private boolean isVeggie(ItemStack stack) {
         return stack.is(Items.DRIED_KELP) || stack.is(Items.BEETROOT) || stack.is(Items.CARROT) || stack.is(Items.BAKED_POTATO);
     }

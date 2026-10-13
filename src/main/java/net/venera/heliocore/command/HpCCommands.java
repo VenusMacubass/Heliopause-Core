@@ -40,12 +40,10 @@ public class HpCCommands {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
 
         dispatcher.register(Commands.literal("radiation")
-                .requires(source -> source.hasPermission(2)) // Require OP level 2 (standard cheats)
-
-                // --- SUBCOMMAND: ADD ---
+                .requires(source -> source.hasPermission(2)) //Authority level 2 (standard commands)
                 .then(Commands.literal("add")
                         .then(Commands.argument("targets", EntityArgument.entities())
-                                .then(Commands.argument("amount", DoubleArgumentType.doubleArg(0)) // Prevents negative numbers
+                                .then(Commands.argument("amount", DoubleArgumentType.doubleArg(0)) 
                                         .executes(context -> executeRadiationCommand(
                                                 context.getSource(),
                                                 EntityArgument.getEntities(context, "targets"),
@@ -55,8 +53,6 @@ public class HpCCommands {
                                 )
                         )
                 )
-
-                // --- SUBCOMMAND: SET ---
                 .then(Commands.literal("set")
                         .then(Commands.argument("targets", EntityArgument.entities())
                                 .then(Commands.argument("amount", DoubleArgumentType.doubleArg(0))
@@ -69,8 +65,6 @@ public class HpCCommands {
                                 )
                         )
                 )
-
-                // --- SUBCOMMAND: REMOVE ---
                 .then(Commands.literal("remove")
                         .then(Commands.argument("targets", EntityArgument.entities())
                                 .then(Commands.argument("amount", DoubleArgumentType.doubleArg(0))
@@ -83,9 +77,6 @@ public class HpCCommands {
                                 )
                         )
                 )
-
-                // --- SUBCOMMAND: CLEAR ---
-                // Clear doesn't need an amount argument!
                 .then(Commands.literal("clear")
                         .then(Commands.argument("targets", EntityArgument.entities())
                                 .executes(context -> executeRadiationCommand(
@@ -141,48 +132,37 @@ public class HpCCommands {
                 RadiationData radData = living.getData(HpCAttachments.RADIATION_DATA);
 
                 switch (action) {
-                    // We pass MAX_RADIATION as the limit so admin commands bypass Space Suit armor!
                     case "add" -> radData.changeRadiation(amount, true, RadiationData.MAX_RADIATION);
                     case "remove" -> radData.changeRadiation(amount, false);
                     case "set" -> radData.setRadiation(amount);
                     case "clear" -> radData.setRadiation(0);
                 }
-
-                // Force an immediate HUD sync so the admin sees the change instantly
+                
                 if (living instanceof ServerPlayer serverPlayer) {
                     PacketDistributor.sendToPlayer(serverPlayer, new SyncRadiationPayload(radData.getRadiation()));
                 }
                 successCount++;
             }
         }
-
-        // Send feedback to the admin who typed the command
+        
         if (successCount > 0) {
             source.sendSuccess(() -> Component.literal("Successfully applied radiation entities."), true);
         } else {
             source.sendFailure(Component.literal("No valid living entities found to apply radiation."));
         }
-
-        // Brigadier requires returning an integer (usually the number of successful executions)
         return successCount;
     }
 
     private static int teleportEntity(CommandSourceStack source, Collection<? extends Entity> targets, ResourceKey<Level> targetDimensionKey) {
         int successCount = 0;
         ServerLevel targetLevel = source.getServer().getLevel(targetDimensionKey);
-
-        if (targetLevel == null) return 0; // Safety check
-
+        if (targetLevel == null) return 0;
         double targetScale = getCoordinateScale(targetDimensionKey);
 
         for (Entity entity : targets) {
             double sourceScale = getCoordinateScale(entity.level().dimension());
-
-            // Dynamic Math: Scales coordinates seamlessly between ANY two dimensions
             double targetX = (entity.getX() * sourceScale) / targetScale;
             double targetZ = (entity.getZ() * sourceScale) / targetScale;
-
-            // Calculate a safe drop point
             double targetY = getSafeY(targetLevel, (int) targetX, (int) targetZ);
 
             DimensionTransition transition = new DimensionTransition(
@@ -212,24 +192,20 @@ public class HpCCommands {
         targetLevel.getChunk(x >> 4, z >> 4, ChunkStatus.FULL, true);
 
         if (targetLevel.dimension().equals(Level.NETHER)) {
-            // NETHER: Scan downward from below the bedrock roof
             BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, 120, z);
             for (int y = 120; y > 32; y--) {
                 pos.setY(y);
 
-                // Look for 2 blocks of air above a block that is NOT air and NOT lava
                 if (targetLevel.isEmptyBlock(pos) && targetLevel.isEmptyBlock(pos.above())) {
                     BlockPos floor = pos.below();
                     if (!targetLevel.getBlockState(floor).isAir() && targetLevel.getFluidState(floor).isEmpty()) {
-                        return y + 0.1D; // Safe cave found!
+                        return y + 0.1D; 
                     }
                 }
             }
-            return 70.0D; // Fallback if no safe cave is found
+            return 70.0D; 
         } else {
-            // OVERWORLD / MOON / END: Surface scan
             int surfaceY = targetLevel.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
-            
             return surfaceY > targetLevel.getMinBuildHeight() ? (surfaceY + 0.1D) : 600.0D;
         }
     }

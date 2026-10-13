@@ -20,17 +20,16 @@ public class LanderMenu extends AbstractContainerMenu {
     public LanderMenu(int containerId, Inventory inv, RegistryFriendlyByteBuf extraData) {
         this(containerId, inv, (Tier1RocketLanderEntity) inv.player.level().getEntity(extraData.readInt()));
     }
-    
 
     public LanderMenu(int containerId, Inventory inventory, Tier1RocketLanderEntity lander) {
         super(HpCMenuTypes.LANDER_MENU.get(), containerId);
         this.lander = lander;
-        IItemHandler handler = (this.lander != null) ? this.lander.inventory : new ItemStackHandler(29); // Changed to 29
+        IItemHandler handler = (this.lander != null) ? this.lander.inventory : new ItemStackHandler(29); 
         
         int slotIndex = 0;
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
-                this.addSlot(new SlotItemHandler(this.lander.inventory, slotIndex++, 8 + col * 18, 63 + row * 18)); // Removed offsetY
+                this.addSlot(new SlotItemHandler(this.lander.inventory, slotIndex++, 8 + col * 18, 63 + row * 18)); 
             }
         }
         
@@ -58,7 +57,7 @@ public class LanderMenu extends AbstractContainerMenu {
 
     private static final int TE_INVENTORY_SLOT_COUNT = 29;
     private static final int VANILLA_SLOT_COUNT = 36;
-    private static final int VANILLA_FIRST_SLOT_INDEX = TE_INVENTORY_SLOT_COUNT; // Index 29
+    private static final int VANILLA_FIRST_SLOT_INDEX = TE_INVENTORY_SLOT_COUNT; 
 
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {

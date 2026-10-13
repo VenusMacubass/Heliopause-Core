@@ -29,8 +29,7 @@ public class HumanoidOxygenGear<T extends LivingEntity> extends HumanoidModel<T>
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
-
-		// 1. Standard Humanoid Skeleton Bones Required by Minecraft
+		
 		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 		partdefinition.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
@@ -39,24 +38,20 @@ public class HumanoidOxygenGear<T extends LivingEntity> extends HumanoidModel<T>
 		partdefinition.addOrReplaceChild("right_arm", CubeListBuilder.create(), PartPose.offset(-5.0F, 2.0F, 0.0F));
 		partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create(), PartPose.offset(1.9F, 12.0F, 0.0F));
 		partdefinition.addOrReplaceChild("right_leg", CubeListBuilder.create(), PartPose.offset(-1.9F, 12.0F, 0.0F));
-
-		// 2. Individual Gear Components
+		
 		head.addOrReplaceChild("mask", CubeListBuilder.create().texOffs(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.5F)), PartPose.ZERO);
-
-		// Grouping the connector/hose cubes into a single separate part
+		
 		body.addOrReplaceChild("connectors", CubeListBuilder.create()
 						.texOffs(15, 35).addBox(-3.0F, 1.0F, 2.0F, 6.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
 						.texOffs(2, 1).addBox(2.0F, 1.0F, 3.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
 						.texOffs(2, 1).addBox(-3.0F, 1.0F, 3.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
 						.texOffs(15, 37).addBox(-1.0F, 0.0F, 2.0F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
 				PartPose.ZERO);
-
-		// Isolated Left Tank
+		
 		body.addOrReplaceChild("left_tank", CubeListBuilder.create()
 						.texOffs(2, 33).addBox(1.0F, 2.0F, 2.0F, 3.0F, 8.0F, 3.0F, new CubeDeformation(0.0F)),
 				PartPose.ZERO);
-
-		// Isolated Right Tank
+		
 		body.addOrReplaceChild("right_tank", CubeListBuilder.create()
 						.texOffs(2, 33).addBox(-4.0F, 2.0F, 2.0F, 3.0F, 8.0F, 3.0F, new CubeDeformation(0.0F)),
 				PartPose.ZERO);

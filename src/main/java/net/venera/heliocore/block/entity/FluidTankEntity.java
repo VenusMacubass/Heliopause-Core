@@ -9,7 +9,6 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -77,8 +76,6 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
         };
     }
 
-    // --- MULTIBLOCK LOGIC ---
-
     public FluidTankEntity getMasterTank() {
         if (this.level == null) return this;
         BlockPos checkPos = this.getBlockPos().below();
@@ -132,10 +129,8 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
         this.setChanged();
     }
 
-    // --- ROUTED FLUID LOGIC ---
-
-    public ItemStack handleBucket(ItemStack container, Player player){
-        if (this != getMasterTank()) return getMasterTank().handleBucket(container, player);
+    public ItemStack handleBucket(ItemStack container){
+        if (this != getMasterTank()) return getMasterTank().handleBucket(container);
 
         if (container.getItem() == Items.BUCKET) {
             if (fluidTank.getFluidAmount() < BUCKET_CAPACITY) return container;
@@ -175,8 +170,8 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
         return container;
     }
 
-    public ItemStack handleCanister(ItemStack container, Player player){
-        if (this != getMasterTank()) return getMasterTank().handleCanister(container, player);
+    public ItemStack handleCanister(ItemStack container){
+        if (this != getMasterTank()) return getMasterTank().handleCanister(container);
 
         if (!(container.getItem() instanceof CanisterItem canisterItem))
             return container;
@@ -218,8 +213,8 @@ public class FluidTankEntity extends BlockEntity implements IFluidMachine {
         return container;
     }
 
-    public ItemStack handleGasTank(ItemStack container, Player player){
-        if (this != getMasterTank()) return getMasterTank().handleGasTank(container, player);
+    public ItemStack handleGasTank(ItemStack container){
+        if (this != getMasterTank()) return getMasterTank().handleGasTank(container);
 
         if (!(container.getItem() instanceof GasTankItem gasTankItem))
             return container;

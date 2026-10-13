@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.OptionalLong;
 
 public class HpCDimensions {
-    
     public static final ResourceKey<Level> MOON_LEVEL_KEY = ResourceKey.create(
             Registries.DIMENSION,
             ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "moon")
@@ -45,7 +44,7 @@ public class HpCDimensions {
 
         MultiNoiseBiomeSource moonBiomeSource = MultiNoiseBiomeSource.createFromList(
                 new Climate.ParameterList<>(List.of(
-                        //LUNAR MARIA (High Erosion = Flat)
+                        //Maria (High Erosion = Flat)
                         Pair.of(Climate.parameters(
                                 Climate.Parameter.span(-1.0F, 1.0F), // Temperature 
                                 Climate.Parameter.span(-1.0F, 1.0F), // Humidity 
@@ -56,7 +55,7 @@ public class HpCDimensions {
                                 0.0F
                         ), biomeRegistry.getOrThrow(HpCBiomes.LUNAR_MARIA)), 
 
-                        //LUNAR HIGHLANDS (Low Erosion = Jagged)
+                        //Highlands (Low Erosion = Jagged)
                         Pair.of(Climate.parameters(
                                 Climate.Parameter.span(-1.0F, 1.0F), // Temperature 
                                 Climate.Parameter.span(-1.0F, 1.0F), // Humidity 

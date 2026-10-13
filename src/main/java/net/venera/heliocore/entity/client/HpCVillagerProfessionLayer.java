@@ -46,8 +46,7 @@ public class HpCVillagerProfessionLayer extends VillagerProfessionLayer<Villager
 
         VillagerData data = villager.getVillagerData();
         VillagerType type = data.getType();
-
-        // If this is a regular Overworld villager, run the normal vanilla belt-buckle layer
+        
         if (type != HpCVillagers.LUNAR_HIGHLANDS.get() && type != HpCVillagers.LUNAR_MARIA.get()) {
             super.render(poseStack, buffer, packedLight, villager, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
             return;

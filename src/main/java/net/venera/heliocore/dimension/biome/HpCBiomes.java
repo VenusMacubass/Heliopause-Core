@@ -20,7 +20,6 @@ public class HpCBiomes {
         var configuredCarvers = context.lookup(Registries.CONFIGURED_CARVER);
         
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
-        
         BiomeGenerationSettings.Builder biomeBuilder = new BiomeGenerationSettings.Builder(placedFeatures, configuredCarvers);
         
         context.register(LUNAR_HIGHLANDS , new Biome.BiomeBuilder()

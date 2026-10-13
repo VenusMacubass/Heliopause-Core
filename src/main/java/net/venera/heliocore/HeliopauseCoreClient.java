@@ -243,7 +243,6 @@ public class HeliopauseCoreClient {
         event.registerBlockEntityRenderer(HpCBlockEntities.MAGNETIC_CRAFTING_TABLE_ENTITY.get(), MagneticCraftingTableRenderer::new);
         event.registerEntityRenderer(EntityType.VILLAGER, context -> new VillagerRenderer(context) {
             {
-                // Remove the vanilla profession layer and replace it with our lunar-aware layer
                 this.layers.removeIf(layer -> layer instanceof VillagerProfessionLayer);
                 this.addLayer(new HpCVillagerProfessionLayer(this, context.getResourceManager(), "villager"));
             }
@@ -603,8 +602,7 @@ public class HeliopauseCoreClient {
     @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
         Map<String, BakedModel> toppingModels = new HashMap<>();
-
-        // Extract the baked topping models we requested in the previous event
+        
         for (String topping : TOPPINGS) {
             for (int slice = 0; slice <= 3; slice++) {
                 ResourceLocation loc = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "block/pizza/topping_" + topping + "_" + slice);
@@ -614,16 +612,13 @@ public class HeliopauseCoreClient {
                 }
             }
         }
-
-        // Loop through all 4 slice states of the physical Pizza block
+        
         for (int slice = 0; slice <= 3; slice++) {
-            // This ModelResourceLocation matches exactly what NeoForge generates for block states
             ModelResourceLocation pizzaBaseLoc = new ModelResourceLocation(
                     ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "default_pizza"), "slices=" + slice);
 
             BakedModel existingModel = event.getModels().get(pizzaBaseLoc);
             if (existingModel != null) {
-                // Replace it with our wrapper!
                 event.getModels().put(pizzaBaseLoc, new PizzaBakedModel(existingModel, toppingModels));
             }
         }
@@ -639,7 +634,7 @@ public class HeliopauseCoreClient {
             if (headArmor.is(HpCTags.Items.T1_PRESSURE_PROTECTORS) || headArmor.is(HpCTags.Items.T2_PRESSURE_PROTECTORS)) {
                 hasMask = false;
             }
-            // Hide the vanilla nose BEFORE the base model renders
+            
             if (hasMask) {
                 model.getHead().getChild("nose").visible = false;
             }
@@ -649,7 +644,6 @@ public class HeliopauseCoreClient {
     @SubscribeEvent
     public static void onPostRenderVillager(RenderLivingEvent.Post<?, ?> event) {
         if (event.getEntity() instanceof Villager villager && event.getRenderer().getModel() instanceof VillagerModel<?> model) {
-            // Unhide the nose immediately AFTER rendering to ensure regular Overworld villagers aren't affected
             model.getHead().getChild("nose").visible = true;
         }
     }

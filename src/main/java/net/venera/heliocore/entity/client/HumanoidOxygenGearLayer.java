@@ -18,7 +18,6 @@ import net.venera.heliocore.item.HpCTags;
 
 public class HumanoidOxygenGearLayer<T extends LivingEntity, M extends HumanoidModel<T>> extends RenderLayer<T, M> {
     private final HumanoidOxygenGear<T> gearModel;
-    // Make sure your texture file is named exactly this and placed in this exact folder!
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(HeliopauseCore.MOD_ID, "textures/entity/oxygen_gear/humanoid_oxygen_gear.png");
 
     public HumanoidOxygenGearLayer(RenderLayerParent<T, M> parentRenderer, EntityModelSet modelSet) {
@@ -34,17 +33,14 @@ public class HumanoidOxygenGearLayer<T extends LivingEntity, M extends HumanoidM
         boolean hasConnectors = !inventory.getStackInSlot(1).isEmpty();
         boolean hasLeftTank = !inventory.getStackInSlot(2).isEmpty();
         boolean hasRightTank = !inventory.getStackInSlot(3).isEmpty();
-
-        // --- NEW: SPACE SUIT HELMET CHECK ---
+        
         var headArmor = entity.getItemBySlot(EquipmentSlot.HEAD);
         boolean hasSpaceHelmet = headArmor.is(HpCTags.Items.T1_PRESSURE_PROTECTORS) ||
                 headArmor.is(HpCTags.Items.T2_PRESSURE_PROTECTORS);
-
-        // If they have the full helmet on, hide the internal oxygen mask
+        
         if (hasSpaceHelmet) {
             hasMask = false;
         }
-        // ------------------------------------
 
         if (!hasMask && !hasConnectors && !hasLeftTank && !hasRightTank) {
             return;

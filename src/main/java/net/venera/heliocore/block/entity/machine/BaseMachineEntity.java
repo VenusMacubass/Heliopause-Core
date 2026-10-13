@@ -17,9 +17,8 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import javax.annotation.Nullable;
 
 public abstract class BaseMachineEntity extends BlockEntity implements MenuProvider {
-    public final ItemStackHandler inventory; //Standard Inventory for all machines
-    
-    public final ContainerData data; //Standard Data Syncing for GUIs
+    public final ItemStackHandler inventory; 
+    public final ContainerData data; 
 
     public BaseMachineEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int slotCount) {
         super(type, pos, state);

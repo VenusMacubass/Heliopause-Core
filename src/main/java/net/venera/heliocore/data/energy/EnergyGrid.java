@@ -15,10 +15,9 @@ public class EnergyGrid {
     private final List<GridPort> outputs = new ArrayList<>();
     
     private final Map<GridPort, Map<GridPort, Integer>> distanceCache = new HashMap<>();
-    
-    private static final int LOSS_PER_BLOCK = 0;
+    private static final double LOSS_PER_BLOCK = 0.005D;
 
-    public EnergyGrid(int id, Set<BlockPos> wires, Set<GridPort> ports, Level level) {
+    public EnergyGrid(int id, Set<BlockPos> wires, Set<GridPort> ports) {
         this.id = id;
         this.wires = wires;
         
@@ -26,10 +25,20 @@ public class EnergyGrid {
             if (port.type() == GridPort.PortType.INPUT) inputs.add(port);
             else if (port.type() == GridPort.PortType.OUTPUT) outputs.add(port);
         }
-        buildDistanceCache(level);
+        buildDistanceCache();
     }
     
-    private void buildDistanceCache(Level level) {
+    private void buildDistanceCache() {
+        if (wires.isEmpty()) {
+            for (GridPort source : outputs) {
+                Map<GridPort, Integer> dists = new HashMap<>();
+                for (GridPort sink : inputs) {
+                    dists.put(sink, 0); 
+                }
+                distanceCache.put(source, dists);
+            }
+            return;
+        }
         for (GridPort source : outputs) {
             Map<GridPort, Integer> distancesForThisSource = new HashMap<>();
             
@@ -66,7 +75,7 @@ public class EnergyGrid {
 
     public void tickEnergy(Level level) {
         if (inputs.isEmpty() || outputs.isEmpty()) return;
-        
+
         Map<GridPort, Integer> supplyMap = new HashMap<>();
         long totalSupply = 0;
 
@@ -81,9 +90,11 @@ public class EnergyGrid {
                 }
             }
         }
-        if (totalSupply == 0) return; 
+        if (totalSupply == 0) return;
 
         Map<GridPort, Integer> demandMap = new HashMap<>();
+        Map<GridPort, Integer> grossCostMap = new HashMap<>();
+        Map<GridPort, Double> lossMultiplierMap = new HashMap<>();
         long totalDemand = 0;
 
         for (GridPort sinkPort : inputs) {
@@ -92,68 +103,86 @@ public class EnergyGrid {
             if (sinkBe instanceof BaseElectricMachineEntity battery && battery.getEnergyStorage() != null) {
                 int space = battery.getEnergyStorage().receiveEnergy(Integer.MAX_VALUE, true);
                 if (space > 0) {
+
+                    int minDistance = Integer.MAX_VALUE;
+                    for (GridPort activeSource : supplyMap.keySet()) {
+                        int dist = distanceCache.getOrDefault(activeSource, Collections.emptyMap()).getOrDefault(sinkPort, Integer.MAX_VALUE);
+                        if (dist < minDistance) {
+                            minDistance = dist;
+                        }
+                    }
+                    
+                    if (minDistance == Integer.MAX_VALUE) minDistance = 0;
+                    double lossMultiplier = minDistance * LOSS_PER_BLOCK;
+                    if (lossMultiplier >= 1.0) continue;
+                    int grossCost = (int) Math.ceil(space / (1.0 - lossMultiplier));
+
                     demandMap.put(sinkPort, space);
-                    totalDemand += space;
+                    grossCostMap.put(sinkPort, grossCost);
+                    lossMultiplierMap.put(sinkPort, lossMultiplier);
+                    totalDemand += grossCost;
                 }
             }
         }
-        if (totalDemand == 0) return; 
-        
+        if (totalDemand == 0) return;
+
         double gridRatio = Math.min(1.0, (double) totalSupply / totalDemand);
         long totalEnergySpentByGrid = 0;
+        long remainingSupply = totalSupply;
 
         for (Map.Entry<GridPort, Integer> entry : demandMap.entrySet()) {
             GridPort sinkPort = entry.getKey();
-            int requested = entry.getValue();
+            int space = entry.getValue();
+            int grossCost = grossCostMap.get(sinkPort);
+            double lossMultiplier = lossMultiplierMap.get(sinkPort);
             
-            int targetReceive = (int) Math.round(requested * gridRatio);
-            if (targetReceive <= 0) continue;
+            int allocatedGross = (int) Math.round(grossCost * gridRatio);
+            if (allocatedGross <= 0) continue;
             
-            int minDistance = Integer.MAX_VALUE;
-            for (GridPort activeSource : supplyMap.keySet()) {
-                int dist = distanceCache.getOrDefault(activeSource, Collections.emptyMap()).getOrDefault(sinkPort, Integer.MAX_VALUE);
-                if (dist < minDistance) {
-                    minDistance = dist;
-                }
+            int loss = (int) Math.round(allocatedGross * lossMultiplier);
+            int targetReceive = allocatedGross - loss;
+            
+            if (targetReceive > space) {
+                int excess = targetReceive - space;
+                targetReceive = space;
+                allocatedGross -= excess;
             }
-            if (minDistance == Integer.MAX_VALUE) minDistance = 0; 
-            
-            int loss = minDistance * LOSS_PER_BLOCK;
-            int costToGrid = targetReceive + loss;
-            
-            if (totalSupply >= costToGrid) {
+            if (targetReceive <= 0) continue;
+
+            if (remainingSupply >= allocatedGross) {
                 BlockEntity sinkBe = level.getBlockEntity(sinkPort.machinePos());
                 if (sinkBe instanceof BaseElectricMachineEntity battery) {
-                    battery.getEnergyStorage().receiveEnergy(targetReceive, false); 
-                    totalSupply -= costToGrid;
-                    totalEnergySpentByGrid += costToGrid;
+                    battery.getEnergyStorage().receiveEnergy(targetReceive, false);
+                    remainingSupply -= allocatedGross;
+                    totalEnergySpentByGrid += allocatedGross;
                 }
             }
         }
-        
+
         if (totalEnergySpentByGrid > 0) {
             long remainingToExtract = totalEnergySpentByGrid;
-            long initialTotalSupply = supplyMap.values().stream().mapToLong(i -> i).sum();
+            long remainingSupplyPool = totalSupply;
 
             for (Map.Entry<GridPort, Integer> entry : supplyMap.entrySet()) {
                 if (remainingToExtract <= 0) break;
 
                 GridPort sourcePort = entry.getKey();
                 int maxAvailable = entry.getValue();
-                
-                double supplyRatio = (double) maxAvailable / initialTotalSupply;
-                int extractAmount = (int) Math.round(totalEnergySpentByGrid * supplyRatio);
-                
+
+                double dynamicRatio = (double) maxAvailable / remainingSupplyPool;
+                int extractAmount = (int) Math.round(remainingToExtract * dynamicRatio);
+
                 extractAmount = (int) Math.min(extractAmount, remainingToExtract);
                 extractAmount = Math.min(extractAmount, maxAvailable);
 
                 if (extractAmount > 0) {
                     BlockEntity sourceBe = level.getBlockEntity(sourcePort.machinePos());
                     if (sourceBe instanceof BaseElectricMachineEntity generator) {
-                        generator.getEnergyStorage().extractEnergy(extractAmount, false); 
+                        generator.getEnergyStorage().extractEnergy(extractAmount, false);
                         remainingToExtract -= extractAmount;
                     }
                 }
+                remainingSupplyPool -= maxAvailable;
             }
         }
     }

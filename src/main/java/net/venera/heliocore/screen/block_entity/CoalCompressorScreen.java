@@ -35,7 +35,6 @@ public class CoalCompressorScreen extends AbstractContainerScreen<CoalCompressor
         if (progressWidth > 0){
             //guiGraphics.blit(SOURCE_GUI, whereToDrawX, whereToDrawY, textureX, textureY, textureW, textureH);
             guiGraphics.blit(PROGRESS_ARROW, x + 85, y + 35, 0, 0, progressWidth, 15, 33, 15);
-            //guiGraphics.blit(COAL_COMPRESSOR_GUI, x + 101, y + 29, 176, 0, (progressWidth > 23 ? progressWidth - 23 : 0), 13);
         }
         
         if(menu.getActivation() && menu.getCompression()){

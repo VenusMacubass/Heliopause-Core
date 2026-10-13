@@ -1,4 +1,4 @@
-// 1.21.1	2026-09-30T01:13:50.1757279	Registries
+// 1.21.1	2026-10-13T13:10:36.0143567	Registries
 8bc25e86fc4e155a7d31c7733f9635befea3399e data/heliocore/dimension/moon.json
 5c3ab2456f3347149c033961f5e622ea563ef7ed data/heliocore/dimension_type/moon.json
 b1557ee736b85234ad2fda7d2e3c6710150509a9 data/heliocore/neoforge/biome_modifier/add_aluminium_ore.json
@@ -57,8 +57,8 @@ ff5c71f7737cb5d74b6cfdc42f1f384555b1cc3d data/heliocore/worldgen/template_pool/m
 878fcb1cc94a38c2cad09f825fa075b65563d6f4 data/heliocore/worldgen/template_pool/moon_village/houses.json
 22d07c67e5cb0ffb6020ba8fb16fa7ad35a84c93 data/heliocore/worldgen/template_pool/moon_village/paddocks.json
 9272062936e2f93e7344de5454b5822e9ec2f157 data/heliocore/worldgen/template_pool/moon_village/pathways.json
-8b74cd65deaa5b3ff64346a55ad63dfea9ab0811 data/heliocore/worldgen/template_pool/moon_village/road_turns.json
+84408294e2f386118438e83b743d23123b2e1cee data/heliocore/worldgen/template_pool/moon_village/road_turns.json
 52f65ee52f3093b9b629e2077dae4946fb6995a9 data/heliocore/worldgen/template_pool/moon_village/solar_fields.json
 475ed830e61b433f9ac8877b7ca757a445e8b4d4 data/heliocore/worldgen/template_pool/moon_village/start.json
-f146ce8589e33b864573b3bbff15d8b270e98547 data/heliocore/worldgen/template_pool/moon_village/streets.json
-c740359a3e3b1c0d6438a10c1b4117d878d615e9 data/heliocore/worldgen/template_pool/moon_village/street_terminators.json
+556ae67f00d016a1a77824319409d13668101213 data/heliocore/worldgen/template_pool/moon_village/streets.json
+c740359a3e3b1c0d6438a10c1b4117d878d615e9 data/heliocore/worldgen/template_pool/moon_village/street_ends.json

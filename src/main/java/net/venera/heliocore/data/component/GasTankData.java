@@ -9,7 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.Fluid;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.item.hpc_custom.GasTankItem;
-
 import javax.annotation.Nullable;
 
 public record GasTankData(@Nullable ResourceLocation fluidId, int amount) {
@@ -23,17 +22,17 @@ public record GasTankData(@Nullable ResourceLocation fluidId, int amount) {
 
     public static final StreamCodec<RegistryFriendlyByteBuf, GasTankData> STREAM_CODEC =
             StreamCodec.of(
-                    (buf, data) -> { // encoder: write data into the buffer
-                        if (data.fluidId() == null) { // write nullable ResourceLocation manually
+                    (buf, data) -> { 
+                        if (data.fluidId() == null) { 
                             buf.writeBoolean(false);
                         } else {
                             buf.writeBoolean(true);
                             buf.writeResourceLocation(data.fluidId());
                         }
-                        buf.writeVarInt(data.amount()); //write amount as variant
+                        buf.writeVarInt(data.amount()); 
                     },
 
-                    buf -> { // decoder: read data back from buffer
+                    buf -> { 
                         ResourceLocation fluid = null;
                         if (buf.readBoolean()) {
                             fluid = buf.readResourceLocation();

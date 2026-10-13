@@ -6,7 +6,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
 public class ServerConfigHubScreen extends Screen {
-    private final Screen parent; // This will be HpCMainConfigScreen
+    private final Screen parent; 
 
     public ServerConfigHubScreen(Screen parent) {
         super(Component.literal("Server Settings"));
@@ -19,12 +19,10 @@ public class ServerConfigHubScreen extends Screen {
         int centerX = this.width / 2;
         int startY = 60;
 
-        // Add to this list as you make more server features!
         this.addRenderableWidget(Button.builder(Component.literal("Life Support Systems"), btn -> {
             this.minecraft.setScreen(new LifeSupportSettingsScreen(this));
         }).bounds(centerX - 100, startY, 200, 20).build());
-
-        // Back Button
+        
         this.addRenderableWidget(Button.builder(Component.literal("Back"), btn -> {
             this.onClose();
         }).bounds(centerX - 100, this.height - 40, 200, 20).build());

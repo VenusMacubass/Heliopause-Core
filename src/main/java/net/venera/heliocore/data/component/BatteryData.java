@@ -8,9 +8,9 @@ import net.minecraft.network.codec.StreamCodec;
 
 public record BatteryData(int energy, int capacity) {
     public BatteryData {
-        if (capacity < 0) capacity = 0;             // Prevent negative capacity
-        if (energy < 0) energy = 0;                 // Prevent negative energy
-        if (energy > capacity) energy = capacity;   // Prevent overfill
+        if (capacity < 0) capacity = 0;             
+        if (energy < 0) energy = 0;                 
+        if (energy > capacity) energy = capacity;   
     }
 
     public static final Codec<BatteryData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -19,9 +19,9 @@ public record BatteryData(int energy, int capacity) {
     ).apply(instance, BatteryData::new));
     
     public static final StreamCodec<ByteBuf, BatteryData> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.INT, BatteryData::energy,    // First Int
-            ByteBufCodecs.INT, BatteryData::capacity,  // Second Int
-            BatteryData::new                           // Factory
+            ByteBufCodecs.INT, BatteryData::energy,    
+            ByteBufCodecs.INT, BatteryData::capacity,  
+            BatteryData::new                          
     );
 
     public int getEnergy(){return energy;}

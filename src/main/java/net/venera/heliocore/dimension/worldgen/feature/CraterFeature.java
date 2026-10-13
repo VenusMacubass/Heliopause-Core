@@ -3,6 +3,8 @@ package net.venera.heliocore.dimension.worldgen.feature;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -22,12 +24,10 @@ public class CraterFeature extends Feature<CraterConfig> {
         RandomSource random = context.random();
 
         CraterConfig config = context.config();
-
-        // === START DIFFERENCE: Structure Avoidance ===
-        net.minecraft.world.level.StructureManager structureManager = level.getLevel().structureManager();
+        
+        StructureManager structureManager = level.getLevel().structureManager();
         int maxRadius = config.maxRadius();
-
-        // We check the center, plus the 4 furthest edges of the crater's blast zone
+        
         BlockPos[] checkPoints = {
                 origin,
                 origin.offset(maxRadius, 0, 0),
@@ -37,13 +37,11 @@ public class CraterFeature extends Feature<CraterConfig> {
         };
 
         for (BlockPos pos : checkPoints) {
-            // If any of these points touch a village's bounding box, abort the crater entirely!
             if (structureManager.hasAnyStructureAt(pos)) {
                 return false;
             }
         }
-        // === END DIFFERENCE ===
-
+       
         if (level.isEmptyBlock(origin.below())) {
             return false;
         }
@@ -52,26 +50,33 @@ public class CraterFeature extends Feature<CraterConfig> {
         double squish = config.squish();
         boolean placedAny = false;
         
+        int originChunkX = origin.getX() >> 4;
+        int originChunkZ = origin.getZ() >> 4;
+
         for (int x = -radius; x <= radius; x++) {
             for (int z = -radius; z <= radius; z++) {
 
                 int worldX = origin.getX() + x;
                 int worldZ = origin.getZ() + z;
+
+                int targetChunkX = worldX >> 4;
+                int targetChunkZ = worldZ >> 4;
                 
+                if (Math.abs(originChunkX - targetChunkX) > 1 || Math.abs(originChunkZ - targetChunkZ) > 1) {
+                    continue;
+                }
+
                 int surfaceY = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, worldX, worldZ) - 2;
 
                 double distance2D = Math.sqrt(x * x + z * z);
-                
                 if (distance2D > radius) {
                     continue;
                 }
-                
+
                 double bowlDepth = -Math.sqrt(radius * radius - distance2D * distance2D) / squish;
-                
                 int floorY = origin.getY() + (int) Math.round(bowlDepth);
-                
                 int actualFloorY = Math.min(floorY, surfaceY);
-                
+
                 BlockPos turfPos = new BlockPos(worldX, actualFloorY, worldZ);
                 BlockPos dirtPos = new BlockPos(worldX, actualFloorY - 1, worldZ);
                 BlockPos rockPos = new BlockPos(worldX, actualFloorY - 2, worldZ);
@@ -89,18 +94,18 @@ public class CraterFeature extends Feature<CraterConfig> {
                         level.setBlock(turfPos, HpCBlocks.MOON_REGOLITH.get().defaultBlockState(), 2);
                         level.setBlock(dirtPos, HpCBlocks.MOON_DIRT.get().defaultBlockState(), 2);
                     }
-                    
+
                     level.setBlock(rockPos, HpCBlocks.MOON_ROCK.get().defaultBlockState(), 2);
                     placedAny = true;
                 }
-                
+
                 for (int y = actualFloorY - 3; y >= actualFloorY - 5; y--) {
                     BlockPos cavePos = new BlockPos(worldX, y, worldZ);
                     if (level.isEmptyBlock(cavePos)) {
                         level.setBlock(cavePos, HpCBlocks.MOON_ROCK.get().defaultBlockState(), 2);
                     }
                 }
-                
+
                 for (int y = actualFloorY + 1; y <= surfaceY + 2; y++) {
                     BlockPos airPos = new BlockPos(worldX, y, worldZ);
                     if (!level.isEmptyBlock(airPos)) {

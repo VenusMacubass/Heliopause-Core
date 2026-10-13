@@ -42,8 +42,6 @@ public class OpenAirlockGoal extends Goal {
                     BlockPos overheadPos = mobPos.offset(x, y, z);
                     if (level.getBlockState(overheadPos).is(HpCBlocks.AIRLOCK_FRAME_SWITCH.get())) {
                         BlockState switchState = level.getBlockState(overheadPos);
-
-                        // Only take control if the switch is currently ACTIVE (open)
                         if (switchState.getBlock() instanceof AirlockFrameSwitch && switchState.getValue(AirlockFrameSwitch.ACTIVE)) {
                             this.doorPos = mobPos;
                             this.switchPos = overheadPos;

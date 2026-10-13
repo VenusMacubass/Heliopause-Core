@@ -34,8 +34,7 @@ public class VillagerOxygenGear<T extends Entity> extends VillagerModel<T> {
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
-
-		// 1. Standard Villager Skeleton Bones Required by Minecraft
+		
 		PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.ZERO);
 		PartDefinition hat = head.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
 		hat.addOrReplaceChild("hat_rim", CubeListBuilder.create(), PartPose.ZERO);
@@ -47,32 +46,26 @@ public class VillagerOxygenGear<T extends Entity> extends VillagerModel<T> {
 		partdefinition.addOrReplaceChild("arms", CubeListBuilder.create(), PartPose.offset(0.0F, 2.95F, -1.05F));
 		partdefinition.addOrReplaceChild("right_leg", CubeListBuilder.create(), PartPose.offset(-2.0F, 12.0F, 0.0F));
 		partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create(), PartPose.offset(2.0F, 12.0F, 0.0F));
-
-		// 2. Individual Gear Components
-		// Mask (from Blockbench 'headwear')
+		
 		head.addOrReplaceChild("mask", CubeListBuilder.create()
 						.texOffs(28, 0).addBox(-4.0F, -10.0F, -6.0F, 8.0F, 10.0F, 10.0F, new CubeDeformation(0.51F)),
 				PartPose.ZERO);
-
-		// Shortened Nose
+		
 		head.addOrReplaceChild("short_nose", CubeListBuilder.create()
 						.texOffs(24, 0).addBox(-1.0F, -1.0F, -6.0F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.0F)),
 				PartPose.offset(0.0F, -2.0F, 0.0F));
-
-		// Connectors (from Blockbench 'body')
+		
 		body.addOrReplaceChild("connectors", CubeListBuilder.create()
 						.texOffs(16, 6).addBox(-1.0F, 0.0F, 3.0F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
 						.texOffs(2, 6).addBox(-3.0F, 1.0F, 3.0F, 6.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
 						.texOffs(17, 4).addBox(2.0F, 1.0F, 4.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
 						.texOffs(17, 4).addBox(-3.0F, 1.0F, 4.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
 				PartPose.ZERO);
-
-		// Left Tank
+		
 		body.addOrReplaceChild("left_tank", CubeListBuilder.create()
 						.texOffs(11, 8).addBox(0.0F, 2.0F, 3.0F, 4.0F, 8.0F, 4.0F, new CubeDeformation(0.0F)),
 				PartPose.ZERO);
-
-		// Right Tank
+		
 		body.addOrReplaceChild("right_tank", CubeListBuilder.create()
 						.texOffs(11, 8).addBox(-4.0F, 2.0F, 3.0F, 4.0F, 8.0F, 4.0F, new CubeDeformation(0.0F)),
 				PartPose.ZERO);

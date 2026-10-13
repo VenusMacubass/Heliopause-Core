@@ -64,7 +64,6 @@ public class GasVaporizerEntity extends BaseElectricMachineEntity implements IFl
             ResourceLocation id = BuiltInRegistries.FLUID.getKey(stack.getFluid());
             return stack.getFluid().getFluidType().getDensity() < 0 && id.getPath().endsWith("_gas");
         }
-
     };
 
     public final FluidTank liquidTank = new FluidTank(maxCapacity/2) {
@@ -166,7 +165,7 @@ public class GasVaporizerEntity extends BaseElectricMachineEntity implements IFl
         }
         
         if (conversionScore > 0) {
-            Fluid targetGas = net.minecraft.world.level.material.Fluids.EMPTY;
+            Fluid targetGas = Fluids.EMPTY;
             
             if (!gasTank.isEmpty()) {
                 targetGas = gasTank.getFluid().getFluid();
@@ -178,13 +177,13 @@ public class GasVaporizerEntity extends BaseElectricMachineEntity implements IFl
                     ResourceLocation gasId = ResourceLocation.fromNamespaceAndPath(liquidId.getNamespace(), gasName);
                     Fluid mappedGas = BuiltInRegistries.FLUID.get(gasId);
 
-                    if (mappedGas != null && mappedGas != net.minecraft.world.level.material.Fluids.EMPTY) {
+                    if (mappedGas != null && mappedGas != Fluids.EMPTY) {
                         targetGas = mappedGas;
                     }
                 }
             }
             
-            if (targetGas != net.minecraft.world.level.material.Fluids.EMPTY) {
+            if (targetGas != Fluids.EMPTY) {
                 int gasToPush = Math.min(conversionScore, CONVERSION_RATE);
                 int accepted = gasTank.fill(new FluidStack(targetGas, gasToPush), IFluidHandler.FluidAction.EXECUTE);
 

@@ -38,14 +38,12 @@ public class PCBFabricatorEntity extends BaseElectricMachineEntity{
     private final int[] INPUT_SLOTS = {0,1,2,3,4,5};
     private final int OUTPUT_SLOT = 6;
     private final int BATTERY_SLOT = 7;
-    private final int energyTransferRate;
     private final int ENERGY_USAGE;
     public boolean isActive = false;
     private int progress = 0;
     private int maxProgress = 400;
     public PCBFabricatorEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int energyCapacity, int energyTransferRate, int energyUsage) {
         super(type, pos, blockState, 11, energyCapacity, energyTransferRate, 0);
-        this.energyTransferRate = energyTransferRate;
         this.ENERGY_USAGE = energyUsage;
     }
 

@@ -23,10 +23,9 @@ public class HpCDebugStickItem extends Item {
             serverPlayer.openMenu(new SimpleMenuProvider(
                     (id, playerInv, p) -> new HpCEquipmentMenu(id, playerInv, interactionTarget),
                     Component.literal("Entity Gear Debug")
-            ), buf -> buf.writeInt(interactionTarget.getId())); // Pass the target's ID to the client buffer
+            ), buf -> buf.writeInt(interactionTarget.getId())); 
 
         }
-        // Return success so the hand swings and the game knows an action occurred
         return InteractionResult.sidedSuccess(player.level().isClientSide());
     }
 }

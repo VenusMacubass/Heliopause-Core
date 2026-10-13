@@ -20,8 +20,7 @@ public class Tier1RocketLanderModel<T extends Entity> extends EntityModel<T> {
 	private final ModelPart legs_nw;
 	private final ModelPart engine;
 	private final ModelPart bb_main;
-
-
+	
 	public Tier1RocketLanderModel(ModelPart root) {
 		this.walls = root.getChild("walls");
 		this.legs_sw = root.getChild("legs_sw");

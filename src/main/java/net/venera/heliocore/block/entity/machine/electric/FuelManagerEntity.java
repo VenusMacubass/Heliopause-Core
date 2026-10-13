@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -249,7 +250,7 @@ public class FuelManagerEntity extends BaseElectricMachineEntity implements IFlu
         ResourceLocation fluidLocation = ResourceLocation.parse(fluidType);
         Fluid resolvedFluid = BuiltInRegistries.FLUID.get(fluidLocation);
 
-        if (resolvedFluid != null && resolvedFluid != net.minecraft.world.level.material.Fluids.EMPTY) {
+        if (resolvedFluid != null && resolvedFluid != Fluids.EMPTY) {
             FluidStack newStack = new FluidStack(resolvedFluid, amount);
 
             if (fuelTank.isFluidValid(newStack)) {

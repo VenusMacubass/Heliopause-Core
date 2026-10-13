@@ -101,7 +101,7 @@ public class MagneticAssemblyPlatformEntity extends BaseMachineEntity{
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("block.minecraft.magnetic_assembly_platform");
+        return Component.translatable("block.heliocore.magnetic_assembly_platform");
     }
 
     @Override

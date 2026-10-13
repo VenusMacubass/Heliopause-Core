@@ -16,26 +16,8 @@ import net.venera.heliocore.item.HpCItems;
 import net.venera.heliocore.recipe.HpCRecipes;
 
 public class CannedStewRecipe extends CustomRecipe {
-
     public CannedStewRecipe(CraftingBookCategory category) {
         super(category);
-    }
-
-    // Helper 1: Check if the item is ANY of the valid vanilla stews/soups
-    private boolean isStew(ItemStack stack) {
-        return stack.is(Items.SUSPICIOUS_STEW) ||
-                stack.is(Items.MUSHROOM_STEW) ||
-                stack.is(Items.RABBIT_STEW) ||
-                stack.is(Items.BEETROOT_SOUP);
-    }
-
-    // Helper 2: Map the vanilla stew to your corresponding canned version
-    private Item getResultingCan(Item stewItem) {
-        if (stewItem == Items.SUSPICIOUS_STEW) return HpCItems.CANNED_SUSPICIOUS_STEW.get();
-        if (stewItem == Items.MUSHROOM_STEW) return HpCItems.CANNED_MUSHROOM_STEW.get();
-        if (stewItem == Items.RABBIT_STEW) return HpCItems.CANNED_RABBIT_STEW.get();
-        if (stewItem == Items.BEETROOT_SOUP) return HpCItems.CANNED_BEETROOT_SOUP.get();
-        return net.minecraft.world.item.Items.AIR; // Fallback
     }
 
     @Override
@@ -46,7 +28,6 @@ public class CannedStewRecipe extends CustomRecipe {
         for (int i = 0; i < input.size(); i++) {
             ItemStack stack = input.getItem(i);
             if (!stack.isEmpty()) {
-                // Now uses the isStew() helper instead of hardcoding Suspicious Stew
                 if (isStew(stack) && !hasStew) {
                     hasStew = true;
                 } else if (stack.is(HpCItems.EMPTY_CAN.get()) && !hasCan) {
@@ -72,12 +53,10 @@ public class CannedStewRecipe extends CustomRecipe {
         }
 
         if (stewIngredient.isEmpty()) return ItemStack.EMPTY;
-
-        // Dynamically get the right can based on the ingredient
+        
         Item resultingItem = getResultingCan(stewIngredient.getItem());
         ItemStack result = new ItemStack(resultingItem);
-
-        // ONLY attempt to transfer effects if the ingredient was actually a Suspicious Stew
+        
         if (stewIngredient.is(Items.SUSPICIOUS_STEW)) {
             if (stewIngredient.has(DataComponents.SUSPICIOUS_STEW_EFFECTS)) {
                 var effects = stewIngredient.get(DataComponents.SUSPICIOUS_STEW_EFFECTS);
@@ -88,13 +67,27 @@ public class CannedStewRecipe extends CustomRecipe {
         return result;
     }
 
+    private boolean isStew(ItemStack stack) {
+        return stack.is(Items.SUSPICIOUS_STEW) ||
+                stack.is(Items.MUSHROOM_STEW) ||
+                stack.is(Items.RABBIT_STEW) ||
+                stack.is(Items.BEETROOT_SOUP);
+    }
+
+    private Item getResultingCan(Item stewItem) {
+        if (stewItem == Items.SUSPICIOUS_STEW) return HpCItems.CANNED_SUSPICIOUS_STEW.get();
+        if (stewItem == Items.MUSHROOM_STEW) return HpCItems.CANNED_MUSHROOM_STEW.get();
+        if (stewItem == Items.RABBIT_STEW) return HpCItems.CANNED_RABBIT_STEW.get();
+        if (stewItem == Items.BEETROOT_SOUP) return HpCItems.CANNED_BEETROOT_SOUP.get();
+        return net.minecraft.world.item.Items.AIR; //Fallback
+    }
+
     @Override
     public NonNullList<ItemStack> getRemainingItems(CraftingInput input) {
         NonNullList<ItemStack> remainders = super.getRemainingItems(input);
 
         for (int i = 0; i < input.size(); i++) {
             ItemStack stack = input.getItem(i);
-            // Returns a bowl for ANY stew found in the grid
             if (isStew(stack)) {
                 remainders.set(i, new ItemStack(Items.BOWL));
             }

@@ -20,11 +20,9 @@ import javax.annotation.Nullable;
 public class EnergyStorageEntity extends BaseElectricMachineEntity {
     private final int INPUT_SLOT = 0;
     private final int OUTPUT_SLOT = 1;
-    private final int energyTransferRate;
 
     public EnergyStorageEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int energyCapacity, int energyTransferRate) {
         super(type, pos, blockState, 2, energyCapacity, energyTransferRate, energyTransferRate);
-        this.energyTransferRate = energyTransferRate;
     }
 
     @Override
@@ -52,9 +50,7 @@ public class EnergyStorageEntity extends BaseElectricMachineEntity {
     private void processOutputBattery() {
         ItemStack stack = inventory.getStackInSlot(OUTPUT_SLOT);
         if (stack.getItem() instanceof BatteryItem batteryItem) {
-
             int energyAvailable = energyStorage.extractEnergy(Integer.MAX_VALUE, true);
-
             int acceptedByBattery = batteryItem.receiveEnergy(stack, energyAvailable, true);
 
             if (acceptedByBattery > 0) {

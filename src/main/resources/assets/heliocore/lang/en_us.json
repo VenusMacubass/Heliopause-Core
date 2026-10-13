@@ -261,12 +261,13 @@
   "key.heliocore.vehicle_inventory": "Vehicle Inventory Key",
 
   "tooltip.heliocore.pizza_toppings": "Toppings:",
-  "tooltip.heliocore.topping.chicken": "- Chicken",
-  "tooltip.heliocore.topping.meat": "- Meat",
-  "tooltip.heliocore.topping.mushroom": "- Mushroom",
-  "tooltip.heliocore.topping.fish": "- Fish",
-  "tooltip.heliocore.topping.veggies": "- Veggies",
+  "tooltip.heliocore.topping.chicken": "Chicken",
+  "tooltip.heliocore.topping.meat": "Meat",
+  "tooltip.heliocore.topping.mushroom": "Mushroom",
+  "tooltip.heliocore.topping.fish": "Fish",
+  "tooltip.heliocore.topping.veggies": "Veggies",
 
+  "tooltip.heliocore.press_jump_button": "Press the jump button to slow down!",
 
   "entity.minecraft.villager.heliocore.whitesmith": "Whitesmith"
 }

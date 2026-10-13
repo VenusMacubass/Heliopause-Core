@@ -25,7 +25,6 @@ public class CargoManagerEntity extends BaseElectricMachineEntity implements Mac
     private final int[] INPUT_SLOTS = {0, 1, 2, 3, 4, 5, 6, 7, 8};
     private final int[] OUTPUT_SLOTS = {9, 10, 11, 12, 13, 14, 15, 16, 17};
     private final int BATTERY_SLOT = 18;
-    private final int tierTransferRate;
     private final int ENERGY_USAGE;
     public boolean isActive = false;
     public boolean isLoading = false;
@@ -33,7 +32,6 @@ public class CargoManagerEntity extends BaseElectricMachineEntity implements Mac
     private final int frequency = 5; 
     public CargoManagerEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int energyCapacity, int energyTransferRate, int energyUsage) {
         super(type, pos, blockState, 19, energyCapacity, energyTransferRate, 0);
-        this.tierTransferRate = energyTransferRate;
         this.ENERGY_USAGE = energyUsage;
     }
 
@@ -99,9 +97,9 @@ public class CargoManagerEntity extends BaseElectricMachineEntity implements Mac
             ItemStack extracted = inventory.extractItem(i, 1, true);
             if (extracted.isEmpty()) continue; 
             
-            ItemStack leftover = ItemHandlerHelper.insertItem(rocketEntity.inventory, extracted, true);
+            ItemStack inserted = ItemHandlerHelper.insertItem(rocketEntity.inventory, extracted, true);
             
-            if (leftover.isEmpty()) {
+            if (inserted.isEmpty()) {
                 inventory.extractItem(i, 1, false); 
                 ItemHandlerHelper.insertItem(rocketEntity.inventory, extracted, false); 
                 
@@ -117,9 +115,9 @@ public class CargoManagerEntity extends BaseElectricMachineEntity implements Mac
             if (extracted.isEmpty()) continue;
             
             for (int outSlot : OUTPUT_SLOTS) {
-                ItemStack leftover = inventory.insertItem(outSlot, extracted, true);
+                ItemStack inserted = inventory.insertItem(outSlot, extracted, true);
                 
-                if (leftover.isEmpty()) {
+                if (inserted.isEmpty()) {
                     rocketEntity.inventory.extractItem(i, 1, false);
                     inventory.insertItem(outSlot, extracted, false); 
                     

@@ -1,5 +1,6 @@
 package net.venera.heliocore.screen.hud;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -27,25 +28,30 @@ public class LanderHudOverlay implements LayeredDraw.Layer {
             
             int color;
             if (yVelocity <= -6.0D) {
-                color = 0xFF5555; // Red 
+                color = 0xFF5555; //Red 
             } else if (yVelocity <= -1.8D) {
-                color = 0xFFFF55; // Yellow 
+                color = 0xFFFF55; //Yellow 
             } else {
-                color = 0x55FF55; // Green
+                color = 0x55FF55; //Green
             }
 
             Font font = mc.font;
 
+            Component warningText = Component.translatable("tooltip.heliocore.press_jump_button",
+                    Component.keybind("key.jump").withStyle(ChatFormatting.RED)
+            );
+            
             String formattedSpeed = String.format("%.1f", speedMps);
-            Component text = Component.translatable("hud.heliocore.lander_descent_speed", formattedSpeed);
+            Component speedText = Component.translatable("hud.heliocore.lander_descent_speed", formattedSpeed);
 
             int screenWidth = guiGraphics.guiWidth();
             int screenHeight = guiGraphics.guiHeight();
             
-            int x = (screenWidth - font.width(text)) / 2;
+            int x = (screenWidth - font.width(speedText)) / 2;
             int y = screenHeight / 2 + 40;
-            
-            guiGraphics.drawString(font, text, x, y, color, true);
+
+            guiGraphics.drawString(font, warningText, x-20, y-50, color, true);
+            guiGraphics.drawString(font, speedText, x, y, color, true);
         }
     }
 }

@@ -9,6 +9,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.venera.heliocore.HeliopauseConfig;
 
+import java.util.Locale;
 import java.util.function.Consumer;
 
 public class LifeSupportSettingsScreen extends Screen {
@@ -23,29 +24,25 @@ public class LifeSupportSettingsScreen extends Screen {
     protected void init() {
         super.init();
         int centerX = this.width / 2;
-
-        // Slider for Max Chamber Volume (100 to 50000)
+        
         addSliderAndInput("Max Chamber Volume", centerX, 70,
                 HeliopauseConfig.MAX_CHAMBER_VOLUME.get().floatValue(), 100f, 50000f,
                 val -> HeliopauseConfig.MAX_CHAMBER_VOLUME.set(val.intValue()));
-
-        // Reset Defaults Button
+        
         this.addRenderableWidget(Button.builder(Component.literal("Reset Defaults"), btn -> {
-            HeliopauseConfig.MAX_CHAMBER_VOLUME.set(2000);
+            HeliopauseConfig.MAX_CHAMBER_VOLUME.set(10000);
             this.minecraft.setScreen(new LifeSupportSettingsScreen(this.parent));
         }).bounds(centerX - 100, 110, 200, 20).build());
-
-        // Done Button to exit back to Main Hub
+        
         this.addRenderableWidget(Button.builder(Component.literal("Done"), btn -> {
             this.onClose();
         }).bounds(centerX - 100, this.height - 40, 200, 20).build());
     }
-
-    // Identical helper method from your HUD screen
+    
     private void addSliderAndInput(String name, int centerX, int y, float currentValue, float min, float max, Consumer<Float> onSave) {
         boolean isScale = max < 100;
         EditBox editBox = new EditBox(this.font, centerX + 50, y, 70, 20, Component.literal(name));
-        editBox.setValue(isScale ? String.format(java.util.Locale.US, "%.2f", currentValue) : String.valueOf((int) currentValue));
+        editBox.setValue(isScale ? String.format(Locale.US, "%.2f", currentValue) : String.valueOf((int) currentValue));
 
         class CustomSlider extends AbstractSliderButton {
             public CustomSlider(int x, int y, int width, int height, Component message, double value) {
@@ -56,7 +53,7 @@ public class LifeSupportSettingsScreen extends Screen {
             @Override
             protected void applyValue() {
                 float val = Mth.lerp((float) this.value, min, max);
-                editBox.setValue(isScale ? String.format(java.util.Locale.US, "%.2f", val) : String.valueOf((int) val));
+                editBox.setValue(isScale ? String.format(Locale.US, "%.2f", val) : String.valueOf((int) val));
                 onSave.accept(val);
             }
             public void updateVisuals(double newValue) {

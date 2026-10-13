@@ -22,29 +22,26 @@ public class PizzaRecipe extends CustomRecipe {
     public boolean matches(CraftingInput inv, Level level) {
         ItemStack pizzaStack = ItemStack.EMPTY;
         int proposedToppings = 0;
-        // First pass: find the pizza and collect proposed toppings
         for (int i = 0; i < inv.size(); i++) {
             ItemStack stack = inv.getItem(i);
             if (!stack.isEmpty()) {
                 if (stack.is(HpCBlocks.DEFAULT_PIZZA.get().asItem())) {
-                    if (!pizzaStack.isEmpty()) return false; // Only one pizza allowed
+                    if (!pizzaStack.isEmpty()) return false; 
                     pizzaStack = stack;
                 } else {
                     int bit = getToppingBit(stack.getItem());
                     if (bit > 0) {
-                        // Reject if they put two of the SAME topping in the crafting grid
                         if ((proposedToppings & bit) != 0) return false;
                         proposedToppings |= bit;
                     } else {
-                        return false; // Reject non-topping items
+                        return false; 
                     }
                 }
             }
         }
 
         if (pizzaStack.isEmpty() || proposedToppings == 0) return false;
-
-        // Reject if the pizza ALREADY has one of the proposed toppings on it
+        
         Integer existingMask = pizzaStack.get(HpCDataComponents.PIZZA_TOPPINGS.get());
         int currentMask = (existingMask != null) ? existingMask : 0;
 
@@ -55,22 +52,19 @@ public class PizzaRecipe extends CustomRecipe {
     public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
         ItemStack pizzaStack = ItemStack.EMPTY;
         int currentMask = 0;
-
-        // Find the pizza and calculate the new toppings
+        
         for (int i = 0; i < inv.size(); i++) {
             ItemStack stack = inv.getItem(i);
             if (!stack.isEmpty()) {
                 if (stack.is(HpCBlocks.DEFAULT_PIZZA.get().asItem())) {
                     pizzaStack = stack.copy();
                     pizzaStack.setCount(1);
-
-                    // Read existing toppings so players can add more later
+                    
                     Integer existingMask = pizzaStack.get(HpCDataComponents.PIZZA_TOPPINGS.get());
                     if (existingMask != null) {
                         currentMask |= existingMask;
                     }
                 } else {
-                    // Add the new topping using bitwise OR
                     currentMask |= getToppingBit(stack.getItem());
                 }
             }
@@ -85,7 +79,7 @@ public class PizzaRecipe extends CustomRecipe {
 
     @Override
     public boolean canCraftInDimensions(int width, int height) {
-        return width * height >= 2; // Needs at least 2 slots (Pizza + 1 Topping)
+        return width * height >= 2; 
     }
 
     @Override

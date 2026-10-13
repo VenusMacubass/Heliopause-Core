@@ -704,8 +704,6 @@ public class HpCEvents {
             villager.goalSelector.addGoal(2, new OpenAirlockGoal(villager));
             villager.goalSelector.addGoal(4, new RefillOxygenGoal(villager, 1, 48));
 
-            // If the villager is in a vacuum dimension but still has a vanilla Overworld skin (e.g. Plains from a Structure Block),
-            // automatically assign the skin matching the lunar biome at its current position.
             VillagerType currentType = villager.getVillagerData().getType();
             if (OxygenVolumeHelper.isVacuumDimension(event.getLevel())
                     && currentType != HpCVillagers.LUNAR_HIGHLANDS.get()

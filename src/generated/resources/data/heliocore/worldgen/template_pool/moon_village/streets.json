@@ -23,5 +23,5 @@
       "weight": 2
     }
   ],
-  "fallback": "heliocore:moon_village/street_terminators"
+  "fallback": "heliocore:moon_village/street_ends"
 }

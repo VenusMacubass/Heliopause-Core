@@ -22,10 +22,8 @@ import net.venera.heliocore.util.MachineConfigHelper;
 
 public abstract class BaseElectricMachineEntity extends BaseMachineEntity {
     protected final MachineEnergyStorage energyStorage;
-    public BaseElectricMachineEntity(BlockEntityType<?> type, BlockPos pos, BlockState state,
-                                     int slotCount, int energyCapacity, int energyInputRate, int energyOutputRate) {
+    public BaseElectricMachineEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int slotCount, int energyCapacity, int energyInputRate, int energyOutputRate) {
         super(type, pos, state, slotCount);
-        
         
         this.energyStorage = new MachineEnergyStorage(this, energyCapacity, energyInputRate, energyOutputRate) {
             @Override
@@ -64,11 +62,9 @@ public abstract class BaseElectricMachineEntity extends BaseMachineEntity {
         }
     }
     
-    //--- SHARED HELPER METHODS ---//
     protected boolean processBatterySlot(int slotIndex) {
         ItemStack batteryStack = inventory.getStackInSlot(slotIndex);
         if (batteryStack.getItem() instanceof BatteryItem batteryItem) {
-            // 2. Updated to calculate space manually so generators with 0 maxReceive can still use internal batteries
             int spaceInMachine = energyStorage.getMaxEnergyStored() - energyStorage.getEnergyStored();
             int toTransfer = batteryItem.extractEnergy(batteryStack, spaceInMachine, true);
 
@@ -91,7 +87,6 @@ public abstract class BaseElectricMachineEntity extends BaseMachineEntity {
         if (config == null) return false; 
         
         Direction facing = this.getBlockState().getValue(BlockStateProperties.FACING);
-        
         Direction modelSide = MachineConfigHelper.getRelativeSide(side, facing);
         
         return config.containsKey(modelSide);

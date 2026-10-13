@@ -1,6 +1,5 @@
 package net.venera.heliocore.data.radiation;
 
-import it.unimi.dsi.fastutil.ints.Int2FloatAVLTreeMap;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;

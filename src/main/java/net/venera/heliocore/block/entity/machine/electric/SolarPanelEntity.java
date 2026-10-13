@@ -141,7 +141,7 @@ public class SolarPanelEntity extends BaseElectricMachineEntity implements Machi
         return Math.max(0.0f, sunFactor * lightEfficiency);
     }
     
-    private float lightEfficiencyCheck(Level level, BlockPos pos) { //Returns how much sunlight is available 
+    private float lightEfficiencyCheck(Level level, BlockPos pos) { 
         int blockedPanelits = 0;
         for(int x=-1; x<=1; x++) {
             for(int z=-1; z<=1; z++) {

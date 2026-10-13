@@ -10,26 +10,10 @@ import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.client.model.data.ModelProperty;
 
 public class PizzaEntity extends BlockEntity {
-
-    // Topping Bitmask Values:
-    // 1 = Chicken, 2 = Meat, 4 = Mushroom, 8 = Fish, 16 = Vegetable
-    private int toppingsMask = 0;
+    private int toppingsMask = 0; //1:Chicken, 2: Meat, 4: Mushroom, 8: Fish, 16: Vegetable
 
     public PizzaEntity(BlockPos pos, BlockState state) {
-        // We will create HpCBlockEntities in the next step!
         super(HpCBlockEntities.PIZZA_ENTITY.get(), pos, state);
-    }
-
-    public boolean addTopping(int toppingBit) {
-        if ((this.toppingsMask & toppingBit) == 0) {
-            this.toppingsMask |= toppingBit;
-            setChanged();
-            if (level != null && !level.isClientSide()) {
-                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-            }
-            return true;
-        }
-        return false;
     }
     
     public void setToppingsMask(int mask) {
@@ -51,22 +35,6 @@ public class PizzaEntity extends BlockEntity {
         return ModelData.builder().with(TOPPINGS_PROPERTY, this.toppingsMask).build();
     }
 
-    // --- DATA SAVING & LOADING ---
-
-    @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.putInt("Toppings", this.toppingsMask);
-    }
-
-    @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        this.toppingsMask = tag.getInt("Toppings");
-    }
-
-    // --- CLIENT SYNCING (Essential for dynamic rendering) ---
-
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag tag = new CompoundTag();
@@ -77,5 +45,17 @@ public class PizzaEntity extends BlockEntity {
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
+    }
+    
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        tag.putInt("Toppings", this.toppingsMask);
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        this.toppingsMask = tag.getInt("Toppings");
     }
 }

@@ -33,6 +33,8 @@ import net.venera.heliocore.util.MachineConfigHelper;
 import net.venera.heliocore.util.PipeNetworkHelper;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Set;
+
 public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements IFluidMachine, MachineConfigHelper.IToggleableMachine {
     private final int BATTERY_SLOT = 0;
     private final int OXYGEN_GAS_SLOT = 1;
@@ -185,7 +187,7 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
 
                 BlockState state = level.getBlockState(targetPos);
                 
-                if (state.is(BlockTags.LEAVES)) {
+                if (state.is(BlockTags.LEAVES) || state.is(BlockTags.SAPLINGS) || state.is(BlockTags.CROPS)) {
                     leafBonus++;
                 }
             }
@@ -200,7 +202,7 @@ public class OxygenGeneratorEntity extends BaseElectricMachineEntity implements 
         BlockPos pipePos = pos.relative(outputFace);
         if (!(level.getBlockState(pipePos).getBlock() instanceof FluidPipeBlock)) return;
 
-        java.util.Set<BlockEntity> connectedMachines = PipeNetworkHelper.findConnectedInventories(level, pipePos, pos);
+        Set<BlockEntity> connectedMachines = PipeNetworkHelper.findConnectedInventories(level, pipePos, pos);
         int fluidToPush = Math.min(oxygenTank.getFluidAmount(), fluidFlowRate); 
 
         for (BlockEntity entity : connectedMachines) {

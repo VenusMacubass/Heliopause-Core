@@ -78,7 +78,7 @@ public class AirlockFrameSwitch extends Block {
         
         float pitch = context.getPlayer() != null ? context.getPlayer().getXRot() : 0;
         Direction hDirection = context.getHorizontalDirection().getOpposite();
-        int absRotation = 0;
+        int absRotation;
 
         if (pistonFacing.getAxis() == Direction.Axis.Z) {
             if (pitch < -45) absRotation = 0;

@@ -59,23 +59,23 @@ public class HpCPlacedFeatures {  //Where to place and how to place
         register(context, MOON_TIN_ORE_PLACED_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.MOON_TIN_ORE_KEY),
                 HpCOrePlacement.commonOrePlacement(12, HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(80))));
 
-        // Iron: Less frequent than Earth (7 per chunk), spread evenly.
+        //Fe: Less frequent than Earth (7 per chunk), spread evenly.
         register(context, MOON_IRON_ORE_PLACED_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.MOON_IRON_ORE_KEY),
                 HpCOrePlacement.commonOrePlacement(7, HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(80))));
 
-        // Copper: Rarer than Earth (6 per chunk instead of 16).
+        //Cu: Rarer than Earth (6 per chunk instead of 16).
         register(context, MOON_COPPER_ORE_PLACED_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.MOON_COPPER_ORE_KEY),
                 HpCOrePlacement.commonOrePlacement(6, HeightRangePlacement.triangle(VerticalAnchor.absolute(-32), VerticalAnchor.absolute(80))));
 
-        // Aluminium: More abundant than Moon Iron (12 per chunk).
+        //Al: More abundant than Moon Iron (12 per chunk).
         register(context, MOON_ALUMINIUM_ORE_PLACED_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.MOON_ALUMINIUM_ORE_KEY),
                 HpCOrePlacement.commonOrePlacement(12, HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(64))));
 
-        // Silicon: Copper-like abundance (16 per chunk), spread everywhere.
+        //Si: Copper-like abundance (16 per chunk), spread everywhere.
         register(context, MOON_SILICON_ORE_PLACED_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.MOON_SILICON_ORE_KEY),
                 HpCOrePlacement.commonOrePlacement(16, HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(100))));
 
-        // Iridium: More abundant than Earth (2 times per chunk guaranteed), sub-surface.
+        //I: More abundant than Earth (2 times per chunk guaranteed), sub-surface.
         register(context, MOON_IRIDIUM_ORE_PLACED_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.MOON_IRIDIUM_ORE_KEY),
                 HpCOrePlacement.commonOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.absolute(20), VerticalAnchor.absolute(120))));
 
@@ -94,8 +94,6 @@ public class HpCPlacedFeatures {  //Where to place and how to place
                         HeightRangePlacement.uniform(VerticalAnchor.absolute(-60), VerticalAnchor.absolute(0)),
                         BiomeFilter.biome()
                 ));
-
-        
         
         context.register(MARIA_CRATER_PLACED_KEY, new PlacedFeature(
                 configuredFeatures.getOrThrow(HpCConfiguredFeatures.MARIA_CRATER_KEY),

@@ -255,7 +255,7 @@ public class HpCBlocks {
     
     public static final DeferredBlock<Block> SOLAR_PANEL_PARTS = registerBlock("solar_panel_parts",
             () -> new SolarPanelPartBlock(BlockBehaviour.Properties.of().noLootTable().sound(SoundType.METAL)));
-
+    
     public static final DeferredBlock<LanternBlock> EXTINGUISHED_LANTERN = registerBlock("extinguished_lantern",
             () -> new LanternBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.LANTERN).lightLevel(state -> 0)));
     public static final DeferredBlock<LanternBlock> EXTINGUISHED_SOUL_LANTERN = registerBlock("extinguished_soul_lantern",

@@ -164,7 +164,7 @@ public class GasCompressorEntity extends BaseElectricMachineEntity implements IF
                     ResourceLocation liquidId = ResourceLocation.fromNamespaceAndPath(gasId.getNamespace(), liquidName);
                     Fluid outputLiquid = BuiltInRegistries.FLUID.get(liquidId);
 
-                    if (outputLiquid != null && outputLiquid != net.minecraft.world.level.material.Fluids.EMPTY) {
+                    if (outputLiquid != null && outputLiquid != Fluids.EMPTY) {
                         int liquidToGenerate = this.conversionScore / conversionThreshold;
                         int acceptedLiquid = liquidTank.fill(new FluidStack(outputLiquid, liquidToGenerate), IFluidHandler.FluidAction.EXECUTE);
                         

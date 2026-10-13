@@ -43,6 +43,7 @@ public class GridManager extends SavedData {
         
         for (Direction dir : Direction.values()) {
             BlockPos neighborPos = machinePos.relative(dir);
+            if (!level.isLoaded(neighborPos)) continue;
             
             if (!positionToGrid.containsKey(neighborPos) && level.getBlockState(neighborPos).getBlock() instanceof WireBlock) {
                 buildGridAt(level, neighborPos);
@@ -103,7 +104,7 @@ public class GridManager extends SavedData {
                         Set<GridPort> microPorts = Set.of(port1, port2);
                         int newId = recycledIds.isEmpty() ? nextGridId++ : recycledIds.poll();
                         
-                        EnergyGrid microGrid = new EnergyGrid(newId, Collections.emptySet(), microPorts, level);
+                        EnergyGrid microGrid = new EnergyGrid(newId, Collections.emptySet(), microPorts);
                         activeGrids.put(newId, microGrid);
                         setDirty();
                     }
@@ -126,7 +127,7 @@ public class GridManager extends SavedData {
         if (gridToSplit == null) return;
         destroyGrid(gridToSplit);
         
-        for (net.minecraft.core.Direction dir : net.minecraft.core.Direction.values()) {
+        for (Direction dir : Direction.values()) {
             BlockPos neighbor = brokenPos.relative(dir);
             
             if (!positionToGrid.containsKey(neighbor) && level.getBlockState(neighbor).getBlock() instanceof WireBlock) {
@@ -141,7 +142,7 @@ public class GridManager extends SavedData {
         if (result.wires().isEmpty() && result.ports().isEmpty()) return;
         int newId = recycledIds.isEmpty() ? nextGridId++ : recycledIds.poll();
         
-        EnergyGrid newGrid = new EnergyGrid(newId, result.wires(), result.ports(), level);
+        EnergyGrid newGrid = new EnergyGrid(newId, result.wires(), result.ports());
         
         activeGrids.put(newId, newGrid);
         for (BlockPos wirePos : result.wires()) {
