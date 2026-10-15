@@ -1,4 +1,4 @@
-// 1.21.1	2026-09-18T11:55:00.4691722	Block States: heliocore
+// 1.21.1	2026-10-15T21:18:50.5720902	Block States: heliocore
 d59962edbb614daa7605d955b287ee61773bd2a2 assets/heliocore/blockstates/airlock_frame_switch.json
 a23ba85944456dbe50bd58319b35ee6bd730f46f assets/heliocore/blockstates/airlock_gate_frame.json
 bdf870c7e5505d6271b1fd115489f88d5a3e3959 assets/heliocore/blockstates/airlock_generated_black.json
@@ -162,8 +162,8 @@ a0ab61b6df6401d325e06be646d729a6132d0808 assets/heliocore/models/block/moon_dung
 3efa4685a98124160ff039d0c7fe60a849787760 assets/heliocore/models/block/moon_dungeon_brick_wall_side_tall.json
 d201b1610f498258dad62e074b6c19f8aea2e67c assets/heliocore/models/block/moon_iridium_ore.json
 9dab55a141ee46da5311211811850822ffeeb4cc assets/heliocore/models/block/moon_iron_ore.json
-da76bba0e6ff9b9b1ee6fadd9e68f825db6f4b27 assets/heliocore/models/block/moon_regolith.json
-7e4e29a2159ddf231762a92afddf05b66d3634fe assets/heliocore/models/block/moon_regolith_tektites.json
+46fc163827b087adce8d09c496be23dc19ae20f7 assets/heliocore/models/block/moon_regolith.json
+14793499ceac5299e370ec05160093c8a561a676 assets/heliocore/models/block/moon_regolith_tektites.json
 c69e62abad09d913e5bbe73d87041ac9066422ea assets/heliocore/models/block/moon_rock.json
 131291ffc8bccb118861efd060d46922b069dd50 assets/heliocore/models/block/moon_rock_slab.json
 d8ba5156091f386e190360301bcb125ae8c93e1b assets/heliocore/models/block/moon_rock_slab_double.json

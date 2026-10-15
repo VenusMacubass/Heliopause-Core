@@ -2,10 +2,10 @@
   "carvers": {},
   "downfall": 0.0,
   "effects": {
-    "ambient_sound": "minecraft:ambient.basalt_deltas.loop",
+    "ambient_sound": "minecraft:ambient.nether_wastes.loop",
     "fog_color": 0,
     "foliage_color": 8368696,
-    "grass_color": 8368696,
+    "grass_color": 13619151,
     "sky_color": 0,
     "water_color": 4159204,
     "water_fog_color": 329011

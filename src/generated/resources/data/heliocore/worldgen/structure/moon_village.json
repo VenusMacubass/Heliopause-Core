@@ -28,6 +28,6 @@
   },
   "start_pool": "heliocore:moon_village/start",
   "step": "surface_structures",
-  "terrain_adaptation": "beard_thin",
+  "terrain_adaptation": "beard_box",
   "use_expansion_hack": true
 }

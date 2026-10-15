@@ -44,7 +44,7 @@ public class HpCStructures {
                                 )
                         ), 
                         GenerationStep.Decoration.SURFACE_STRUCTURES,
-                        TerrainAdjustment.BEARD_THIN
+                        TerrainAdjustment.BEARD_BOX
                 ),
                 templatePools.getOrThrow(HpCStructurePools.START), 
                 12, // Max size/depth of the village chain

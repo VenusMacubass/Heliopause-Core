@@ -12,6 +12,7 @@ import net.minecraft.client.model.VillagerModel;
 import net.minecraft.client.model.WolfModel;
 import net.minecraft.client.model.ZombieModel;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -170,6 +171,17 @@ public class HeliopauseCoreClient {
                 HpCBlocks.MOON_DUNGEON_BRICK_SLAB.get(),
                 HpCBlocks.MOON_DUNGEON_BRICK_STAIRS.get(),
                 HpCBlocks.MOON_DUNGEON_BRICK_WALL.get());
+
+        event.register(
+                (state, level, pos, tintIndex) -> {
+                    if (level != null && pos != null) {
+                        return BiomeColors.getAverageGrassColor(level, pos);
+                    }
+                    return 0xFFFFFF;
+                },
+                HpCBlocks.MOON_REGOLITH.get(),
+                HpCBlocks.MOON_TEKTITES_REGOLITH.get()
+        );
     }
 
     @SubscribeEvent
@@ -232,7 +244,11 @@ public class HeliopauseCoreClient {
                 HpCBlocks.MOON_DUNGEON_BRICK_SLAB.get(),
                 HpCBlocks.MOON_DUNGEON_BRICK_STAIRS.get(),
                 HpCBlocks.MOON_DUNGEON_BRICK_WALL.get());
-        
+
+        event.register(
+                (stack, tintIndex) -> 0xFFFFFF,
+                HpCBlocks.MOON_REGOLITH.get()
+        );
     }
 
     @SubscribeEvent

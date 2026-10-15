@@ -3,6 +3,7 @@ package net.venera.heliocore.recipe;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -22,6 +23,18 @@ public record MagneticAssemblyPlatformRecipe(
         List<Ingredient> boosters,
         Ingredient nose,
         ItemStack result) implements Recipe<MagneticAssemblyPlatformInput> {
+
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
+        NonNullList<Ingredient> list = NonNullList.create();
+        list.addAll(fins);
+        list.addAll(hulls);
+        list.addAll(boosters);
+        list.add(nose);
+        list.add(base);
+        list.add(engine);
+        return list;
+    }
 
     @Override
     public boolean matches(MagneticAssemblyPlatformInput input, Level level) {

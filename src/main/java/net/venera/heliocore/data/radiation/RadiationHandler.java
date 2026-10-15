@@ -66,7 +66,7 @@ public class RadiationHandler {
     }
 
     private static void applyRadiationEffects(LivingEntity entity, RadiationData radData) {
-        if(entity instanceof Player player && player.isCreative()){return;}
+        if(entity instanceof Player player && (player.isCreative() || player.isSpectator())){return;}
         double radLevel = radData.getRadiation();
         if (radLevel > 150) {
             entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 1200, radLevel > 600 ? 2 : 1));

@@ -83,7 +83,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         blockWithItem(HpCBlocks.IRIDIUM_BLOCK);
         blockWithItem(HpCBlocks.RADIOACTIVE_BLOCK);
-        blockWithItem(HpCBlocks.MOON_REGOLITH);
+        tintedBlockWithItem(HpCBlocks.MOON_REGOLITH);
         blockWithItem(HpCBlocks.MOON_DIRT);
         blockWithItem(HpCBlocks.MOON_ROCK);
         blockWithItem(HpCBlocks.BASE_BUILDING_WHITE_BLOCK);
@@ -323,7 +323,7 @@ public class HpCBlockStateProvider extends BlockStateProvider {
         tintedOreBlock(HpCBlocks.MOON_IRIDIUM_ORE.get(), moonStone, iridiumOreTex);
         tintedOreBlock(HpCBlocks.IRIDIUM_ORE.get(), stone, iridiumOreTex);
         tintedOreBlock(HpCBlocks.DEEPSLATE_IRIDIUM_ORE.get(), deepslate, iridiumOreTex);
-        tintedOreBlock(HpCBlocks.MOON_TEKTITES_REGOLITH.get(), moonRegolith, tektitesOreTex);
+        tintedBaseOreBlock(HpCBlocks.MOON_TEKTITES_REGOLITH.get(), moonRegolith, tektitesOreTex);
         tintedOreBlock(HpCBlocks.MOON_TEKTITES.get(), moonDirt, tektitesOreTex);
         //endregion
         
@@ -340,8 +340,16 @@ public class HpCBlockStateProvider extends BlockStateProvider {
     private void blockItem(DeferredBlock<?> deferredBlock){
         simpleBlockItem(deferredBlock.get(), new ModelFile.UncheckedModelFile(HeliopauseCore.MOD_ID + ":block/" + deferredBlock.getId().getPath()));
     }
-    private void blockItem(DeferredBlock<?> deferredBlock, String appendix){
-        simpleBlockItem(deferredBlock.get(), new ModelFile.UncheckedModelFile(HeliopauseCore.MOD_ID + ":block/" + deferredBlock.getId().getPath() + appendix));
+    private void tintedBlockWithItem(DeferredBlock<?> deferredBlock) {
+        simpleBlockWithItem(
+                deferredBlock.get(),
+                models().singleTexture(
+                        deferredBlock.getId().getPath(),
+                        mcLoc("block/leaves"),
+                        "all",
+                        blockTexture(deferredBlock.get())
+                )
+        );
     }
 
     public void customFacesBlock(Block block, ResourceLocation defaultTexture, Map<Direction, ResourceLocation> overrides) {
@@ -371,11 +379,33 @@ public class HpCBlockStateProvider extends BlockStateProvider {
 
     public void tintedOreBlock(Block block, ResourceLocation baseTexture, ResourceLocation overlayTexture) {
         String baseName = BuiltInRegistries.BLOCK.getKey(block).getPath();
-        
+
         ModelFile oreModel = models().withExistingParent(baseName, modLoc("block/tinted_ore_template"))
                 .texture("base", baseTexture)
                 .texture("overlay", overlayTexture);
-        
+
+        simpleBlock(block, oreModel);
+        itemModels().getBuilder(baseName)
+                .parent(oreModel);
+    }
+
+    public void tintedBaseOreBlock(Block block, ResourceLocation baseTexture, ResourceLocation overlayTexture) {
+        String baseName = BuiltInRegistries.BLOCK.getKey(block).getPath();
+
+        BlockModelBuilder oreModel = models().withExistingParent(baseName, mcLoc("block/block"))
+                .renderType("minecraft:cutout")
+                .texture("particle", baseTexture)
+                .texture("base", baseTexture)
+                .texture("overlay", overlayTexture)
+                .element()
+                .from(0, 0, 0).to(16, 16, 16)
+                .allFaces((dir, face) -> face.texture("#base").cullface(dir).tintindex(0))
+                .end()
+                .element()
+                .from(0, 0, 0).to(16, 16, 16)
+                .allFaces((dir, face) -> face.texture("#overlay").cullface(dir))
+                .end();
+
         simpleBlock(block, oreModel);
         itemModels().getBuilder(baseName)
                 .parent(oreModel);

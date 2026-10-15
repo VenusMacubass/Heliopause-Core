@@ -1,4 +1,4 @@
-// 1.21.1	2026-10-13T13:10:36.0143567	Registries
+// 1.21.1	2026-10-15T21:07:23.0847335	Registries
 8bc25e86fc4e155a7d31c7733f9635befea3399e data/heliocore/dimension/moon.json
 5c3ab2456f3347149c033961f5e622ea563ef7ed data/heliocore/dimension_type/moon.json
 b1557ee736b85234ad2fda7d2e3c6710150509a9 data/heliocore/neoforge/biome_modifier/add_aluminium_ore.json
@@ -16,8 +16,8 @@ e4ba0e2e7c81289089f462b603afdaae5b938a49 data/heliocore/neoforge/biome_modifier/
 f7b638d0fe67b551ca84f3d877f1fd973ea1414c data/heliocore/neoforge/biome_modifier/add_moon_tin_ore.json
 ce0113a2cf5e90fd68fb4d98f2bed1c44fb2d05e data/heliocore/neoforge/biome_modifier/add_silicon_ore.json
 8cdeef2a3865430f2722a11d1f300dba8d13d15f data/heliocore/neoforge/biome_modifier/add_tin_ore.json
-a608129048c148c4dfbf58855460fa49f096137b data/heliocore/worldgen/biome/lunar_highlands.json
-a608129048c148c4dfbf58855460fa49f096137b data/heliocore/worldgen/biome/lunar_maria.json
+7bfff0879846abad5d9340c11e6f11734e318aa8 data/heliocore/worldgen/biome/lunar_highlands.json
+dbc2f44cc027a1557703a3d532a176bd8fa587ab data/heliocore/worldgen/biome/lunar_maria.json
 564ff3463279303b7a42d0a5be7fa56372eb66a1 data/heliocore/worldgen/configured_feature/crude_oil_lake.json
 32d4487f10b97cf406019ef98b4c9cb72a33dc09 data/heliocore/worldgen/configured_feature/highlands_crater.json
 63d02673e86a9abc2724475474f5294450f4653f data/heliocore/worldgen/configured_feature/maria_crater.json
@@ -47,7 +47,7 @@ a93e52cd3fa64ea0c610ca2738c5c45252616b75 data/heliocore/worldgen/placed_feature/
 80ea273cd3ffe6a647888a70244b2b4c86ab4ccb data/heliocore/worldgen/placed_feature/moon_tin_ore_placed.json
 ecef4e75cd7750891576e1ecba25684eab3eee65 data/heliocore/worldgen/placed_feature/silicon_ore_placed.json
 4950fe6ce82ddbbbd6191c1b9ae0f659d2aba3bb data/heliocore/worldgen/placed_feature/tin_ore_placed.json
-6dbe7fe34a35bfa1113a16bdb40f4767e22c6e71 data/heliocore/worldgen/structure/moon_village.json
+3d7660336712e73409bfb31ae1296a83c7700640 data/heliocore/worldgen/structure/moon_village.json
 4b48f425fac7c62e25099ddfafd391f03b99c0a9 data/heliocore/worldgen/structure_set/moon_village.json
 06e213d77f4b4d9e811be6d9baedc07a033ac316 data/heliocore/worldgen/template_pool/moon_village/beds.json
 c4bdd1700d0ae044a66d37f7072a897dc4eb3bac data/heliocore/worldgen/template_pool/moon_village/blacksmith_job_blocks.json

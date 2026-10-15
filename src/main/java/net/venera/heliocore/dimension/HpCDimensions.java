@@ -19,7 +19,6 @@ import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.dimension.biome.HpCBiomes;
 import net.venera.heliocore.dimension.worldgen.HpCNoiseSettings;
-
 import java.util.List;
 import java.util.OptionalLong;
 
