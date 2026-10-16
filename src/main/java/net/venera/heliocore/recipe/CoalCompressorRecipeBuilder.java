@@ -15,7 +15,6 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.ItemLike;
-import net.venera.heliocore.recipe.CoalCompressorRecipe;
 import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -92,7 +91,7 @@ public class CoalCompressorRecipeBuilder implements RecipeBuilder {
         ShapedRecipePattern pattern = ShapedRecipePattern.of(this.key, this.rows);
         CraftingBookCategory bookCategory = CraftingBookCategory.MISC;
         
-        CoalCompressorRecipe recipe = new CoalCompressorRecipe(
+        CompressorRecipe recipe = new CompressorRecipe(
                 this.group != null ? this.group : "",
                 bookCategory,
                 pattern,

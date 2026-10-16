@@ -1,7 +1,6 @@
 package net.venera.heliocore.recipe;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
@@ -17,11 +16,11 @@ public class HpCRecipes {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, HeliopauseCore.MOD_ID);
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, HeliopauseCore.MOD_ID);
 
-    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CoalCompressorRecipe>> COAL_COMPRESSOR_SERIALIZER = RECIPE_SERIALIZERS.register("coal_compressor", CoalCompressorRecipe.Serializer::new);
-    public static final DeferredHolder<RecipeType<?>, RecipeType<CoalCompressorRecipe>> COAL_COMPRESSOR_TYPE = RECIPE_TYPES.register("coal_compressor", () -> new RecipeType<>() {
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CompressorRecipe>> COMPRESSOR_SERIALIZER = RECIPE_SERIALIZERS.register("compressor", CompressorRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<CompressorRecipe>> COMPRESSOR_TYPE = RECIPE_TYPES.register("compressor", () -> new RecipeType<>() {
         @Override
         public String toString() {
-            return "coal_compressor";
+            return "compressor";
         }
     });
 

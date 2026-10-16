@@ -1016,26 +1016,26 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
         
         //region Compressors
         CoalCompressorRecipeBuilder.compress(RecipeCategory.MISC, HpCItems.COMPRESSED_COPPER.get())
-                .pattern("C  ")
-                .pattern("C  ")
+                .pattern("C")
+                .pattern("C")
                 .define('C', Items.COPPER_INGOT)
                 .unlockedBy("has_copper", has(Items.COPPER_INGOT))
                 .save(recipeOutput, HeliopauseCore.MOD_ID + ":compressed_copper_compressor");
         CoalCompressorRecipeBuilder.compress(RecipeCategory.MISC, HpCItems.COMPRESSED_TIN.get())
-                .pattern("T  ")
-                .pattern("T  ")
+                .pattern("T")
+                .pattern("T")
                 .define('T', HpCItems.TIN_INGOT.get())
                 .unlockedBy("has_tin", has(HpCItems.TIN_INGOT.get()))
                 .save(recipeOutput, HeliopauseCore.MOD_ID + ":compressed_tin_compressor");
         CoalCompressorRecipeBuilder.compress(RecipeCategory.MISC, HpCItems.COMPRESSED_BRONZE.get())
-                .pattern("CT  ")
+                .pattern("CT")
                 .define('C', HpCItems.COMPRESSED_COPPER.get())
                 .define('T', HpCItems.COMPRESSED_TIN.get())
                 .unlockedBy("has_compressed_tin", has(HpCItems.COMPRESSED_TIN.get()))
                 .save(recipeOutput, HeliopauseCore.MOD_ID + ":compressed_bronze_compressor");
         CoalCompressorRecipeBuilder.compress(RecipeCategory.MISC, HpCItems.COMPRESSED_IRON.get())
-                .pattern("I  ")
-                .pattern("I  ")
+                .pattern("I")
+                .pattern("I")
                 .define('I', Items.IRON_INGOT)
                 .unlockedBy("has_iron", has(Items.IRON_INGOT))
                 .save(recipeOutput, HeliopauseCore.MOD_ID + ":compressed_iron_compressor");
@@ -1046,9 +1046,9 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_aluminium", has(HpCItems.ALUMINIUM_INGOT.get()))
                 .save(recipeOutput, HeliopauseCore.MOD_ID + ":compressed_aluminium_compressor");
         CoalCompressorRecipeBuilder.compress(RecipeCategory.MISC, HpCItems.COMPRESSED_STEEL.get())
-                .pattern("C  ")
-                .pattern("I  ")
-                .pattern("C  ")
+                .pattern("C")
+                .pattern("I")
+                .pattern("C")
                 .define('C', Items.COAL)
                 .define('I', HpCItems.COMPRESSED_IRON.get())
                 .unlockedBy("has_compressed_iron", has(HpCItems.COMPRESSED_IRON.get()))

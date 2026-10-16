@@ -9,14 +9,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-public class CoalCompressorRecipe implements CraftingRecipe {
+public class CompressorRecipe implements CraftingRecipe {
     public final ShapedRecipePattern pattern;
     final ItemStack result;
     final String group;
     final CraftingBookCategory category;
     final boolean showNotification;
 
-    public CoalCompressorRecipe(String group, CraftingBookCategory category, ShapedRecipePattern pattern, ItemStack result, boolean showNotification) {
+    public CompressorRecipe(String group, CraftingBookCategory category, ShapedRecipePattern pattern, ItemStack result, boolean showNotification) {
         this.group = group;
         this.category = category;
         this.pattern = pattern;
@@ -24,16 +24,16 @@ public class CoalCompressorRecipe implements CraftingRecipe {
         this.showNotification = showNotification;
     }
 
-    public CoalCompressorRecipe(String group, CraftingBookCategory category, ShapedRecipePattern pattern, ItemStack result) {
+    public CompressorRecipe(String group, CraftingBookCategory category, ShapedRecipePattern pattern, ItemStack result) {
         this(group, category, pattern, result, true);
     }
 
     public RecipeSerializer<?> getSerializer() {
-        return HpCRecipes.COAL_COMPRESSOR_SERIALIZER.get();
+        return HpCRecipes.COMPRESSOR_SERIALIZER.get();
     }
 
     public RecipeType<?> getType() {
-        return HpCRecipes.COAL_COMPRESSOR_TYPE.get();
+        return HpCRecipes.COMPRESSOR_TYPE.get();
     }
 
     public String getGroup() {
@@ -81,28 +81,28 @@ public class CoalCompressorRecipe implements CraftingRecipe {
         return nonnulllist.isEmpty() || nonnulllist.stream().filter((p_151277_) -> !p_151277_.isEmpty()).anyMatch(Ingredient::hasNoItems);
     }
 
-    public static class Serializer implements RecipeSerializer<CoalCompressorRecipe> {
-        public static final MapCodec<CoalCompressorRecipe> CODEC = RecordCodecBuilder.mapCodec((p_340778_) -> p_340778_.group(Codec.STRING.optionalFieldOf("group", "").forGetter((p_311729_) -> p_311729_.group), CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter((p_311732_) -> p_311732_.category), ShapedRecipePattern.MAP_CODEC.forGetter((p_311733_) -> p_311733_.pattern), ItemStack.STRICT_CODEC.fieldOf("result").forGetter((p_311730_) -> p_311730_.result), Codec.BOOL.optionalFieldOf("show_notification", true).forGetter((p_311731_) -> p_311731_.showNotification)).apply(p_340778_, CoalCompressorRecipe::new));
-        public static final StreamCodec<RegistryFriendlyByteBuf, CoalCompressorRecipe> STREAM_CODEC = StreamCodec.of(CoalCompressorRecipe.Serializer::toNetwork, CoalCompressorRecipe.Serializer::fromNetwork);
+    public static class Serializer implements RecipeSerializer<CompressorRecipe> {
+        public static final MapCodec<CompressorRecipe> CODEC = RecordCodecBuilder.mapCodec((p_340778_) -> p_340778_.group(Codec.STRING.optionalFieldOf("group", "").forGetter((p_311729_) -> p_311729_.group), CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter((p_311732_) -> p_311732_.category), ShapedRecipePattern.MAP_CODEC.forGetter((p_311733_) -> p_311733_.pattern), ItemStack.STRICT_CODEC.fieldOf("result").forGetter((p_311730_) -> p_311730_.result), Codec.BOOL.optionalFieldOf("show_notification", true).forGetter((p_311731_) -> p_311731_.showNotification)).apply(p_340778_, CompressorRecipe::new));
+        public static final StreamCodec<RegistryFriendlyByteBuf, CompressorRecipe> STREAM_CODEC = StreamCodec.of(CompressorRecipe.Serializer::toNetwork, CompressorRecipe.Serializer::fromNetwork);
 
-        public MapCodec<CoalCompressorRecipe> codec() {
+        public MapCodec<CompressorRecipe> codec() {
             return CODEC;
         }
 
-        public StreamCodec<RegistryFriendlyByteBuf, CoalCompressorRecipe> streamCodec() {
+        public StreamCodec<RegistryFriendlyByteBuf, CompressorRecipe> streamCodec() {
             return STREAM_CODEC;
         }
 
-        private static CoalCompressorRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
+        private static CompressorRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
             String s = buffer.readUtf();
             CraftingBookCategory craftingbookcategory = buffer.readEnum(CraftingBookCategory.class);
             ShapedRecipePattern shapedrecipepattern = ShapedRecipePattern.STREAM_CODEC.decode(buffer);
             ItemStack itemstack = ItemStack.STREAM_CODEC.decode(buffer);
             boolean flag = buffer.readBoolean();
-            return new CoalCompressorRecipe(s, craftingbookcategory, shapedrecipepattern, itemstack, flag);
+            return new CompressorRecipe(s, craftingbookcategory, shapedrecipepattern, itemstack, flag);
         }
 
-        private static void toNetwork(RegistryFriendlyByteBuf buffer, CoalCompressorRecipe recipe) {
+        private static void toNetwork(RegistryFriendlyByteBuf buffer, CompressorRecipe recipe) {
             buffer.writeUtf(recipe.group);
             buffer.writeEnum(recipe.category);
             ShapedRecipePattern.STREAM_CODEC.encode(buffer, recipe.pattern);

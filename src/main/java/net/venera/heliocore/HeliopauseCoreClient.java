@@ -12,6 +12,7 @@ import net.minecraft.client.model.VillagerModel;
 import net.minecraft.client.model.WolfModel;
 import net.minecraft.client.model.ZombieModel;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -29,6 +30,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -659,8 +661,25 @@ public class HeliopauseCoreClient {
 
     @SubscribeEvent
     public static void onPostRenderVillager(RenderLivingEvent.Post<?, ?> event) {
-        if (event.getEntity() instanceof Villager villager && event.getRenderer().getModel() instanceof VillagerModel<?> model) {
+        if (event.getEntity() instanceof Villager && event.getRenderer().getModel() instanceof VillagerModel<?> model) {
             model.getHead().getChild("nose").visible = true;
+        }
+    }
+
+    @SubscribeEvent
+    public static void onRocketCameraShake(ViewportEvent.ComputeCameraAngles event) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        
+        if (player != null && player.getVehicle() instanceof Tier1RocketEntity rocket) {
+            if (rocket.getEntityData().get(Tier1RocketEntity.IS_LAUNCHED)) {
+                RandomSource random = player.getRandom();
+                
+                float intensity = 0.3f;
+                
+                event.setPitch(event.getPitch() + (random.nextFloat() - 0.5f) * intensity);
+                event.setYaw(event.getYaw() + (random.nextFloat() - 0.5f) * intensity);
+                event.setRoll(event.getRoll() + (random.nextFloat() - 0.5f) * intensity);
+            }
         }
     }
 }

@@ -269,5 +269,9 @@
 
   "tooltip.heliocore.press_jump_button": "Press the jump button to slow down!",
 
-  "entity.minecraft.villager.heliocore.whitesmith": "Whitesmith"
+  "entity.minecraft.villager.heliocore.whitesmith": "Whitesmith",
+  
+  "jei_title.heliocore.magnetic_assembly": "Magnetic Assembly Platform",
+  "jei_title.heliocore.pcb_fabricator": "PCB Fabricator",
+  "jei_title.heliocore.compressor": "Compressor"
 }

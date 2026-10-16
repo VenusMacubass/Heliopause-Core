@@ -345,26 +345,19 @@ public class HpCItems {
                 }
                 @Override
                 public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
-                    // 1. Process the eating (reduces stack size, restores hunger)
                     ItemStack result = super.finishUsingItem(stack, level, entityLiving);
-
-                    // 2. Apply radiation safely on the server side
+                    
                     if (!level.isClientSide() && entityLiving instanceof Player player) {
-                        // Note: Make sure HpCAttachments is correct for your codebase
                         var radiationData = player.getData(HpCAttachments.RADIATION_DATA);
                         radiationData.changeRadiation(50, false);
                     }
-
-                    // 3. Return the Empty Can!
+                    
                     if (entityLiving instanceof Player player && !player.getAbilities().instabuild) {
-                        // Change EMPTY_CAN to match whatever your actual item is named in your registry
                         ItemStack emptyCan = new ItemStack(HpCItems.EMPTY_CAN.get());
-
-                        // If they ate the last one in the stack, swap it to an empty can
+                        
                         if (result.isEmpty()) {
                             return emptyCan;
                         } else {
-                            // Otherwise, try to put it in their inventory, or drop if full
                             if (!player.getInventory().add(emptyCan)) {
                                 player.drop(emptyCan, false);
                             }
@@ -383,26 +376,19 @@ public class HpCItems {
                 }
                 @Override
                 public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
-                    // 1. Process the eating (reduces stack size, restores hunger)
                     ItemStack result = super.finishUsingItem(stack, level, entityLiving);
-
-                    // 2. Apply radiation safely on the server side
+                    
                     if (!level.isClientSide() && entityLiving instanceof Player player) {
-                        // Note: Make sure HpCAttachments is correct for your codebase
                         var radiationData = player.getData(HpCAttachments.RADIATION_DATA);
                         radiationData.changeRadiation(50, false);
                     }
-
-                    // 3. Return the Empty Can!
+                    
                     if (entityLiving instanceof Player player && !player.getAbilities().instabuild) {
-                        // Change EMPTY_CAN to match whatever your actual item is named in your registry
                         ItemStack emptyCan = new ItemStack(HpCItems.EMPTY_CAN.get());
-
-                        // If they ate the last one in the stack, swap it to an empty can
+                        
                         if (result.isEmpty()) {
                             return emptyCan;
                         } else {
-                            // Otherwise, try to put it in their inventory, or drop if full
                             if (!player.getInventory().add(emptyCan)) {
                                 player.drop(emptyCan, false);
                             }
@@ -421,26 +407,19 @@ public class HpCItems {
                 }
                 @Override
                 public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
-                    // 1. Process the eating (reduces stack size, restores hunger)
                     ItemStack result = super.finishUsingItem(stack, level, entityLiving);
-
-                    // 2. Apply radiation safely on the server side
+                    
                     if (!level.isClientSide() && entityLiving instanceof Player player) {
-                        // Note: Make sure HpCAttachments is correct for your codebase
                         var radiationData = player.getData(HpCAttachments.RADIATION_DATA);
                         radiationData.changeRadiation(50, false);
                     }
-
-                    // 3. Return the Empty Can!
+                    
                     if (entityLiving instanceof Player player && !player.getAbilities().instabuild) {
-                        // Change EMPTY_CAN to match whatever your actual item is named in your registry
                         ItemStack emptyCan = new ItemStack(HpCItems.EMPTY_CAN.get());
-
-                        // If they ate the last one in the stack, swap it to an empty can
+                        
                         if (result.isEmpty()) {
                             return emptyCan;
                         } else {
-                            // Otherwise, try to put it in their inventory, or drop if full
                             if (!player.getInventory().add(emptyCan)) {
                                 player.drop(emptyCan, false);
                             }
@@ -640,23 +619,20 @@ public class HpCItems {
 
     //region Registry and Helpers
     private static FoodProperties getInheritedFoodProps(Item ingredient, int ingredientCount) {
-        FoodProperties baseFood = ingredient.components().get(net.minecraft.core.component.DataComponents.FOOD);
-
-        // Multiply nutrition by the amount of ingredients used in the recipe
+        FoodProperties baseFood = ingredient.components().get(DataComponents.FOOD);
+        
         int nutrition = baseFood != null ? baseFood.nutrition() * ingredientCount : 2;
-
-        // Reverse-engineer the modifier: modifier = saturation / (nutrition * 2)
-        float modifier = 0.1f; // Default fallback
+        float modifier = 0.1f; 
+        
         if (baseFood != null && baseFood.nutrition() > 0) {
             modifier = baseFood.saturation() / (baseFood.nutrition() * 2.0f);
         }
 
         FoodProperties.Builder builder = new FoodProperties.Builder()
                 .nutrition(nutrition)
-                .saturationModifier(modifier) // We pass the MODIFIER here, not the raw points!
+                .saturationModifier(modifier) 
                 .alwaysEdible();
-
-        // If the original ingredient eats fast, this will too
+        
         if (baseFood != null && baseFood.eatDurationTicks() < 32) {
             builder.fast();
         }

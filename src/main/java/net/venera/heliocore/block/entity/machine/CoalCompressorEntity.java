@@ -20,7 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.venera.heliocore.block.entity.HpCBlockEntities;
-import net.venera.heliocore.recipe.CoalCompressorRecipe;
+import net.venera.heliocore.recipe.CompressorRecipe;
 import net.venera.heliocore.recipe.HpCRecipes;
 import net.venera.heliocore.screen.block_entity.CoalCompressorMenu;
 import org.jetbrains.annotations.Nullable;
@@ -86,7 +86,7 @@ public class CoalCompressorEntity extends BaseMachineEntity{
     public void tick(Level level) {
         if (level.isClientSide()) return;
         
-        RecipeHolder<CoalCompressorRecipe> compRecipe = getCompressorRecipe();
+        RecipeHolder<CompressorRecipe> compRecipe = getCompressorRecipe();
         RecipeHolder<BlastingRecipe> blastRecipe = getBlastingRecipe();
         
         Recipe<?> activeRecipe = null;
@@ -103,7 +103,7 @@ public class CoalCompressorEntity extends BaseMachineEntity{
         if (burnTime > 0 && activeRecipe != null && canCraft(activeRecipe)) {
             progress++;
             isActive = true;
-            compressing = (activeRecipe instanceof CoalCompressorRecipe);
+            compressing = (activeRecipe instanceof CompressorRecipe);
 
             dirty = true;
 
@@ -173,7 +173,7 @@ public class CoalCompressorEntity extends BaseMachineEntity{
     private void craftItem(Recipe<?> recipe) {
         ItemStack result = recipe.getResultItem(level.registryAccess()).copy();
 
-        if (recipe instanceof CoalCompressorRecipe) {
+        if (recipe instanceof CompressorRecipe) {
             for (int i : INPUT_SLOTS) {
                 ItemStack stack = inventory.getStackInSlot(i);
                 if (!stack.isEmpty()) stack.shrink(1);
@@ -196,7 +196,7 @@ public class CoalCompressorEntity extends BaseMachineEntity{
         }
     }
 
-    private RecipeHolder<CoalCompressorRecipe> getCompressorRecipe() {
+    private RecipeHolder<CompressorRecipe> getCompressorRecipe() {
         if (level == null) return null;
 
         NonNullList<ItemStack> craftingGrid = NonNullList.withSize(9, ItemStack.EMPTY);
@@ -206,7 +206,7 @@ public class CoalCompressorEntity extends BaseMachineEntity{
 
         CraftingInput input = CraftingInput.of(3, 3, craftingGrid);
         
-        return level.getRecipeManager().getRecipeFor(HpCRecipes.COAL_COMPRESSOR_TYPE.get(), input, level).orElse(null);
+        return level.getRecipeManager().getRecipeFor(HpCRecipes.COMPRESSOR_TYPE.get(), input, level).orElse(null);
     }
 
     private RecipeHolder<BlastingRecipe> getBlastingRecipe() {

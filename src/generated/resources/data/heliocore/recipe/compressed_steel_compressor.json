@@ -1,5 +1,5 @@
 {
-  "type": "heliocore:coal_compressor",
+  "type": "heliocore:compressor",
   "category": "misc",
   "key": {
     "C": {
@@ -10,9 +10,9 @@
     }
   },
   "pattern": [
-    "C  ",
-    "I  ",
-    "C  "
+    "C",
+    "I",
+    "C"
   ],
   "result": {
     "count": 1,

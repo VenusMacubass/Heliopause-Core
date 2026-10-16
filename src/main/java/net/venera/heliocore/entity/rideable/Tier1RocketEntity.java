@@ -28,7 +28,7 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
         super(entityType, level);
     }
 
-    private static final EntityDataAccessor<Boolean> IS_LAUNCHED = SynchedEntityData.defineId(Tier1RocketEntity.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Boolean> IS_LAUNCHED = SynchedEntityData.defineId(Tier1RocketEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> FUEL_AMOUNT = SynchedEntityData.defineId(Tier1RocketEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ENERGY_AMOUNT = SynchedEntityData.defineId(Tier1RocketEntity.class, EntityDataSerializers.INT);
     public final int MAX_FUEL = 1000;
@@ -59,8 +59,10 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
                     this.setFuelAmount(this.getFuelAmount() - FUEL_USAGE);
                     this.setEnergyAmount(this.getEnergyAmount() - ENERGY_USAGE);
                 } else {
-                    this.entityData.set(IS_LAUNCHED, false); // Out of fuel/energy!
+                    this.entityData.set(IS_LAUNCHED, false); 
                 }
+            }else{
+                spawnLaunchExhaust();
             }
             
             if (this.entityData.get(IS_LAUNCHED)) {
@@ -349,6 +351,39 @@ public class Tier1RocketEntity extends Entity implements PlayerRideableJumping {
             this.setFuelAmount(this.getFuelAmount() + filled);
         }
         return filled;
+    }
+
+    private void spawnLaunchExhaust() {
+        // Adjust the Y-offset (+0.2) so particles spawn exactly at your engine nozzle
+        double exhaustX = this.getX();
+        double exhaustY = this.getY() + 0.2;
+        double exhaustZ = this.getZ();
+
+        // 1. The Core Flame (Tight, bright, shooting fast straight down)
+        for (int i = 0; i < 5; i++) {
+            this.level().addParticle(
+                    net.minecraft.core.particles.ParticleTypes.FLAME,
+                    exhaustX + (this.random.nextDouble() - 0.5) * 0.4,
+                    exhaustY,
+                    exhaustZ + (this.random.nextDouble() - 0.5) * 0.4,
+                    (this.random.nextDouble() - 0.5) * 0.1, // Very slight lateral spread
+                    -0.8,                                   // Fast downward velocity
+                    (this.random.nextDouble() - 0.5) * 0.1
+            );
+        }
+
+        // 2. The Thick Smoke Plume (Wider spread, huge clouds)
+        for (int i = 0; i < 15; i++) {
+            this.level().addParticle(
+                    net.minecraft.core.particles.ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                    exhaustX + (this.random.nextDouble() - 0.5) * 1.2,
+                    exhaustY - 0.5,
+                    exhaustZ + (this.random.nextDouble() - 0.5) * 1.2,
+                    (this.random.nextDouble() - 0.5) * 0.3,
+                    -1.2,                                   // Faster downward velocity than the fire
+                    (this.random.nextDouble() - 0.5) * 0.3
+            );
+        }
     }
 
     @Override

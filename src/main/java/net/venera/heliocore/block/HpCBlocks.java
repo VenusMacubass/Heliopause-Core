@@ -28,7 +28,6 @@ import net.venera.heliocore.block.hpc_custom.machine.electric.*;
 import net.venera.heliocore.block.entity.HpCBlockEntities;
 import net.venera.heliocore.data.component.HpCDataComponents;
 import net.venera.heliocore.item.HpCItems;
-
 import java.util.List;
 import java.util.function.Supplier;
 
