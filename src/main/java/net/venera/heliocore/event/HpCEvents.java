@@ -10,15 +10,17 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.AbstractSkeleton;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Spider;
+import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerType;
 import net.minecraft.world.entity.player.Player;
@@ -176,7 +178,6 @@ public class HpCEvents {
         registerElectric(event, HpCBlockEntities.GAS_COMPRESSOR_ENTITY.get());
         registerElectric(event, HpCBlockEntities.GAS_VAPORIZER_ENTITY.get());
         registerElectric(event, HpCBlockEntities.OXYGEN_SEALER_ENTITY.get());
-        registerElectric(event, HpCBlockEntities.DECONSTRUCTOR_ENTITY.get());
         registerElectric(event, HpCBlockEntities.PCB_FABRICATOR_ENTITY.get());
     }
     
@@ -571,7 +572,7 @@ public class HpCEvents {
             ItemStack beltItem = inventory.getStackInSlot(9);
 
             if (gravityAttribute != null && safeFallAttribute != null) {
-                if (isOnMoon && !(beltItem.is(HpCItems.MASS_BELT.get()))) {
+                if (isOnMoon && !(beltItem.is(HpCItems.WEIGHT_BELT.get()))) {
                     if (!gravityAttribute.hasModifier(MOON_GRAVITY_ID)) {
                         gravityAttribute.addTransientModifier(new AttributeModifier(MOON_GRAVITY_ID, -0.83, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
                     }
@@ -662,36 +663,44 @@ public class HpCEvents {
             newInventory.setStackInSlot(i, oldInventory.getStackInSlot(i).copy());
         }
     }
-    
+
     @SubscribeEvent
     public static void onMobSpawn(FinalizeSpawnEvent event) {
         LivingEntity entity = event.getEntity();
         Level level = entity.level();
         if (level.isClientSide() || event.getSpawnType() == MobSpawnType.SPAWN_EGG) return;
-        
+
         if (OxygenVolumeHelper.isVacuumDimension(level)) {
-            if (entity instanceof Villager villager) {
-                ItemStackHandler inventory = villager.getData(HpCAttachments.EQUIPMENT_INVENTORY);
 
-                inventory.setStackInSlot(0, HpCItems.OXYGEN_MASK.asItem().getDefaultInstance()); 
-                inventory.setStackInSlot(1, HpCItems.OXYGEN_CONNECTORS.asItem().getDefaultInstance()); 
-                inventory.setStackInSlot(2, HpCItems.COMPRESSED_GAS_TANK.get().setGasTankData(new ItemStack(HpCItems.COMPRESSED_GAS_TANK.get()), GasTankData.OXYGEN_GAS, GasTankItem.MAX_CAPACITY)); 
+            boolean isTargetMob = entity instanceof AbstractVillager ||
+                    entity instanceof Zombie ||
+                    entity instanceof AbstractSkeleton ||
+                    entity instanceof Spider ||
+                    entity instanceof Creeper;
+
+            if (isTargetMob && entity instanceof Mob mob) {
+
+                var inventory = mob.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+
+                inventory.setStackInSlot(0, HpCItems.OXYGEN_MASK.asItem().getDefaultInstance());
+                inventory.setStackInSlot(1, HpCItems.OXYGEN_CONNECTORS.asItem().getDefaultInstance());
+                inventory.setStackInSlot(2, HpCItems.COMPRESSED_GAS_TANK.get().setGasTankData(new ItemStack(HpCItems.COMPRESSED_GAS_TANK.get()), GasTankData.OXYGEN_GAS, GasTankItem.MAX_CAPACITY));
                 inventory.setStackInSlot(3, HpCItems.COMPRESSED_GAS_TANK.get().setGasTankData(new ItemStack(HpCItems.COMPRESSED_GAS_TANK.get()), GasTankData.OXYGEN_GAS, GasTankItem.MAX_CAPACITY));
-                
-                inventory.setStackInSlot(4, HpCItems.T1_THERMAL_INSULATION_HEAD.asItem().getDefaultInstance()); 
-                inventory.setStackInSlot(5, HpCItems.T1_THERMAL_INSULATION_TORSO.asItem().getDefaultInstance());
-                inventory.setStackInSlot(6, HpCItems.T1_THERMAL_INSULATION_LEGGINGS.asItem().getDefaultInstance()); 
-                inventory.setStackInSlot(7, HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.asItem().getDefaultInstance()); 
 
-                villager.setItemSlot(EquipmentSlot.HEAD, new ItemStack(HpCItems.T1_SPACE_SUIT_HELMET.get()));
-                villager.setItemSlot(EquipmentSlot.CHEST, new ItemStack(HpCItems.T1_SPACE_SUIT_CHESTPLATE.get()));
-                villager.setItemSlot(EquipmentSlot.LEGS, new ItemStack(HpCItems.T1_SPACE_SUIT_LEGGINGS.get()));
-                villager.setItemSlot(EquipmentSlot.FEET, new ItemStack(HpCItems.T1_SPACE_SUIT_BOOTS.get()));
-                
-                villager.setDropChance(EquipmentSlot.HEAD, 0.0f);
-                villager.setDropChance(EquipmentSlot.CHEST, 0.0f);
-                villager.setDropChance(EquipmentSlot.LEGS, 0.0f);
-                villager.setDropChance(EquipmentSlot.FEET, 0.0f);
+                inventory.setStackInSlot(4, HpCItems.T1_THERMAL_INSULATION_HEAD.asItem().getDefaultInstance());
+                inventory.setStackInSlot(5, HpCItems.T1_THERMAL_INSULATION_TORSO.asItem().getDefaultInstance());
+                inventory.setStackInSlot(6, HpCItems.T1_THERMAL_INSULATION_LEGGINGS.asItem().getDefaultInstance());
+                inventory.setStackInSlot(7, HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.asItem().getDefaultInstance());
+
+                mob.setItemSlot(EquipmentSlot.HEAD, new ItemStack(HpCItems.T1_SPACE_SUIT_HELMET.get()));
+                mob.setItemSlot(EquipmentSlot.CHEST, new ItemStack(HpCItems.T1_SPACE_SUIT_CHESTPLATE.get()));
+                mob.setItemSlot(EquipmentSlot.LEGS, new ItemStack(HpCItems.T1_SPACE_SUIT_LEGGINGS.get()));
+                mob.setItemSlot(EquipmentSlot.FEET, new ItemStack(HpCItems.T1_SPACE_SUIT_BOOTS.get()));
+
+                mob.setDropChance(EquipmentSlot.HEAD, 0.0f);
+                mob.setDropChance(EquipmentSlot.CHEST, 0.0f);
+                mob.setDropChance(EquipmentSlot.LEGS, 0.0f);
+                mob.setDropChance(EquipmentSlot.FEET, 0.0f);
             }
         }
     }
@@ -727,6 +736,4 @@ public class HpCEvents {
         );
     }
     //endregion
-    
-    
 }

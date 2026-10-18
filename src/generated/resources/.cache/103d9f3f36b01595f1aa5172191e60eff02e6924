@@ -1,4 +1,4 @@
-// 1.21.1	2026-10-15T21:07:23.0847335	Registries
+// 1.21.1	2026-10-18T00:13:27.2719758	Registries
 8bc25e86fc4e155a7d31c7733f9635befea3399e data/heliocore/dimension/moon.json
 5c3ab2456f3347149c033961f5e622ea563ef7ed data/heliocore/dimension_type/moon.json
 b1557ee736b85234ad2fda7d2e3c6710150509a9 data/heliocore/neoforge/biome_modifier/add_aluminium_ore.json
@@ -16,8 +16,8 @@ e4ba0e2e7c81289089f462b603afdaae5b938a49 data/heliocore/neoforge/biome_modifier/
 f7b638d0fe67b551ca84f3d877f1fd973ea1414c data/heliocore/neoforge/biome_modifier/add_moon_tin_ore.json
 ce0113a2cf5e90fd68fb4d98f2bed1c44fb2d05e data/heliocore/neoforge/biome_modifier/add_silicon_ore.json
 8cdeef2a3865430f2722a11d1f300dba8d13d15f data/heliocore/neoforge/biome_modifier/add_tin_ore.json
-7bfff0879846abad5d9340c11e6f11734e318aa8 data/heliocore/worldgen/biome/lunar_highlands.json
-dbc2f44cc027a1557703a3d532a176bd8fa587ab data/heliocore/worldgen/biome/lunar_maria.json
+25fe06305bde7fa1e78ca1f1965ed8d44fc95261 data/heliocore/worldgen/biome/lunar_highlands.json
+e69e72af01fc2bdc7c3e423badde9b143782cfdd data/heliocore/worldgen/biome/lunar_maria.json
 564ff3463279303b7a42d0a5be7fa56372eb66a1 data/heliocore/worldgen/configured_feature/crude_oil_lake.json
 32d4487f10b97cf406019ef98b4c9cb72a33dc09 data/heliocore/worldgen/configured_feature/highlands_crater.json
 63d02673e86a9abc2724475474f5294450f4653f data/heliocore/worldgen/configured_feature/maria_crater.json

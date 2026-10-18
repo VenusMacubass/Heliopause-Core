@@ -28,18 +28,22 @@ public class HpCItemTagProvider extends ItemTagsProvider {
                 .add(HpCItems.COPPER_CANISTER.get())
                 .add(HpCItems.TIN_CANISTER.get());
 
-        tag(ItemTags.SWORDS).add(HpCItems.STEEL_SWORD.get());
-        tag(ItemTags.AXES).add(HpCItems.STEEL_AXE.get());
-        tag(ItemTags.PICKAXES).add(HpCItems.STEEL_PICKAXE.get());
-        tag(ItemTags.SHOVELS).add(HpCItems.STEEL_SHOVEL.get());
-        tag(ItemTags.HOES).add(HpCItems.STEEL_HOE.get());
+        tag(ItemTags.SWORDS)
+                .add(HpCItems.STEEL_SWORD.get());
+        tag(ItemTags.AXES)
+                .add(HpCItems.STEEL_AXE.get());
+        tag(ItemTags.PICKAXES)
+                .add(HpCItems.STEEL_PICKAXE.get());
+        tag(ItemTags.SHOVELS)
+                .add(HpCItems.STEEL_SHOVEL.get());
+        tag(ItemTags.HOES)
+                .add(HpCItems.STEEL_HOE.get());
 
         tag(ItemTags.TRIMMABLE_ARMOR)
                 .add(HpCItems.STEEL_HELMET.get())
                 .add(HpCItems.STEEL_CHESTPLATE.get())
                 .add(HpCItems.STEEL_LEGGINGS.get())
                 .add(HpCItems.STEEL_BOOTS.get());
-                
         
         tag(HpCTags.Items.CIRCUIT_MATERIALS)
                 .add(Items.QUARTZ)
@@ -51,41 +55,92 @@ public class HpCItemTagProvider extends ItemTagsProvider {
                 .add(HpCItems.ALUMINIUM_INGOT.get())
                 .add(Items.IRON_INGOT)
                 .add(HpCItems.IRIDIUM_INGOT.get());
+
         
         
-        tag(OXYGEN_MASK).add(HpCItems.OXYGEN_MASK.get());
-        tag(OXYGEN_CONNECTORS).add(HpCItems.OXYGEN_CONNECTORS.get());
+        //region Gears and Equipment
+        tag(OXYGEN_SETUP_PIECES)
+                .add(HpCItems.OXYGEN_MASK.get())
+                .add(HpCItems.OXYGEN_CONNECTORS.get())
+                .add(HpCItems.COMPRESSED_GAS_TANK.get());
         tag(OXYGEN_TANK).add(HpCItems.COMPRESSED_GAS_TANK.get());
 
+        
+        
+        
         tag(THERMAL_GEAR_T1)
                 .add(HpCItems.T1_THERMAL_INSULATION_HEAD.get())
                 .add(HpCItems.T1_THERMAL_INSULATION_TORSO.get())
                 .add(HpCItems.T1_THERMAL_INSULATION_LEGGINGS.get())
                 .add(HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.get());
         
-        tag(THERMAL_GEAR_HEAD).add(HpCItems.T1_THERMAL_INSULATION_HEAD.get());
-        tag(THERMAL_GEAR_TORSO).add(HpCItems.T1_THERMAL_INSULATION_TORSO.get());
-        tag(THERMAL_GEAR_LEGS).add(HpCItems.T1_THERMAL_INSULATION_LEGGINGS.get());
-        tag(THERMAL_GEAR_HANDS_AND_FEET).add(HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.get());
+        tag(THERMAL_GEAR_HEAD)
+                .add(HpCItems.T1_THERMAL_INSULATION_HEAD.get());
+        tag(THERMAL_GEAR_TORSO)
+                .add(HpCItems.T1_THERMAL_INSULATION_TORSO.get());
+        tag(THERMAL_GEAR_LEGS)
+                .add(HpCItems.T1_THERMAL_INSULATION_LEGGINGS.get());
+        tag(THERMAL_GEAR_HANDS_AND_FEET)
+                .add(HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.get());
         
-        tag(T1_PRESSURE_PROTECTORS)
+        
+        
+        tag(PRESSURE_PROTECTORS_T1)
                 .add(HpCItems.T1_SPACE_SUIT_HELMET.get())
                 .add(HpCItems.T1_SPACE_SUIT_CHESTPLATE.get())
                 .add(HpCItems.T1_SPACE_SUIT_LEGGINGS.get())
                 .add(HpCItems.T1_SPACE_SUIT_BOOTS.get());
         
-        tag(T1_RADIATION_PROTECTORS)
+        tag(PRESSURE_PROTECTORS_HELMET)
+                .add(HpCItems.T1_SPACE_SUIT_HELMET.get());
+        tag(PRESSURE_PROTECTORS_CHESTPLATE)
+                .add(HpCItems.T1_SPACE_SUIT_CHESTPLATE.get());
+        tag(PRESSURE_PROTECTORS_LEGGINGS)
+                .add(HpCItems.T1_SPACE_SUIT_LEGGINGS.get());
+        tag(PRESSURE_PROTECTORS_BOOTS)
+                .add(HpCItems.T1_SPACE_SUIT_BOOTS.get());
+        
+        
+        
+        tag(RADIATION_PROTECTORS_T1)
                 .add(HpCItems.T1_SPACE_SUIT_HELMET.get())
                 .add(HpCItems.T1_SPACE_SUIT_CHESTPLATE.get())
                 .add(HpCItems.T1_SPACE_SUIT_LEGGINGS.get())
                 .add(HpCItems.T1_SPACE_SUIT_BOOTS.get());
         
-        tag(NOSES).add(HpCItems.T1_ROCKET_NOSE_CONE.get());
-//        tag(BOOSTERS).add(HpCItems..get());
-        tag(HULLS).add(HpCItems.COMPRESSED_HD_PLATE.get());
-        tag(FINS).add(HpCItems.T1_ROCKET_FIN.get());
-        tag(BASE).add(HpCItems.T1_ROCKET_BASE.get());
-        tag(ENGINES).add(HpCItems.T1_ROCKET_ENGINE.get());
+        tag(RADIATION_PROTECTORS_HELMET)
+                .add(HpCItems.T1_SPACE_SUIT_HELMET.get());
+        tag(RADIATION_PROTECTORS_CHESTPLATE)
+                .add(HpCItems.T1_SPACE_SUIT_CHESTPLATE.get());
+        tag(RADIATION_PROTECTORS_LEGGINGS)
+                .add(HpCItems.T1_SPACE_SUIT_LEGGINGS.get());
+        tag(RADIATION_PROTECTORS_BOOTS)
+                .add(HpCItems.T1_SPACE_SUIT_BOOTS.get());
+        
+        
+        
+        
+        
+        
+        tag(T1_ROCKET_PARTS)
+                .add(HpCItems.T1_ROCKET_NOSE_CONE.get())
+                .add(HpCItems.COMPRESSED_HD_PLATE.get())
+                .add(HpCItems.T1_ROCKET_FIN.get())
+                .add(HpCItems.T1_ROCKET_BASE.get())
+                .add(HpCItems.T1_ROCKET_ENGINE.get());
+        tag(NOSES)
+                .add(HpCItems.T1_ROCKET_NOSE_CONE.get());
+//        tag(BOOSTERS)
+//              .add(HpCItems..get());
+        tag(HULLS)
+                .add(HpCItems.COMPRESSED_HD_PLATE.get());
+        tag(FINS)
+                .add(HpCItems.T1_ROCKET_FIN.get());
+        tag(BASE)
+                .add(HpCItems.T1_ROCKET_BASE.get());
+        tag(ENGINES)
+                .add(HpCItems.T1_ROCKET_ENGINE.get());
+        //endregion
         
         tag(HpCTags.Items.STONES)
                 .add(Blocks.STONE.asItem())

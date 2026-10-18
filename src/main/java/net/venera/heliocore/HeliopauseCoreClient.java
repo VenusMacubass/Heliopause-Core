@@ -6,20 +6,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.client.gui.screens.options.OptionsScreen;
-import net.minecraft.client.model.CatModel;
-import net.minecraft.client.model.VillagerModel;
-import net.minecraft.client.model.WolfModel;
-import net.minecraft.client.model.ZombieModel;
+import net.minecraft.client.model.*;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.VillagerRenderer;
+import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.entity.layers.VillagerProfessionLayer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -29,6 +23,7 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffects;
@@ -36,10 +31,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.Wolf;
-import net.minecraft.world.entity.monster.Drowned;
-import net.minecraft.world.entity.monster.Husk;
-import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -50,6 +44,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
@@ -65,11 +60,11 @@ import net.venera.heliocore.data.atmospherics.OxygenVolumeHelper;
 import net.venera.heliocore.data.atmospherics.SpaceGearSetupController;
 import net.venera.heliocore.data.component.CanisterData;
 import net.venera.heliocore.data.component.HpCDataComponents;
+import net.venera.heliocore.dimension.HpCDimensions;
 import net.venera.heliocore.entity.HpCEntities;
 import net.venera.heliocore.entity.client.*;
 import net.venera.heliocore.entity.rideable.Tier1RocketEntity;
 import net.venera.heliocore.entity.rideable.Tier1RocketLanderEntity;
-import net.venera.heliocore.entity.villager.HpCVillagers;
 import net.venera.heliocore.entity.zombie.SpaceZombieRenderer;
 import net.venera.heliocore.fluid.HpCFluids;
 import net.venera.heliocore.item.HpCItems;
@@ -91,7 +86,6 @@ import net.venera.heliocore.screen.hud.LanderHudOverlay;
 import net.venera.heliocore.screen.hud.SpaceSuitHudOverlay;
 import net.venera.heliocore.util.*;
 import org.joml.Matrix4f;
-
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
@@ -377,10 +371,21 @@ public class HeliopauseCoreClient {
         event.registerLayerDefinition(WolfOxygenGear.LAYER_LOCATION, WolfOxygenGear::createBodyLayer);
         event.registerLayerDefinition(HumanoidOxygenGear.LAYER_LOCATION, HumanoidOxygenGear::createBodyLayer);
         event.registerLayerDefinition(VillagerOxygenGear.LAYER_LOCATION, VillagerOxygenGear::createBodyLayer);
+        event.registerLayerDefinition(CreeperOxygenGear.LAYER_LOCATION, CreeperOxygenGear::createBodyLayer);
+        event.registerLayerDefinition(SpiderOxygenGear.LAYER_LOCATION, SpiderOxygenGear::createBodyLayer);
     }
 
     @SubscribeEvent
     public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
+        PlayerRenderer defaultPlayer = event.getSkin(PlayerSkin.Model.WIDE);
+        if (defaultPlayer != null) {
+            defaultPlayer.addLayer(new HumanoidOxygenGearLayer<>(defaultPlayer, event.getEntityModels()));
+        }
+        PlayerRenderer slimPlayer = event.getSkin(PlayerSkin.Model.SLIM);
+        if (slimPlayer != null) {
+            slimPlayer.addLayer(new HumanoidOxygenGearLayer<>(slimPlayer, event.getEntityModels()));
+        }
+        
         var rawCatRenderer = event.getRenderer(EntityType.CAT);
         if (rawCatRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
 
@@ -388,30 +393,31 @@ public class HeliopauseCoreClient {
             LivingEntityRenderer<Cat, CatModel<Cat>> catRenderer = (LivingEntityRenderer<Cat, CatModel<Cat>>) livingRenderer;
             catRenderer.addLayer(new CatOxygenGearLayer(catRenderer, event.getEntityModels()));
         }
-        
         var rawWolfRenderer = event.getRenderer(EntityType.WOLF);
         if (rawWolfRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
             @SuppressWarnings("unchecked")
             LivingEntityRenderer<Wolf, WolfModel<Wolf>> wolfRenderer = (LivingEntityRenderer<Wolf, WolfModel<Wolf>>) livingRenderer;
             wolfRenderer.addLayer(new WolfOxygenGearLayer(wolfRenderer, event.getEntityModels()));
         }
-
-        PlayerRenderer defaultPlayer = event.getSkin(PlayerSkin.Model.WIDE);
-        if (defaultPlayer != null) {
-            defaultPlayer.addLayer(new HumanoidOxygenGearLayer<>(defaultPlayer, event.getEntityModels()));
-        }
         
-        PlayerRenderer slimPlayer = event.getSkin(PlayerSkin.Model.SLIM);
-        if (slimPlayer != null) {
-            slimPlayer.addLayer(new HumanoidOxygenGearLayer<>(slimPlayer, event.getEntityModels()));
-        }
-
         var rawVillagerRenderer = event.getRenderer(EntityType.VILLAGER);
         if (rawVillagerRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
             @SuppressWarnings("unchecked")
             LivingEntityRenderer<Villager, VillagerModel<Villager>> villagerRenderer = (LivingEntityRenderer<Villager, VillagerModel<Villager>>) livingRenderer;
-            villagerRenderer.addLayer(new VillagerOxygenGearLayer(villagerRenderer, event.getEntityModels()));
+            villagerRenderer.addLayer(new VillagerOxygenGearLayer<>(villagerRenderer, event.getEntityModels()));
         }
+        var rawWandererRenderer = event.getRenderer(EntityType.WANDERING_TRADER);
+        if (rawWandererRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+            @SuppressWarnings("unchecked")
+            LivingEntityRenderer<WanderingTrader, VillagerModel<WanderingTrader>> wandererRenderer = (LivingEntityRenderer<WanderingTrader, VillagerModel<WanderingTrader>>) livingRenderer;
+            wandererRenderer.addLayer(new VillagerOxygenGearLayer<>(wandererRenderer, event.getEntityModels()));
+        }
+//        var rawWitchRenderer = event.getRenderer(EntityType.WITCH);
+//        if (rawWitchRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+//            @SuppressWarnings("unchecked")
+//            LivingEntityRenderer<Witch, WitchModel<Witch>> witchRenderer = (LivingEntityRenderer<Witch, WitchModel<Witch>>) livingRenderer;
+//            witchRenderer.addLayer(new VillagerOxygenGearLayer<>(witchRenderer, event.getEntityModels()));
+//        }
 
         var rawZombieRenderer = event.getRenderer(EntityType.ZOMBIE);
         if (rawZombieRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
@@ -430,6 +436,45 @@ public class HeliopauseCoreClient {
             @SuppressWarnings("unchecked")
             LivingEntityRenderer<Drowned, ZombieModel<Drowned>> drownedRenderer = (LivingEntityRenderer<Drowned, ZombieModel<Drowned>>) livingRenderer;
             drownedRenderer.addLayer(new HumanoidOxygenGearLayer<>(drownedRenderer, event.getEntityModels()));
+        }
+
+        var rawSkeletonRenderer = event.getRenderer(EntityType.SKELETON);
+        if (rawSkeletonRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+            @SuppressWarnings("unchecked")
+            LivingEntityRenderer<Skeleton, SkeletonModel<Skeleton>> skeletonRenderer = (LivingEntityRenderer<Skeleton, SkeletonModel<Skeleton>>) livingRenderer;
+            skeletonRenderer.addLayer(new HumanoidOxygenGearLayer<>(skeletonRenderer, event.getEntityModels()));
+        }
+        var rawWitherSkeletonRenderer = event.getRenderer(EntityType.WITHER_SKELETON);
+        if (rawWitherSkeletonRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+            @SuppressWarnings("unchecked")
+            LivingEntityRenderer<WitherSkeleton, SkeletonModel<WitherSkeleton>> witherSkeletonRenderer = (LivingEntityRenderer<WitherSkeleton, SkeletonModel<WitherSkeleton>>) livingRenderer;
+            witherSkeletonRenderer.addLayer(new HumanoidOxygenGearLayer<>(witherSkeletonRenderer, event.getEntityModels()));
+        }
+        var rawStrayRenderer = event.getRenderer(EntityType.STRAY);
+        if (rawStrayRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+            @SuppressWarnings("unchecked")
+            LivingEntityRenderer<Stray, SkeletonModel<Stray>> strayRenderer = (LivingEntityRenderer<Stray, SkeletonModel<Stray>>) livingRenderer;
+            strayRenderer.addLayer(new HumanoidOxygenGearLayer<>(strayRenderer, event.getEntityModels()));
+        }
+
+        var rawCreeperRenderer = event.getRenderer(EntityType.CREEPER);
+        if (rawCreeperRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+            @SuppressWarnings("unchecked")
+            LivingEntityRenderer<Creeper, CreeperModel<Creeper>> creeperRenderer = (LivingEntityRenderer<Creeper, CreeperModel<Creeper>>) livingRenderer;
+            creeperRenderer.addLayer(new CreeperOxygenGearLayer<>(creeperRenderer, event.getEntityModels()));
+        }
+
+        var rawSpiderRenderer = event.getRenderer(EntityType.SPIDER);
+        if (rawSpiderRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+            @SuppressWarnings("unchecked")
+            LivingEntityRenderer<Spider, SpiderModel<Spider>> spiderRenderer = (LivingEntityRenderer<Spider, SpiderModel<Spider>>) livingRenderer;
+            spiderRenderer.addLayer(new SpiderOxygenGearLayer<>(spiderRenderer, event.getEntityModels()));
+        }
+        var rawCaveSpiderRenderer = event.getRenderer(EntityType.CAVE_SPIDER);
+        if (rawCaveSpiderRenderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+            @SuppressWarnings("unchecked")
+            LivingEntityRenderer<CaveSpider, SpiderModel<CaveSpider>> caveSpiderRenderer = (LivingEntityRenderer<CaveSpider, SpiderModel<CaveSpider>>) livingRenderer;
+            caveSpiderRenderer.addLayer(new SpiderOxygenGearLayer<>(caveSpiderRenderer, event.getEntityModels()));
         }
         
     }
@@ -649,7 +694,7 @@ public class HeliopauseCoreClient {
             boolean hasMask = !inventory.getStackInSlot(0).isEmpty();
 
             var headArmor = villager.getItemBySlot(EquipmentSlot.HEAD);
-            if (headArmor.is(HpCTags.Items.T1_PRESSURE_PROTECTORS) || headArmor.is(HpCTags.Items.T2_PRESSURE_PROTECTORS)) {
+            if (headArmor.is(HpCTags.Items.PRESSURE_PROTECTORS_T1) || headArmor.is(HpCTags.Items.PRESSURE_PROTECTORS_T2)) {
                 hasMask = false;
             }
             
@@ -679,6 +724,34 @@ public class HeliopauseCoreClient {
                 event.setPitch(event.getPitch() + (random.nextFloat() - 0.5f) * intensity);
                 event.setYaw(event.getYaw() + (random.nextFloat() - 0.5f) * intensity);
                 event.setRoll(event.getRoll() + (random.nextFloat() - 0.5f) * intensity);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlaySound(PlaySoundEvent event) {
+        if (event.getSound() == null) return;
+        
+        SoundSource source = event.getSound().getSource();
+        
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player == null || player.level() == null) return;
+        
+        if (player.level().dimension() == HpCDimensions.MOON_LEVEL_KEY) {
+            boolean hasHelmet = player.getItemBySlot(EquipmentSlot.HEAD).is(HpCTags.Items.PRESSURE_PROTECTORS_T1);
+            boolean hasChest = player.getItemBySlot(EquipmentSlot.CHEST).is(HpCTags.Items.PRESSURE_PROTECTORS_T1);
+
+            if (!hasHelmet || !hasChest) {
+                if (source != SoundSource.MUSIC && source != SoundSource.MASTER) {
+                    
+                    double dX = event.getSound().getX() - player.getX();
+                    double dY = event.getSound().getY() - player.getY();
+                    double dZ = event.getSound().getZ() - player.getZ();
+                    
+                    if (dX * dX + dY * dY + dZ * dZ > 4.0) {
+                        event.setSound(null);
+                    }
+                }
             }
         }
     }

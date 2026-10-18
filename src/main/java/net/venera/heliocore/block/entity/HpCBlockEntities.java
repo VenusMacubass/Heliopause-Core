@@ -102,12 +102,6 @@ public class HpCBlockEntities {
                     HpCBlocks.OXYGEN_SEALER.get()).build(null));
     
     //endregion
-
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DeconstructorEntity>> DECONSTRUCTOR_ENTITY = BLOCK_ENTITIES.register("deconstructor_entity",
-            ()-> BlockEntityType.Builder.of((blockPos, blockState) ->
-                            new DeconstructorEntity(HpCBlockEntities.DECONSTRUCTOR_ENTITY.get(), blockPos, blockState,
-                                    50000, 120, 20),
-                    HpCBlocks.DECONSTRUCTOR.get()).build(null));
     
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PCBFabricatorEntity>> PCB_FABRICATOR_ENTITY = BLOCK_ENTITIES.register("pcb_fabricator_entity",
             ()-> BlockEntityType.Builder.of((blockPos, blockState) ->

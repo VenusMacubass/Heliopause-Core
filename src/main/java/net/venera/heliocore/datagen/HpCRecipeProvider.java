@@ -461,6 +461,18 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('C', HpCItems.COMPRESSED_ALUMINIUM.get())
                 .unlockedBy("has_air_fan", has(HpCItems.AIR_FAN.get()))
                 .save(recipeOutput, "oxygen_sealer_crafting");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, HpCBlocks.MAGNETIC_ASSEMBLY_PLATFORM.get())
+                .pattern("III")
+                .pattern("SCS")
+                .pattern("RBR")
+                .define('I', HpCItems.COMPRESSED_IRON.get())
+                .define('C', Items.CRAFTER)
+                .define('R', HpCItems.COMPRESSED_IRIDIUM.get())
+                .define('S', HpCItems.COMPRESSED_STEEL.get())
+                .define('B', HpCItems.BASIC_CIRCUIT_BOARD.get())
+                .unlockedBy("has_crafter", has(Items.CRAFTER))
+                .save(recipeOutput, "magnetic_assembly_platform_crafting");
         //endregion
         
         //region Low Functionality Items and Blocks
@@ -665,7 +677,7 @@ public class HpCRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_thermal_isolator", has(HpCItems.THERMAL_INSULATION_MATERIAL.get()))
                 .save(recipeOutput, "t1_thermal_insulation_hands_and_feet_crafting");
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, HpCItems.MASS_BELT.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, HpCItems.WEIGHT_BELT.get())
                 .pattern("IGI")
                 .define('G', Items.GOLD_BLOCK)
                 .define('I', Items.IRON_INGOT)

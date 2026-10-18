@@ -10,7 +10,8 @@
     "heliocore:gas_compressor",
     "heliocore:gas_vaporizer",
     "heliocore:energy_generator",
-    "heliocore:deconstructor",
-    "heliocore:oxygen_sealer"
+    "heliocore:oxygen_sealer",
+    "heliocore:pcb_fabricator",
+    "heliocore:magnetic_assembly_platform"
   ]
 }

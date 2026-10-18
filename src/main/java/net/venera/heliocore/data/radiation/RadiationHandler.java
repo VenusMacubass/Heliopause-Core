@@ -3,8 +3,6 @@ package net.venera.heliocore.data.radiation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -100,9 +98,9 @@ public class RadiationHandler {
     public static int getSuitProtectionLevel(LivingEntity entity) {
         int protection = 0;
         for(ItemStack stack : entity.getArmorSlots()){
-            if(stack.is(HpCTags.Items.T3_RADIATION_PROTECTORS)) protection += 3;
-            else if(stack.is(HpCTags.Items.T2_RADIATION_PROTECTORS)) protection += 2;
-            else if(stack.is(HpCTags.Items.T1_RADIATION_PROTECTORS)) protection += 1;
+            if(stack.is(HpCTags.Items.RADIATION_PROTECTORS_T3)) protection += 3;
+            else if(stack.is(HpCTags.Items.RADIATION_PROTECTORS_T2)) protection += 2;
+            else if(stack.is(HpCTags.Items.RADIATION_PROTECTORS_T1)) protection += 1;
         }
 
         if (protection >= 12) return 200; // Full T3

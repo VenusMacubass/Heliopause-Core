@@ -20,7 +20,9 @@ public class HpCBiomeTagProvider extends BiomeTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(HpCTags.Biomes.HAS_ABUNDANT_OIL)
                 .addTag(BiomeTags.IS_OCEAN)
+                .addTag(BiomeTags.IS_DEEP_OCEAN)
                 .addTag(BiomeTags.HAS_SWAMP_HUT)
+                .addTag(BiomeTags.IS_BADLANDS)
                 .addTag(BiomeTags.HAS_DESERT_PYRAMID);       
         
         this.tag(HpCTags.Biomes.LUNAR_HIGHLANDS)

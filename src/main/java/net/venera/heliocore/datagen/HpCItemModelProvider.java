@@ -134,7 +134,7 @@ public class HpCItemModelProvider extends ItemModelProvider {
         basicItem(HpCItems.SINGULAR_SOLAR_PANEL.get());
         basicItem(HpCItems.TIER_1_SOLAR_PANEL.get());
         basicItem(HpCItems.STEEL_ROD.get());
-        basicItem(HpCItems.MASS_BELT.get());
+        basicItem(HpCItems.WEIGHT_BELT.get());
         basicItem(HpCItems.ROCKET_ITEM.get());
 
         basicItem(HpCItems.RAW_ALUMINIUM.get());

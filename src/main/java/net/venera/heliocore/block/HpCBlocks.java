@@ -116,8 +116,6 @@ public class HpCBlocks {
             () -> new GasVaporizerBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.GAS_VAPORIZER_ENTITY));
     public static final DeferredBlock<Block> ENERGY_GENERATOR = registerBlock("energy_generator",
             () -> new EnergyGeneratorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.ENERGY_GENERATOR_ENTITY));
-    public static final DeferredBlock<Block> DECONSTRUCTOR = registerBlock("deconstructor",
-            () -> new DeconstructorBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.DECONSTRUCTOR_ENTITY));
     public static final DeferredBlock<Block> OXYGEN_SEALER = registerBlock("oxygen_sealer",
             () -> new OxygenSealerBlock(BlockBehaviour.Properties.of().strength(2f), HpCBlockEntities.OXYGEN_SEALER_ENTITY));
     public static final DeferredBlock<Block> PCB_FABRICATOR = registerBlock("pcb_fabricator", 
@@ -128,7 +126,7 @@ public class HpCBlocks {
     
     //region Moon
     public static final DeferredBlock<Block> MOON_REGOLITH = registerBlock("moon_regolith",
-            () -> new Block(BlockBehaviour.Properties.of().sound(SoundType.SAND)));
+            () -> new Block(BlockBehaviour.Properties.of().sound(SoundType.SNOW)));
     public static final DeferredBlock<Block> MOON_DIRT = registerBlock("moon_dirt",
             () -> new Block(BlockBehaviour.Properties.of().sound(SoundType.ROOTED_DIRT)));
     public static final DeferredBlock<Block> MOON_ROCK = registerBlock("moon_rock",
@@ -136,7 +134,7 @@ public class HpCBlocks {
     public static final DeferredBlock<Block> MOON_COBBLESTONE = registerBlock("moon_cobblestone",
             () -> new Block(BlockBehaviour.Properties.of().strength(5f).requiresCorrectToolForDrops().sound(SoundType.STONE)));
     public static final DeferredBlock<Block> MOON_DUNGEON_BRICKS = registerBlock("moon_dungeon_bricks",
-            () -> new Block(BlockBehaviour.Properties.of().requiresCorrectToolForDrops()));
+            () -> new Block(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().sound(SoundType.DEEPSLATE_BRICKS)));
     
     
     public static final DeferredBlock<WallBlock> MOON_ROCK_WALL = registerBlock("moon_rock_wall",

@@ -586,7 +586,7 @@ public class HpCItems {
                     return InteractionResultHolder.pass(player.getItemInHand(hand));
                 }
             });
-    public static final DeferredItem<Item> MASS_BELT = ITEMS.register("mass_belt", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> WEIGHT_BELT = ITEMS.register("weight_belt", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> T1_THERMAL_INSULATION_HEAD = ITEMS.register("t1_thermal_insulation_head", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> T1_THERMAL_INSULATION_TORSO = ITEMS.register("t1_thermal_insulation_torso", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> T1_THERMAL_INSULATION_LEGGINGS = ITEMS.register("t1_thermal_insulation_leggings", () -> new Item(new Item.Properties()));

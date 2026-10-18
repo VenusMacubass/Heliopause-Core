@@ -1,4 +1,4 @@
-// 1.21.1	2026-09-19T19:03:29.5152674	Item Models: heliocore
+// 1.21.1	2026-10-18T11:21:58.4072844	Item Models: heliocore
 1ac96947d6d705457f38d0a1fa68a0dcb74bc592 assets/heliocore/models/item/air_fan.json
 0734313d99e1a4ca395735a0943619e787dd452a assets/heliocore/models/item/base_building_wall_black.json
 77313ec5bf2583da66c950d2ae65ff21c6eb341c assets/heliocore/models/item/base_building_wall_white.json
@@ -60,7 +60,6 @@ b063bf0d94b21cd7a1510223b9081d4b9aef6afa assets/heliocore/models/item/fish_burge
 a5d460edca37824a4e26dc7a6edeeea70b8dcbec assets/heliocore/models/item/gas_regulator.json
 1f5f611f28b823a9553c4a282c0690eb16df8ea1 assets/heliocore/models/item/glass_sword.json
 d754b71e6180081a586fe7630dd92361e15d31f8 assets/heliocore/models/item/heavy_duty_plate.json
-9c25b320400f8a2f03099d0ba1a2db2984f34b1d assets/heliocore/models/item/mass_belt.json
 f161f4e5733fdfa637181ee0e9da9a60bf97c014 assets/heliocore/models/item/moon_dungeon_brick_wall.json
 8ba848f79f24fecc74d70c6e43e32f4a49d5ce29 assets/heliocore/models/item/moon_rock_wall.json
 f643fc074ecadea8066344fa970997e691ff0ec0 assets/heliocore/models/item/oxygen_connectors.json
@@ -191,3 +190,4 @@ a900bde53a5d489a2b8ba1f4da88452d1bde67e2 assets/heliocore/models/item/tektites.j
 c4a1fffa789a0c1c784b73b4f8db68fc83bb55eb assets/heliocore/models/item/thermal_regulator.json
 9e04aee0352d41a0ec1dece97afc9a09cb3e640a assets/heliocore/models/item/tier_1_solar_panel.json
 6fd8a87b2a85618f369419c444839dadff10afce assets/heliocore/models/item/tin_canister.json
+1e42dc6bc029002c26e9526703800695d55c187b assets/heliocore/models/item/weight_belt.json

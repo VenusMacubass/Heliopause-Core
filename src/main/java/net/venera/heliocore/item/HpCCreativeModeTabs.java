@@ -105,7 +105,7 @@ public class HpCCreativeModeTabs {
                         output.accept(HpCItems.T1_SPACE_SUIT_LEGGINGS.get());
                         output.accept(HpCItems.T1_SPACE_SUIT_BOOTS.get());
                         
-                        output.accept(HpCItems.MASS_BELT.get());
+                        output.accept(HpCItems.WEIGHT_BELT.get());
                         output.accept(HpCItems.GLASS_SWORD.get());
                         
                         output.accept(HpCItems.RAW_TIN.get());

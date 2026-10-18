@@ -30,7 +30,6 @@
     "heliocore:gas_compressor",
     "heliocore:gas_vaporizer",
     "heliocore:energy_generator",
-    "heliocore:deconstructor",
     "heliocore:oxygen_sealer",
     "heliocore:magnetic_assembly_platform",
     "heliocore:radioactive_block",

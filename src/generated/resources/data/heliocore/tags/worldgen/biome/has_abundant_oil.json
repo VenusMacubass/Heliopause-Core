@@ -1,7 +1,9 @@
 {
   "values": [
     "#minecraft:is_ocean",
+    "#minecraft:is_deep_ocean",
     "#minecraft:has_structure/swamp_hut",
+    "#minecraft:is_badlands",
     "#minecraft:has_structure/desert_pyramid"
   ]
 }

@@ -25,9 +25,7 @@ public class HpCMobTagProvider extends EntityTypeTagsProvider {
                 .addTag(EntityTypeTags.ARTHROPOD)
                 .addTag(EntityTypeTags.RAIDERS)
                 .addTag(EntityTypeTags.AQUATIC)
-                .addTag(EntityTypeTags.FROG_FOOD); 
-        
-        tag(OXYGEN_SLOTS_RECEIVERS)
+                .addTag(EntityTypeTags.FROG_FOOD)
                 .add(EntityType.CREEPER, 
                         EntityType.ENDERMAN, 
                         EntityType.GHAST, 
@@ -45,13 +43,16 @@ public class HpCMobTagProvider extends EntityTypeTagsProvider {
         tag(HAS_THERMAL_BLESSING)
                 .add(EntityType.IRON_GOLEM);
         tag(HAS_OXYGEN_BLESSING)
+                .add(EntityType.PARROT)
                 .add(EntityType.CAT)
                 .add(EntityType.WOLF);
         tag(HAS_RADIATION_BLESSING)
+                .add(EntityType.PARROT)
                 .add(EntityType.CAT)
                 .add(EntityType.WOLF);
         tag(HAS_PRESSURE_BLESSING)
                 .add(EntityType.IRON_GOLEM)
+                .add(EntityType.PARROT)
                 .add(EntityType.CAT)
                 .add(EntityType.WOLF);
     }

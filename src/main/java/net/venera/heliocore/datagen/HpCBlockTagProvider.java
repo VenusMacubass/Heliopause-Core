@@ -56,7 +56,6 @@ public class HpCBlockTagProvider extends BlockTagsProvider {
                 .add(HpCBlocks.GAS_COMPRESSOR.get())
                 .add(HpCBlocks.GAS_VAPORIZER.get())
                 .add(HpCBlocks.ENERGY_GENERATOR.get())
-                .add(HpCBlocks.DECONSTRUCTOR.get())
                 .add(HpCBlocks.OXYGEN_SEALER.get())
                 .add(HpCBlocks.MAGNETIC_ASSEMBLY_PLATFORM.get())
                 
@@ -143,8 +142,9 @@ public class HpCBlockTagProvider extends BlockTagsProvider {
                 .add(HpCBlocks.GAS_COMPRESSOR.get())
                 .add(HpCBlocks.GAS_VAPORIZER.get())
                 .add(HpCBlocks.ENERGY_GENERATOR.get())
-                .add(HpCBlocks.DECONSTRUCTOR.get())
-                .add(HpCBlocks.OXYGEN_SEALER.get());
+                .add(HpCBlocks.OXYGEN_SEALER.get())
+                .add(HpCBlocks.PCB_FABRICATOR.get())
+                .add(HpCBlocks.MAGNETIC_ASSEMBLY_PLATFORM.get());
 
 
         tag(HpCTags.Blocks.MOON_REGOLITH_REPLACEABLES).add(HpCBlocks.MOON_REGOLITH.get());

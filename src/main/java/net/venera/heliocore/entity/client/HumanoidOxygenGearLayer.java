@@ -35,8 +35,8 @@ public class HumanoidOxygenGearLayer<T extends LivingEntity, M extends HumanoidM
         boolean hasRightTank = !inventory.getStackInSlot(3).isEmpty();
         
         var headArmor = entity.getItemBySlot(EquipmentSlot.HEAD);
-        boolean hasSpaceHelmet = headArmor.is(HpCTags.Items.T1_PRESSURE_PROTECTORS) ||
-                headArmor.is(HpCTags.Items.T2_PRESSURE_PROTECTORS);
+        boolean hasSpaceHelmet = headArmor.is(HpCTags.Items.PRESSURE_PROTECTORS_T1) ||
+                headArmor.is(HpCTags.Items.PRESSURE_PROTECTORS_T2);
         
         if (hasSpaceHelmet) {
             hasMask = false;

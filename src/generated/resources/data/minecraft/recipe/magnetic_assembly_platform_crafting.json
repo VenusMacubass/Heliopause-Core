@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "B": {
+      "item": "heliocore:basic_circuit_board"
+    },
+    "C": {
+      "item": "minecraft:crafter"
+    },
+    "I": {
+      "item": "heliocore:compressed_iron"
+    },
+    "R": {
+      "item": "heliocore:compressed_iridium"
+    },
+    "S": {
+      "item": "heliocore:compressed_steel"
+    }
+  },
+  "pattern": [
+    "III",
+    "SCS",
+    "RBR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "heliocore:magnetic_assembly_platform"
+  }
+}

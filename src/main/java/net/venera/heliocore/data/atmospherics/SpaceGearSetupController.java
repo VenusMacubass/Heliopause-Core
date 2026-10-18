@@ -49,26 +49,50 @@ public class SpaceGearSetupController {
         int thermalProtectionScore = 0;
 
         ItemStack headStack = inventory.getStackInSlot(4);
-        if (headStack.is(HpCItems.T1_THERMAL_INSULATION_HEAD.get())) {
+        if (headStack.is(HpCTags.Items.THERMAL_GEAR_T1)) {
             thermalProtectionScore++;
+        }
+        if (headStack.is(HpCTags.Items.THERMAL_GEAR_T2)) {
+            thermalProtectionScore += 2;
+        }
+        if (headStack.is(HpCTags.Items.THERMAL_GEAR_T3)) {
+            thermalProtectionScore += 3;
         }
 
         
         ItemStack torsoStack = inventory.getStackInSlot(5);
-        if (torsoStack.is(HpCItems.T1_THERMAL_INSULATION_TORSO.get())) {
+        if (torsoStack.is(HpCTags.Items.THERMAL_GEAR_T1)) {
             thermalProtectionScore++;
+        }
+        if (torsoStack.is(HpCTags.Items.THERMAL_GEAR_T2)) {
+            thermalProtectionScore += 2;
+        }
+        if (torsoStack.is(HpCTags.Items.THERMAL_GEAR_T3)) {
+            thermalProtectionScore += 3;
         }
 
         
         ItemStack legStack = inventory.getStackInSlot(6);
-        if (legStack.is(HpCItems.T1_THERMAL_INSULATION_LEGGINGS.get())) {
+        if (legStack.is(HpCTags.Items.THERMAL_GEAR_T1)) {
             thermalProtectionScore++;
+        }
+        if (legStack.is(HpCTags.Items.THERMAL_GEAR_T2)) {
+            thermalProtectionScore += 2;
+        }
+        if (legStack.is(HpCTags.Items.THERMAL_GEAR_T3)) {
+            thermalProtectionScore += 3;
         }
 
         
         ItemStack handsAndFeetStack = inventory.getStackInSlot(7);
-        if (handsAndFeetStack.is(HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.get())) {
+        if (handsAndFeetStack.is(HpCTags.Items.THERMAL_GEAR_T1)) {
             thermalProtectionScore++;
+        }
+        if (handsAndFeetStack.is(HpCTags.Items.THERMAL_GEAR_T2)) {
+            thermalProtectionScore += 2;
+        }
+        if (handsAndFeetStack.is(HpCTags.Items.THERMAL_GEAR_T3)) {
+            thermalProtectionScore += 3;
         }
         
         return thermalProtectionScore;
@@ -77,9 +101,9 @@ public class SpaceGearSetupController {
     public static boolean checkBaricSetup(LivingEntity livingEntity, int tier) {
         TagKey<Item> pressureProtector;
         switch (tier) {
-            case 1 -> pressureProtector = HpCTags.Items.T1_PRESSURE_PROTECTORS;
-            case 2 -> pressureProtector = HpCTags.Items.T2_PRESSURE_PROTECTORS;
-            case 3 -> pressureProtector = HpCTags.Items.T3_PRESSURE_PROTECTORS;
+            case 1 -> pressureProtector = HpCTags.Items.PRESSURE_PROTECTORS_T1;
+            case 2 -> pressureProtector = HpCTags.Items.PRESSURE_PROTECTORS_T2;
+            case 3 -> pressureProtector = HpCTags.Items.PRESSURE_PROTECTORS_T3;
             default -> throw new IllegalArgumentException("Invalid tier: " + tier);
         }
         for (ItemStack armorPiece : livingEntity.getArmorSlots()) {

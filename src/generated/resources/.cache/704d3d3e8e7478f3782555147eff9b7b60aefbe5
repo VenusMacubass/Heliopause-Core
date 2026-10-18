@@ -1,19 +1,23 @@
-// 1.21.1	2026-09-17T16:19:15.4397481	Tags for minecraft:item mod id heliocore
+// 1.21.1	2026-10-18T11:21:58.4132574	Tags for minecraft:item mod id heliocore
 e0bfc26d31f2a836e943fe7930590f71e8a3e74c data/heliocore/tags/item/canister.json
 7adee3a6cf4e8d524b666c4a096c32f02b18f5db data/heliocore/tags/item/circuit_materials.json
 6db9722aa3e98cc50f72ac4c0a991f901f7309c6 data/heliocore/tags/item/compressible_ingots.json
+d5fa9edd2102891a913f58b0f8e2cb8290012f73 data/heliocore/tags/item/oxygen_setup.json
+6a720f3c1f85fd49b7e12e33a846bf2ac10e825f data/heliocore/tags/item/pressure_protectors_boots.json
+1f9d5b876f736f4f773f2f5adb4a28c10a892397 data/heliocore/tags/item/pressure_protectors_chestplate.json
+12869ce90a77e3370a55e14fee66dc50d575334b data/heliocore/tags/item/pressure_protectors_helmet.json
+fa1a84eda9f66be25c365433a0a5add1c541ef37 data/heliocore/tags/item/pressure_protectors_leggings.json
 98a70b1a03f2c0ebbaf891639e6b30d0d824765e data/heliocore/tags/item/slots/base.json
 32548834d03c8b686736cb59c3ce160a000fd7cd data/heliocore/tags/item/slots/engines.json
 ebbb547b09f25f281fc42190ebb354ba0aee7e19 data/heliocore/tags/item/slots/fins.json
 2a4db15fc73f2db18647c81a37f5cea850aa8735 data/heliocore/tags/item/slots/hulls.json
 9ecc95145ec44f84a6eb4f78d8ea3c295af6a66c data/heliocore/tags/item/slots/noses.json
-d78dea7881ff6c4bce8bb1760d7d5d5ab868168e data/heliocore/tags/item/slots/oxygen_connectors.json
-96ac74fc3ae79a5bbc1fc47a30a7a0d7c40e70b3 data/heliocore/tags/item/slots/oxygen_mask.json
 660304c1431a89599c3470290ddb23ba64b6500e data/heliocore/tags/item/slots/oxygen_tank.json
 a8fc9d94364118c7246e368d4f418652158d0d34 data/heliocore/tags/item/stone_variants.json
 de2a8d4afd9df650904239f1adcfa022c659da3d data/heliocore/tags/item/t1_pressure_protectors.json
 de2a8d4afd9df650904239f1adcfa022c659da3d data/heliocore/tags/item/t1_radiation_protectors.json
-3e92a9f0dd006835f0dabc9d590d23f15bb3b686 data/heliocore/tags/item/thermal_gear.json
+007f0ef0a873cc69097054d70f94339bd9b76a91 data/heliocore/tags/item/t1_rocket_parts.json
+3e92a9f0dd006835f0dabc9d590d23f15bb3b686 data/heliocore/tags/item/t1_thermal_gear.json
 bb83361d93fb378549d6c8f830cf39d9e71bd240 data/heliocore/tags/item/thermal_gear_hands_and_feet.json
 f588e191c8cf2e47600d9f77c6baf1dea42d401c data/heliocore/tags/item/thermal_gear_head.json
 28cc6c80aa263fae90c8f073dfbb0e00fb4bd96e data/heliocore/tags/item/thermal_gear_legs.json

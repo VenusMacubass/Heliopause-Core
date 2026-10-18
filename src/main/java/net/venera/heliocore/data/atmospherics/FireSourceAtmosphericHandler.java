@@ -63,6 +63,10 @@ public class FireSourceAtmosphericHandler {
                     level.setBlockAndUpdate(pos, state.setValue(BlockStateProperties.LIT, false));
                 }
             }
+
+            else if (state.is(Blocks.FIRE) || state.is(Blocks.SOUL_FIRE)) {
+                level.removeBlock(pos, false);
+            }
         }
     }
 }

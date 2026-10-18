@@ -13,7 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
-import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.data.HpCAttachments;
 import net.venera.heliocore.event.HpCEvents;
 import net.venera.heliocore.item.HpCItems;
@@ -52,7 +51,7 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
         this.addSlot(new SlotItemHandler(equipmentInventory, 0, 18, 22) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(HpCTags.Items.OXYGEN_MASK);
+                return stack.is(HpCItems.OXYGEN_MASK);
             }
 
             @Override
@@ -73,7 +72,7 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
         this.addSlot(new SlotItemHandler(equipmentInventory, 1, 18, 42) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(HpCTags.Items.OXYGEN_CONNECTORS);
+                return stack.is(HpCItems.OXYGEN_CONNECTORS);
             }
 
             @Override
@@ -188,7 +187,7 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
         this.addSlot(new SlotItemHandler(equipmentInventory, 9, 118, 44) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(HpCItems.MASS_BELT.get());
+                return stack.is(HpCItems.WEIGHT_BELT.get());
             }
 
             @Override
@@ -219,31 +218,24 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
         if (sourceSlot == null || !sourceSlot.hasItem()) return ItemStack.EMPTY;
         ItemStack sourceStack = sourceSlot.getItem();
         ItemStack copyOfSourceStack = sourceStack.copy();
-
-        // 1. Completely disable quick moving if clicking the offhand slot
+        
         if (pIndex == OFFHAND_INDEX) {
             return ItemStack.EMPTY;
         }
-
-        // 2. Custom Slots (0-9) -> Player Inventory + Hotbar (10-45)
+        
         if (pIndex < CUSTOM_SLOT_COUNT) {
             if (!moveItemStackTo(sourceStack, VANILLA_MAIN_FIRST, VANILLA_END, false)) {
                 return ItemStack.EMPTY;
             }
         }
-        // 3. Player Inventory + Hotbar (10-45) -> Custom Slots OR internal swapping
         else if (pIndex >= VANILLA_MAIN_FIRST && pIndex < VANILLA_END) {
-            // First, try to send it to our custom equipment slots
             if (!moveItemStackTo(sourceStack, 0, CUSTOM_SLOT_COUNT, false)) {
-
-                // If it can't go to equipment slots, swap it between main inventory and hotbar
+                
                 if (pIndex < VANILLA_HOTBAR_FIRST) {
-                    // Main Inventory -> Hotbar
                     if (!moveItemStackTo(sourceStack, VANILLA_HOTBAR_FIRST, VANILLA_END, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
-                    // Hotbar -> Main Inventory
                     if (!moveItemStackTo(sourceStack, VANILLA_MAIN_FIRST, VANILLA_HOTBAR_FIRST, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -256,8 +248,7 @@ public class HpCEquipmentMenu extends AbstractContainerMenu {
         } else {
             sourceSlot.setChanged();
         }
-
-        // If the stack size didn't change at all, the move failed entirely
+        
         if (sourceStack.getCount() == copyOfSourceStack.getCount()) {
             return ItemStack.EMPTY;
         }

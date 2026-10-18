@@ -43,8 +43,8 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
         var head = mc.player.getItemBySlot(EquipmentSlot.HEAD);
         var chest = mc.player.getItemBySlot(EquipmentSlot.CHEST);
 
-        boolean hasHelmet = head.is(HpCTags.Items.T1_PRESSURE_PROTECTORS) || head.is(HpCTags.Items.T2_PRESSURE_PROTECTORS);
-        boolean hasChestplate = chest.is(HpCTags.Items.T1_PRESSURE_PROTECTORS) || chest.is(HpCTags.Items.T2_PRESSURE_PROTECTORS);
+        boolean hasHelmet = head.is(HpCTags.Items.PRESSURE_PROTECTORS_T1) || head.is(HpCTags.Items.PRESSURE_PROTECTORS_T2);
+        boolean hasChestplate = chest.is(HpCTags.Items.PRESSURE_PROTECTORS_T1) || chest.is(HpCTags.Items.PRESSURE_PROTECTORS_T2);
 
         if (!hasHelmet || !hasChestplate) {
             return;
