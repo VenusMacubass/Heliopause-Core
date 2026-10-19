@@ -2,8 +2,8 @@
   "feature": "heliocore:overworld_iridium_ore",
   "placement": [
     {
-      "type": "minecraft:rarity_filter",
-      "chance": 2
+      "type": "minecraft:count",
+      "count": 6
     },
     {
       "type": "minecraft:in_square"
@@ -11,12 +11,12 @@
     {
       "type": "minecraft:height_range",
       "height": {
-        "type": "minecraft:uniform",
+        "type": "minecraft:trapezoid",
         "max_inclusive": {
           "absolute": 256
         },
         "min_inclusive": {
-          "absolute": 64
+          "absolute": -128
         }
       }
     },

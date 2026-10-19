@@ -88,16 +88,16 @@ public class HpCConfiguredFeatures { //What to place
         //region Registry
         register(context, OVERWORLD_TIN_ORE_KEY, Feature.ORE, new OreConfiguration(overworldTinOres, 10));
         register(context, OVERWORLD_ALUMINIUM_ORE_KEY, Feature.ORE, new OreConfiguration(overworldAluminiumOres, 10));
-        register(context, OVERWORLD_SILICON_ORE_KEY, Feature.ORE, new OreConfiguration(overworldSiliconOres, 2));
-        register(context, OVERWORLD_IRIDIUM_ORE_KEY, Feature.ORE, new OreConfiguration(overworldIridiumOres, 2));
+        register(context, OVERWORLD_SILICON_ORE_KEY, Feature.ORE, new OreConfiguration(overworldSiliconOres, 8));
+        register(context, OVERWORLD_IRIDIUM_ORE_KEY, Feature.ORE, new OreConfiguration(overworldIridiumOres, 7));
 
         register(context, MOON_TEKTITE_KEY, Feature.ORE, new OreConfiguration(moonTektiteOres, 3));
         register(context, MOON_TIN_ORE_KEY, Feature.ORE, new OreConfiguration(moonTinOres, 3));
         register(context, MOON_IRON_ORE_KEY, Feature.ORE, new OreConfiguration(moonIronOres, 7)); // Slightly smaller than Earth Iron
         register(context, MOON_COPPER_ORE_KEY, Feature.ORE, new OreConfiguration(moonCopperOres, 9)); // Standard copper vein size
-        register(context, MOON_ALUMINIUM_ORE_KEY, Feature.ORE, new OreConfiguration(moonAluminiumOres, 8)); // Abundant veins
-        register(context, MOON_SILICON_ORE_KEY, Feature.ORE, new OreConfiguration(moonSiliconOres, 4)); // Small veins
-        register(context, MOON_IRIDIUM_ORE_KEY, Feature.ORE, new OreConfiguration(moonIridiumOres, 3)); // Slightly larger than Earth Iridium
+        register(context, MOON_ALUMINIUM_ORE_KEY, Feature.ORE, new OreConfiguration(moonAluminiumOres, 8));
+        register(context, MOON_SILICON_ORE_KEY, Feature.ORE, new OreConfiguration(moonSiliconOres, 9)); 
+        register(context, MOON_IRIDIUM_ORE_KEY, Feature.ORE, new OreConfiguration(moonIridiumOres, 8)); 
 
         context.register(CRUDE_OIL_RESERVOIR, new ConfiguredFeature<>(
                 Feature.LAKE,

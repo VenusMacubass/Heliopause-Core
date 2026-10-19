@@ -16,10 +16,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.AbstractSkeleton;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.monster.Spider;
-import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerType;
@@ -666,7 +663,7 @@ public class HpCEvents {
 
     @SubscribeEvent
     public static void onMobSpawn(FinalizeSpawnEvent event) {
-        LivingEntity entity = event.getEntity();
+        Mob entity = event.getEntity();
         Level level = entity.level();
         if (level.isClientSide() || event.getSpawnType() == MobSpawnType.SPAWN_EGG) return;
 
@@ -678,9 +675,16 @@ public class HpCEvents {
                     entity instanceof Spider ||
                     entity instanceof Creeper;
 
-            if (isTargetMob && entity instanceof Mob mob) {
+            if (isTargetMob) {
+                if (entity instanceof WitherSkeleton) {
+                    entity.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
+                    entity.setDropChance(EquipmentSlot.MAINHAND, 0.085f); //Vanilla drop chance
+                } else if (entity.getClass() == Skeleton.class) {
+                    entity.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(HpCItems.STEEL_SWORD.get()));
+                    entity.setDropChance(EquipmentSlot.MAINHAND, 0.085f);
+                }
 
-                var inventory = mob.getData(HpCAttachments.EQUIPMENT_INVENTORY);
+                var inventory = entity.getData(HpCAttachments.EQUIPMENT_INVENTORY);
 
                 inventory.setStackInSlot(0, HpCItems.OXYGEN_MASK.asItem().getDefaultInstance());
                 inventory.setStackInSlot(1, HpCItems.OXYGEN_CONNECTORS.asItem().getDefaultInstance());
@@ -692,15 +696,15 @@ public class HpCEvents {
                 inventory.setStackInSlot(6, HpCItems.T1_THERMAL_INSULATION_LEGGINGS.asItem().getDefaultInstance());
                 inventory.setStackInSlot(7, HpCItems.T1_THERMAL_INSULATION_HANDS_AND_FEET.asItem().getDefaultInstance());
 
-                mob.setItemSlot(EquipmentSlot.HEAD, new ItemStack(HpCItems.T1_SPACE_SUIT_HELMET.get()));
-                mob.setItemSlot(EquipmentSlot.CHEST, new ItemStack(HpCItems.T1_SPACE_SUIT_CHESTPLATE.get()));
-                mob.setItemSlot(EquipmentSlot.LEGS, new ItemStack(HpCItems.T1_SPACE_SUIT_LEGGINGS.get()));
-                mob.setItemSlot(EquipmentSlot.FEET, new ItemStack(HpCItems.T1_SPACE_SUIT_BOOTS.get()));
+                entity.setItemSlot(EquipmentSlot.HEAD, new ItemStack(HpCItems.T1_SPACE_SUIT_HELMET.get()));
+                entity.setItemSlot(EquipmentSlot.CHEST, new ItemStack(HpCItems.T1_SPACE_SUIT_CHESTPLATE.get()));
+                entity.setItemSlot(EquipmentSlot.LEGS, new ItemStack(HpCItems.T1_SPACE_SUIT_LEGGINGS.get()));
+                entity.setItemSlot(EquipmentSlot.FEET, new ItemStack(HpCItems.T1_SPACE_SUIT_BOOTS.get()));
 
-                mob.setDropChance(EquipmentSlot.HEAD, 0.0f);
-                mob.setDropChance(EquipmentSlot.CHEST, 0.0f);
-                mob.setDropChance(EquipmentSlot.LEGS, 0.0f);
-                mob.setDropChance(EquipmentSlot.FEET, 0.0f);
+                entity.setDropChance(EquipmentSlot.HEAD, 0.0f);
+                entity.setDropChance(EquipmentSlot.CHEST, 0.0f);
+                entity.setDropChance(EquipmentSlot.LEGS, 0.0f);
+                entity.setDropChance(EquipmentSlot.FEET, 0.0f);
             }
         }
     }

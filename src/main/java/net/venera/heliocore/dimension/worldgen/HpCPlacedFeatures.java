@@ -44,12 +44,12 @@ public class HpCPlacedFeatures {  //Where to place and how to place
         
         register(context, ALUMINIUM_ORE_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.OVERWORLD_ALUMINIUM_ORE_KEY),
                 HpCOrePlacement.commonOrePlacement(6, HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(16))));
-        
+
         register(context, SILICON_ORE_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.OVERWORLD_SILICON_ORE_KEY),
-                HpCOrePlacement.commonOrePlacement(3, HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(64))));
-        
+                HpCOrePlacement.commonOrePlacement(6, HeightRangePlacement.triangle(VerticalAnchor.absolute(-144), VerticalAnchor.absolute(16))));
+
         register(context, IRIDIUM_ORE_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.OVERWORLD_IRIDIUM_ORE_KEY),
-                HpCOrePlacement.rareOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.absolute(64), VerticalAnchor.absolute(256))));
+                HpCOrePlacement.commonOrePlacement(6, HeightRangePlacement.triangle(VerticalAnchor.absolute(-128), VerticalAnchor.absolute(256))));
 
 
 
@@ -82,14 +82,14 @@ public class HpCPlacedFeatures {  //Where to place and how to place
 
         register(context, CRUDE_OIL_PLACED_DEFAULT, configuredFeatures.getOrThrow(HpCConfiguredFeatures.CRUDE_OIL_RESERVOIR),
                 List.of(
-                        RarityFilter.onAverageOnceEvery(20),
+                        RarityFilter.onAverageOnceEvery(12),
                         InSquarePlacement.spread(),
                         HeightRangePlacement.uniform(VerticalAnchor.absolute(-60), VerticalAnchor.absolute(0)),
                         BiomeFilter.biome()
                 ));
         register(context, CRUDE_OIL_PLACED_ABUNDANT, configuredFeatures.getOrThrow(HpCConfiguredFeatures.CRUDE_OIL_RESERVOIR),
                 List.of(
-                        RarityFilter.onAverageOnceEvery(12),
+                        RarityFilter.onAverageOnceEvery(8),
                         InSquarePlacement.spread(),
                         HeightRangePlacement.uniform(VerticalAnchor.absolute(-60), VerticalAnchor.absolute(0)),
                         BiomeFilter.biome()

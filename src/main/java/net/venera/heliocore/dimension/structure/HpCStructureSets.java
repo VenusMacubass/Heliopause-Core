@@ -20,8 +20,8 @@ public class HpCStructureSets {
         context.register(MOON_VILLAGE_SET, new StructureSet(
                 structures.getOrThrow(HpCStructures.MOON_VILLAGE),
                 new RandomSpreadStructurePlacement(
-                        32, //Average distance in chunks between villages
-                        16,  //Minimum chunk distance 
+                        48, //Average distance in chunks between villages
+                        24,  //Minimum chunk distance 
                         RandomSpreadType.LINEAR,
                         1234567890 
                 )
