@@ -11,8 +11,10 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.common.Tags;
 import net.venera.heliocore.data.component.HpCDataComponents;
 import net.venera.heliocore.item.HpCItems;
+import net.venera.heliocore.item.HpCTags;
 import net.venera.heliocore.recipe.HpCRecipes;
 
 public class BurgerRecipe extends CustomRecipe {
@@ -90,7 +92,7 @@ public class BurgerRecipe extends CustomRecipe {
     }
     
     private boolean isVeggie(ItemStack stack) {
-        return stack.is(Items.DRIED_KELP) || stack.is(Items.BEETROOT) || stack.is(Items.CARROT) || stack.is(Items.BAKED_POTATO);
+        return stack.is(Tags.Items.FOODS_VEGETABLE);
     }
     
     private Item getBurgerOutput(Item meatItem) {

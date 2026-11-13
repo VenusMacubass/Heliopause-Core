@@ -60,7 +60,7 @@ public class HpCBiomeModifiers {  //In what biome and in what stage shall I plac
                 GenerationStep.Decoration.UNDERGROUND_ORES));
 
         context.register(ADD_IRIDIUM_ORE, new BiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
+                biomes.getOrThrow(BiomeTags.IS_MOUNTAIN),
                 HolderSet.direct(placedFeatures.getOrThrow(HpCPlacedFeatures.IRIDIUM_ORE_KEY)),
                 GenerationStep.Decoration.UNDERGROUND_ORES));
 

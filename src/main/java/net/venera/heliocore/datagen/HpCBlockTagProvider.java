@@ -3,6 +3,7 @@ package net.venera.heliocore.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.venera.heliocore.HeliopauseCore;
@@ -122,6 +123,44 @@ public class HpCBlockTagProvider extends BlockTagsProvider {
         tag(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(HpCBlocks.RADIOACTIVE_BLOCK.get());
 
+        tag(Tags.Blocks.ORES_COPPER).add(HpCBlocks.MOON_COPPER_ORE.get());
+        tag(Tags.Blocks.ORES_IRON).add(HpCBlocks.MOON_IRON_ORE.get());
+        tag(HpCTags.Blocks.ORES_TIN)
+                .add(HpCBlocks.TIN_ORE.get(), HpCBlocks.DEEPSLATE_TIN_ORE.get(), HpCBlocks.MOON_TIN_ORE.get());
+        tag(HpCTags.Blocks.ORES_ALUMINUM)
+                .add(HpCBlocks.ALUMINIUM_ORE.get(), HpCBlocks.DEEPSLATE_ALUMINIUM_ORE.get(), HpCBlocks.MOON_ALUMINIUM_ORE.get());
+        tag(HpCTags.Blocks.ORES_IRIDIUM)
+                .add(HpCBlocks.IRIDIUM_ORE.get(), HpCBlocks.DEEPSLATE_IRIDIUM_ORE.get(), HpCBlocks.MOON_IRIDIUM_ORE.get());
+        tag(HpCTags.Blocks.ORES_SILICON)
+                .add(HpCBlocks.SILICON_ORE.get(), HpCBlocks.DEEPSLATE_SILICON_ORE.get(), HpCBlocks.MOON_SILICON_ORE.get());
+
+        tag(Tags.Blocks.ORES)
+                .addTag(HpCTags.Blocks.ORES_TIN)
+                .addTag(HpCTags.Blocks.ORES_ALUMINUM)
+                .addTag(HpCTags.Blocks.ORES_IRIDIUM)
+                .addTag(HpCTags.Blocks.ORES_SILICON);
+
+        tag(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE)
+                .add(HpCBlocks.DEEPSLATE_TIN_ORE.get())
+                .add(HpCBlocks.DEEPSLATE_ALUMINIUM_ORE.get())
+                .add(HpCBlocks.DEEPSLATE_IRIDIUM_ORE.get())
+                .add(HpCBlocks.DEEPSLATE_SILICON_ORE.get());
+
+        tag(HpCTags.Blocks.STORAGE_BLOCKS_TIN).add(HpCBlocks.TIN_BLOCK.get());
+        tag(HpCTags.Blocks.STORAGE_BLOCKS_RAW_TIN).add(HpCBlocks.RAW_TIN_BLOCK.get());
+        tag(HpCTags.Blocks.STORAGE_BLOCKS_ALUMINUM).add(HpCBlocks.ALUMINIUM_BLOCK.get());
+        tag(HpCTags.Blocks.STORAGE_BLOCKS_RAW_ALUMINUM).add(HpCBlocks.RAW_ALUMINIUM_BLOCK.get());
+        tag(HpCTags.Blocks.STORAGE_BLOCKS_IRIDIUM).add(HpCBlocks.IRIDIUM_BLOCK.get());
+        tag(HpCTags.Blocks.STORAGE_BLOCKS_SILICON).add(HpCBlocks.SILICON_BLOCK.get());
+
+        tag(Tags.Blocks.STORAGE_BLOCKS)
+                .addTag(HpCTags.Blocks.STORAGE_BLOCKS_TIN)
+                .addTag(HpCTags.Blocks.STORAGE_BLOCKS_RAW_TIN)
+                .addTag(HpCTags.Blocks.STORAGE_BLOCKS_ALUMINUM)
+                .addTag(HpCTags.Blocks.STORAGE_BLOCKS_RAW_ALUMINUM)
+                .addTag(HpCTags.Blocks.STORAGE_BLOCKS_IRIDIUM)
+                .addTag(HpCTags.Blocks.STORAGE_BLOCKS_SILICON);
+        
         tag(BlockTags.WALLS)
                 .add(HpCBlocks.BASE_BUILDING_WALL_WHITE.get())
                 .add(HpCBlocks.BASE_BUILDING_WALL_BLACK.get())

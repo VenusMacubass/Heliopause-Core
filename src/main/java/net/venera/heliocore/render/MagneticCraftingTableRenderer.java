@@ -46,8 +46,9 @@ public class MagneticCraftingTableRenderer implements BlockEntityRenderer<Magnet
                 double zOffset = -0.20D + (row * 0.20D);
                 
                 poseStack.translate(xOffset, 0.0D, zOffset);
+                poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
                 poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
-                poseStack.scale(0.3F, 0.3F, 0.3F);
+                poseStack.scale(0.2F, 0.2F, 0.2F);
 
                 this.itemRenderer.renderStatic(stack, ItemDisplayContext.FIXED, actualLight, OverlayTexture.NO_OVERLAY, poseStack, buffer, blockEntity.getLevel(), 0);
 

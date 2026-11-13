@@ -49,7 +49,7 @@ public class HpCPlacedFeatures {  //Where to place and how to place
                 HpCOrePlacement.commonOrePlacement(6, HeightRangePlacement.triangle(VerticalAnchor.absolute(-144), VerticalAnchor.absolute(16))));
 
         register(context, IRIDIUM_ORE_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.OVERWORLD_IRIDIUM_ORE_KEY),
-                HpCOrePlacement.commonOrePlacement(6, HeightRangePlacement.triangle(VerticalAnchor.absolute(-128), VerticalAnchor.absolute(256))));
+                HpCOrePlacement.commonOrePlacement(100, HeightRangePlacement.triangle(VerticalAnchor.absolute(-16), VerticalAnchor.absolute(480))));
 
 
 
@@ -58,24 +58,20 @@ public class HpCPlacedFeatures {  //Where to place and how to place
         
         register(context, MOON_TIN_ORE_PLACED_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.MOON_TIN_ORE_KEY),
                 HpCOrePlacement.commonOrePlacement(12, HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(80))));
-
-        //Fe: Less frequent than Earth (7 per chunk), spread evenly.
+        
         register(context, MOON_IRON_ORE_PLACED_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.MOON_IRON_ORE_KEY),
                 HpCOrePlacement.commonOrePlacement(7, HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(80))));
-
-        //Cu: Rarer than Earth (6 per chunk instead of 16).
+        
         register(context, MOON_COPPER_ORE_PLACED_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.MOON_COPPER_ORE_KEY),
                 HpCOrePlacement.commonOrePlacement(6, HeightRangePlacement.triangle(VerticalAnchor.absolute(-32), VerticalAnchor.absolute(80))));
-
-        //Al: More abundant than Moon Iron (12 per chunk).
+        
         register(context, MOON_ALUMINIUM_ORE_PLACED_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.MOON_ALUMINIUM_ORE_KEY),
                 HpCOrePlacement.commonOrePlacement(12, HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(64))));
-
-        //Si: Copper-like abundance (16 per chunk), spread everywhere.
+        
         register(context, MOON_SILICON_ORE_PLACED_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.MOON_SILICON_ORE_KEY),
                 HpCOrePlacement.commonOrePlacement(16, HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(100))));
 
-        //I: More abundant than Earth (2 times per chunk guaranteed), sub-surface.
+        
         register(context, MOON_IRIDIUM_ORE_PLACED_KEY, configuredFeatures.getOrThrow(HpCConfiguredFeatures.MOON_IRIDIUM_ORE_KEY),
                 HpCOrePlacement.commonOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.absolute(20), VerticalAnchor.absolute(120))));
 

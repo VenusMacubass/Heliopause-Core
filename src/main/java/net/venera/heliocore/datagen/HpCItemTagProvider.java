@@ -7,6 +7,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.venera.heliocore.HeliopauseCore;
 import net.venera.heliocore.block.HpCBlocks;
@@ -24,6 +25,43 @@ public class HpCItemTagProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        copy(Tags.Blocks.ORES_COPPER, Tags.Items.ORES_COPPER);
+        copy(Tags.Blocks.ORES_IRON, Tags.Items.ORES_IRON);
+        copy(HpCTags.Blocks.ORES_TIN, HpCTags.Items.ORES_TIN);
+        copy(HpCTags.Blocks.ORES_ALUMINUM, HpCTags.Items.ORES_ALUMINUM);
+        copy(HpCTags.Blocks.ORES_IRIDIUM, HpCTags.Items.ORES_IRIDIUM);
+        copy(HpCTags.Blocks.ORES_SILICON, HpCTags.Items.ORES_SILICON);
+        copy(Tags.Blocks.ORES, Tags.Items.ORES);
+
+        copy(HpCTags.Blocks.STORAGE_BLOCKS_TIN, HpCTags.Items.STORAGE_BLOCKS_TIN);
+        copy(HpCTags.Blocks.STORAGE_BLOCKS_RAW_TIN, HpCTags.Items.STORAGE_BLOCKS_RAW_TIN);
+        copy(HpCTags.Blocks.STORAGE_BLOCKS_ALUMINUM, HpCTags.Items.STORAGE_BLOCKS_ALUMINUM);
+        copy(HpCTags.Blocks.STORAGE_BLOCKS_RAW_ALUMINUM, HpCTags.Items.STORAGE_BLOCKS_RAW_ALUMINUM);
+        copy(HpCTags.Blocks.STORAGE_BLOCKS_IRIDIUM, HpCTags.Items.STORAGE_BLOCKS_IRIDIUM);
+        copy(HpCTags.Blocks.STORAGE_BLOCKS_SILICON, HpCTags.Items.STORAGE_BLOCKS_SILICON);
+        copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS);
+        
+        
+        
+        tag(HpCTags.Items.INGOTS_TIN).add(HpCItems.TIN_INGOT.get());
+        tag(HpCTags.Items.INGOTS_ALUMINUM).add(HpCItems.ALUMINIUM_INGOT.get());
+        tag(HpCTags.Items.INGOTS_IRIDIUM).add(HpCItems.IRIDIUM_INGOT.get());
+        
+        tag(Tags.Items.INGOTS)
+                .addTag(HpCTags.Items.INGOTS_TIN)
+                .addTag(HpCTags.Items.INGOTS_ALUMINUM)
+                .addTag(HpCTags.Items.INGOTS_IRIDIUM);
+        
+        tag(HpCTags.Items.RAW_MATERIALS_TIN).add(HpCItems.RAW_TIN.get());
+        tag(HpCTags.Items.RAW_MATERIALS_ALUMINUM).add(HpCItems.RAW_ALUMINIUM.get());
+
+        tag(Tags.Items.RAW_MATERIALS)
+                .addTag(HpCTags.Items.RAW_MATERIALS_TIN)
+                .addTag(HpCTags.Items.RAW_MATERIALS_ALUMINUM);
+
+        tag(HpCTags.Items.SILICON).add(HpCItems.SILICON.get());
+        tag(HpCTags.Items.GEMS_SILICON).add(HpCItems.SILICON.get());
+        
         tag(HpCTags.Items.CANISTER)
                 .add(HpCItems.COPPER_CANISTER.get())
                 .add(HpCItems.TIN_CANISTER.get());
@@ -50,11 +88,11 @@ public class HpCItemTagProvider extends ItemTagsProvider {
                 .add(Items.LAPIS_LAZULI);
 
         tag(HpCTags.Items.COMPRESSIBLE_INGOTS)
-                .add(Items.COPPER_INGOT)
-                .add(HpCItems.TIN_INGOT.get())
-                .add(HpCItems.ALUMINIUM_INGOT.get())
-                .add(Items.IRON_INGOT)
-                .add(HpCItems.IRIDIUM_INGOT.get());
+                .addTag(Tags.Items.INGOTS_COPPER)
+                .addTag(HpCTags.Items.INGOTS_TIN)
+                .addTag(HpCTags.Items.INGOTS_ALUMINUM)
+                .addTag(Tags.Items.INGOTS_IRON)
+                .addTag(HpCTags.Items.INGOTS_IRIDIUM);
 
         
         
