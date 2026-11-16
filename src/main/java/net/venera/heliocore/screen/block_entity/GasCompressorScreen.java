@@ -33,7 +33,7 @@ public class GasCompressorScreen extends AbstractContainerScreen<GasCompressorMe
         int y = (height - imageHeight) / 2;
 
         this.enabilitationButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.isEnabled() ? "Disable" : "Enable"),
+                        Component.translatable(menu.isEnabled() ? "heliocore.screen.disable" : "heliocore.screen.enable"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
@@ -95,28 +95,34 @@ public class GasCompressorScreen extends AbstractContainerScreen<GasCompressorMe
         int energyHeight = 7;
 
         if (isMouseOver(mouseX, mouseY, gasX, gasY, gasWidth, gasHeight)) {
-            int currentGas = menu.blockEntity.gasTank.getFluidAmount();
-            int capacity = menu.blockEntity.gasTank.getCapacity();
-
             guiGraphics.renderTooltip(font,
-                    Component.literal("Gas: " + currentGas + " mB / " + capacity + " mB"),
+                    Component.translatable(
+                            "heliocore.screen.gas",
+                            menu.getGas(),
+                            menu.getMaxGas()
+                    ),
                     mouseX, mouseY
             );
         }
 
         if (isMouseOver(mouseX, mouseY, liquidX, liquidY, liquidWidth, liquidHeight)) {
-            int currentLiquid = menu.blockEntity.liquidTank.getFluidAmount();
-            int capacity = menu.blockEntity.liquidTank.getCapacity();
-
             guiGraphics.renderTooltip(font,
-                    Component.literal("Liquified Gas: " + currentLiquid + " mB / " + capacity + " mB"),
+                    Component.translatable(
+                            "heliocore.screen.liquid",
+                            menu.getLiquid(),
+                            menu.getMaxLiquid()
+                    ),
                     mouseX, mouseY
             );
         }
 
         if (isMouseOver(mouseX, mouseY, energyX, energyY, energyWidth, energyHeight)) {
             guiGraphics.renderTooltip(font,
-                    Component.literal("Energy: " + menu.getEnergy() + " FE / " + menu.getMaxEnergy() + " FE"),
+                    Component.translatable(
+                            "heliocore.screen.energy",
+                            menu.getEnergy(),
+                            menu.getMaxEnergy()
+                    ),
                     mouseX, mouseY
             );
         }
@@ -125,7 +131,7 @@ public class GasCompressorScreen extends AbstractContainerScreen<GasCompressorMe
     @Override
     protected void containerTick() {
         super.containerTick();
-        this.enabilitationButton.setMessage(Component.literal(menu.isEnabled() ? "Disable" : "Enable"));
+        this.enabilitationButton.setMessage(Component.translatable(menu.isEnabled() ? "heliocore.screen.disable" : "heliocore.screen.enable"));
     }
 
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {

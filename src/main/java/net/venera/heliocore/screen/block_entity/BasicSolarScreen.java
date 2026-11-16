@@ -37,7 +37,7 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
         int y = (height - imageHeight) / 2;
 
         this.toggleButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.isEnabled() ? "Disable" : "Enable"),
+                        Component.translatable(menu.isEnabled() ? "heliocore.screen.disable" : "heliocore.screen.enable"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
@@ -94,17 +94,20 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
         int sunArea = 16;
         
         if(isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)){
-            guiGraphics.renderTooltip(font, Component.literal( 
-                    "Energy: " + menu.getEnergy() + " / " + menu.getMaxEnergy() + " FE"), x, y);
+            guiGraphics.renderTooltip(font, Component.translatable(
+                    "heliocore.screen.energy",
+                    menu.getEnergy(),
+                    menu.getMaxEnergy()
+            ), x, y);
         }
 
         if(isMouseOver(x, y, sunX, sunY, sunArea, sunArea)) {
             if(menu.isActive()) {
-                guiGraphics.renderTooltip(font, Component.literal(
-                        "Sun is visible."), x, y);
+                guiGraphics.renderTooltip(font, Component.translatable(
+                        "heliocore.screen.sun_visible"), x, y);
             } else {
-                guiGraphics.renderTooltip(font, Component.literal(
-                        "Sun is not visible."), x, y);
+                guiGraphics.renderTooltip(font, Component.translatable(
+                        "heliocore.screen.sun_invisible"), x, y);
             }
         }
     }
@@ -112,7 +115,7 @@ public class BasicSolarScreen extends AbstractContainerScreen<BasicSolarMenu> {
     @Override
     protected void containerTick() {
         super.containerTick();
-        this.toggleButton.setMessage(Component.literal(menu.isEnabled() ? "Disable" : "Enable"));
+        this.toggleButton.setMessage(Component.translatable(menu.isEnabled() ? "heliocore.screen.disable" : "heliocore.screen.enable"));
     }
 
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {

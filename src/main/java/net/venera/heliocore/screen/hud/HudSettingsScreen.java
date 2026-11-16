@@ -5,10 +5,12 @@ import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.venera.heliocore.HeliopauseClientConfig;
 
+import java.util.Locale;
 import java.util.function.Consumer;
 
 public class HudSettingsScreen extends Screen {
@@ -25,36 +27,48 @@ public class HudSettingsScreen extends Screen {
         int centerX = this.width / 2;
         
         this.addRenderableWidget(Button.builder(
-                Component.literal("HUD: " + (HeliopauseClientConfig.HUD_ENABLED.get() ? "ON" : "OFF")),
+                CommonComponents.optionStatus(
+                        Component.translatable("heliocore.screen.hud"),
+                        HeliopauseClientConfig.HUD_ENABLED.get()
+                ),
                 btn -> {
                     boolean current = HeliopauseClientConfig.HUD_ENABLED.get();
                     HeliopauseClientConfig.HUD_ENABLED.set(!current);
-                    btn.setMessage(Component.literal("HUD: " + (!current ? "ON" : "OFF")));
+                    btn.setMessage( CommonComponents.optionStatus(
+                            Component.translatable("heliocore.screen.hud"),
+                            HeliopauseClientConfig.HUD_ENABLED.get()
+                    ));
                 }
         ).bounds(centerX - 100, 40, 95, 20).build());
         
         this.addRenderableWidget(Button.builder(
-                Component.literal("Layout: " + (HeliopauseClientConfig.HUD_HORIZONTAL.get() ? "Horizontal" : "Vertical")),
+                CommonComponents.optionStatus(
+                        Component.translatable("heliocore.screen.layout"),
+                        HeliopauseClientConfig.HUD_HORIZONTAL.get()
+                ),
                 btn -> {
                     boolean current = HeliopauseClientConfig.HUD_HORIZONTAL.get();
                     HeliopauseClientConfig.HUD_HORIZONTAL.set(!current);
-                    btn.setMessage(Component.literal("Layout: " + (!current ? "Horizontal" : "Vertical")));
+                    btn.setMessage(CommonComponents.optionStatus(
+                            Component.translatable("heliocore.screen.layout"),
+                            HeliopauseClientConfig.HUD_HORIZONTAL.get()
+                    ));
                 }
         ).bounds(centerX + 5, 40, 95, 20).build());
-        
-        addSliderAndInput("X Position", centerX, 70,
+
+        addSliderAndInput(Component.translatable("heliocore.screen.x_pos"), centerX, 70,
                 HeliopauseClientConfig.HUD_X.get(), 0, 1000,
                 val -> HeliopauseClientConfig.HUD_X.set(val.intValue()));
-        
-        addSliderAndInput("Y Position", centerX, 100,
+
+        addSliderAndInput(Component.translatable("heliocore.screen.y_pos"), centerX, 100,
                 HeliopauseClientConfig.HUD_Y.get(), 0, 1000,
                 val -> HeliopauseClientConfig.HUD_Y.set(val.intValue()));
-        
-        addSliderAndInput("Scale", centerX, 130,
+
+        addSliderAndInput(Component.translatable("heliocore.screen.scale"), centerX, 130,
                 HeliopauseClientConfig.HUD_SCALE.get().floatValue(), 0.5f, 5.0f,
                 val -> HeliopauseClientConfig.HUD_SCALE.set((double) val));
         
-        this.addRenderableWidget(Button.builder(Component.literal("Reset Defaults"), btn -> {
+        this.addRenderableWidget(Button.builder(Component.translatable("heliocore.screen.reset"), btn -> {
             HeliopauseClientConfig.HUD_ENABLED.set(true);
             HeliopauseClientConfig.HUD_X.set(HeliopauseClientConfig.HUD_X.getDefault());
             HeliopauseClientConfig.HUD_Y.set(HeliopauseClientConfig.HUD_Y.getDefault());
@@ -63,7 +77,7 @@ public class HudSettingsScreen extends Screen {
             this.minecraft.setScreen(new HudSettingsScreen(this.parent));
         }).bounds(centerX - 100, 170, 200, 20).build());
         
-        this.addRenderableWidget(Button.builder(Component.literal("Done"), btn -> {
+        this.addRenderableWidget(Button.builder(Component.translatable("heliocore.screen.done"), btn -> {
             this.onClose();
         }).bounds(centerX - 100, 200, 200, 20).build());
     }
@@ -72,7 +86,7 @@ public class HudSettingsScreen extends Screen {
         boolean isScale = max < 100;
         EditBox editBox = new EditBox(this.font, centerX + 50, y, 70, 20, Component.literal(name));
         
-        editBox.setValue(isScale ? String.format(java.util.Locale.US, "%.2f", currentValue) : String.valueOf((int) currentValue));
+        editBox.setValue(isScale ? String.format(Locale.US, "%.2f", currentValue) : String.valueOf((int) currentValue));
         
         class CustomSlider extends AbstractSliderButton {
             public CustomSlider(int x, int y, int width, int height, Component message, double value) {
@@ -87,7 +101,7 @@ public class HudSettingsScreen extends Screen {
             @Override
             protected void applyValue() {
                 float val = Mth.lerp((float) this.value, min, max);
-                editBox.setValue(isScale ? String.format(java.util.Locale.US, "%.2f", val) : String.valueOf((int) val));
+                editBox.setValue(isScale ? String.format(Locale.US, "%.2f", val) : String.valueOf((int) val));
                 onSave.accept(val);
             }
             
@@ -121,11 +135,55 @@ public class HudSettingsScreen extends Screen {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
         super.render(guiGraphics, mouseX, mouseY, partialTick);
-        guiGraphics.drawCenteredString(this.font, "Space Suit HUD Settings", this.width / 2, 15, 0xFFFFFF);
+        guiGraphics.drawCenteredString(this.font, Component.translatable("heliocore.screen.space_suit_hud.settings"), this.width / 2, 15, 0xFFFFFF);
     }
 
     @Override
     public boolean isPauseScreen() {
         return false;
+    }
+
+    private void addSliderAndInput(Component name, int centerX, int y, float currentValue, float min, float max, Consumer<Float> onSave) {
+        boolean isScale = max < 100;
+        EditBox editBox = new EditBox(this.font, centerX + 50, y, 70, 20, name);
+
+        editBox.setValue(isScale ? String.format(Locale.US, "%.2f", currentValue) : String.valueOf((int) currentValue));
+
+        class CustomSlider extends AbstractSliderButton {
+            public CustomSlider(int x, int y, int width, int height, Component message, double value) {
+                super(x, y, width, height, message, value);
+            }
+
+            @Override
+            protected void updateMessage() {
+                this.setMessage(name);
+            }
+
+            @Override
+            protected void applyValue() {
+                float val = Mth.lerp((float) this.value, min, max);
+                editBox.setValue(isScale ? String.format(Locale.US, "%.2f", val) : String.valueOf((int) val));
+                onSave.accept(val);
+            }
+
+            public void updateVisuals(double newValue) {
+                this.value = newValue;
+                this.updateMessage();
+            }
+        }
+
+        CustomSlider slider = new CustomSlider(centerX - 120, y, 160, 20, name, Mth.inverseLerp(Math.min(currentValue, max), min, max));
+
+        editBox.setResponder(text -> {
+            try {
+                float val = Float.parseFloat(text);
+                onSave.accept(val);
+                slider.updateVisuals(Mth.inverseLerp(val, min, max));
+            } catch (NumberFormatException ignored) {
+            }
+        });
+
+        this.addRenderableWidget(slider);
+        this.addRenderableWidget(editBox);
     }
 }

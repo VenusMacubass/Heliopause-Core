@@ -49,7 +49,11 @@ public class EnergyStorageUnitScreen extends AbstractContainerScreen<EnergyStora
 
         if (isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)) {
             guiGraphics.renderTooltip(font,
-                    Component.literal("Stored Energy: " + menu.getEnergy() + "/" + menu.getMaxEnergy()),
+                    Component.translatable(
+                            "heliocore.screen.energy",
+                            menu.getEnergy(),
+                            menu.getMaxEnergy()
+                    ),
                     x, y
             );
         }

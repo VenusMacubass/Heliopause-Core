@@ -159,6 +159,22 @@ public class RefineryMenu extends AbstractContainerMenu {
     public int getMaxEnergy() {
         return this.blockEntity.getEnergyStorage().getMaxEnergyStored();
     }
+    
+    public int getFuel(){
+        return this.blockEntity.fuelTank.getFluidAmount();
+    }
+
+    public int getMaxFuel(){
+        return this.blockEntity.fuelTank.getCapacity();
+    }
+
+    public int getOil(){
+        return this.blockEntity.oilTank.getFluidAmount();
+    }
+
+    public int getMaxOil(){
+        return this.blockEntity.oilTank.getCapacity();
+    }
 
     public int getEnergyScaled(int pixels) {
         int energy = getEnergy();

@@ -60,11 +60,11 @@ public class LanderScreen  extends AbstractContainerScreen<LanderMenu> {
         int fuelHeight = 41;
         
         if (isMouseOver(x, y, fuelX, fuelY, fuelWidth, fuelHeight)) {
-            int currentFuel = menu.lander.getFuelAmount();
-            int maxFuel = menu.lander.MAX_FUEL;
-
-            guiGraphics.renderTooltip(font, Component.literal(
-                    "Fuel: " + currentFuel + " / " + maxFuel + " mL"), x, y);
+            guiGraphics.renderTooltip(font, Component.translatable(
+                    "heliocore.screen.fuel",
+                    menu.getFuel(),
+                    menu.getMaxFuel()
+            ), x, y);
         }
 
     }

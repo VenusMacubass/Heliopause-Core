@@ -9,7 +9,7 @@ public class ClientConfigHubScreen extends Screen {
     private final Screen parent; 
 
     public ClientConfigHubScreen(Screen parent) {
-        super(Component.literal("Client Settings"));
+        super(Component.translatable("heliocore.screen.client_settings"));
         this.parent = parent;
     }
 
@@ -19,11 +19,11 @@ public class ClientConfigHubScreen extends Screen {
         int centerX = this.width / 2;
         int startY = 60;
         
-        this.addRenderableWidget(Button.builder(Component.literal("Space Suit HUD"), btn -> {
+        this.addRenderableWidget(Button.builder(Component.translatable("heliocore.screen.space_suit_hud"), btn -> {
             this.minecraft.setScreen(new net.venera.heliocore.screen.hud.HudSettingsScreen(this));
         }).bounds(centerX - 100, startY, 200, 20).build());
         
-        this.addRenderableWidget(Button.builder(Component.literal("Back"), btn -> {
+        this.addRenderableWidget(Button.builder(Component.translatable("heliocore.screen.back"), btn -> {
             this.onClose();
         }).bounds(centerX - 100, this.height - 40, 200, 20).build());
     }

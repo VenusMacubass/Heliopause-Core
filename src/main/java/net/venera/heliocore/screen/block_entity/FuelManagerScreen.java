@@ -32,24 +32,24 @@ public class FuelManagerScreen extends AbstractContainerScreen<FuelManagerMenu> 
         int y = (height - imageHeight) / 2;
 
         this.inputEnableButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.isFueling() ? "Stop Loading" : "Load Fuel"),
+                        Component.translatable(menu.isFueling() ? "heliocore.screen.fuel_manager.load_stop" : "heliocore.screen.fuel_manager.load"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
                             );
                         })
-                .bounds(x + 73, y + 5, 36, 15)
+                .bounds(x + 73, y + 19, 36, 15)
                 .build()
         );
 
         this.outputEnableButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.isCharging() ? "Stop Charging" : "Charge"),
+                        Component.translatable(menu.isCharging() ? "heliocore.screen.fuel_manager.charge_stop" : "heliocore.screen.fuel_manager.charge"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 1)
                             );
                         })
-                .bounds(x + 73, y + 22, 36, 15)
+                .bounds(x + 73, y + 34, 36, 15)
                 .build()
         );
     }
@@ -61,7 +61,7 @@ public class FuelManagerScreen extends AbstractContainerScreen<FuelManagerMenu> 
         RenderSystem.setShaderTexture(0, FUEL_MANAGER_GUI);
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
-        guiGraphics.blit(FUEL_MANAGER_GUI, x, y, 0, 0, 176, 174); //Gui
+        guiGraphics.blit(FUEL_MANAGER_GUI, x, y, 0, 0, 176, 186); //Gui
 
         int scaledHeight = menu.getFuelScaled(41);
 
@@ -70,21 +70,21 @@ public class FuelManagerScreen extends AbstractContainerScreen<FuelManagerMenu> 
 
             guiGraphics.blit(
                     FUEL_GUI,
-                    x + 152,                // Screen X
-                    y + 6 + emptySpace,     // Screen Y (Pushed down)
-                    0,                      // Texture U (Starts at 0 on the file)
-                    emptySpace,             // Texture V (Pushed down)
-                    16,                     // Render Width
-                    scaledHeight,           // Render Height
-                    16,                     // Actual width of the PNG file
-                    41                      // Actual height of the PNG file
+                    x + 152,             //Screen X
+                    y + 18 + emptySpace,    //Screen Y (Pushed down)
+                    0,                      //Texture U (Starts at 0 on the file)
+                    emptySpace,             //Texture V (Pushed down)
+                    16,                     //Render Width
+                    scaledHeight,           //Render Height
+                    16,                     //Actual width of the PNG file
+                    41                      //Actual height of the PNG file
             );
         }
 
         int chargeLength = menu.getEnergyScaled(54);
         if (chargeLength > 0) {
             int startX = x + 74;
-            int startY = y + 40;
+            int startY = y + 52;
             int endX = startX + chargeLength;
             int endY = startY + 7;
             guiGraphics.fill(startX, startY, endX, endY, 0xFFFFE400);
@@ -98,24 +98,27 @@ public class FuelManagerScreen extends AbstractContainerScreen<FuelManagerMenu> 
         int imageY = (height - imageHeight) / 2;
 
         int energyX = imageX + 74;
-        int energyY = imageY + 40;
+        int energyY = imageY + 52;
         int energyWidth = 54;
         int energyHeight = 7;
         int fuelX = imageX + 152;
-        int fuelY = imageY + 6;
+        int fuelY = imageY + 18;
         int fuelWidth = 16;
         int fuelHeight = 41;
         
         if (isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)) {
-            guiGraphics.renderTooltip(font, Component.literal(
-                    "Energy: " + menu.getEnergy() + " / " + menu.getMaxEnergy() + " FE"), x, y);
+            guiGraphics.renderTooltip(font, Component.translatable(
+                    "heliocore.screen.energy",
+                    menu.getEnergy(),
+                    menu.getMaxEnergy()
+            ), x, y);
         }
         if (isMouseOver(x, y, fuelX, fuelY, fuelWidth, fuelHeight)) {
-            int currentFuel = menu.data.get(0);
-            int maxFuel = menu.data.get(1);
-
-            guiGraphics.renderTooltip(font, Component.literal(
-                    "Fuel: " + currentFuel + " / " + maxFuel + " mL"), x, y);
+            guiGraphics.renderTooltip(font, Component.translatable(
+                    "heliocore.screen.fuel",
+                    menu.getFuel(),
+                    menu.getMaxFuel()
+            ), x, y);
         }
         
     }
@@ -123,8 +126,8 @@ public class FuelManagerScreen extends AbstractContainerScreen<FuelManagerMenu> 
     @Override
     protected void containerTick() {
         super.containerTick();
-        this.inputEnableButton.setMessage(Component.literal(menu.isFueling() ? "Stop Loading" : "Load Fuel"));
-        this.outputEnableButton.setMessage(Component.literal(menu.isCharging() ? "Stop Charging" : "Charge"));
+        this.inputEnableButton.setMessage(Component.translatable(menu.isFueling() ? "heliocore.screen.fuel_manager.load_stop" : "heliocore.screen.fuel_manager.load"));
+        this.outputEnableButton.setMessage(Component.translatable(menu.isCharging() ? "heliocore.screen.fuel_manager.charge_stop" : "heliocore.screen.fuel_manager.charge"));
     }
 
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {
@@ -135,7 +138,7 @@ public class FuelManagerScreen extends AbstractContainerScreen<FuelManagerMenu> 
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         guiGraphics.drawString(this.font, this.title, 7, 4, 0x404040, false);
-        guiGraphics.drawString(this.font, this.playerInventoryTitle, 7, 40, 0x404040, false);
+        guiGraphics.drawString(this.font, this.playerInventoryTitle, 7, 52, 0x404040, false);
     }
 
     @Override

@@ -135,6 +135,14 @@ public class OxygenGeneratorMenu extends AbstractContainerMenu {
         return this.blockEntity.getEnergyStorage().getMaxEnergyStored();
     }
 
+    public int getOxygen(){
+        return this.blockEntity.data.get(0);
+    }
+
+    public int getMaxOxygen(){
+        return this.blockEntity.data.get(1);
+    }
+    
     public int getEnergyScaled(int pixels) {
         int energy = getEnergy();
         int capacity = getMaxEnergy();

@@ -31,7 +31,7 @@ public class OxygenSealerScreen extends AbstractContainerScreen<OxygenSealerMenu
         int y = (height - imageHeight) / 2;
 
         this.enabilitationButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.isEnabled() ? "Disable" : "Enable"),
+                        Component.translatable(menu.isEnabled() ? "heliocore.screen.disable" : "heliocore.screen.enable"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
@@ -83,18 +83,23 @@ public class OxygenSealerScreen extends AbstractContainerScreen<OxygenSealerMenu
         int energyHeight = 7;
 
         if (isMouseOver(mouseX, mouseY, fuelX, fuelY, fuelWidth, fuelHeight)) {
-            int currentOxygen = menu.blockEntity.oxygenTank.getFluidAmount();
-            int capacity = menu.blockEntity.oxygenTank.getCapacity();
-
             guiGraphics.renderTooltip(font,
-                    Component.literal("Oxygen: " + currentOxygen + " mB / " + capacity + " mB"),
+                    Component.translatable(
+                            "heliocore.screen.oxygen",
+                            menu.getOxygen(),
+                            menu.getMaxOxygen()
+                    ),
                     mouseX, mouseY
             );
         }
 
         if (isMouseOver(mouseX, mouseY, energyX, energyY, energyWidth, energyHeight)) {
             guiGraphics.renderTooltip(font,
-                    Component.literal("Energy: " + menu.getEnergy() + " FE / " + menu.getMaxEnergy() + " FE"),
+                    Component.translatable(
+                            "heliocore.screen.energy",
+                            menu.getEnergy(),
+                            menu.getMaxEnergy()
+                    ),
                     mouseX, mouseY
             );
         }
@@ -103,7 +108,7 @@ public class OxygenSealerScreen extends AbstractContainerScreen<OxygenSealerMenu
     @Override
     protected void containerTick() {
         super.containerTick();
-        this.enabilitationButton.setMessage(Component.literal(menu.isEnabled() ? "Disable" : "Enable"));
+        this.enabilitationButton.setMessage(Component.translatable(menu.isEnabled() ? "heliocore.screen.disable" : "heliocore.screen.enable"));
     }
 
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {
@@ -119,25 +124,25 @@ public class OxygenSealerScreen extends AbstractContainerScreen<OxygenSealerMenu
         int colorRed = 0xFF5555;
         
         if (menu.isSealed()) {
-            guiGraphics.drawString(this.font, "Room Condition: Sealed", 35, 18, colorGreen, false);
+            guiGraphics.drawString(this.font, Component.translatable("heliocore.screen.oxygen_sealer.room.sealed"), 35, 18, colorGreen, false);
         } else {
-            guiGraphics.drawString(this.font, "Room Condition: Invalid", 35, 18, colorRed, false);
+            guiGraphics.drawString(this.font, Component.translatable("heliocore.screen.oxygen_sealer.room.unsealed"), 35, 18, colorRed, false);
         }
         
         int warningY = 28;
 
         if (menu.isBlocked()) {
-            guiGraphics.drawString(this.font, "Sealer is blocked!", 35, warningY, colorRed, false);
+            guiGraphics.drawString(this.font, Component.translatable("heliocore.screen.oxygen_sealer.room.seal_block"), 35, warningY, colorRed, false);
             warningY += 10;
         }
 
         if (!menu.hasEnoughEnergy()) {
-            guiGraphics.drawString(this.font, "Insufficient Energy", 35, warningY, colorRed, false);
+            guiGraphics.drawString(this.font, Component.translatable("heliocore.screen.oxygen_sealer.room.insufficient_energy"), 35, warningY, colorRed, false);
             warningY += 10;
         }
 
         if (!menu.hasEnoughOxygen()) {
-            guiGraphics.drawString(this.font, "Insufficient Oxygen", 35, warningY, colorRed, false);
+            guiGraphics.drawString(this.font, Component.translatable("heliocore.screen.oxygen_sealer.room.insufficient_oxygen"), 35, warningY, colorRed, false);
             warningY += 10;
         }
     }

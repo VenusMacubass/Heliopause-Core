@@ -56,7 +56,11 @@ public class PCBFabricatorScreen extends AbstractContainerScreen<PCBFabricatorMe
 
         if (isMouseOver(mouseX, mouseY, energyX, energyY, energyWidth, energyHeight)) {
             guiGraphics.renderTooltip(font,
-                    Component.literal("Energy: " + menu.getEnergy() + " FE / " + menu.getMaxEnergy() + " FE"),
+                    Component.translatable(
+                            "heliocore.screen.energy",
+                            menu.getEnergy(),
+                            menu.getMaxEnergy()
+                    ),
                     mouseX, mouseY
             );
         }

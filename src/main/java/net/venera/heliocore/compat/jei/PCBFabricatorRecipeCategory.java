@@ -44,6 +44,12 @@ public class PCBFabricatorRecipeCategory implements IRecipeCategory<PCBFabricato
         return PCB_FABRICATOR_RECIPE_TYPE;
     }
 
+    @Override @SuppressWarnings("removal")
+    public IDrawable getBackground() {
+        return this.background;
+    }
+
+
     @Override
     public Component getTitle() {
         return Component.translatable("jei_title." + HeliopauseCore.MOD_ID + ".pcb_fabricator");

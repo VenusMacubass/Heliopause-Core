@@ -97,6 +97,11 @@ public class CompressorRecipeCategory implements IRecipeCategory<CompressorRecip
                 .addItemStack(recipe.getResultItem(null));
     }
 
+    @Override @SuppressWarnings("removal")
+    public IDrawable getBackground() { //Here to keep older versions from crashing.
+        return this.background;
+    }
+
     @Override
     public void draw(CompressorRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         this.background.draw(guiGraphics, 0, 0);

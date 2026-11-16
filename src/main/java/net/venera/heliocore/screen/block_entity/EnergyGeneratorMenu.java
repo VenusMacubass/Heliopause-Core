@@ -154,6 +154,14 @@ public class EnergyGeneratorMenu extends AbstractContainerMenu {
         return this.blockEntity.getEnergyStorage().getMaxEnergyStored();
     }
     
+    public int getFuel(){
+        return this.blockEntity.data.get(0);
+    }
+    
+    public int getMaxFuel(){
+        return this.blockEntity.data.get(1);
+    }
+    
     public boolean isActive() {
         return this.data.get(2) > 0;
     }

@@ -142,6 +142,14 @@ public class OxygenSealerMenu extends AbstractContainerMenu {
     public int getMaxEnergy() {
         return this.blockEntity.getEnergyStorage().getMaxEnergyStored();
     }
+    
+    public int getOxygen(){
+        return this.blockEntity.oxygenTank.getFluidAmount();
+    }
+
+    public int getMaxOxygen(){
+        return this.blockEntity.oxygenTank.getCapacity();
+    }
 
     public int getEnergyScaled(int pixels) {
         int energy = getEnergy();

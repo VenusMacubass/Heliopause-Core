@@ -154,7 +154,7 @@ public class EnergyGeneratorEntity extends BaseElectricMachineEntity implements 
     
     private boolean processSolidFuels(){
         ItemStack solidFuelStack = inventory.getStackInSlot(SOLID_FUEL_SLOT);
-        if(solidFuelStack.getBurnTime(RecipeType.SMELTING) > 0){
+        if(solidFuelStack.getBurnTime(RecipeType.SMELTING) > 0 && enabled){
             burnTime += solidFuelStack.getBurnTime(RecipeType.SMELTING);
             maxBurnTime = solidFuelStack.getBurnTime(RecipeType.SMELTING);
             if(solidFuelStack.getItem() == Items.LAVA_BUCKET){
@@ -170,7 +170,7 @@ public class EnergyGeneratorEntity extends BaseElectricMachineEntity implements 
     }   
     
     private boolean processLiquidFuels(){
-        if(!liquidFuelTank.isEmpty()){
+        if(!liquidFuelTank.isEmpty() && enabled){
             int burnDuration = Math.min(liquidFuelTank.getFluidAmount(), LIQUID_CONSUMPTION_RATE);
             liquidFuelTank.drain(burnDuration, FluidTank.FluidAction.EXECUTE);
             burnTime += burnDuration;
@@ -204,7 +204,7 @@ public class EnergyGeneratorEntity extends BaseElectricMachineEntity implements 
 
     private boolean canGenerate(){
         boolean hasSpace = energyStorage.getEnergyStored() < energyStorage.getMaxEnergyStored();
-        return hasSpace && burnTime > 0 && enabled;
+        return hasSpace && burnTime > 0;
     }
 
     private void generateEnergy() {

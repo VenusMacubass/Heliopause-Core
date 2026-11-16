@@ -147,6 +147,22 @@ public class VaporizerMenu extends AbstractContainerMenu {
     public int getMaxEnergy() {
         return this.blockEntity.getEnergyStorage().getMaxEnergyStored();
     }
+    
+    public int getGas(){
+        return this.blockEntity.gasTank.getFluidAmount();
+    }
+    
+    public int getMaxGas(){
+        return this.blockEntity.gasTank.getCapacity();
+    }
+
+    public int getLiquid(){
+        return this.blockEntity.liquidTank.getFluidAmount();
+    }
+
+    public int getMaxLiquid(){
+        return this.blockEntity.liquidTank.getCapacity();
+    }
 
     public int getEnergyScaled(int pixels) {
         int energy = getEnergy();

@@ -9,7 +9,7 @@ public class ServerConfigHubScreen extends Screen {
     private final Screen parent; 
 
     public ServerConfigHubScreen(Screen parent) {
-        super(Component.literal("Server Settings"));
+        super(Component.translatable("heliocore.screen.server_settings"));
         this.parent = parent;
     }
 
@@ -19,11 +19,11 @@ public class ServerConfigHubScreen extends Screen {
         int centerX = this.width / 2;
         int startY = 60;
 
-        this.addRenderableWidget(Button.builder(Component.literal("Life Support Systems"), btn -> {
-            this.minecraft.setScreen(new LifeSupportSettingsScreen(this));
-        }).bounds(centerX - 100, startY, 200, 20).build());
+//        this.addRenderableWidget(Button.builder(Component.literal("Life Support Systems"), btn -> {
+//            this.minecraft.setScreen(new LifeSupportSettingsScreen(this));
+//        }).bounds(centerX - 100, startY, 200, 20).build());
         
-        this.addRenderableWidget(Button.builder(Component.literal("Back"), btn -> {
+        this.addRenderableWidget(Button.builder(Component.translatable("heliocore.screen.back"), btn -> {
             this.onClose();
         }).bounds(centerX - 100, this.height - 40, 200, 20).build());
     }

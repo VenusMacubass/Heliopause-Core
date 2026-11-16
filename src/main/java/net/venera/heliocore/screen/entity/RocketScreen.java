@@ -71,18 +71,18 @@ public class RocketScreen  extends AbstractContainerScreen<RocketMenu> {
         int fuelHeight = 41;
 
         if (isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)) {
-            int currentEnergy = menu.rocket.getEnergyAmount();
-            int maxEnergy = menu.rocket.MAX_ENERGY;
-
-            guiGraphics.renderTooltip(font, Component.literal(
-                    "Energy: " + currentEnergy + " / " + maxEnergy + " FE"), x, y);
+            guiGraphics.renderTooltip(font, Component.translatable(
+                    "heliocore.screen.energy",
+                    menu.getEnergy(),
+                    menu.getMaxEnergy()
+            ), x, y);
         }
         if (isMouseOver(x, y, fuelX, fuelY, fuelWidth, fuelHeight)) {
-            int currentFuel = menu.rocket.getFuelAmount();
-            int maxFuel = menu.rocket.MAX_FUEL;
-
-            guiGraphics.renderTooltip(font, Component.literal(
-                    "Fuel: " + currentFuel + " / " + maxFuel + " mL"), x, y);
+            guiGraphics.renderTooltip(font, Component.translatable(
+                    "heliocore.screen.fuel",
+                    menu.getFuel(),
+                    menu.getMaxFuel()
+            ), x, y);
         }
 
     }

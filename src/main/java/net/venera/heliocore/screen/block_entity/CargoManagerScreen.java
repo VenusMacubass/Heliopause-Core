@@ -31,7 +31,7 @@ public class CargoManagerScreen extends AbstractContainerScreen<CargoManagerMenu
         int y = (height - imageHeight) / 2;
 
         this.inputEnableButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.isLoading() ? "Loadn't" : "Load"),
+                        Component.translatable(menu.isLoading() ? "heliocore.screen.cargo_manager.load_stop" : "heliocore.screen.cargo_manager.load"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
@@ -42,7 +42,7 @@ public class CargoManagerScreen extends AbstractContainerScreen<CargoManagerMenu
         );
 
         this.outputEnableButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.isUnloading() ? "Unloadn't" : "Unload"),
+                        Component.literal(menu.isUnloading() ? "heliocore.screen.cargo_manager.unload_stop" : "heliocore.screen.cargo_manager.unload"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 1)
@@ -87,16 +87,19 @@ public class CargoManagerScreen extends AbstractContainerScreen<CargoManagerMenu
 
 
         if (isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)) {
-            guiGraphics.renderTooltip(font, Component.literal(
-                    "Energy: " + menu.getEnergy() + " / " + menu.getMaxEnergy() + " FE"), x, y);
+            guiGraphics.renderTooltip(font, Component.translatable(
+                    "heliocore.screen.energy",
+                    menu.getEnergy(),
+                    menu.getMaxEnergy()
+            ), x, y);
         }
     }
 
     @Override
     protected void containerTick() {
         super.containerTick();
-        this.inputEnableButton.setMessage(Component.literal(menu.isLoading() ? "Loadn't" : "Load"));
-        this.outputEnableButton.setMessage(Component.literal(menu.isUnloading() ? "Unloadn't" : "Unload"));
+        this.inputEnableButton.setMessage(Component.translatable(menu.isLoading() ? "heliocore.screen.cargo_manager.load_stop" : "heliocore.screen.cargo_manager.load"));
+        this.outputEnableButton.setMessage(Component.translatable(menu.isUnloading() ? "heliocore.screen.cargo_manager.unload_stop" : "heliocore.screen.cargo_manager.unload"));
     }
 
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {

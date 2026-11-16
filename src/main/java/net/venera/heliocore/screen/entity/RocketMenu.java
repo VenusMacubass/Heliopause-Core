@@ -58,4 +58,24 @@ public class RocketMenu extends AbstractContainerMenu{
 
         return (currentFuel * pixels) / maxFuel;
     }
+    
+    public int getEnergy(){
+        if (this.rocket == null) return 0;
+        return this.rocket.getEnergyAmount();
+    }
+
+    public int getMaxEnergy(){
+        if (this.rocket == null) return 0;
+        return this.rocket.MAX_ENERGY;
+    }
+
+    public int getFuel(){
+        if (this.rocket == null) return 0;
+        return this.rocket.getFuelAmount();
+    }
+
+    public int getMaxFuel(){
+        if (this.rocket == null) return 0;
+        return this.rocket.MAX_FUEL;
+    }
 }

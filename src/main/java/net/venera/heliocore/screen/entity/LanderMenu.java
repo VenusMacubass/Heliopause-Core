@@ -127,4 +127,14 @@ public class LanderMenu extends AbstractContainerMenu {
 
         return (currentFuel * pixels) / maxFuel;
     }
+    
+    public int getFuel(){
+        if (this.lander == null) return 0;
+        return this.lander.getFuelAmount();
+    }
+
+    public int getMaxFuel(){
+        if (this.lander == null) return 0;
+        return this.lander.MAX_FUEL;
+    }
 }

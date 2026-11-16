@@ -29,7 +29,7 @@ public class OxygenGeneratorScreen extends AbstractContainerScreen<OxygenGenerat
         int y = (height - imageHeight) / 2;
 
         this.toggleButton = this.addRenderableWidget(Button.builder(
-                        Component.literal(menu.isEnabled() ? "Disable" : "Enable"),
+                        Component.translatable(menu.isEnabled() ? "heliocore.screen.disable" : "heliocore.screen.enable"),
                         button -> {
                             PacketDistributor.sendToServer(
                                     new MachineButtonHelper(menu.blockEntity.getBlockPos(), 0)
@@ -88,23 +88,26 @@ public class OxygenGeneratorScreen extends AbstractContainerScreen<OxygenGenerat
         int oxygenHeight = 7;
 
         if(isMouseOver(x, y, energyX, energyY, energyWidth, energyHeight)){
-            guiGraphics.renderTooltip(font, Component.literal(
-                    "Energy: " + menu.getEnergy() + " / " + menu.getMaxEnergy() + " FE"), x, y);
+            guiGraphics.renderTooltip(font, Component.translatable(
+                    "heliocore.screen.energy",
+                    menu.getEnergy(),
+                    menu.getMaxEnergy()
+            ), x, y);
         }
 
         if(isMouseOver(x, y, oxygenX, oxygenY, oxygenWidth, oxygenHeight)) {
-            int currentOxygen = menu.data.get(0);
-            int maxOxygen = menu.data.get(1);
-
-            guiGraphics.renderTooltip(font, Component.literal(
-                    "Oxygen: " + currentOxygen + " / " + maxOxygen + " FO"), x, y);
+            guiGraphics.renderTooltip(font, Component.translatable(
+                    "heliocore.screen.oxygen",
+                    menu.getOxygen(),
+                    menu.getMaxOxygen()
+            ), x, y);
         }
     }
     
     @Override
     protected void containerTick() {
         super.containerTick();
-        this.toggleButton.setMessage(Component.literal(menu.isEnabled() ? "Disable" : "Enable"));
+        this.toggleButton.setMessage(Component.translatable(menu.isEnabled() ? "heliocore.screen.disable" : "heliocore.screen.enable"));
     }
     
     private boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {

@@ -36,7 +36,7 @@ public class FuelManagerMenu extends AbstractContainerMenu {
         addPlayerInventory(inventory);
         addPlayerHotbar(inventory);
 
-        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 0, 132, 31) {
+        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 0, 132, 43) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return  stack.getItem() instanceof BatteryItem;
@@ -48,7 +48,7 @@ public class FuelManagerMenu extends AbstractContainerMenu {
             }
         });
 
-        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 1, 132, 6) {
+        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 1, 132, 18) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return  stack.getItem() == HpCFluids.REFINED_FUEL.getBucket() || stack.getItem() instanceof CanisterItem;
@@ -108,14 +108,14 @@ public class FuelManagerMenu extends AbstractContainerMenu {
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 51 + i * 18));
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 63 + i * 18));
             }
         }
     }
 
     private void addPlayerHotbar(Inventory playerInventory) {
         for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 109));
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 121));
         }
     }
 
@@ -135,6 +135,14 @@ public class FuelManagerMenu extends AbstractContainerMenu {
 
     public int getMaxEnergy() {
         return this.blockEntity.getEnergyStorage().getMaxEnergyStored();
+    }
+    
+    public int getFuel(){
+        return this.blockEntity.data.get(0);
+    }
+
+    public int getMaxFuel(){
+        return this.blockEntity.data.get(1);
     }
 
     public int getEnergyScaled(int pixels) {

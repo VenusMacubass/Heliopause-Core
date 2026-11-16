@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.LayeredDraw;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
@@ -193,9 +194,9 @@ public class SpaceSuitHudOverlay implements LayeredDraw.Layer{
         float textScale = scale * 0.35f;
         guiGraphics.pose().scale(textScale, textScale, 1.0f);
 
-        guiGraphics.drawString(font, "Radiation:", (int) (radBarX / textScale), (int) (radTextY / textScale), 0xFFFFFF, false);
-        guiGraphics.drawString(font, "Pressure:", (int) (pressBarX / textScale), (int) (pressTextY / textScale), 0xFFFFFF, false);
-        guiGraphics.drawString(font, "Oxygen:", (int) (tankX / textScale), (int) (oxyTextY / textScale), 0xFFFFFF, false);
+        guiGraphics.drawString(font, Component.translatable("heliocore.screen.radiation"), (int) (radBarX / textScale), (int) (radTextY / textScale), 0xFFFFFF, false);
+        guiGraphics.drawString(font, Component.translatable("heliocore.screen.pressure"), (int) (pressBarX / textScale), (int) (pressTextY / textScale), 0xFFFFFF, false);
+        guiGraphics.drawString(font, Component.translatable("heliocore.screen.oxygen"), (int) (tankX / textScale), (int) (oxyTextY / textScale), 0xFFFFFF, false);
 
         guiGraphics.pose().popPose();
     }

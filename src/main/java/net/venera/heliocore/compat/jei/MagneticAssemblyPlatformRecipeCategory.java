@@ -49,6 +49,12 @@ public class MagneticAssemblyPlatformRecipeCategory implements IRecipeCategory<M
         return Component.translatable("jei_title." + HeliopauseCore.MOD_ID + ".magnetic_assembly");
     }
 
+    @Override @SuppressWarnings("removal")
+    public IDrawable getBackground() {
+        return this.background;
+    }
+
+
     @Override
     public int getWidth() {
         return WIDTH;

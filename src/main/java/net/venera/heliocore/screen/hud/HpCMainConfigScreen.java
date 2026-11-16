@@ -9,7 +9,7 @@ public class HpCMainConfigScreen extends Screen {
     private final Screen parent; 
 
     public HpCMainConfigScreen(Screen parent) {
-        super(Component.literal("Heliopause Core Settings"));
+        super(Component.translatable("heliocore.screen.settings"));
         this.parent = parent;
     }
 
@@ -19,15 +19,15 @@ public class HpCMainConfigScreen extends Screen {
         int centerX = this.width / 2;
         int startY = 60;
         
-        this.addRenderableWidget(Button.builder(Component.literal("Client Settings"), btn -> {
+        this.addRenderableWidget(Button.builder(Component.translatable("heliocore.screen.client_settings"), btn -> {
             this.minecraft.setScreen(new ClientConfigHubScreen(this));
         }).bounds(centerX - 100, startY, 200, 20).build());
         
-        this.addRenderableWidget(Button.builder(Component.literal("Server Settings"), btn -> {
+        this.addRenderableWidget(Button.builder(Component.translatable("heliocore.screen.server_settings"), btn -> {
             this.minecraft.setScreen(new ServerConfigHubScreen(this));
         }).bounds(centerX - 100, startY + 25, 200, 20).build());
         
-        this.addRenderableWidget(Button.builder(Component.literal("Done"), btn -> {
+        this.addRenderableWidget(Button.builder(Component.translatable("heliocore.screen.done"), btn -> {
             this.onClose();
         }).bounds(centerX - 100, this.height - 40, 200, 20).build());
     }
